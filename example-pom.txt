@@ -5,7 +5,7 @@
 
     <artifactId>SpireCafe</artifactId>
     <version>1.0.0</version>
-    <name>Spire Biomes</name>
+    <name>Spire Café</name>
     <description>Modding Anniversary 7: Spire Café</description>
 
     <properties>
