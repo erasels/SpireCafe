@@ -1,0 +1,9 @@
+{
+  "${ModID}:KoishiNPC": {
+    "NAMES": [
+      "Koishi"
+    ],
+    "TEXT": [
+    ]
+  }
+}
