@@ -24,7 +24,7 @@ public class KoishiNPC extends AbstractNPC {
     }
 
     public void renderCutscenePortrait(SpriteBatch sb) {
-        sb.draw(cutscenePortrait, (1560.0F - (cutscenePortrait.getRegionWidth() / 2.0F)) * Settings.scale, 0 * Settings.scale, 0.0F, 0.0F, cutscenePortrait.getRegionWidth(), cutscenePortrait.getRegionHeight(), Settings.scale, Settings.scale, 0.0F);
+        simpleRenderCutscenePortrait(sb, 1560.0F,0.0F, 0.0F, 0.0F, 0.0F);
     }
 
     public void onInteract() {
