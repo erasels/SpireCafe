@@ -15,6 +15,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.Exordium;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import org.apache.logging.log4j.LogManager;
@@ -22,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cardvars.SecondDamage;
 import spireCafe.cardvars.SecondMagicNumber;
+import spireCafe.interactables.TestEvent;
 import spireCafe.util.TexLoader;
 
 import java.lang.reflect.InvocationTargetException;
@@ -84,6 +86,10 @@ public class Anniv7Mod implements
 
     public static String makeImagePath(String resourcePath) {
         return modID + "Resources/images/" + resourcePath;
+    }
+
+    public static String makeCharacterPath(String resourcePath) {
+        return modID + "Resources/images/characters/" + resourcePath;
     }
 
     public static String makeUIPath(String resourcePath) {
@@ -179,12 +185,13 @@ public class Anniv7Mod implements
     @Override
     public void receivePostInitialize() {
         initializedStrings = true;
-        unfilteredAllZones.forEach(AbstractZone::loadStrings);
-        unfilteredAllZones.sort(Comparator.comparing(c->c.id));
+        //unfilteredAllZones.forEach(AbstractZone::loadStrings);
+        //unfilteredAllZones.sort(Comparator.comparing(c->c.id));
         addPotions();
         addSaveFields();
         initializeConfig();
         initializeSavedData();
+        BaseMod.addEvent(TestEvent.ID, TestEvent.class, Exordium.ID);
     }
 
     public static void addPotions() {
@@ -230,8 +237,6 @@ public class Anniv7Mod implements
 
     @Override
     public void receiveEditStrings() {
-
-
         loadStrings("eng");
         loadZoneStrings(unfilteredAllZones, "eng");
         if (Settings.language != Settings.GameLanguage.ENG)
@@ -244,6 +249,7 @@ public class Anniv7Mod implements
 
     private void loadStrings(String langKey) {
         if (!Gdx.files.internal(modID + "Resources/localization/" + langKey + "/").exists()) return;
+        loadStringsFile(langKey, CharacterStrings.class);
         loadStringsFile(langKey, CardStrings.class);
         loadStringsFile(langKey, RelicStrings.class);
         loadStringsFile(langKey, PowerStrings.class);
@@ -256,24 +262,24 @@ public class Anniv7Mod implements
     }
 
     public void loadZoneStrings(Collection<?> zones, String langKey) {
-        for (AbstractZone zone : zones) {
-            String languageAndZone = langKey + "/" + zone.id;
-            String filepath = modID + "Resources/localization/" + languageAndZone;
-            if (!Gdx.files.internal(filepath).exists()) {
-                continue;
-            }
-            logger.info("Loading strings for zone " + zone.id + "from \"resources/localization/" + languageAndZone + "\"");
-
-            loadStringsFile(languageAndZone, CardStrings.class);
-            loadStringsFile(languageAndZone, RelicStrings.class);
-            loadStringsFile(languageAndZone, PowerStrings.class);
-            loadStringsFile(languageAndZone, UIStrings.class);
-            loadStringsFile(languageAndZone, StanceStrings.class);
-            loadStringsFile(languageAndZone, OrbStrings.class);
-            loadStringsFile(languageAndZone, PotionStrings.class);
-            loadStringsFile(languageAndZone, EventStrings.class);
-            loadStringsFile(languageAndZone, MonsterStrings.class);
-        }
+//        for (AbstractZone zone : zones) {
+//            String languageAndZone = langKey + "/" + zone.id;
+//            String filepath = modID + "Resources/localization/" + languageAndZone;
+//            if (!Gdx.files.internal(filepath).exists()) {
+//                continue;
+//            }
+//            logger.info("Loading strings for zone " + zone.id + "from \"resources/localization/" + languageAndZone + "\"");
+//
+//            loadStringsFile(languageAndZone, CardStrings.class);
+//            loadStringsFile(languageAndZone, RelicStrings.class);
+//            loadStringsFile(languageAndZone, PowerStrings.class);
+//            loadStringsFile(languageAndZone, UIStrings.class);
+//            loadStringsFile(languageAndZone, StanceStrings.class);
+//            loadStringsFile(languageAndZone, OrbStrings.class);
+//            loadStringsFile(languageAndZone, PotionStrings.class);
+//            loadStringsFile(languageAndZone, EventStrings.class);
+//            loadStringsFile(languageAndZone, MonsterStrings.class);
+//        }
     }
 
     private void loadStringsFile(String key, Class<?> stringType) {
@@ -299,16 +305,16 @@ public class Anniv7Mod implements
             String json = Gdx.files.internal(filepath).readString(String.valueOf(StandardCharsets.UTF_8));
             keywords.addAll(Arrays.asList(gson.fromJson(json, Keyword[].class)));
         }
-        for (AbstractZone zone : unfilteredAllZones) {
-            String languageAndZone = langKey + "/" + zone.id;
-            String zoneJson = modID + "Resources/localization/" + languageAndZone + "/Keywordstrings.json";
-            FileHandle handle = Gdx.files.internal(zoneJson);
-            if (handle.exists()) {
-                logger.info("Loading keywords for zone " + zone.id + "from \"resources/localization/" + languageAndZone + "\"");
-                zoneJson = handle.readString(String.valueOf(StandardCharsets.UTF_8));
-                keywords.addAll(Arrays.asList(gson.fromJson(zoneJson, Keyword[].class)));
-            }
-        }
+//        for (AbstractZone zone : unfilteredAllZones) {
+//            String languageAndZone = langKey + "/" + zone.id;
+//            String zoneJson = modID + "Resources/localization/" + languageAndZone + "/Keywordstrings.json";
+//            FileHandle handle = Gdx.files.internal(zoneJson);
+//            if (handle.exists()) {
+//                logger.info("Loading keywords for zone " + zone.id + "from \"resources/localization/" + languageAndZone + "\"");
+//                zoneJson = handle.readString(String.valueOf(StandardCharsets.UTF_8));
+//                keywords.addAll(Arrays.asList(gson.fromJson(zoneJson, Keyword[].class)));
+//            }
+//        }
 
         for (Keyword keyword : keywords) {
             BaseMod.addKeyword(modID, keyword.PROPER_NAME, keyword.NAMES, keyword.DESCRIPTION);
@@ -327,13 +333,13 @@ public class Anniv7Mod implements
     private ModPanel settingsPanel;
 
     private void initializeConfig() {
-        UIStrings configStrings = CardCrawlGame.languagePack.getUIString(makeID("ConfigMenuText"));
-
-        Texture badge = TexLoader.getTexture(makeImagePath("ui/badge.png"));
-
-        settingsPanel = new ModPanel();
-
-        BaseMod.registerModBadge(badge, configStrings.TEXT[0], configStrings.TEXT[1], configStrings.TEXT[2], settingsPanel);
+//        UIStrings configStrings = CardCrawlGame.languagePack.getUIString(makeID("ConfigMenuText"));
+//
+//        Texture badge = TexLoader.getTexture(makeImagePath("ui/badge.png"));
+//
+//        settingsPanel = new ModPanel();
+//
+//        BaseMod.registerModBadge(badge, configStrings.TEXT[0], configStrings.TEXT[1], configStrings.TEXT[2], settingsPanel);
     }
 
     private void initializeSavedData() {

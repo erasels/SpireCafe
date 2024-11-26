@@ -508,25 +508,4 @@ public class Wiz {
             return AbstractDungeon.getCurrRoom();
         return null;
     }
-
-    /************************************************************
-     *              Anniversary 6 specific utility methods
-     ************************************************************/
-    public static AbstractZone getCurZone() {
-        return ZonePatches.currentZone();
-    }
-
-    public static void forCurZone(Consumer<AbstractZone> doForZone) {
-        AbstractZone curZone = getCurZone();
-        if (curZone != null) {
-            doForZone.accept(curZone);
-        }
-    }
-
-    public static <T> void forCurZone(Class<T> clazz, Consumer<T> doForZone) {
-        AbstractZone curZone = getCurZone();
-        if (clazz.isInstance(curZone)) {
-            doForZone.accept(clazz.cast(curZone));
-        }
-    }
 }
