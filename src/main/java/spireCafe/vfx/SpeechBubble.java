@@ -12,24 +12,22 @@ public class SpeechBubble {
     private static final float SHADOW_OFFSET;
     private static final float WAVY_DISTANCE;
     private float shadow_offset;
-    private float x;
-    private float y;
+    private final float x;
+    private final float y;
     private float wavy_y;
     private float wavyHelper;
-    private float scaleTimer;
-    private float minScaleTimer;
+    private final float scaleTimer;
     private float currScaleTimer;
-    private Color shadowColor;
-    private Color color;
+    private final Color shadowColor;
+    private final Color color;
     public float scale;
     public boolean isGrowing = false;
 
-    public SpeechBubble(float x, float y, float scaleTimer, String msg) {
+    public SpeechBubble(float x, float y, float scaleTimer) {
         this.shadow_offset = 0.0F;
         this.scaleTimer = scaleTimer;
-        this.minScaleTimer = scaleTimer / 6;
         this.shadowColor = new Color(0.0F, 0.0F, 0.0F, 0.0F);
-        this.x = x - 50.0F * Settings.scale;
+        this.x = x - (50.0F * Settings.scale);
         this.y = y;
         this.color = new Color(0.8F, 0.9F, 0.9F, 1.0F);
     }
@@ -47,12 +45,13 @@ public class SpeechBubble {
         } else {
             this.currScaleTimer -= Gdx.graphics.getDeltaTime();
         }
-        if (this.currScaleTimer < minScaleTimer) {
-            this.currScaleTimer = minScaleTimer;
+        if (this.currScaleTimer < 0) {
+            this.currScaleTimer = 0;
         }
         if (this.currScaleTimer > scaleTimer) {
             this.currScaleTimer = scaleTimer;
         }
+        this.color.a = Interpolation.linear.apply(0.5f, 1.0f, this.currScaleTimer / 0.3F);
         this.scale = Interpolation.linear.apply(Settings.scale / 5.0f, Settings.scale / 2.0F, this.currScaleTimer / 0.3F);
     }
 
@@ -62,9 +61,6 @@ public class SpeechBubble {
         sb.draw(ImageMaster.SPEECH_BUBBLE_IMG, this.x - 512.0F + this.shadow_offset, this.y - 256.0F + this.wavy_y - this.shadow_offset, 512.0F, 256.0F, 512.0F, 512.0F, this.scale, this.scale, 0, 0, 0, 512, 512, true, false);
         sb.setColor(this.color);
         sb.draw(ImageMaster.SPEECH_BUBBLE_IMG, this.x - 512.0F, this.y - 256.0F + this.wavy_y, 512.0F, 256.0F, 512.0F, 512.0F, this.scale, this.scale, 0, 0, 0, 512, 512, true, false);
-    }
-
-    public void dispose() {
     }
 
     static {

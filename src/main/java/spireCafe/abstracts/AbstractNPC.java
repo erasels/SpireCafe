@@ -13,7 +13,7 @@ public abstract class AbstractNPC extends AbstractCafeInteractable {
 
     public AbstractNPC(float animationX, float animationY, float hb_w, float hb_h) {
         super(animationX, animationY, hb_w, hb_h);
-        speechBubble = new SpeechBubble(animationX, animationY + hb_h, speechBubbleScaleTimer, "test");
+        speechBubble = new SpeechBubble(animationX, animationY + hb_h, speechBubbleScaleTimer);
     }
 
     public void renderCutscenePortrait(SpriteBatch sb) {
