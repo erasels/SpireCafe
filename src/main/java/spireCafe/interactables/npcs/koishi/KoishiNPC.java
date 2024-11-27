@@ -16,7 +16,7 @@ public class KoishiNPC extends AbstractNPC {
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
     public KoishiNPC(float animationX, float animationY) {
-        super(animationX, animationY, 200.0f, 200.0f);
+        super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
         this.animation = new SpriterAnimation(Anniv7Mod.makeCharacterPath("Koishi/Spriter/KoishiAnimation.scml"));
         this.animation.setFlip(true, false);
