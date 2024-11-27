@@ -5,5 +5,19 @@
     ],
     "TEXT": [
     ]
+  },
+  "${ModID}:MarisaNPC": {
+    "NAMES": [
+      "Marisa"
+    ],
+    "TEXT": [
+    ]
+  },
+  "${ModID}:RedCrewNPC": {
+    "NAMES": [
+      "Red Crewmate"
+    ],
+    "TEXT": [
+    ]
   }
 }
