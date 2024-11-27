@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.events.RoomEventDialog;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractNPC;
-import spireCafe.interactables.npcs.koishi.KoishiNPC;
+import spireCafe.interactables.npcs.koishi.KoishiPatron;
 
 import java.util.ArrayList;
 
@@ -22,7 +22,7 @@ public class TestEvent extends AbstractEvent {
         AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.EVENT;
         this.hasDialog = true;
         this.hasFocus = true;
-        npcs.add(new KoishiNPC(1200.0F * Settings.scale, AbstractDungeon.floorY));
+        npcs.add(new KoishiPatron(1200.0F * Settings.scale, AbstractDungeon.floorY));
     }
 
     @Override
