@@ -20,14 +20,20 @@ public class KoishiNPC extends AbstractNPC {
         this.name = characterStrings.NAMES[0];
         this.animation = new SpriterAnimation(Anniv7Mod.makeCharacterPath("Koishi/Spriter/KoishiAnimation.scml"));
         this.animation.setFlip(true, false);
-        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Koishi/Portrait.png")));
+        setCutscenePortrait("Portrait1");
     }
 
     public void renderCutscenePortrait(SpriteBatch sb) {
         sb.draw(cutscenePortrait, (1560.0F - (cutscenePortrait.getRegionWidth() / 2.0F)) * Settings.scale, 0 * Settings.scale, 0.0F, 0.0F, cutscenePortrait.getRegionWidth(), cutscenePortrait.getRegionHeight(), Settings.scale, Settings.scale, 0.0F);
     }
 
+    public void setCutscenePortrait(String texture) {
+        String resourcePath = String.format("Koishi/%s.png", texture);
+        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath(resourcePath)));
+    }
+
     public void onInteract() {
+        setCutscenePortrait("Portrait1");
         AbstractDungeon.topLevelEffectsQueue.add(new KoishiCutscene(this));
     }
 }

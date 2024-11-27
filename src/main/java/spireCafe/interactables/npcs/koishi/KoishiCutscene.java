@@ -40,12 +40,17 @@ public class KoishiCutscene extends AbstractCutscene {
         if (dialogueIndex == 1) {
             super.onClick();
             this.dialog.addDialogOption(OPTIONS[0]);
+            character.setCutscenePortrait("Portrait4");
         } else if (dialogueIndex == 8) {
             super.onClick();
             this.dialog.addDialogOption(OPTIONS[7] + FontHelper.colorString(OPTIONS[8] + maxhpCost + OPTIONS[9], "r") + " " + FontHelper.colorString(OPTIONS[10], "g"));
             this.dialog.addDialogOption(OPTIONS[11]);
+            character.setCutscenePortrait("Portrait5");
         } else if (dialogueIndex == 6 || dialogueIndex == 7 || dialogueIndex == 12) {
             endCutscene();
+        } else if (dialogueIndex == 10) {
+            super.onClick();
+            character.setCutscenePortrait("Portrait8");
         } else {
             super.onClick();
         }
@@ -57,6 +62,7 @@ public class KoishiCutscene extends AbstractCutscene {
             super.onClick();
             this.dialog.addDialogOption(OPTIONS[1]);
             this.dialog.addDialogOption(OPTIONS[2]);
+            character.setCutscenePortrait("Portrait2");
         } else if (dialogueIndex == 3) {
             if (slot == 0) {
                 super.onClick();
@@ -64,6 +70,7 @@ public class KoishiCutscene extends AbstractCutscene {
                 this.dialog.addDialogOption(OPTIONS[6]);
             } else {
                 super.onClick(8);
+                character.setCutscenePortrait("Portrait4");
             }
         } else if (dialogueIndex == 4) {
             if (slot == 0) {
@@ -78,6 +85,7 @@ public class KoishiCutscene extends AbstractCutscene {
                 AbstractDungeon.gridSelectScreen.open(group, 1, OPTIONS[4] + " " + OPTIONS[5], false);
             } else {
                 super.onClick(7);
+                character.setCutscenePortrait("Portrait3");
             }
         } else if (dialogueIndex == 9) {
             if (slot == 0) {
@@ -87,6 +95,7 @@ public class KoishiCutscene extends AbstractCutscene {
                 AbstractDungeon.gridSelectScreen.open(AbstractDungeon.player.masterDeck.getPurgeableCards(), 1, OPTIONS[10], false, false, false, true);
             } else {
                 super.onClick(13);
+                character.setCutscenePortrait("Portrait4");
             }
         }
     }
