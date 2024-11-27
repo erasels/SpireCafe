@@ -44,8 +44,9 @@ public class KoishiCutscene extends AbstractCutscene {
             super.onClick();
             this.dialog.addDialogOption(OPTIONS[7] + FontHelper.colorString(OPTIONS[8] + maxhpCost + OPTIONS[9], "r") + " " + FontHelper.colorString(OPTIONS[10], "g"));
             this.dialog.addDialogOption(OPTIONS[11]);
-        } else if (dialogueIndex == 6 || dialogueIndex == 7 || dialogueIndex == 12) {
+        } else if (dialogueIndex == 6 || dialogueIndex == 7 || dialogueIndex == 12 || dialogueIndex == 13 || dialogueIndex == 14) {
             endCutscene();
+            character.hasInteracted=true;
         } else {
             super.onClick();
         }
