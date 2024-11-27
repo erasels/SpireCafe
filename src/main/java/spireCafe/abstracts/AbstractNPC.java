@@ -14,4 +14,8 @@ public abstract class AbstractNPC extends AbstractCafeInteractable {
     public void renderCutscenePortrait(SpriteBatch sb) {
 
     }
+
+    public void setCutscenePortrait(String texture) {
+
+    }
 }
