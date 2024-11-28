@@ -8,15 +8,14 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import spireCafe.Anniv7Mod;
-import spireCafe.abstracts.AbstractNPC;
 import spireCafe.abstracts.AbstractPatron;
 import spireCafe.util.TexLoader;
 
-public class ExampleNPC extends AbstractPatron {
-    public static final String ID = ExampleNPC.class.getSimpleName();
+public class ExamplePatron extends AbstractPatron {
+    public static final String ID = ExamplePatron.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
-    public ExampleNPC(float animationX, float animationY) {
+    public ExamplePatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
         this.animation = new SpriterAnimation(Anniv7Mod.makeCharacterPath("RedCrew/RedCrew.scml"));
@@ -28,6 +27,6 @@ public class ExampleNPC extends AbstractPatron {
     }
 
     public void onInteract() {
-        AbstractDungeon.topLevelEffectsQueue.add(new ExampleNPCCutscene(this));
+        AbstractDungeon.topLevelEffectsQueue.add(new ExamplePatronCutscene(this));
     }
 }

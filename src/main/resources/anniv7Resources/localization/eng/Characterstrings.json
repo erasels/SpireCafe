@@ -6,23 +6,23 @@
     "TEXT": [
     ]
   },
-  "${ModID}:MarisaNPC": {
+  "${ModID}:MarisaPatron": {
     "NAMES": [
       "Marisa"
     ],
     "TEXT": [
     ]
   },
-  "${ModID}:RedCrewNPC": {
+  "${ModID}:RedCrewPatron": {
     "NAMES": [
       "Red Crewmate"
     ],
     "TEXT": [
     ]
   },
-  "${ModID}:ExampleNPC": {
+  "${ModID}:ExamplePatron": {
     "NAMES": [
-      "Example NPC"
+      "Example Patron"
     ],
     "TEXT": [
     ]

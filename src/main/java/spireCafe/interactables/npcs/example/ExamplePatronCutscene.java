@@ -14,13 +14,13 @@ import spireCafe.abstracts.AbstractNPC;
 
 import static spireCafe.Anniv7Mod.makeID;
 
-public class ExampleNPCCutscene extends AbstractCutscene {
-    public static final String ID = makeID(ExampleNPCCutscene.class.getSimpleName());
+public class ExamplePatronCutscene extends AbstractCutscene {
+    public static final String ID = makeID(ExamplePatronCutscene.class.getSimpleName());
     private static final EventStrings eventStrings = CardCrawlGame.languagePack.getEventString(ID);
     private boolean forRemove = false;
     private boolean forUpgrade = false;
 
-    public ExampleNPCCutscene(AbstractNPC character) {
+    public ExamplePatronCutscene(AbstractNPC character) {
         super(character, eventStrings);
     }
 

@@ -53,8 +53,8 @@
       ""
     ]
   },
-  "${ModID}:ExampleNPCCutscene": {
-    "NAME": "Example NPC Cutscene",
+  "${ModID}:ExamplePatronCutscene": {
+    "NAME": "Example Patron Cutscene",
     "DESCRIPTIONS": [
       "\"Hello, I am a blacksmith of great renown.\"",
       "\"What can I do for you, weary traveler?\"",
