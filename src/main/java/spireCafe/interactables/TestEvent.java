@@ -9,6 +9,8 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractNPC;
 import spireCafe.interactables.npcs.koishi.KoishiPatron;
+import spireCafe.interactables.npcs.example.ExampleNPC;
+import spireCafe.interactables.npcs.marisa.MarisaNPC;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,8 @@ public class TestEvent extends AbstractEvent {
         this.hasDialog = true;
         this.hasFocus = true;
         npcs.add(new KoishiPatron(1200.0F * Settings.scale, AbstractDungeon.floorY));
+        npcs.add(new MarisaNPC(1400.0F * Settings.scale, AbstractDungeon.floorY));
+        npcs.add(new ExampleNPC(1000.0F * Settings.scale, AbstractDungeon.floorY));
     }
 
     @Override

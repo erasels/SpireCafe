@@ -1,5 +1,7 @@
 package spireCafe.ui;
 
+import basemod.abstracts.events.PhasedEvent;
+import basemod.abstracts.events.phases.TextPhase;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -17,6 +19,8 @@ import spireCafe.abstracts.AbstractCutscene;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class Dialog {
     private Color color = new Color(0.0F, 0.0F, 0.0F, 0.0F);
@@ -114,44 +118,52 @@ public class Dialog {
         optionList.remove(slot);
     }
 
-    public void addDialogOption(String text) {
-        optionList.add(new OptionButton(this, optionList.size(), text));
+    public OptionButton addDialogOption(String text) {
+        OptionButton button = new OptionButton(this, optionList.size(), text);
+        optionList.add(button);
+        return button;
     }
 
-    public void addDialogOption(String text, AbstractCard previewCard) {
-        optionList.add(new OptionButton(this, optionList.size(), text, previewCard));
+    public OptionButton addDialogOption(String text, AbstractCard previewCard) {
+        OptionButton button = new OptionButton(this, optionList.size(), text, previewCard);
+        optionList.add(button);
+        return button;
     }
 
-    public void addDialogOption(String text, AbstractRelic previewRelic) {
-        optionList.add(new OptionButton(this, optionList.size(), text, previewRelic));
+    public OptionButton addDialogOption(String text, AbstractRelic previewRelic) {
+        OptionButton button = new OptionButton(this, optionList.size(), text, previewRelic);
+        optionList.add(button);
+        return button;
     }
 
-    public void addDialogOption(String text, AbstractCard previewCard, AbstractRelic previewRelic) {
-        optionList.add(new OptionButton(this, optionList.size(), text, previewCard, previewRelic));
+    public OptionButton addDialogOption(String text, AbstractCard previewCard, AbstractRelic previewRelic) {
+        OptionButton button = new OptionButton(this, optionList.size(), text, previewCard, previewRelic);
+        optionList.add(button);
+        return button;
     }
 
-    public void addDialogOption(String text, boolean isDisabled) {
-        optionList.add(new OptionButton(this, optionList.size(), text, isDisabled));
+    public OptionButton addDialogOption(String text, boolean isDisabled) {
+        OptionButton button = new OptionButton(this, optionList.size(), text, isDisabled);
+        optionList.add(button);
+        return button;
     }
 
-    public void addDialogOption(String text, boolean isDisabled, AbstractCard previewCard) {
-        optionList.add(new OptionButton(this, optionList.size(), text, isDisabled, previewCard));
+    public OptionButton addDialogOption(String text, boolean isDisabled, AbstractCard previewCard) {
+        OptionButton button = new OptionButton(this, optionList.size(), text, isDisabled, previewCard);
+        optionList.add(button);
+        return button;
     }
 
-    public void addDialogOption(String text, boolean isDisabled, AbstractRelic previewRelic) {
-        optionList.add(new OptionButton(this, optionList.size(), text, isDisabled, previewRelic));
+    public OptionButton addDialogOption(String text, boolean isDisabled, AbstractRelic previewRelic) {
+        OptionButton button = new OptionButton(this, optionList.size(), text, isDisabled, previewRelic);
+        optionList.add(button);
+        return button;
     }
 
-    public void addDialogOption(String text, boolean isDisabled, AbstractCard previewCard, AbstractRelic previewRelic) {
-        optionList.add(new OptionButton(this, optionList.size(), text, isDisabled, previewCard, previewRelic));
-    }
-
-    public void updateDialogOption(int slot, String text) {
-        optionList.set(slot, new OptionButton(this, slot, text));
-    }
-
-    public void onOptionClick(int slot) {
-        this.cutscene.onOptionClick(slot);
+    public OptionButton addDialogOption(String text, boolean isDisabled, AbstractCard previewCard, AbstractRelic previewRelic) {
+        OptionButton button = new OptionButton(this, optionList.size(), text, isDisabled, previewCard, previewRelic);
+        optionList.add(button);
+        return button;
     }
 
     public void updateBodyText(String text) {

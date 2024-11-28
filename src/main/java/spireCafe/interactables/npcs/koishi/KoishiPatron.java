@@ -15,11 +15,16 @@ public class KoishiPatron extends AbstractPatron {
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
     public KoishiPatron(float animationX, float animationY) {
-        super(animationX, animationY, 200.0f, 200.0f);
+        super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
         this.animation = new SpriterAnimation(Anniv7Mod.makeCharacterPath("Koishi/Spriter/KoishiAnimation.scml"));
         this.animation.setFlip(true, false);
-        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Koishi/Portrait.png")));
+        setCutscenePortrait("Portrait1");
+    }
+
+    public void setCutscenePortrait(String texture) {
+        String resourcePath = String.format("Koishi/%s.png", texture);
+        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath(resourcePath)));
     }
 
     public void renderCutscenePortrait(SpriteBatch sb) {
@@ -27,6 +32,7 @@ public class KoishiPatron extends AbstractPatron {
     }
 
     public void onInteract() {
+        setCutscenePortrait("Portrait1");
         AbstractDungeon.topLevelEffectsQueue.add(new KoishiCutscene(this));
     }
 }

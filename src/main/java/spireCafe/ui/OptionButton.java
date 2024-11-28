@@ -12,6 +12,10 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
+import spireCafe.abstracts.AbstractCutscene;
+
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class OptionButton {
     private static final float OPTION_SPACING_Y;
@@ -35,6 +39,7 @@ public class OptionButton {
     private final AbstractCard cardToPreview;
     private final AbstractRelic relicToPreview;
     public Dialog dialog;
+    public BiConsumer<Dialog, Integer> optionResult;
 
     public OptionButton(Dialog dialog, int slot, String msg, boolean isDisabled, AbstractCard previewCard, AbstractRelic previewRelic) {
         this.dialog = dialog;
@@ -88,6 +93,12 @@ public class OptionButton {
         this(dialog, slot, msg, false, previewRelic);
     }
 
+    public void setOptionResult(Consumer<Integer> optionResult) {
+        this.optionResult = (dialog, i) -> {
+            optionResult.accept(i);
+        };
+    }
+
     private String stripColor(String input) {
         input = input.replace("#r", "");
         input = input.replace("#g", "");
@@ -134,7 +145,7 @@ public class OptionButton {
         if (this.hb.clicked) {
             this.hb.clicked = false;
             this.pressed = true;
-            this.dialog.onOptionClick(this.slot);
+            this.optionResult.accept(this.dialog, slot);
         }
 
         if (!this.isDisabled) {
