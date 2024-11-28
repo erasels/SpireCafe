@@ -1,4 +1,11 @@
 {
+  "${ModID}:ExamplePatron": {
+    "NAMES": [
+      "Example Patron"
+    ],
+    "TEXT": [
+    ]
+  },
   "${ModID}:KoishiPatron": {
     "NAMES": [
       "Koishi"
@@ -16,13 +23,6 @@
   "${ModID}:RedCrewPatron": {
     "NAMES": [
       "Red Crewmate"
-    ],
-    "TEXT": [
-    ]
-  },
-  "${ModID}:ExamplePatron": {
-    "NAMES": [
-      "Example Patron"
     ],
     "TEXT": [
     ]

@@ -1,6 +1,5 @@
 package spireCafe.interactables.npcs.example;
 
-import basemod.animations.SpriterAnimation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -18,8 +17,8 @@ public class ExamplePatron extends AbstractPatron {
     public ExamplePatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
-        this.animation = new SpriterAnimation(Anniv7Mod.makeCharacterPath("RedCrew/RedCrew.scml"));
-        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("RedCrew/Portrait.png")));
+        this.img = TexLoader.getTexture(Anniv7Mod.makeCharacterPath("ExampleNPC/image.png"));
+        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("ExampleNPC/Portrait.png")));
     }
 
     public void renderCutscenePortrait(SpriteBatch sb) {
