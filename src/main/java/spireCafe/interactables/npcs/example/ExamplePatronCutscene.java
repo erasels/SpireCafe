@@ -42,6 +42,10 @@ public class ExamplePatronCutscene extends AbstractCutscene {
             // Adds a player dialog option for upgrading a card. You can specify what happens when the button is clicked with setOptionResult.
             this.dialog.addDialogOption(OPTIONS[0] + FontHelper.colorString(OPTIONS[1], "g")).setOptionResult((i)->{
                 nextDialogue();
+                // If the player selects an option that provides some benefit (like upgrading a card, removing a card, etc.)
+                // then this alreadyPerformedTransaction flag should be set to true. This will prevent the player from
+                // interacting further with the NPC so they can't repeatedly perform the same transaction.
+                character.alreadyPerformedTransaction = true;
                 forUpgrade = true;
                 AbstractDungeon.gridSelectScreen.open(AbstractDungeon.player.masterDeck.getUpgradableCards(), 1, OPTIONS[1], true);
             });
@@ -50,6 +54,7 @@ public class ExamplePatronCutscene extends AbstractCutscene {
                 // goToDialogue(4) will jump to dialogue index 4 instead of advancing to index + 1.
                 // This allows you to "jump" to different sections of cutscene text depending on player input.
                 goToDialogue(4);
+                character.alreadyPerformedTransaction = true;
                 forRemove = true;
                 AbstractDungeon.gridSelectScreen.open(AbstractDungeon.player.masterDeck.getPurgeableCards(), 1, OPTIONS[3], false, false, false, true);
             });
@@ -58,10 +63,10 @@ public class ExamplePatronCutscene extends AbstractCutscene {
                 goToDialogue(6);
             });
         } else if (dialogueIndex == 3 || dialogueIndex == 5 || dialogueIndex == 6 || dialogueIndex == 7) {
-            // Exit the cutscene at any of these dialogue indices
+            // Exit the cutscene at any of these dialogue indices.
             endCutscene();
         } else {
-            // Default behavior is to simply display the text in the next dialogue index
+            // Default behavior is to simply display the text in the next dialogue index.
             nextDialogue();
         }
     }
@@ -74,7 +79,6 @@ public class ExamplePatronCutscene extends AbstractCutscene {
                 AbstractDungeon.player.masterDeck.removeCard(c);
             }
             AbstractDungeon.gridSelectScreen.selectedCards.clear();
-            character.alreadyPerformedTransaction =true;
             backToCutscene();
         }
 
@@ -86,7 +90,6 @@ public class ExamplePatronCutscene extends AbstractCutscene {
                 AbstractDungeon.effectsQueue.add(new UpgradeShineEffect((float)Settings.WIDTH / 2.0F, (float)Settings.HEIGHT / 2.0F));
             }
             AbstractDungeon.gridSelectScreen.selectedCards.clear();
-            character.alreadyPerformedTransaction =true;
             backToCutscene();
         }
     }

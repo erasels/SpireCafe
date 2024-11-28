@@ -9,7 +9,7 @@
       "\"One remove coming right up.\"",
       "You feel much lighter after shedding some excess supplies.",
       "\"Let me know if you change your mind.\"",
-      "\"I am sorry but i have other customers to attend to.\""
+      "\"Be safe out there.\""
     ],
     "OPTIONS": [
       "I would like you to smith my stuff. ",
@@ -36,21 +36,21 @@
       "\"Doesn't that feel better? It's much better to just let all your worries drift away, right?\"",
       "You feel like there's something very wrong with that statement, but you can't tell what.",
       "\"You want to keep thinking about it? That's too bad. I think people would be a lot happier if they didn't think about troubling things.\"",
-      "She does not seem interested in talking to you."
+      "\"I wonder if sister would like anything here as a souvenir\"."
     ],
     "OPTIONS": [
-      "\"No.\"",
-      "\"Sure.\"",
-      "\"No thanks.\"",
+      "No.",
+      "Sure.",
+      "No thanks.",
       "[Play] ",
       "Give a card in your deck Innate and",
       "Autoplay.",
-      "\"On second thought . . .\"",
+      "On second thought . . .",
       "[Agree] ",
       "Lose ",
       " Max HP.",
       "Remove a card.",
-      "\"I'd rather not . . .\""
+      "I'd rather not . . ."
     ]
   },
   "${ModID}:MarisaCutscene": {

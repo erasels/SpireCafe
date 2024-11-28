@@ -47,6 +47,7 @@ public class KoishiCutscene extends AbstractCutscene {
                     nextDialogue();
                     this.dialog.addDialogOption(OPTIONS[3] + FontHelper.colorString(OPTIONS[4], "g") + " " + FontHelper.colorString(OPTIONS[5], "r")).setOptionResult((l)->{
                         nextDialogue();
+                        character.alreadyPerformedTransaction = true;
                         forAugment = true;
                         CardGroup group = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
                         for (AbstractCard card : AbstractDungeon.player.masterDeck.group) {
@@ -70,6 +71,7 @@ public class KoishiCutscene extends AbstractCutscene {
             nextDialogue();
             this.dialog.addDialogOption(OPTIONS[7] + FontHelper.colorString(OPTIONS[8] + maxhpCost + OPTIONS[9], "r") + " " + FontHelper.colorString(OPTIONS[10], "g")).setOptionResult((i)->{
                 nextDialogue();
+                character.alreadyPerformedTransaction = true;
                 AbstractDungeon.player.decreaseMaxHealth(maxhpCost);
                 forRemove = true;
                 AbstractDungeon.gridSelectScreen.open(AbstractDungeon.player.masterDeck.getPurgeableCards(), 1, OPTIONS[10], false, false, false, true);
@@ -98,7 +100,6 @@ public class KoishiCutscene extends AbstractCutscene {
                 AbstractDungeon.player.masterDeck.removeCard(c);
             }
             AbstractDungeon.gridSelectScreen.selectedCards.clear();
-            character.alreadyPerformedTransaction =true;
             backToCutscene();
         }
 
@@ -109,7 +110,6 @@ public class KoishiCutscene extends AbstractCutscene {
                 CardModifierManager.addModifier(c, new AutoplayMod());
             }
             AbstractDungeon.gridSelectScreen.selectedCards.clear();
-            character.alreadyPerformedTransaction =true;
             backToCutscene();
         }
     }

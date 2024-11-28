@@ -32,7 +32,11 @@ public class KoishiPatron extends AbstractPatron {
     }
 
     public void onInteract() {
-        setCutscenePortrait("Portrait1");
+        if (alreadyPerformedTransaction) {
+            setCutscenePortrait("Portrait4");
+        } else {
+            setCutscenePortrait("Portrait1");
+        }
         AbstractDungeon.topLevelEffectsQueue.add(new KoishiCutscene(this));
     }
 }

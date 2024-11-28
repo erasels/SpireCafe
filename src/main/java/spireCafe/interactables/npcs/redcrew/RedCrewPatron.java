@@ -4,7 +4,6 @@ import basemod.animations.SpriterAnimation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import spireCafe.Anniv7Mod;
@@ -23,7 +22,7 @@ public class RedCrewPatron extends AbstractNPC {
     }
 
     public void renderCutscenePortrait(SpriteBatch sb) {
-        sb.draw(cutscenePortrait, (1660.0F - (cutscenePortrait.getRegionWidth() / 2.0F)) * Settings.scale, 0 * Settings.scale, 0.0F, 0.0F, cutscenePortrait.getRegionWidth(), cutscenePortrait.getRegionHeight(), Settings.scale, Settings.scale, 0.0F);
+        simpleRenderCutscenePortrait(sb, 1660.0F,0.0F, 0.0F, 0.0F, 0.0F);
     }
 
     public void onInteract() {
