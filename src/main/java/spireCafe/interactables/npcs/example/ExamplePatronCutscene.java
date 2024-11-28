@@ -74,7 +74,7 @@ public class ExamplePatronCutscene extends AbstractCutscene {
                 AbstractDungeon.player.masterDeck.removeCard(c);
             }
             AbstractDungeon.gridSelectScreen.selectedCards.clear();
-            character.alreadyPerformedInteraction=true;
+            character.alreadyPerformedTransaction =true;
             backToCutscene();
         }
 
@@ -86,7 +86,7 @@ public class ExamplePatronCutscene extends AbstractCutscene {
                 AbstractDungeon.effectsQueue.add(new UpgradeShineEffect((float)Settings.WIDTH / 2.0F, (float)Settings.HEIGHT / 2.0F));
             }
             AbstractDungeon.gridSelectScreen.selectedCards.clear();
-            character.alreadyPerformedInteraction=true;
+            character.alreadyPerformedTransaction =true;
             backToCutscene();
         }
     }

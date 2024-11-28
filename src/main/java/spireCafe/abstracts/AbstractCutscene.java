@@ -38,7 +38,7 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
         this.hb.x = 0.0F;
         this.hb.y = 0.0F;
         this.show = true;
-        if(character.alreadyPerformedInteraction){
+        if(character.alreadyPerformedTransaction){
             this.dialogueIndex=DESCRIPTIONS.length-1;
         } else {
             this.dialogueIndex = 0;
