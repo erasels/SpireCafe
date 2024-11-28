@@ -57,7 +57,7 @@ public class ExamplePatronCutscene extends AbstractCutscene {
             this.dialog.addDialogOption(OPTIONS[4]).setOptionResult((i)->{
                 goToDialogue(6);
             });
-        } else if (dialogueIndex == 3 || dialogueIndex == 5 || dialogueIndex == 6) {
+        } else if (dialogueIndex == 3 || dialogueIndex == 5 || dialogueIndex == 6 || dialogueIndex == 7) {
             // Exit the cutscene at any of these dialogue indices
             endCutscene();
         } else {
@@ -74,6 +74,7 @@ public class ExamplePatronCutscene extends AbstractCutscene {
                 AbstractDungeon.player.masterDeck.removeCard(c);
             }
             AbstractDungeon.gridSelectScreen.selectedCards.clear();
+            character.alreadyPerformedInteraction=true;
             backToCutscene();
         }
 
@@ -85,6 +86,7 @@ public class ExamplePatronCutscene extends AbstractCutscene {
                 AbstractDungeon.effectsQueue.add(new UpgradeShineEffect((float)Settings.WIDTH / 2.0F, (float)Settings.HEIGHT / 2.0F));
             }
             AbstractDungeon.gridSelectScreen.selectedCards.clear();
+            character.alreadyPerformedInteraction=true;
             backToCutscene();
         }
     }

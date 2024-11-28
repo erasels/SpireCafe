@@ -9,7 +9,7 @@ import spireCafe.vfx.SpeechBubble;
 public abstract class AbstractNPC extends AbstractCafeInteractable {
     public TextureRegion cutscenePortrait;
     public String name;
-    public boolean hasInteracted = false;
+    public boolean alreadyPerformedInteraction = false;
     public SpeechBubble speechBubble;
     public float speechBubbleScaleTimer = 0.3f;
 

@@ -98,7 +98,7 @@ public class KoishiCutscene extends AbstractCutscene {
                 AbstractDungeon.player.masterDeck.removeCard(c);
             }
             AbstractDungeon.gridSelectScreen.selectedCards.clear();
-            character.hasInteracted=true;
+            character.alreadyPerformedInteraction=true;
             backToCutscene();
         }
 
@@ -109,7 +109,7 @@ public class KoishiCutscene extends AbstractCutscene {
                 CardModifierManager.addModifier(c, new AutoplayMod());
             }
             AbstractDungeon.gridSelectScreen.selectedCards.clear();
-            character.hasInteracted=true;
+            character.alreadyPerformedInteraction=true;
             backToCutscene();
         }
     }
