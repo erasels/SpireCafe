@@ -33,9 +33,6 @@ public class KoishiCutscene extends AbstractCutscene {
         } else {
             maxhpCost = (int)(MAX_HP_COST * AbstractDungeon.player.maxHealth);
         }
-        if (character.alreadyPerformedTransaction) {
-            character.setCutscenePortrait("Portrait4");
-        }
     }
 
     @Override
