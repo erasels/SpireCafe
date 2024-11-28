@@ -1,6 +1,8 @@
 package spireCafe.abstracts;
 
 import basemod.animations.AbstractAnimation;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -9,6 +11,7 @@ import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
 public abstract class AbstractCafeInteractable {
     public AbstractAnimation animation;
+    public Texture img;
     protected Hitbox hitbox;
 
     public float animationX;
@@ -35,8 +38,11 @@ public abstract class AbstractCafeInteractable {
     }
 
     public void renderAnimation(SpriteBatch sb) {
+        sb.setColor(Color.WHITE);
         if (animation != null) {
             animation.renderSprite(sb, animationX, animationY);
+        } else if (this.img != null) {
+            sb.draw(this.img, this.animationX - (float)this.img.getWidth() * Settings.scale / 2.0F, this.animationY, (float)this.img.getWidth() * Settings.scale, (float)this.img.getHeight() * Settings.scale, 0, 0, this.img.getWidth(), this.img.getHeight(), false, false);
         }
         this.hitbox.render(sb);
     }
