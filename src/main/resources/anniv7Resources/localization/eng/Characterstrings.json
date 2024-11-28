@@ -19,5 +19,12 @@
     ],
     "TEXT": [
     ]
+  },
+  "${ModID}:ExampleNPC": {
+    "NAMES": [
+      "Example NPC"
+    ],
+    "TEXT": [
+    ]
   }
 }

@@ -38,65 +38,54 @@ public class KoishiCutscene extends AbstractCutscene {
     @Override
     protected void onClick() {
         if (dialogueIndex == 1) {
-            super.onClick();
-            this.dialog.addDialogOption(OPTIONS[0]);
+            nextDialogue();
             character.setCutscenePortrait("Portrait4");
+            this.dialog.addDialogOption(OPTIONS[0]).setOptionResult((i)->{
+                nextDialogue();
+                character.setCutscenePortrait("Portrait2");
+                this.dialog.addDialogOption(OPTIONS[1]).setOptionResult((j)->{
+                    nextDialogue();
+                    this.dialog.addDialogOption(OPTIONS[3] + FontHelper.colorString(OPTIONS[4], "g") + " " + FontHelper.colorString(OPTIONS[5], "r")).setOptionResult((l)->{
+                        nextDialogue();
+                        forAugment = true;
+                        CardGroup group = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
+                        for (AbstractCard card : AbstractDungeon.player.masterDeck.group) {
+                            if (card.cost != -2 && !AutoplayField.autoplay.get(card) && !CardModifierManager.hasModifier(card, AutoplayMod.ID)) {
+                                group.addToBottom(card);
+                            }
+                        }
+                        AbstractDungeon.gridSelectScreen.open(group, 1, OPTIONS[4] + " " + OPTIONS[5], false);
+                    });
+                    this.dialog.addDialogOption(OPTIONS[6]).setOptionResult((m)-> {
+                        goToDialogue(7);
+                        character.setCutscenePortrait("Portrait3");
+                    });
+                });
+                this.dialog.addDialogOption(OPTIONS[2]).setOptionResult((k)->{
+                    goToDialogue(8);
+                    character.setCutscenePortrait("Portrait4");
+                });
+            });
         } else if (dialogueIndex == 8) {
-            super.onClick();
-            this.dialog.addDialogOption(OPTIONS[7] + FontHelper.colorString(OPTIONS[8] + maxhpCost + OPTIONS[9], "r") + " " + FontHelper.colorString(OPTIONS[10], "g"));
-            this.dialog.addDialogOption(OPTIONS[11]);
+            nextDialogue();
+            this.dialog.addDialogOption(OPTIONS[7] + FontHelper.colorString(OPTIONS[8] + maxhpCost + OPTIONS[9], "r") + " " + FontHelper.colorString(OPTIONS[10], "g")).setOptionResult((i)->{
+                nextDialogue();
+                AbstractDungeon.player.decreaseMaxHealth(maxhpCost);
+                forRemove = true;
+                AbstractDungeon.gridSelectScreen.open(AbstractDungeon.player.masterDeck.getPurgeableCards(), 1, OPTIONS[10], false, false, false, true);
+            });
+            this.dialog.addDialogOption(OPTIONS[11]).setOptionResult((j)->{
+                goToDialogue(13);
+                character.setCutscenePortrait("Portrait4");
+            });
             character.setCutscenePortrait("Portrait5");
         } else if (dialogueIndex == 6 || dialogueIndex == 7 || dialogueIndex == 12) {
             endCutscene();
         } else if (dialogueIndex == 10) {
-            super.onClick();
+            nextDialogue();
             character.setCutscenePortrait("Portrait8");
         } else {
-            super.onClick();
-        }
-    }
-
-    @Override
-    public void onOptionClick(int slot) {
-        if (dialogueIndex == 2) {
-            super.onClick();
-            this.dialog.addDialogOption(OPTIONS[1]);
-            this.dialog.addDialogOption(OPTIONS[2]);
-            character.setCutscenePortrait("Portrait2");
-        } else if (dialogueIndex == 3) {
-            if (slot == 0) {
-                super.onClick();
-                this.dialog.addDialogOption(OPTIONS[3] + FontHelper.colorString(OPTIONS[4], "g") + " " + FontHelper.colorString(OPTIONS[5], "r"));
-                this.dialog.addDialogOption(OPTIONS[6]);
-            } else {
-                super.onClick(8);
-                character.setCutscenePortrait("Portrait4");
-            }
-        } else if (dialogueIndex == 4) {
-            if (slot == 0) {
-                super.onClick();
-                forAugment = true;
-                CardGroup group = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
-                for (AbstractCard card : AbstractDungeon.player.masterDeck.group) {
-                    if (card.cost != -2 && !AutoplayField.autoplay.get(card) && !CardModifierManager.hasModifier(card, AutoplayMod.ID)) {
-                        group.addToBottom(card);
-                    }
-                }
-                AbstractDungeon.gridSelectScreen.open(group, 1, OPTIONS[4] + " " + OPTIONS[5], false);
-            } else {
-                super.onClick(7);
-                character.setCutscenePortrait("Portrait3");
-            }
-        } else if (dialogueIndex == 9) {
-            if (slot == 0) {
-                super.onClick();
-                AbstractDungeon.player.decreaseMaxHealth(maxhpCost);
-                forRemove = true;
-                AbstractDungeon.gridSelectScreen.open(AbstractDungeon.player.masterDeck.getPurgeableCards(), 1, OPTIONS[10], false, false, false, true);
-            } else {
-                super.onClick(13);
-                character.setCutscenePortrait("Portrait4");
-            }
+            nextDialogue();
         }
     }
 

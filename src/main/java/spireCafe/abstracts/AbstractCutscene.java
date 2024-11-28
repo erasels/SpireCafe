@@ -65,11 +65,15 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
     }
 
     protected void onClick() {
-        this.dialogueIndex++;
-        onClick(dialogueIndex);
+        nextDialogue();
     }
 
-    protected void onClick(int newIndex) {
+    protected void nextDialogue() {
+        this.dialogueIndex++;
+        goToDialogue(dialogueIndex);
+    }
+
+    protected void goToDialogue(int newIndex) {
         Dialog.optionList.clear();
         this.dialogueIndex = newIndex;
         if (this.dialogueIndex < DESCRIPTIONS.length) {
@@ -77,10 +81,6 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
         } else {
             endCutscene();
         }
-    }
-
-    public void onOptionClick(int slot) {
-
     }
 
     protected void endCutscene() {
