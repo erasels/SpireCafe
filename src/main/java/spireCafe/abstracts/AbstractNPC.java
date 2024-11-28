@@ -2,12 +2,14 @@ package spireCafe.abstracts;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import spireCafe.vfx.SpeechBubble;
 
 public abstract class AbstractNPC extends AbstractCafeInteractable {
     public TextureRegion cutscenePortrait;
     public String name;
+    public boolean alreadyPerformedTransaction = false;
     public SpeechBubble speechBubble;
     public float speechBubbleScaleTimer = 0.3f;
 
@@ -16,12 +18,14 @@ public abstract class AbstractNPC extends AbstractCafeInteractable {
         speechBubble = new SpeechBubble(this.hitbox.cX, this.hitbox.y + this.hitbox.height, speechBubbleScaleTimer);
     }
 
-    public void renderCutscenePortrait(SpriteBatch sb) {
+    public void setCutscenePortrait(String texture) {
 
     }
 
-    public void setCutscenePortrait(String texture) {
+    public abstract void renderCutscenePortrait(SpriteBatch sb);
 
+    public void simpleRenderCutscenePortrait(SpriteBatch sb, float xOffset, float yOffset, float originX, float originY, float rotation) {
+        sb.draw(cutscenePortrait, (xOffset - (cutscenePortrait.getRegionWidth() / 2.0F)) * Settings.scale, yOffset * Settings.scale, originX, originY, cutscenePortrait.getRegionWidth(), cutscenePortrait.getRegionHeight(), Settings.scale, Settings.scale, rotation);
     }
 
     @Override

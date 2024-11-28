@@ -11,11 +11,11 @@ import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractNPC;
 import spireCafe.util.TexLoader;
 
-public class RedCrewNPC extends AbstractNPC {
-    public static final String ID = RedCrewNPC.class.getSimpleName();
+public class RedCrewPatron extends AbstractNPC {
+    public static final String ID = RedCrewPatron.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
-    public RedCrewNPC(float animationX, float animationY) {
+    public RedCrewPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
         this.animation = new SpriterAnimation(Anniv7Mod.makeCharacterPath("RedCrew/RedCrew.scml"));

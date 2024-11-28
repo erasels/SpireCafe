@@ -14,13 +14,13 @@ import spireCafe.abstracts.AbstractNPC;
 
 import static spireCafe.Anniv7Mod.makeID;
 
-public class ExampleNPCCutscene extends AbstractCutscene {
-    public static final String ID = makeID(ExampleNPCCutscene.class.getSimpleName());
+public class ExamplePatronCutscene extends AbstractCutscene {
+    public static final String ID = makeID(ExamplePatronCutscene.class.getSimpleName());
     private static final EventStrings eventStrings = CardCrawlGame.languagePack.getEventString(ID);
     private boolean forRemove = false;
     private boolean forUpgrade = false;
 
-    public ExampleNPCCutscene(AbstractNPC character) {
+    public ExamplePatronCutscene(AbstractNPC character) {
         super(character, eventStrings);
     }
 
@@ -57,7 +57,7 @@ public class ExampleNPCCutscene extends AbstractCutscene {
             this.dialog.addDialogOption(OPTIONS[4]).setOptionResult((i)->{
                 goToDialogue(6);
             });
-        } else if (dialogueIndex == 3 || dialogueIndex == 5 || dialogueIndex == 6) {
+        } else if (dialogueIndex == 3 || dialogueIndex == 5 || dialogueIndex == 6 || dialogueIndex == 7) {
             // Exit the cutscene at any of these dialogue indices
             endCutscene();
         } else {
@@ -74,6 +74,7 @@ public class ExampleNPCCutscene extends AbstractCutscene {
                 AbstractDungeon.player.masterDeck.removeCard(c);
             }
             AbstractDungeon.gridSelectScreen.selectedCards.clear();
+            character.alreadyPerformedTransaction =true;
             backToCutscene();
         }
 
@@ -85,6 +86,7 @@ public class ExampleNPCCutscene extends AbstractCutscene {
                 AbstractDungeon.effectsQueue.add(new UpgradeShineEffect((float)Settings.WIDTH / 2.0F, (float)Settings.HEIGHT / 2.0F));
             }
             AbstractDungeon.gridSelectScreen.selectedCards.clear();
+            character.alreadyPerformedTransaction =true;
             backToCutscene();
         }
     }

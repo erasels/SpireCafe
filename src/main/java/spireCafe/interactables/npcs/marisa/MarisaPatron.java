@@ -11,11 +11,11 @@ import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractNPC;
 import spireCafe.util.TexLoader;
 
-public class MarisaNPC extends AbstractNPC {
-    public static final String ID = MarisaNPC.class.getSimpleName();
+public class MarisaPatron extends AbstractNPC {
+    public static final String ID = MarisaPatron.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
-    public MarisaNPC(float animationX, float animationY) {
+    public MarisaPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
         this.animation = new SpriterAnimation(Anniv7Mod.makeCharacterPath("Marisa/Spriter/MarisaAnimation.scml"));

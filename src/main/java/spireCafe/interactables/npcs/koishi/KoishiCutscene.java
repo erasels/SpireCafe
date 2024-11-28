@@ -79,7 +79,7 @@ public class KoishiCutscene extends AbstractCutscene {
                 character.setCutscenePortrait("Portrait4");
             });
             character.setCutscenePortrait("Portrait5");
-        } else if (dialogueIndex == 6 || dialogueIndex == 7 || dialogueIndex == 12) {
+        } else if (dialogueIndex == 6 || dialogueIndex == 7 || dialogueIndex == 12 || dialogueIndex == 13 || dialogueIndex == 14) {
             endCutscene();
         } else if (dialogueIndex == 10) {
             nextDialogue();
@@ -98,6 +98,7 @@ public class KoishiCutscene extends AbstractCutscene {
                 AbstractDungeon.player.masterDeck.removeCard(c);
             }
             AbstractDungeon.gridSelectScreen.selectedCards.clear();
+            character.alreadyPerformedTransaction =true;
             backToCutscene();
         }
 
@@ -108,6 +109,7 @@ public class KoishiCutscene extends AbstractCutscene {
                 CardModifierManager.addModifier(c, new AutoplayMod());
             }
             AbstractDungeon.gridSelectScreen.selectedCards.clear();
+            character.alreadyPerformedTransaction =true;
             backToCutscene();
         }
     }

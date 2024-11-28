@@ -33,12 +33,16 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
         TEXTBOX = new TextureRegion(TEXTBOX_TEXTURE);
         DESCRIPTIONS = eventStrings.DESCRIPTIONS;
         OPTIONS = eventStrings.OPTIONS;
-        this.dialogueIndex = 0;
         this.character = character;
         this.hb = new Hitbox(Settings.WIDTH, Settings.HEIGHT);
         this.hb.x = 0.0F;
         this.hb.y = 0.0F;
         this.show = true;
+        if(character.alreadyPerformedTransaction){
+            this.dialogueIndex=DESCRIPTIONS.length-1;
+        } else {
+            this.dialogueIndex = 0;
+        }
     }
 
     public void update() {

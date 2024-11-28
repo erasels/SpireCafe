@@ -30,6 +30,10 @@ public abstract class AbstractCafeInteractable {
 
     public abstract void onInteract();
 
+    public boolean canSpawn(){
+        return true;
+    }
+
     public void update() {
         this.hitbox.update();
         if (this.hitbox.hovered && InputHelper.justClickedLeft && this.clickable && !AbstractDungeon.isScreenUp && !AbstractCutscene.isInCutscene) {
