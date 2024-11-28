@@ -1,4 +1,11 @@
 {
+  "${ModID}:ExampleNPC": {
+    "NAMES": [
+      "Example NPC"
+    ],
+    "TEXT": [
+    ]
+  },
   "${ModID}:KoishiNPC": {
     "NAMES": [
       "Koishi"
@@ -16,13 +23,6 @@
   "${ModID}:RedCrewNPC": {
     "NAMES": [
       "Red Crewmate"
-    ],
-    "TEXT": [
-    ]
-  },
-  "${ModID}:ExampleNPC": {
-    "NAMES": [
-      "Example NPC"
     ],
     "TEXT": [
     ]

@@ -18,8 +18,8 @@ public class ExampleNPC extends AbstractNPC {
     public ExampleNPC(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
-        this.animation = new SpriterAnimation(Anniv7Mod.makeCharacterPath("RedCrew/RedCrew.scml"));
-        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("RedCrew/Portrait.png")));
+        this.img = TexLoader.getTexture(Anniv7Mod.makeCharacterPath("ExampleNPC/image.png"));
+        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("ExampleNPC/Portrait.png")));
     }
 
     public void renderCutscenePortrait(SpriteBatch sb) {
