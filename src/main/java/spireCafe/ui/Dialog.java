@@ -1,7 +1,5 @@
 package spireCafe.ui;
 
-import basemod.abstracts.events.PhasedEvent;
-import basemod.abstracts.events.phases.TextPhase;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -19,8 +17,6 @@ import spireCafe.abstracts.AbstractCutscene;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class Dialog {
     private Color color = new Color(0.0F, 0.0F, 0.0F, 0.0F);

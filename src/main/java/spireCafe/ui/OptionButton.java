@@ -12,7 +12,6 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import spireCafe.abstracts.AbstractCutscene;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -50,7 +49,7 @@ public class OptionButton {
         this.alpha = 0.0F;
         this.boxInactiveColor = new Color(0.2F, 0.25F, 0.25F, 0.0F);
         this.pressed = false;
-        this.x = 860.0F * Settings.xScale;
+        this.x = Settings.WIDTH / 2.0f;
 
         this.slot = slot;
         this.isDisabled = isDisabled;
@@ -108,9 +107,9 @@ public class OptionButton {
     }
 
     public void calculateY(int numOptions) {
-        this.y = Settings.OPTION_Y - 24.0F * Settings.scale;
+        this.y = Settings.HEIGHT / 2.0f;
         this.y += (float)this.slot * OPTION_SPACING_Y;
-        this.y -= (float)numOptions * OPTION_SPACING_Y;
+        this.y -= (float)(numOptions - 1) / 2 * OPTION_SPACING_Y;
 
         this.hb.move(this.x, this.y);
     }
@@ -195,10 +194,13 @@ public class OptionButton {
             sb.setBlendFunction(770, 771);
         }
 
-        if (FontHelper.getSmartWidth(FontHelper.largeDialogOptionFont, this.msg, (float)Settings.WIDTH, 0.0F) > 800.0F * Settings.xScale) {
-            FontHelper.renderSmartText(sb, FontHelper.smallDialogOptionFont, this.msg, this.x + TEXT_ADJUST_X, this.y + TEXT_ADJUST_Y, (float)Settings.WIDTH, 0.0F, this.textColor);
+        float maxTextLength = 800.0F * Settings.xScale;
+        float textWidth = FontHelper.getSmartWidth(FontHelper.largeDialogOptionFont, this.msg, (float)Settings.WIDTH, 0.0F);
+        float textX = Interpolation.linear.apply(this.x + 445 * Settings.xScale, this.x, textWidth / maxTextLength);
+        if (textWidth > maxTextLength) {
+            FontHelper.renderSmartText(sb, FontHelper.smallDialogOptionFont, this.msg, textX + TEXT_ADJUST_X, this.y + TEXT_ADJUST_Y, (float)Settings.WIDTH, 0.0F, this.textColor);
         } else {
-            FontHelper.renderSmartText(sb, FontHelper.largeDialogOptionFont, this.msg, this.x + TEXT_ADJUST_X, this.y + TEXT_ADJUST_Y, (float)Settings.WIDTH, 0.0F, this.textColor);
+            FontHelper.renderSmartText(sb, FontHelper.largeDialogOptionFont, this.msg, textX + TEXT_ADJUST_X, this.y + TEXT_ADJUST_Y, (float)Settings.WIDTH, 0.0F, this.textColor);
         }
 
         this.hb.render(sb);
@@ -224,7 +226,7 @@ public class OptionButton {
 
     static {
         OPTION_SPACING_Y = -82.0F * Settings.scale;
-        TEXT_ADJUST_X = -400.0F * Settings.xScale;
+        TEXT_ADJUST_X = -415.0F * Settings.xScale;
         TEXT_ADJUST_Y = 10.0F * Settings.scale;
         TEXT_ACTIVE_COLOR = Color.WHITE.cpy();
         TEXT_INACTIVE_COLOR = new Color(0.8F, 0.8F, 0.8F, 1.0F);

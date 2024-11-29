@@ -21,7 +21,7 @@ public abstract class AbstractCafeInteractable {
     public AbstractCafeInteractable(float animationX, float animationY, float hb_w, float hb_h, float hb_x_offset, float hb_y_offset) {
         this.animationX = animationX;
         this.animationY = animationY;
-        this.hitbox = new Hitbox(this.animationX + (hb_x_offset * Settings.scale), this.animationY + (hb_y_offset * Settings.scale), hb_w, hb_h);
+        this.hitbox = new Hitbox(this.animationX + (hb_x_offset * Settings.scale), this.animationY + (hb_y_offset * Settings.scale), hb_w * Settings.scale, hb_h * Settings.scale);
     }
 
     public AbstractCafeInteractable(float animationX, float animationY, float hb_w, float hb_h) {
