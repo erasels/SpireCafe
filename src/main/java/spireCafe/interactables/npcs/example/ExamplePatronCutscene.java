@@ -47,7 +47,7 @@ public class ExamplePatronCutscene extends AbstractCutscene {
                 // interacting further with the NPC so they can't repeatedly perform the same transaction.
                 character.alreadyPerformedTransaction = true;
                 forUpgrade = true;
-                AbstractDungeon.gridSelectScreen.open(AbstractDungeon.player.masterDeck.getUpgradableCards(), 1, OPTIONS[1], true);
+                AbstractDungeon.gridSelectScreen.open(AbstractDungeon.player.masterDeck.getUpgradableCards(), 1, OPTIONS[3], true, false, false, false);
             });
             // Adds a player dialog option for removing a card.
             this.dialog.addDialogOption(OPTIONS[2] + FontHelper.colorString(OPTIONS[3], "g")).setOptionResult((i)->{
