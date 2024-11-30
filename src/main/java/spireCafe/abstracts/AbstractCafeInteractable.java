@@ -1,17 +1,28 @@
 package spireCafe.abstracts;
 
 import basemod.animations.AbstractAnimation;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.esotericsoftware.spine.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public abstract class AbstractCafeInteractable {
     public AbstractAnimation animation;
     public Texture img;
+    protected TextureAtlas atlas;
+    protected Skeleton skeleton;
+    public AnimationState state;
+    protected AnimationStateData stateData;
+    public boolean flipHorizontal = false;
+    public boolean flipVertical = false;
     protected Hitbox hitbox;
 
     public float animationX;
@@ -46,8 +57,31 @@ public abstract class AbstractCafeInteractable {
         if (animation != null) {
             animation.renderSprite(sb, animationX, animationY);
         } else if (this.img != null) {
-            sb.draw(this.img, this.animationX - (float)this.img.getWidth() * Settings.scale / 2.0F, this.animationY, (float)this.img.getWidth() * Settings.scale, (float)this.img.getHeight() * Settings.scale, 0, 0, this.img.getWidth(), this.img.getHeight(), false, false);
+            sb.draw(this.img, this.animationX - (float)this.img.getWidth() * Settings.scale / 2.0F, this.animationY, (float)this.img.getWidth() * Settings.scale, (float)this.img.getHeight() * Settings.scale, 0, 0, this.img.getWidth(), this.img.getHeight(), this.flipHorizontal, this.flipVertical);
+        } else {
+            this.state.update(Gdx.graphics.getDeltaTime());
+            this.state.apply(this.skeleton);
+            this.skeleton.updateWorldTransform();
+            this.skeleton.setPosition(this.animationX, this.animationY + AbstractDungeon.sceneOffsetY);
+            this.skeleton.setFlip(this.flipHorizontal, this.flipVertical);
+            sb.end();
+            CardCrawlGame.psb.begin();
+            AbstractMonster.sr.draw(CardCrawlGame.psb, this.skeleton);
+            CardCrawlGame.psb.end();
+            sb.begin();
+            sb.setBlendFunction(770, 771);
         }
         this.hitbox.render(sb);
+    }
+
+    protected void loadAnimation(String atlasUrl, String skeletonUrl, float scale) {
+        this.atlas = new TextureAtlas(Gdx.files.internal(atlasUrl));
+        SkeletonJson json = new SkeletonJson(this.atlas);
+        json.setScale(Settings.renderScale / scale);
+        SkeletonData skeletonData = json.readSkeletonData(Gdx.files.internal(skeletonUrl));
+        this.skeleton = new Skeleton(skeletonData);
+        this.skeleton.setColor(Color.WHITE);
+        this.stateData = new AnimationStateData(skeletonData);
+        this.state = new AnimationState(this.stateData);
     }
 }
