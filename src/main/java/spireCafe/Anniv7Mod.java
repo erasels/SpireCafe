@@ -6,25 +6,23 @@ import basemod.ModPanel;
 import basemod.helpers.RelicType;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Texture;
 import com.evacipated.cardcrawl.mod.stslib.Keyword;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.Exordium;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
+import javassist.CtClass;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import spireCafe.abstracts.AbstractCafeInteractable;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cardvars.SecondDamage;
 import spireCafe.cardvars.SecondMagicNumber;
 import spireCafe.interactables.TestEvent;
-import spireCafe.util.TexLoader;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -66,9 +64,7 @@ public class Anniv7Mod implements
 
     public static final Map<String, Keyword> keywords = new HashMap<>();
 
-    public static List<?> unfilteredAllZones = new ArrayList<>();
-    private static Map<String, ?> zonePackages = new HashMap<>();
-    public static Map<String, Set<String>> zoneEvents = new HashMap<>();
+    public static List<String> unfilteredAllInteractableIDs = new ArrayList<>();
 
 
     public static String makeID(String idText) {
@@ -140,20 +136,22 @@ public class Anniv7Mod implements
         }
     }
 
-    /*private void loadZones() {
-        new AutoAdd(modID)
-                .packageFilter(Anniv7Mod.class)
-                .any(AbstractZone.class, (info, zone)->{
-                    if (!info.ignore) {
-                        String pkg = zone.getClass().getName();
-                        int lastSeparator = pkg.lastIndexOf('.');
-                        if (lastSeparator >= 0) pkg = pkg.substring(0, lastSeparator);
-                        unfilteredAllZones.add(zone);
-                        zonePackages.put(pkg, zone);
-                    }
-                });
-        logger.info("Found zone classes with AutoAdd: " + unfilteredAllZones.size());
-    }*/
+    private void loadInteractables() {
+        AutoAdd autoAdd = new AutoAdd(modID)
+                .packageFilter(Anniv7Mod.class);
+
+        Class<?> type = AbstractCafeInteractable.class;
+        Collection<CtClass> foundClasses = autoAdd.findClasses(type);
+
+        for (CtClass ctClass : foundClasses) {
+            boolean ignore = ctClass.hasAnnotation(AutoAdd.Ignore.class);
+            if (!ignore) {
+                unfilteredAllInteractableIDs.add(ctClass.getSimpleName());
+            }
+        }
+
+        logger.info("Found interactable classes with AutoAdd: " + unfilteredAllInteractableIDs.size());
+    }
 
     @Override
     public void receiveEditRelics() {
@@ -237,12 +235,14 @@ public class Anniv7Mod implements
 
     @Override
     public void receiveEditStrings() {
+        loadInteractables();
+
         loadStrings("eng");
-        loadZoneStrings(unfilteredAllZones, "eng");
+        loadInteractableStrings(unfilteredAllInteractableIDs, "eng");
         if (Settings.language != Settings.GameLanguage.ENG)
         {
             loadStrings(Settings.language.toString().toLowerCase());
-            loadZoneStrings(unfilteredAllZones, Settings.language.toString().toLowerCase());
+            loadInteractableStrings(unfilteredAllInteractableIDs, Settings.language.toString().toLowerCase());
         }
     }
 
@@ -261,25 +261,26 @@ public class Anniv7Mod implements
         loadStringsFile(langKey, MonsterStrings.class);
     }
 
-    public void loadZoneStrings(Collection<?> zones, String langKey) {
-//        for (AbstractZone zone : zones) {
-//            String languageAndZone = langKey + "/" + zone.id;
-//            String filepath = modID + "Resources/localization/" + languageAndZone;
-//            if (!Gdx.files.internal(filepath).exists()) {
-//                continue;
-//            }
-//            logger.info("Loading strings for zone " + zone.id + "from \"resources/localization/" + languageAndZone + "\"");
-//
-//            loadStringsFile(languageAndZone, CardStrings.class);
-//            loadStringsFile(languageAndZone, RelicStrings.class);
-//            loadStringsFile(languageAndZone, PowerStrings.class);
-//            loadStringsFile(languageAndZone, UIStrings.class);
-//            loadStringsFile(languageAndZone, StanceStrings.class);
-//            loadStringsFile(languageAndZone, OrbStrings.class);
-//            loadStringsFile(languageAndZone, PotionStrings.class);
-//            loadStringsFile(languageAndZone, EventStrings.class);
-//            loadStringsFile(languageAndZone, MonsterStrings.class);
-//        }
+    public void loadInteractableStrings(Collection<String> interactableIDs, String langKey) {
+        for (String id : interactableIDs) {
+            String languageAndZone = langKey + "/" + id;
+            String filepath = modID + "Resources/localization/" + languageAndZone;
+            if (!Gdx.files.internal(filepath).exists()) {
+                continue;
+            }
+            logger.info("Loading strings for interactable " + id + " from \"resources/localization/" + languageAndZone + "\"");
+
+            loadStringsFile(languageAndZone, CharacterStrings.class);
+            loadStringsFile(languageAndZone, CardStrings.class);
+            loadStringsFile(languageAndZone, RelicStrings.class);
+            loadStringsFile(languageAndZone, PowerStrings.class);
+            loadStringsFile(languageAndZone, UIStrings.class);
+            loadStringsFile(languageAndZone, StanceStrings.class);
+            loadStringsFile(languageAndZone, OrbStrings.class);
+            loadStringsFile(languageAndZone, PotionStrings.class);
+            loadStringsFile(languageAndZone, EventStrings.class);
+            loadStringsFile(languageAndZone, MonsterStrings.class);
+        }
     }
 
     private void loadStringsFile(String key, Class<?> stringType) {

@@ -1,0 +1,12 @@
+{
+  "${ModID}:MarisaCutscene": {
+    "NAME": "Marisa Cutscene",
+    "DESCRIPTIONS": [
+      "\"My name is Marisa Kirisame!\"",
+      "\"I'm from Touhou Project!\""
+    ],
+    "OPTIONS": [
+      ""
+    ]
+  }
+}
