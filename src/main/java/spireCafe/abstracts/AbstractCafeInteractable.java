@@ -15,6 +15,7 @@ import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public abstract class AbstractCafeInteractable {
+    public String id;
     public AbstractAnimation animation;
     public Texture img;
     protected TextureAtlas atlas;
@@ -30,6 +31,7 @@ public abstract class AbstractCafeInteractable {
     public boolean clickable = true;
 
     public AbstractCafeInteractable(float animationX, float animationY, float hb_w, float hb_h, float hb_x_offset, float hb_y_offset) {
+        this.id = this.getClass().getSimpleName();
         this.animationX = animationX;
         this.animationY = animationY;
         this.hitbox = new Hitbox(this.animationX + (hb_x_offset * Settings.scale), this.animationY + (hb_y_offset * Settings.scale), hb_w * Settings.scale, hb_h * Settings.scale);
