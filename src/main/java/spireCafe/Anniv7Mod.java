@@ -129,7 +129,6 @@ public class Anniv7Mod implements
 
         try {
             Properties defaults = new Properties();
-            //defaults.put("active", "TRUE");
             modConfig = new SpireConfig(modID, "anniv7Config", defaults);
         } catch (Exception e) {
             e.printStackTrace();
@@ -183,8 +182,6 @@ public class Anniv7Mod implements
     @Override
     public void receivePostInitialize() {
         initializedStrings = true;
-        //unfilteredAllZones.forEach(AbstractZone::loadStrings);
-        //unfilteredAllZones.sort(Comparator.comparing(c->c.id));
         addPotions();
         addSaveFields();
         initializeConfig();
@@ -263,23 +260,23 @@ public class Anniv7Mod implements
 
     public void loadInteractableStrings(Collection<String> interactableIDs, String langKey) {
         for (String id : interactableIDs) {
-            String languageAndZone = langKey + "/" + id;
-            String filepath = modID + "Resources/localization/" + languageAndZone;
+            String languageAndInteractable = langKey + "/" + id;
+            String filepath = modID + "Resources/localization/" + languageAndInteractable;
             if (!Gdx.files.internal(filepath).exists()) {
                 continue;
             }
-            logger.info("Loading strings for interactable " + id + " from \"resources/localization/" + languageAndZone + "\"");
+            logger.info("Loading strings for interactable " + id + " from \"resources/localization/" + languageAndInteractable + "\"");
 
-            loadStringsFile(languageAndZone, CharacterStrings.class);
-            loadStringsFile(languageAndZone, CardStrings.class);
-            loadStringsFile(languageAndZone, RelicStrings.class);
-            loadStringsFile(languageAndZone, PowerStrings.class);
-            loadStringsFile(languageAndZone, UIStrings.class);
-            loadStringsFile(languageAndZone, StanceStrings.class);
-            loadStringsFile(languageAndZone, OrbStrings.class);
-            loadStringsFile(languageAndZone, PotionStrings.class);
-            loadStringsFile(languageAndZone, EventStrings.class);
-            loadStringsFile(languageAndZone, MonsterStrings.class);
+            loadStringsFile(languageAndInteractable, CharacterStrings.class);
+            loadStringsFile(languageAndInteractable, CardStrings.class);
+            loadStringsFile(languageAndInteractable, RelicStrings.class);
+            loadStringsFile(languageAndInteractable, PowerStrings.class);
+            loadStringsFile(languageAndInteractable, UIStrings.class);
+            loadStringsFile(languageAndInteractable, StanceStrings.class);
+            loadStringsFile(languageAndInteractable, OrbStrings.class);
+            loadStringsFile(languageAndInteractable, PotionStrings.class);
+            loadStringsFile(languageAndInteractable, EventStrings.class);
+            loadStringsFile(languageAndInteractable, MonsterStrings.class);
         }
     }
 
@@ -306,16 +303,6 @@ public class Anniv7Mod implements
             String json = Gdx.files.internal(filepath).readString(String.valueOf(StandardCharsets.UTF_8));
             keywords.addAll(Arrays.asList(gson.fromJson(json, Keyword[].class)));
         }
-//        for (AbstractZone zone : unfilteredAllZones) {
-//            String languageAndZone = langKey + "/" + zone.id;
-//            String zoneJson = modID + "Resources/localization/" + languageAndZone + "/Keywordstrings.json";
-//            FileHandle handle = Gdx.files.internal(zoneJson);
-//            if (handle.exists()) {
-//                logger.info("Loading keywords for zone " + zone.id + "from \"resources/localization/" + languageAndZone + "\"");
-//                zoneJson = handle.readString(String.valueOf(StandardCharsets.UTF_8));
-//                keywords.addAll(Arrays.asList(gson.fromJson(zoneJson, Keyword[].class)));
-//            }
-//        }
 
         for (Keyword keyword : keywords) {
             BaseMod.addKeyword(modID, keyword.PROPER_NAME, keyword.NAMES, keyword.DESCRIPTION);
