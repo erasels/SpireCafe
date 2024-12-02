@@ -9,7 +9,7 @@ import static spireCafe.Anniv7Mod.makeID;
 
 public class RedCrewCutscene extends AbstractCutscene {
     public static final String ID = makeID(RedCrewCutscene.class.getSimpleName());
-    private static final CutsceneStrings cutsceneStrings = new LocalizedCutsceneStrings().getCutsceneStrings(ID);
+    private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
 
     public RedCrewCutscene(AbstractNPC character) {
         super(character, cutsceneStrings);

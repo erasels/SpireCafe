@@ -34,7 +34,7 @@ public class LocalizedCutsceneStrings {
         cutscenes.putAll(map);
     }
 
-    public CutsceneStrings getCutsceneStrings(String cutsceneName) {
+    public static CutsceneStrings getCutsceneStrings(String cutsceneName) {
         if (cutscenes.containsKey(cutsceneName)) {
             return  cutscenes.get(cutsceneName);
         } else {

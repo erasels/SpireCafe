@@ -18,7 +18,7 @@ import static spireCafe.Anniv7Mod.makeID;
 
 public class KoishiCutscene extends AbstractCutscene {
     public static final String ID = makeID(KoishiCutscene.class.getSimpleName());
-    private static final CutsceneStrings cutsceneStrings = new LocalizedCutsceneStrings().getCutsceneStrings(ID);
+    private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
 
     private static final float MAX_HP_COST = 0.06F;
     private static final float HIGH_ASC_MAX_HP_COST = 0.08F;

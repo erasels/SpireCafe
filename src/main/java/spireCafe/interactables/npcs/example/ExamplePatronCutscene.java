@@ -16,7 +16,7 @@ import static spireCafe.Anniv7Mod.makeID;
 
 public class ExamplePatronCutscene extends AbstractCutscene {
     public static final String ID = makeID(ExamplePatronCutscene.class.getSimpleName());
-    private static final CutsceneStrings cutsceneStrings = new LocalizedCutsceneStrings().getCutsceneStrings(ID);
+    private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
     private boolean forRemove = false;
     private boolean forUpgrade = false;
 
