@@ -5,20 +5,20 @@ import basemod.helpers.CardModifierManager;
 import com.evacipated.cardcrawl.mod.stslib.fields.cards.AbstractCard.AutoplayField;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
-import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
 import spireCafe.cardmods.AutoplayMod;
+import spireCafe.util.cutsceneStrings.CutsceneStrings;
+import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 
 import static spireCafe.Anniv7Mod.makeID;
 
 public class KoishiCutscene extends AbstractCutscene {
     public static final String ID = makeID(KoishiCutscene.class.getSimpleName());
-    private static final EventStrings eventStrings = CardCrawlGame.languagePack.getEventString(ID);
+    private static final CutsceneStrings cutsceneStrings = new LocalizedCutsceneStrings().getCutsceneStrings(ID);
 
     private static final float MAX_HP_COST = 0.06F;
     private static final float HIGH_ASC_MAX_HP_COST = 0.08F;
@@ -27,7 +27,7 @@ public class KoishiCutscene extends AbstractCutscene {
     private boolean forAugment = false;
 
     public KoishiCutscene(AbstractNPC character) {
-        super(character, eventStrings);
+        super(character, cutsceneStrings);
         if (AbstractDungeon.ascensionLevel >= 15) {
             maxhpCost = (int)(HIGH_ASC_MAX_HP_COST * AbstractDungeon.player.maxHealth);
         } else {

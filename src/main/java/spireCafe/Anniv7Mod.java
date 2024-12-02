@@ -23,6 +23,8 @@ import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cardvars.SecondDamage;
 import spireCafe.cardvars.SecondMagicNumber;
 import spireCafe.interactables.TestEvent;
+import spireCafe.util.cutsceneStrings.CutsceneStrings;
+import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -275,7 +277,7 @@ public class Anniv7Mod implements
             loadStringsFile(languageAndInteractable, StanceStrings.class);
             loadStringsFile(languageAndInteractable, OrbStrings.class);
             loadStringsFile(languageAndInteractable, PotionStrings.class);
-            loadStringsFile(languageAndInteractable, EventStrings.class);
+            loadCutsceneStringsFile(languageAndInteractable, CutsceneStrings.class);
             loadStringsFile(languageAndInteractable, MonsterStrings.class);
         }
     }
@@ -284,6 +286,13 @@ public class Anniv7Mod implements
         String filepath = modID + "Resources/localization/" + key + "/" + stringType.getSimpleName().replace("Strings", "strings") + ".json";
         if (Gdx.files.internal(filepath).exists()) {
             BaseMod.loadCustomStringsFile(stringType, filepath);
+        }
+    }
+
+    private void loadCutsceneStringsFile(String key, Class<?> stringType) {
+        String filepath = modID + "Resources/localization/" + key + "/" + stringType.getSimpleName().replace("Strings", "strings") + ".json";
+        if (Gdx.files.internal(filepath).exists()) {
+            LocalizedCutsceneStrings.loadCutsceneStringsFile(filepath);
         }
     }
 

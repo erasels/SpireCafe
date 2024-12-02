@@ -12,8 +12,8 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
-import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
+import spireCafe.util.cutsceneStrings.CutsceneStrings;
 
 public abstract class AbstractCutscene extends AbstractGameEffect {
     public final String[] DESCRIPTIONS;
@@ -28,11 +28,11 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
     protected float blackScreenValue = 0.4f;
     public static boolean isInCutscene = false;
 
-    public AbstractCutscene(AbstractNPC character, EventStrings eventStrings) {
+    public AbstractCutscene(AbstractNPC character, CutsceneStrings cutsceneStrings) {
         Texture TEXTBOX_TEXTURE = TexLoader.getTexture(Anniv7Mod.makeUIPath("Textbox.png"));
         TEXTBOX = new TextureRegion(TEXTBOX_TEXTURE);
-        DESCRIPTIONS = eventStrings.DESCRIPTIONS;
-        OPTIONS = eventStrings.OPTIONS;
+        DESCRIPTIONS = cutsceneStrings.DESCRIPTIONS;
+        OPTIONS = cutsceneStrings.OPTIONS;
         this.character = character;
         this.hb = new Hitbox(Settings.WIDTH, Settings.HEIGHT);
         this.hb.x = 0.0F;

@@ -1,27 +1,27 @@
 package spireCafe.interactables.npcs.example;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
-import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.vfx.UpgradeShineEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardBrieflyEffect;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
+import spireCafe.util.cutsceneStrings.CutsceneStrings;
+import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 
 import static spireCafe.Anniv7Mod.makeID;
 
 public class ExamplePatronCutscene extends AbstractCutscene {
     public static final String ID = makeID(ExamplePatronCutscene.class.getSimpleName());
-    private static final EventStrings eventStrings = CardCrawlGame.languagePack.getEventString(ID);
+    private static final CutsceneStrings cutsceneStrings = new LocalizedCutsceneStrings().getCutsceneStrings(ID);
     private boolean forRemove = false;
     private boolean forUpgrade = false;
 
     public ExamplePatronCutscene(AbstractNPC character) {
-        super(character, eventStrings);
+        super(character, cutsceneStrings);
     }
 
     @Override
