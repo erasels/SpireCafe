@@ -30,6 +30,10 @@ public class TestEvent extends AbstractEvent {
     }
 
     @Override
+    public void onEnterRoom() {
+    }
+
+    @Override
     public void update() {
         super.update();
         if (!RoomEventDialog.waitForInput) {
