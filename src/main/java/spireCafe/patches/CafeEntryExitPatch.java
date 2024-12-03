@@ -1,8 +1,10 @@
 package spireCafe.patches;
 
+import basemod.ReflectionHacks;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.*;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.EventRoom;
@@ -136,6 +138,7 @@ public class CafeEntryExitPatch {
         AbstractDungeon.closeCurrentScreen();
 
         AbstractDungeon.fadeOut();
+        setFadeTimer();
         AbstractDungeon.waitingOnFadeOut = true;
     }
 
@@ -154,6 +157,15 @@ public class CafeEntryExitPatch {
         else {
             AbstractDungeon.player.currentHealth += healthChange;
             AbstractDungeon.effectList.add(new StrikeEffect(AbstractDungeon.player, AbstractDungeon.player.hb.cX, AbstractDungeon.player.hb.cY, -healthChange));
+        }
+    }
+
+    private static void setFadeTimer() {
+        // Normally fast mode makes the fade out/fade in animation nearly instant (0.001 seconds), which looks slightly
+        // odd with the transition to the cafe. We make things a bit less jarring by giving it a longer animation time
+        // than normal (though still substantially shorter than the 0.8 seconds when not in fast mode).
+        if (Settings.FAST_MODE) {
+            ReflectionHacks.setPrivateStatic(AbstractDungeon.class, "fadeTimer", 0.1f);
         }
     }
 
@@ -182,6 +194,7 @@ public class CafeEntryExitPatch {
             if (!this.startedFadeIn) {
                 if (!AbstractDungeon.isFadingOut) {
                     AbstractDungeon.fadeIn();
+                    setFadeTimer();
                     startedFadeIn = true;
                 }
                 this.originalRoom.update();
