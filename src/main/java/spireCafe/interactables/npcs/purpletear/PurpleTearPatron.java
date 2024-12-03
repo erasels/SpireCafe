@@ -12,6 +12,7 @@ import spireCafe.util.TexLoader;
 
 public class PurpleTearPatron extends AbstractPatron {
     public static final String ID = PurpleTearPatron.class.getSimpleName();
+    public static final String assetID = "PurpleTear";
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
     public PurpleTearPatron(float animationX, float animationY) {

@@ -1,4 +1,4 @@
-package spireCafe.relics;
+package spireCafe.interactables.npcs.purpletear;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
@@ -8,9 +8,9 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.EnergizedPower;
 import spireCafe.abstracts.AbstractSCRelic;
-import spireCafe.cards.Prescript;
 
 import static spireCafe.Anniv7Mod.makeID;
+import static spireCafe.interactables.npcs.purpletear.PurpleTearPatron.assetID;
 import static spireCafe.util.Wiz.*;
 
 public class BookOfIndex extends AbstractSCRelic {
@@ -23,7 +23,7 @@ public class BookOfIndex extends AbstractSCRelic {
     private boolean failure;
 
     public BookOfIndex() {
-        super(ID, RelicTier.SPECIAL, LandingSound.HEAVY);
+        super(ID, assetID, RelicTier.SPECIAL, LandingSound.HEAVY);
     }
 
     @Override
