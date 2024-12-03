@@ -167,6 +167,7 @@ public class CafeEntryExitPatch {
 
         @Override
         public void render(SpriteBatch sb) {
+            // We continue to render the original room until the fade out finishes to avoid a jarring transition
             if (!this.startedFadeIn) {
                 this.originalRoom.render(sb);
             }
@@ -177,6 +178,7 @@ public class CafeEntryExitPatch {
 
         @Override
         public void update() {
+            // We continue to render the original room until the fade out finishes to avoid a jarring transition
             if (!this.startedFadeIn) {
                 if (!AbstractDungeon.isFadingOut) {
                     AbstractDungeon.fadeIn();
