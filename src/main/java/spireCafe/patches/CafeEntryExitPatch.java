@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.EventRoom;
 import com.megacrit.cardcrawl.rooms.TreasureRoomBoss;
 import com.megacrit.cardcrawl.ui.buttons.ProceedButton;
+import com.megacrit.cardcrawl.vfx.combat.StrikeEffect;
 import javassist.CannotCompileException;
 import javassist.CtBehavior;
 import javassist.NotFoundException;
@@ -152,6 +153,7 @@ public class CafeEntryExitPatch {
         }
         else {
             AbstractDungeon.player.currentHealth += healthChange;
+            AbstractDungeon.effectList.add(new StrikeEffect(AbstractDungeon.player, AbstractDungeon.player.hb.cX, AbstractDungeon.player.hb.cY, -healthChange));
         }
     }
 
