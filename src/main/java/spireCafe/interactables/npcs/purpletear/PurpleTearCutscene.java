@@ -60,7 +60,6 @@ public class PurpleTearCutscene extends AbstractCutscene {
                 goToDialogue(9);
             });
         } else if (dialogueIndex == 8 || dialogueIndex == 9 || dialogueIndex == 11) {
-            System.out.println("hello");
             endCutscene();
         } else {
             nextDialogue();
