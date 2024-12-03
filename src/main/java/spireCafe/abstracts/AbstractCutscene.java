@@ -28,6 +28,7 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
     protected boolean isNPCSpeaking = false;
     protected float blackScreenValue = 0.4f;
     public static boolean isInCutscene = false;
+    protected final boolean alreadyPerformedTransaction;
 
     public AbstractCutscene(AbstractNPC character, CutsceneStrings cutsceneStrings) {
         Texture TEXTBOX_TEXTURE = TexLoader.getTexture(Anniv7Mod.makeUIPath("Textbox.png"));
@@ -41,6 +42,7 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
         this.hb.y = 0.0F;
         this.show = true;
         this.dialogueIndex = 0;
+        this.alreadyPerformedTransaction= character.alreadyPerformedTransaction;
     }
 
     public void update() {
@@ -50,7 +52,7 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
         if (this.show) {
             AbstractDungeon.overlayMenu.showBlackScreen(blackScreenValue);
             isInCutscene = true;
-            if (character.alreadyPerformedTransaction) {
+            if (alreadyPerformedTransaction) {
                 showBlockingDialogue();
             } else {
                 updateDialogueText();
@@ -64,7 +66,7 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
             }
             if (this.hb.clicked) {
                 this.hb.clicked = false;
-                if (character.alreadyPerformedTransaction) {
+                if (alreadyPerformedTransaction) {
                     endCutscene();
                 } else {
                     onClick();
