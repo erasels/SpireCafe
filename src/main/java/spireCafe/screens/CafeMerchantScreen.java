@@ -14,40 +14,58 @@ public class CafeMerchantScreen extends CustomScreen {
         AbstractDungeon.screen = curScreen();
         AbstractDungeon.isScreenUp = true;
         currentMerchant = merchant;
+        AbstractDungeon.overlayMenu.cancelButton.show("TEMPSTRING");
+        AbstractDungeon.overlayMenu.hideBlackScreen();
+
     }
 
     @Override
     public void reopen() {
         AbstractDungeon.screen = curScreen();
         AbstractDungeon.isScreenUp = true;
+        AbstractDungeon.overlayMenu.cancelButton.show("TEMPSTRING");
+        AbstractDungeon.overlayMenu.hideBlackScreen();
     }
 
     @Override
     public void close() {
-
+        AbstractDungeon.screen = AbstractDungeon.previousScreen;
+        AbstractDungeon.isScreenUp = false;
+        AbstractDungeon.overlayMenu.hideBlackScreen();
     }
+
 
     @Override
     public void update() {
-        //update Articles
-
-        //update Close button
+        currentMerchant.updateShop();
 
     }
 
     @Override
     public void render(SpriteBatch spriteBatch) {
-        //render BG
-
-        //render Articles
-
-        //render Close button
+        currentMerchant.renderShop(spriteBatch);
     }
 
     @Override
     public void openingSettings() {
         AbstractDungeon.previousScreen = curScreen();
     }
+
+    @Override
+    public boolean allowOpenDeck() {
+        return true;
+    }
+
+    @Override
+    public void openingDeck() {
+        AbstractDungeon.previousScreen = curScreen();
+    }
+
+    @Override
+    public boolean allowOpenMap() {
+        return false;
+    }
+
 
 
     @Override

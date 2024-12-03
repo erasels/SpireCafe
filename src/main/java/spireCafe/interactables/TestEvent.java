@@ -7,7 +7,9 @@ import com.megacrit.cardcrawl.events.AbstractEvent;
 import com.megacrit.cardcrawl.events.RoomEventDialog;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import spireCafe.Anniv7Mod;
+import spireCafe.abstracts.AbstractMerchant;
 import spireCafe.abstracts.AbstractNPC;
+import spireCafe.interactables.merchants.example.ExampleMerchant;
 import spireCafe.interactables.npcs.koishi.KoishiPatron;
 import spireCafe.interactables.npcs.example.ExamplePatron;
 import spireCafe.interactables.npcs.marisa.MarisaPatron;
@@ -18,6 +20,7 @@ public class TestEvent extends AbstractEvent {
 
     public static final String ID = Anniv7Mod.makeID(TestEvent.class.getSimpleName());
     ArrayList<AbstractNPC> npcs = new ArrayList<>();
+    AbstractMerchant merchant;
 
     public TestEvent() {
         this.body = "";
@@ -27,6 +30,8 @@ public class TestEvent extends AbstractEvent {
         npcs.add(new KoishiPatron(1200.0F * Settings.scale, AbstractDungeon.floorY));
         npcs.add(new MarisaPatron(1400.0F * Settings.scale, AbstractDungeon.floorY));
         npcs.add(new ExamplePatron(1000.0F * Settings.scale, AbstractDungeon.floorY));
+        merchant = new ExampleMerchant(1400.0F * Settings.scale, AbstractDungeon.floorY + 400f);
+        merchant.rollShop();
     }
 
     @Override
@@ -38,6 +43,7 @@ public class TestEvent extends AbstractEvent {
         for (AbstractNPC npc : npcs) {
             npc.update();
         }
+        merchant.update();
     }
 
     @Override
@@ -49,5 +55,6 @@ public class TestEvent extends AbstractEvent {
         for (AbstractNPC npc : npcs) {
             npc.renderAnimation(sb);
         }
+        merchant.renderAnimation(sb);
     }
 }

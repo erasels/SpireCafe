@@ -2,31 +2,49 @@ package spireCafe.abstracts;
 
 import basemod.BaseMod;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.megacrit.cardcrawl.core.Settings;
 import spireCafe.screens.CafeMerchantScreen;
 
 import java.util.ArrayList;
 
 public abstract class AbstractMerchant extends AbstractCafeInteractable {
     public String name;
-    public Texture background;
+    public TextureRegion background;
     public ArrayList<AbstractArticle> articles = new ArrayList<>();
+    public ArrayList<AbstractArticle> toRemove = new ArrayList<>();
 
     public AbstractMerchant(float animationX, float animationY, float hb_w, float hb_h) {
         super(animationX, animationY, hb_w, hb_h);
     }
+
+    public abstract void rollShop();
 
     @Override
     public void onInteract() {
         BaseMod.openCustomScreen(CafeMerchantScreen.ScreenEnum.CAFE_MERCHANT_SCREEN, this);
     }
 
-    public void addArticle(AbstractArticle article) {
-        articles.add(article);
-        article.merchant = this;
+    public void onBuyArticle(AbstractArticle article) {
+        toRemove.add(article);
     }
 
-    public void buyArticle(AbstractArticle article) {
-        articles.remove(article);
+    public void updateShop() {
+        for (AbstractArticle article : articles) {
+            article.update();
+        }
+        for (AbstractArticle article : toRemove) {
+            articles.remove(article);
+        }
+        toRemove.clear();
+    }
+
+    public void renderShop(SpriteBatch sb) {
+        sb.draw(background, 0f,0f,0f,0f,background.getRegionWidth(),background.getRegionHeight(), Settings.scale, Settings.scale, 0f);
+        for (AbstractArticle article : articles) {
+            article.render(sb);
+        }
     }
 
 
