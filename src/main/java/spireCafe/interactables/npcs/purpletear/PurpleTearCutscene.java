@@ -37,9 +37,14 @@ public class PurpleTearCutscene extends AbstractCutscene {
             });
             this.dialog.addDialogOption(OPTIONS[1]).setOptionResult((i)->{
                 goToDialogue(10);
+                character.setCutscenePortrait("Portrait3");
             });
+        } else if (dialogueIndex == 3) {
+            nextDialogue();
+            character.setCutscenePortrait("Portrait2");
         } else if (dialogueIndex == 5) {
             nextDialogue();
+            character.setCutscenePortrait("Portrait1");
             if (hasRelicOfRarity(AbstractRelic.RelicTier.COMMON)) {
                 this.dialog.addDialogOption(OPTIONS[2] + FontHelper.colorString(OPTIONS[3] + OPTIONS[4] + OPTIONS[7], "r") + " " + FontHelper.colorString(OPTIONS[8], "g"), commonBook).setOptionResult((i)->{
                     generateLoseRelicOptions(AbstractRelic.RelicTier.COMMON, commonBook);
