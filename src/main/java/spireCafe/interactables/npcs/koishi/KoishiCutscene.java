@@ -81,7 +81,7 @@ public class KoishiCutscene extends AbstractCutscene {
                 character.setCutscenePortrait("Portrait4");
             });
             character.setCutscenePortrait("Portrait5");
-        } else if (dialogueIndex == 6 || dialogueIndex == 7 || dialogueIndex == 12 || dialogueIndex == 13 || dialogueIndex == 14) {
+        } else if (dialogueIndex == 6 || dialogueIndex == 7 || dialogueIndex == 12 || dialogueIndex == 13) {
             endCutscene();
         } else if (dialogueIndex == 10) {
             nextDialogue();

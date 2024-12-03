@@ -18,6 +18,7 @@ import spireCafe.util.cutsceneStrings.CutsceneStrings;
 public abstract class AbstractCutscene extends AbstractGameEffect {
     public final String[] DESCRIPTIONS;
     public final String[] OPTIONS;
+    public final String[] BLOCKING_TEXTS;
     private final TextureRegion TEXTBOX;
     protected final Dialog dialog = new Dialog(this);
     protected int dialogueIndex;
@@ -33,16 +34,13 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
         TEXTBOX = new TextureRegion(TEXTBOX_TEXTURE);
         DESCRIPTIONS = cutsceneStrings.DESCRIPTIONS;
         OPTIONS = cutsceneStrings.OPTIONS;
+        BLOCKING_TEXTS = cutsceneStrings.BLOCKING_TEXTS;
         this.character = character;
         this.hb = new Hitbox(Settings.WIDTH, Settings.HEIGHT);
         this.hb.x = 0.0F;
         this.hb.y = 0.0F;
         this.show = true;
-        if(character.alreadyPerformedTransaction){
-            this.dialogueIndex=DESCRIPTIONS.length-1;
-        } else {
-            this.dialogueIndex = 0;
-        }
+        this.dialogueIndex = 0;
     }
 
     public void update() {
@@ -52,7 +50,11 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
         if (this.show) {
             AbstractDungeon.overlayMenu.showBlackScreen(blackScreenValue);
             isInCutscene = true;
-            updateDialogueText();
+            if (character.alreadyPerformedTransaction) {
+                showBlockingDialogue();
+            } else {
+                updateDialogueText();
+            }
         }
         this.hb.update();
         if (Dialog.optionList.isEmpty()) {
@@ -62,10 +64,28 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
             }
             if (this.hb.clicked) {
                 this.hb.clicked = false;
-                onClick();
+                if (character.alreadyPerformedTransaction) {
+                    endCutscene();
+                } else {
+                    onClick();
+                }
             }
         }
         this.dialog.update();
+    }
+
+    protected void showBlockingDialogue() {
+        String text = appendSpeakerToDialogue(getBlockingDialogue());
+        if (this.show) {
+            this.show = false;
+            this.dialog.show(text);
+        } else {
+            this.dialog.updateBodyText(text);
+        }
+    }
+
+    public String getBlockingDialogue() {
+        return BLOCKING_TEXTS[character.blockingDialogueIndex];
     }
 
     protected void onClick() {

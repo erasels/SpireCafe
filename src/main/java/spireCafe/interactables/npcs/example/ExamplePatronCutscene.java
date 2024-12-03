@@ -24,6 +24,17 @@ public class ExamplePatronCutscene extends AbstractCutscene {
         super(character, cutsceneStrings);
     }
 
+    //Instead of only having one line of dialogue after the transaction this Patron says a different line each time.
+    @Override
+    public String getBlockingDialogue() {
+        int blockingDialogueIndex = character.blockingDialogueIndex;
+        String blockingDialogue = cutsceneStrings.BLOCKING_TEXTS[blockingDialogueIndex];
+        if(blockingDialogueIndex<cutsceneStrings.BLOCKING_TEXTS.length-1){
+            character.blockingDialogueIndex++;
+        }
+        return blockingDialogue;
+    }
+
     @Override
     protected void onClick() {
         // In the eventstrings, DESCRIPTIONS is an array of all the cutscene text.
@@ -62,7 +73,7 @@ public class ExamplePatronCutscene extends AbstractCutscene {
             this.dialog.addDialogOption(OPTIONS[4]).setOptionResult((i)->{
                 goToDialogue(6);
             });
-        } else if (dialogueIndex == 3 || dialogueIndex == 5 || dialogueIndex == 6 || dialogueIndex == 7) {
+        } else if (dialogueIndex == 3 || dialogueIndex == 5 || dialogueIndex == 6) {
             // Exit the cutscene at any of these dialogue indices.
             endCutscene();
         } else {

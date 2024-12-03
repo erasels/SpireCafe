@@ -1,6 +1,9 @@
 {
   "${ModID}:RedCrewCutscene": {
     "NAME": "RedCrew Cutscene",
+    "BLOCKING_TEXTS": [
+      "\"...\""
+    ],
     "DESCRIPTIONS": [
       "\"You're sus.\"",
       "\"I'm sus.\""
