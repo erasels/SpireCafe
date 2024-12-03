@@ -42,7 +42,7 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
         this.hb.y = 0.0F;
         this.show = true;
         this.dialogueIndex = 0;
-        this.alreadyPerformedTransaction= character.alreadyPerformedTransaction;
+        this.alreadyPerformedTransaction = character.alreadyPerformedTransaction;
     }
 
     public void update() {
