@@ -10,11 +10,12 @@ import com.megacrit.cardcrawl.powers.EnergizedPower;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cards.Prescript;
 
+import static spireCafe.Anniv7Mod.makeID;
 import static spireCafe.util.Wiz.*;
 
 public class BookOfIndex extends AbstractSCRelic {
 
-    public static final String ID = BookOfIndex.class.getSimpleName();
+    public static final String ID = makeID(BookOfIndex.class.getSimpleName());
     private AbstractCard prescript;
     private AbstractCard.CardType wantType;
     private int num;
@@ -33,12 +34,15 @@ public class BookOfIndex extends AbstractSCRelic {
 
     @Override
     public void onUseCard(AbstractCard card, UseCardAction action) {
+        if (AbstractDungeon.actionManager.cardsPlayedThisTurn.size() > num) {
+            return;
+        }
         if (card.type == wantType && num == AbstractDungeon.actionManager.cardsPlayedThisTurn.size()) {
             this.flash();
             atb(new RelicAboveCreatureAction(adp(), this));
             applyToSelf(new EnergizedPower(adp(), 1));
             success = true;
-        } else if (num >= AbstractDungeon.actionManager.cardsPlayedThisTurn.size()) {
+        } else if (AbstractDungeon.actionManager.cardsPlayedThisTurn.size() >= num) {
             this.flash();
             failure = true;
         }
@@ -52,7 +56,7 @@ public class BookOfIndex extends AbstractSCRelic {
         success = false;
         failure = false;
         prescript = new Prescript();
-        num = AbstractDungeon.miscRng.random(1, 3);
+        num = AbstractDungeon.miscRng.random(2) + 1;
         if (AbstractDungeon.miscRng.randomBoolean()) {
             wantType = AbstractCard.CardType.ATTACK;
         } else {
@@ -80,15 +84,20 @@ public class BookOfIndex extends AbstractSCRelic {
     }
 
     @Override
-    public void render(SpriteBatch sb) {
+    public void onVictory() {
+        prescript = null;
+    }
+
+    @Override
+    public void renderInTopPanel(SpriteBatch sb) {
         super.render(sb);
         if (prescript != null) {
             float drawScale = 0.65f;
-            float offsetX1 = 300.0F * Settings.scale;
-            float offsetY = 100.0F * Settings.scale;
+            float offsetX = 40.0F * Settings.scale;
+            float offsetY = -150.0F * Settings.scale;
             AbstractCard card = prescript;
             card.drawScale = drawScale;
-            card.current_x = this.hb.x;
+            card.current_x = this.hb.x + offsetX;
             card.current_y = this.hb.y + offsetY;
             card.render(sb);
         }
