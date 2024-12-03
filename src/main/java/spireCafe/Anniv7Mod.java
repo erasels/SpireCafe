@@ -6,13 +6,17 @@ import basemod.ModPanel;
 import basemod.helpers.RelicType;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.evacipated.cardcrawl.mod.stslib.Keyword;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.Exordium;
+import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import javassist.CtClass;
@@ -23,9 +27,12 @@ import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cardvars.SecondDamage;
 import spireCafe.cardvars.SecondMagicNumber;
 import spireCafe.interactables.TestEvent;
+import spireCafe.ui.FixedModLabeledToggleButton.FixedModLabeledToggleButton;
+import spireCafe.util.TexLoader;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
@@ -131,6 +138,7 @@ public class Anniv7Mod implements
 
         try {
             Properties defaults = new Properties();
+            defaults.put("cafeEntryCost", "TRUE");
             modConfig = new SpireConfig(modID, "anniv7Config", defaults);
         } catch (Exception e) {
             e.printStackTrace();
@@ -329,14 +337,36 @@ public class Anniv7Mod implements
 
     private ModPanel settingsPanel;
 
+    private static final float ENTRYCOST_CHECKBOX_X = 400f;
+    private static final float ENTRYCOST_CHECKBOX_Y = 685f;
+
     private void initializeConfig() {
-//        UIStrings configStrings = CardCrawlGame.languagePack.getUIString(makeID("ConfigMenuText"));
-//
-//        Texture badge = TexLoader.getTexture(makeImagePath("ui/badge.png"));
-//
-//        settingsPanel = new ModPanel();
-//
-//        BaseMod.registerModBadge(badge, configStrings.TEXT[0], configStrings.TEXT[1], configStrings.TEXT[2], settingsPanel);
+        UIStrings configStrings = CardCrawlGame.languagePack.getUIString(makeID("ConfigMenuText"));
+
+        Texture badge = TexLoader.getTexture(makeImagePath("ui/badge.png"));
+
+        settingsPanel = new ModPanel();
+        FixedModLabeledToggleButton cafeEntryCostToggle = new FixedModLabeledToggleButton(configStrings.TEXT[3], ENTRYCOST_CHECKBOX_X, ENTRYCOST_CHECKBOX_Y, Color.WHITE, FontHelper.tipBodyFont, getCafeEntryCostConfig(), null,
+                (label) -> {},
+                (button) -> setCafeEntryCostConfig(button.enabled));
+        settingsPanel.addUIElement(cafeEntryCostToggle);
+
+        BaseMod.registerModBadge(badge, configStrings.TEXT[0], configStrings.TEXT[1], configStrings.TEXT[2], settingsPanel);
+    }
+
+    public static boolean getCafeEntryCostConfig() {
+        return modConfig != null && modConfig.getBool("cafeEntryCost");
+    }
+
+    public static void setCafeEntryCostConfig(boolean bool) {
+        if (modConfig != null) {
+            modConfig.setBool("cafeEntryCost", bool);
+            try {
+                modConfig.save();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void initializeSavedData() {
