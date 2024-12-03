@@ -75,6 +75,17 @@ public class CafeEntryExitPatch {
         }
     }
 
+    @SpirePatch(clz = AbstractDungeon.class, method = "closeCurrentScreen")
+    public static class CafeShowProceedButtonPatch {
+        @SpirePostfixPatch
+        public static void showProceedButton() {
+            // Many screens (e.g. GridCardSelectScreen) hide the proceed button when opened, so we make it visible again
+            if (inCafe()) {
+                AbstractDungeon.overlayMenu.proceedButton.show();
+            }
+        }
+    }
+
     @SpirePatch(clz = ProceedButton.class, method = "goToNextDungeon")
     public static class CafeExitMarkCompletePatch {
         @SpirePrefixPatch
