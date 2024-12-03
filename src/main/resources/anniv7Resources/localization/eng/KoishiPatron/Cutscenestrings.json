@@ -1,6 +1,9 @@
 {
   "${ModID}:KoishiCutscene": {
     "NAME": "Koishi Cutscene",
+    "BLOCKING_TEXTS": [
+      "\"I wonder if sister would like anything here as a souvenir.\""
+    ],
     "DESCRIPTIONS": [
       "\"Hey! Over here!\"",
       "The girl greets you in a bright and cherry fashion. You wonder how she has so much energy.",
@@ -15,8 +18,7 @@
       "Your head spins, and you blink in confusion. You feel like you've forgotten about something. But as your head clears, you soon forget that you've even forgotten something at all.",
       "\"Doesn't that feel better? It's much better to just let all your worries drift away, right?\"",
       "You feel like there's something very wrong with that statement, but you can't tell what.",
-      "\"You want to keep thinking about it? That's too bad. I think people would be a lot happier if they didn't think about troubling things.\"",
-      "\"I wonder if sister would like anything here as a souvenir\"."
+      "\"You want to keep thinking about it? That's too bad. I think people would be a lot happier if they didn't think about troubling things.\""
     ],
     "OPTIONS": [
       "No.",

@@ -1,6 +1,9 @@
 {
   "${ModID}:MarisaCutscene": {
     "NAME": "Marisa Cutscene",
+    "BLOCKING_TEXTS": [
+      "\"...\""
+    ],
     "DESCRIPTIONS": [
       "\"My name is Marisa Kirisame!\"",
       "\"I'm from Touhou Project!\""

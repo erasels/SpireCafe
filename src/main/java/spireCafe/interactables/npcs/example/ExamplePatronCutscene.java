@@ -1,27 +1,38 @@
 package spireCafe.interactables.npcs.example;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
-import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.vfx.UpgradeShineEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardBrieflyEffect;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
+import spireCafe.util.cutsceneStrings.CutsceneStrings;
+import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 
 import static spireCafe.Anniv7Mod.makeID;
 
 public class ExamplePatronCutscene extends AbstractCutscene {
     public static final String ID = makeID(ExamplePatronCutscene.class.getSimpleName());
-    private static final EventStrings eventStrings = CardCrawlGame.languagePack.getEventString(ID);
+    private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
     private boolean forRemove = false;
     private boolean forUpgrade = false;
 
     public ExamplePatronCutscene(AbstractNPC character) {
-        super(character, eventStrings);
+        super(character, cutsceneStrings);
+    }
+
+    //Instead of only having one line of dialogue after the transaction this Patron says a different line each time.
+    @Override
+    public String getBlockingDialogue() {
+        int blockingDialogueIndex = character.blockingDialogueIndex;
+        String blockingDialogue = cutsceneStrings.BLOCKING_TEXTS[blockingDialogueIndex];
+        if(blockingDialogueIndex<cutsceneStrings.BLOCKING_TEXTS.length-1){
+            character.blockingDialogueIndex++;
+        }
+        return blockingDialogue;
     }
 
     @Override
@@ -62,7 +73,7 @@ public class ExamplePatronCutscene extends AbstractCutscene {
             this.dialog.addDialogOption(OPTIONS[4]).setOptionResult((i)->{
                 goToDialogue(6);
             });
-        } else if (dialogueIndex == 3 || dialogueIndex == 5 || dialogueIndex == 6 || dialogueIndex == 7) {
+        } else if (dialogueIndex == 3 || dialogueIndex == 5 || dialogueIndex == 6) {
             // Exit the cutscene at any of these dialogue indices.
             endCutscene();
         } else {
