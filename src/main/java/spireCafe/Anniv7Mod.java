@@ -39,6 +39,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Consumer;
 
+import static spireCafe.patches.CafeEntryExitPatch.CAFE_ENTRY_SOUND_KEY;
+
 @SuppressWarnings({"unused"})
 @SpireInitializer
 public class Anniv7Mod implements
@@ -332,6 +334,7 @@ public class Anniv7Mod implements
 
     @Override
     public void receiveAddAudio() {
+        BaseMod.addAudio(CAFE_ENTRY_SOUND_KEY, makePath("audio/cafe_entry_door_chime.mp3"));
 
     }
 
