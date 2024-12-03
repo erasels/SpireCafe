@@ -1,5 +1,6 @@
 package spireCafe.patches;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -96,6 +97,20 @@ public class CafeEntryExitPatch {
         }
     }
 
+    @SpirePatch(clz = AbstractDungeon.class, method = "updateFading")
+    public static class CafeDontGoToNextRoomAfterFadeOutPatch {
+        @SpireInstrumentPatch
+        public static ExprEditor dontGoToNextRoomAfterFadeOut () {
+            return new ExprEditor() {
+                public void edit(MethodCall m) throws CannotCompileException {
+                    if (m.getClassName().equals(AbstractDungeon.class.getName()) && m.getMethodName().equals("nextRoomTransition")) {
+                        m.replace(String.format("{ if(!%1$s.inCafe()) { $proceed($$); } }", CafeEntryExitPatch.class.getName()));
+                    }
+                }
+            };
+        }
+    }
+
     public static boolean inCafe() {
         return AbstractDungeon.currMapNode != null && AbstractDungeon.currMapNode.room instanceof CafeEventRoom;
     }
@@ -118,6 +133,9 @@ public class CafeEntryExitPatch {
         AbstractDungeon.combatRewardScreen.clear();
         AbstractDungeon.previousScreen = null;
         AbstractDungeon.closeCurrentScreen();
+
+        AbstractDungeon.fadeOut();
+        AbstractDungeon.waitingOnFadeOut = true;
     }
 
     private static void healBeforeCafe() {
@@ -139,9 +157,34 @@ public class CafeEntryExitPatch {
 
     private static class CafeEventRoom extends EventRoom {
         public AbstractRoom originalRoom;
+        private boolean startedFadeIn;
 
         public CafeEventRoom(AbstractRoom originalRoom) {
             this.originalRoom = originalRoom;
+        }
+
+        @Override
+        public void render(SpriteBatch sb) {
+            if (!this.startedFadeIn) {
+                this.originalRoom.render(sb);
+            }
+            else {
+                super.render(sb);
+            }
+        }
+
+        @Override
+        public void update() {
+            if (!this.startedFadeIn) {
+                if (!AbstractDungeon.isFadingOut) {
+                    AbstractDungeon.fadeIn();
+                    startedFadeIn = true;
+                }
+                this.originalRoom.update();
+            }
+            else {
+                super.update();
+            }
         }
 
         @Override
