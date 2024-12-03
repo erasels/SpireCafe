@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
+import spireCafe.cards.Clone;
 import spireCafe.relics.BookOfIndex;
 import spireCafe.relics.BookOfRCorp;
 import spireCafe.ui.Dialog;
@@ -46,7 +47,7 @@ public class PurpleTearCutscene extends AbstractCutscene {
             nextDialogue();
             character.setCutscenePortrait("Portrait1");
             if (hasRelicOfRarity(AbstractRelic.RelicTier.COMMON)) {
-                this.dialog.addDialogOption(OPTIONS[2] + FontHelper.colorString(OPTIONS[3] + OPTIONS[4] + OPTIONS[7], "r") + " " + FontHelper.colorString(OPTIONS[8], "g"), commonBook).setOptionResult((i)->{
+                this.dialog.addDialogOption(OPTIONS[2] + FontHelper.colorString(OPTIONS[3] + OPTIONS[4] + OPTIONS[7], "r") + " " + FontHelper.colorString(OPTIONS[8], "g"), new Clone(), commonBook).setOptionResult((i)->{
                     generateLoseRelicOptions(AbstractRelic.RelicTier.COMMON, commonBook);
                 });
             } else {
