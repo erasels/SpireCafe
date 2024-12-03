@@ -6,23 +6,34 @@ import basemod.ModPanel;
 import basemod.helpers.RelicType;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.evacipated.cardcrawl.mod.stslib.Keyword;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.Exordium;
+import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
+import javassist.CtClass;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import spireCafe.screens.CafeMerchantScreen;
+import spireCafe.abstracts.AbstractCafeInteractable;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cardvars.SecondDamage;
 import spireCafe.cardvars.SecondMagicNumber;
 import spireCafe.interactables.TestEvent;
+import spireCafe.ui.FixedModLabeledToggleButton.FixedModLabeledToggleButton;
+import spireCafe.util.TexLoader;
+import spireCafe.util.cutsceneStrings.CutsceneStrings;
+import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
@@ -63,9 +74,7 @@ public class Anniv7Mod implements
 
     public static final Map<String, Keyword> keywords = new HashMap<>();
 
-    public static List<?> unfilteredAllZones = new ArrayList<>();
-    private static Map<String, ?> zonePackages = new HashMap<>();
-    public static Map<String, Set<String>> zoneEvents = new HashMap<>();
+    public static List<String> unfilteredAllInteractableIDs = new ArrayList<>();
 
 
     public static String makeID(String idText) {
@@ -130,27 +139,29 @@ public class Anniv7Mod implements
 
         try {
             Properties defaults = new Properties();
-            //defaults.put("active", "TRUE");
+            defaults.put("cafeEntryCost", "TRUE");
             modConfig = new SpireConfig(modID, "anniv7Config", defaults);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    /*private void loadZones() {
-        new AutoAdd(modID)
-                .packageFilter(Anniv7Mod.class)
-                .any(AbstractZone.class, (info, zone)->{
-                    if (!info.ignore) {
-                        String pkg = zone.getClass().getName();
-                        int lastSeparator = pkg.lastIndexOf('.');
-                        if (lastSeparator >= 0) pkg = pkg.substring(0, lastSeparator);
-                        unfilteredAllZones.add(zone);
-                        zonePackages.put(pkg, zone);
-                    }
-                });
-        logger.info("Found zone classes with AutoAdd: " + unfilteredAllZones.size());
-    }*/
+    private void loadInteractables() {
+        AutoAdd autoAdd = new AutoAdd(modID)
+                .packageFilter(Anniv7Mod.class);
+
+        Class<?> type = AbstractCafeInteractable.class;
+        Collection<CtClass> foundClasses = autoAdd.findClasses(type);
+
+        for (CtClass ctClass : foundClasses) {
+            boolean ignore = ctClass.hasAnnotation(AutoAdd.Ignore.class);
+            if (!ignore) {
+                unfilteredAllInteractableIDs.add(ctClass.getSimpleName());
+            }
+        }
+
+        logger.info("Found interactable classes with AutoAdd: " + unfilteredAllInteractableIDs.size());
+    }
 
     @Override
     public void receiveEditRelics() {
@@ -182,8 +193,6 @@ public class Anniv7Mod implements
     @Override
     public void receivePostInitialize() {
         initializedStrings = true;
-        //unfilteredAllZones.forEach(AbstractZone::loadStrings);
-        //unfilteredAllZones.sort(Comparator.comparing(c->c.id));
         addPotions();
         addSaveFields();
         initializeConfig();
@@ -235,12 +244,14 @@ public class Anniv7Mod implements
 
     @Override
     public void receiveEditStrings() {
+        loadInteractables();
+
         loadStrings("eng");
-        loadZoneStrings(unfilteredAllZones, "eng");
+        loadInteractableStrings(unfilteredAllInteractableIDs, "eng");
         if (Settings.language != Settings.GameLanguage.ENG)
         {
             loadStrings(Settings.language.toString().toLowerCase());
-            loadZoneStrings(unfilteredAllZones, Settings.language.toString().toLowerCase());
+            loadInteractableStrings(unfilteredAllInteractableIDs, Settings.language.toString().toLowerCase());
         }
     }
 
@@ -259,31 +270,39 @@ public class Anniv7Mod implements
         loadStringsFile(langKey, MonsterStrings.class);
     }
 
-    public void loadZoneStrings(Collection<?> zones, String langKey) {
-//        for (AbstractZone zone : zones) {
-//            String languageAndZone = langKey + "/" + zone.id;
-//            String filepath = modID + "Resources/localization/" + languageAndZone;
-//            if (!Gdx.files.internal(filepath).exists()) {
-//                continue;
-//            }
-//            logger.info("Loading strings for zone " + zone.id + "from \"resources/localization/" + languageAndZone + "\"");
-//
-//            loadStringsFile(languageAndZone, CardStrings.class);
-//            loadStringsFile(languageAndZone, RelicStrings.class);
-//            loadStringsFile(languageAndZone, PowerStrings.class);
-//            loadStringsFile(languageAndZone, UIStrings.class);
-//            loadStringsFile(languageAndZone, StanceStrings.class);
-//            loadStringsFile(languageAndZone, OrbStrings.class);
-//            loadStringsFile(languageAndZone, PotionStrings.class);
-//            loadStringsFile(languageAndZone, EventStrings.class);
-//            loadStringsFile(languageAndZone, MonsterStrings.class);
-//        }
+    public void loadInteractableStrings(Collection<String> interactableIDs, String langKey) {
+        for (String id : interactableIDs) {
+            String languageAndInteractable = langKey + "/" + id;
+            String filepath = modID + "Resources/localization/" + languageAndInteractable;
+            if (!Gdx.files.internal(filepath).exists()) {
+                continue;
+            }
+            logger.info("Loading strings for interactable " + id + " from \"resources/localization/" + languageAndInteractable + "\"");
+
+            loadStringsFile(languageAndInteractable, CharacterStrings.class);
+            loadStringsFile(languageAndInteractable, CardStrings.class);
+            loadStringsFile(languageAndInteractable, RelicStrings.class);
+            loadStringsFile(languageAndInteractable, PowerStrings.class);
+            loadStringsFile(languageAndInteractable, UIStrings.class);
+            loadStringsFile(languageAndInteractable, StanceStrings.class);
+            loadStringsFile(languageAndInteractable, OrbStrings.class);
+            loadStringsFile(languageAndInteractable, PotionStrings.class);
+            loadCutsceneStringsFile(languageAndInteractable, CutsceneStrings.class);
+            loadStringsFile(languageAndInteractable, MonsterStrings.class);
+        }
     }
 
     private void loadStringsFile(String key, Class<?> stringType) {
         String filepath = modID + "Resources/localization/" + key + "/" + stringType.getSimpleName().replace("Strings", "strings") + ".json";
         if (Gdx.files.internal(filepath).exists()) {
             BaseMod.loadCustomStringsFile(stringType, filepath);
+        }
+    }
+
+    private void loadCutsceneStringsFile(String key, Class<?> stringType) {
+        String filepath = modID + "Resources/localization/" + key + "/" + stringType.getSimpleName().replace("Strings", "strings") + ".json";
+        if (Gdx.files.internal(filepath).exists()) {
+            LocalizedCutsceneStrings.loadCutsceneStringsFile(filepath);
         }
     }
 
@@ -303,16 +322,6 @@ public class Anniv7Mod implements
             String json = Gdx.files.internal(filepath).readString(String.valueOf(StandardCharsets.UTF_8));
             keywords.addAll(Arrays.asList(gson.fromJson(json, Keyword[].class)));
         }
-//        for (AbstractZone zone : unfilteredAllZones) {
-//            String languageAndZone = langKey + "/" + zone.id;
-//            String zoneJson = modID + "Resources/localization/" + languageAndZone + "/Keywordstrings.json";
-//            FileHandle handle = Gdx.files.internal(zoneJson);
-//            if (handle.exists()) {
-//                logger.info("Loading keywords for zone " + zone.id + "from \"resources/localization/" + languageAndZone + "\"");
-//                zoneJson = handle.readString(String.valueOf(StandardCharsets.UTF_8));
-//                keywords.addAll(Arrays.asList(gson.fromJson(zoneJson, Keyword[].class)));
-//            }
-//        }
 
         for (Keyword keyword : keywords) {
             BaseMod.addKeyword(modID, keyword.PROPER_NAME, keyword.NAMES, keyword.DESCRIPTION);
@@ -330,14 +339,36 @@ public class Anniv7Mod implements
 
     private ModPanel settingsPanel;
 
+    private static final float ENTRYCOST_CHECKBOX_X = 400f;
+    private static final float ENTRYCOST_CHECKBOX_Y = 685f;
+
     private void initializeConfig() {
-//        UIStrings configStrings = CardCrawlGame.languagePack.getUIString(makeID("ConfigMenuText"));
-//
-//        Texture badge = TexLoader.getTexture(makeImagePath("ui/badge.png"));
-//
-//        settingsPanel = new ModPanel();
-//
-//        BaseMod.registerModBadge(badge, configStrings.TEXT[0], configStrings.TEXT[1], configStrings.TEXT[2], settingsPanel);
+        UIStrings configStrings = CardCrawlGame.languagePack.getUIString(makeID("ConfigMenuText"));
+
+        Texture badge = TexLoader.getTexture(makeImagePath("ui/badge.png"));
+
+        settingsPanel = new ModPanel();
+        FixedModLabeledToggleButton cafeEntryCostToggle = new FixedModLabeledToggleButton(configStrings.TEXT[3], ENTRYCOST_CHECKBOX_X, ENTRYCOST_CHECKBOX_Y, Color.WHITE, FontHelper.tipBodyFont, getCafeEntryCostConfig(), null,
+                (label) -> {},
+                (button) -> setCafeEntryCostConfig(button.enabled));
+        settingsPanel.addUIElement(cafeEntryCostToggle);
+
+        BaseMod.registerModBadge(badge, configStrings.TEXT[0], configStrings.TEXT[1], configStrings.TEXT[2], settingsPanel);
+    }
+
+    public static boolean getCafeEntryCostConfig() {
+        return modConfig != null && modConfig.getBool("cafeEntryCost");
+    }
+
+    public static void setCafeEntryCostConfig(boolean bool) {
+        if (modConfig != null) {
+            modConfig.setBool("cafeEntryCost", bool);
+            try {
+                modConfig.save();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void initializeSavedData() {

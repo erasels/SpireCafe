@@ -12,12 +12,13 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
-import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
+import spireCafe.util.cutsceneStrings.CutsceneStrings;
 
 public abstract class AbstractCutscene extends AbstractGameEffect {
     public final String[] DESCRIPTIONS;
     public final String[] OPTIONS;
+    public final String[] BLOCKING_TEXTS;
     private final TextureRegion TEXTBOX;
     protected final Dialog dialog = new Dialog(this);
     protected int dialogueIndex;
@@ -28,21 +29,18 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
     protected float blackScreenValue = 0.4f;
     public static boolean isInCutscene = false;
 
-    public AbstractCutscene(AbstractNPC character, EventStrings eventStrings) {
+    public AbstractCutscene(AbstractNPC character, CutsceneStrings cutsceneStrings) {
         Texture TEXTBOX_TEXTURE = TexLoader.getTexture(Anniv7Mod.makeUIPath("Textbox.png"));
         TEXTBOX = new TextureRegion(TEXTBOX_TEXTURE);
-        DESCRIPTIONS = eventStrings.DESCRIPTIONS;
-        OPTIONS = eventStrings.OPTIONS;
+        DESCRIPTIONS = cutsceneStrings.DESCRIPTIONS;
+        OPTIONS = cutsceneStrings.OPTIONS;
+        BLOCKING_TEXTS = cutsceneStrings.BLOCKING_TEXTS;
         this.character = character;
         this.hb = new Hitbox(Settings.WIDTH, Settings.HEIGHT);
         this.hb.x = 0.0F;
         this.hb.y = 0.0F;
         this.show = true;
-        if(character.alreadyPerformedTransaction){
-            this.dialogueIndex=DESCRIPTIONS.length-1;
-        } else {
-            this.dialogueIndex = 0;
-        }
+        this.dialogueIndex = 0;
     }
 
     public void update() {
@@ -52,7 +50,11 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
         if (this.show) {
             AbstractDungeon.overlayMenu.showBlackScreen(blackScreenValue);
             isInCutscene = true;
-            updateDialogueText();
+            if (character.alreadyPerformedTransaction) {
+                showBlockingDialogue();
+            } else {
+                updateDialogueText();
+            }
         }
         this.hb.update();
         if (Dialog.optionList.isEmpty()) {
@@ -62,10 +64,28 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
             }
             if (this.hb.clicked) {
                 this.hb.clicked = false;
-                onClick();
+                if (character.alreadyPerformedTransaction) {
+                    endCutscene();
+                } else {
+                    onClick();
+                }
             }
         }
         this.dialog.update();
+    }
+
+    protected void showBlockingDialogue() {
+        String text = appendSpeakerToDialogue(getBlockingDialogue());
+        if (this.show) {
+            this.show = false;
+            this.dialog.show(text);
+        } else {
+            this.dialog.updateBodyText(text);
+        }
+    }
+
+    public String getBlockingDialogue() {
+        return BLOCKING_TEXTS[character.blockingDialogueIndex];
     }
 
     protected void onClick() {

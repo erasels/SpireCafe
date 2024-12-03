@@ -1,0 +1,29 @@
+{
+  "${ModID}:ExamplePatronCutscene": {
+    "NAME": "Example patron Cutscene",
+    "BLOCKING_TEXTS": [
+      "\"Be safe out there.\"",
+      "\"Be safe.\"",
+      "\"I have other customers to attend to.\"",
+      "\"Please leave me alone.\"",
+      "\"Please...\"",
+      "\"STOP!!\""
+    ],
+    "DESCRIPTIONS": [
+      "\"Hello, I am a blacksmith of great renown.\"",
+      "\"What can I do for you, weary traveler?\"",
+      "\"One smithing coming right up.\"",
+      "You receive your weapon back and it feels to be greatly improved.",
+      "\"One remove coming right up.\"",
+      "You feel much lighter after shedding some excess supplies.",
+      "\"Let me know if you change your mind.\""
+    ],
+    "OPTIONS": [
+      "I would like you to smith my stuff. ",
+      "Upgrade a card.",
+      "I would like you to remove my stuff. ",
+      "Remove a card.",
+      "I don't want anything."
+    ]
+  }
+}
