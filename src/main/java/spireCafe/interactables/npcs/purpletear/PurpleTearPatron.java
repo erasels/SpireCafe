@@ -8,7 +8,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractPatron;
-import spireCafe.interactables.npcs.koishi.KoishiCutscene;
 import spireCafe.util.TexLoader;
 
 public class PurpleTearPatron extends AbstractPatron {
@@ -16,15 +15,14 @@ public class PurpleTearPatron extends AbstractPatron {
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
     public PurpleTearPatron(float animationX, float animationY) {
-        super(animationX, animationY, 160.0f, 200.0f);
+        super(animationX, animationY, 160.0f, 220.0f);
         this.name = characterStrings.NAMES[0];
-        this.animation = new SpriterAnimation(Anniv7Mod.makeCharacterPath("Koishi/Spriter/KoishiAnimation.scml"));
-        this.animation.setFlip(true, false);
+        this.animation = new SpriterAnimation(Anniv7Mod.makeCharacterPath("PurpleTear/Spriter/PurpleTear.scml"));
         setCutscenePortrait("Portrait1");
     }
 
     public void setCutscenePortrait(String texture) {
-        String resourcePath = String.format("Koishi/%s.png", texture);
+        String resourcePath = String.format("PurpleTear/%s.png", texture);
         this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath(resourcePath)));
     }
 
@@ -33,11 +31,12 @@ public class PurpleTearPatron extends AbstractPatron {
     }
 
     public void onInteract() {
-        if (alreadyPerformedTransaction) {
-            setCutscenePortrait("Portrait4");
-        } else {
-            setCutscenePortrait("Portrait1");
-        }
-        AbstractDungeon.topLevelEffectsQueue.add(new KoishiCutscene(this));
+        setCutscenePortrait("Portrait1");
+        AbstractDungeon.topLevelEffectsQueue.add(new PurpleTearCutscene(this));
+    }
+
+    @Override
+    public boolean canSpawn() {
+        return PurpleTearCutscene.canSpawn();
     }
 }

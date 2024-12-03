@@ -144,7 +144,9 @@ public class OptionButton {
         if (this.hb.clicked) {
             this.hb.clicked = false;
             this.pressed = true;
-            this.optionResult.accept(this.dialog, slot);
+            if (!this.isDisabled) {
+                this.optionResult.accept(this.dialog, slot);
+            }
         }
 
         if (!this.isDisabled) {

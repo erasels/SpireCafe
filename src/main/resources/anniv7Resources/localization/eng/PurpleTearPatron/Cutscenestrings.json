@@ -2,37 +2,38 @@
   "${ModID}:PurpleTearCutscene": {
     "NAME": "Purple Tear Cutscene",
     "BLOCKING_TEXTS": [
-      "\"I wonder if sister would like anything here as a souvenir.\""
+      "\"If only my son had lived in a place like this instead . . .\""
     ],
     "DESCRIPTIONS": [
-      "\"Hey! Over here!\"",
-      "The girl greets you in a bright and cherry fashion. You wonder how she has so much energy.",
-      "\"You look interesting! Are you from around here?\"",
-      "\"That's great! I've always wanted to be friends with someone from far away!\" NL The girl smiles at you. \"Will you play with me?\"",
-      "\"Yay! Come on, let's play hide-and-seek!\"",
-      "You stumble through the game in a blur. Despite the girl wearing such eye-catchingly colorful clothing, you found that she eluded your eye a surprisingly large amount of times.",
-      "\"That was fun! Let's do it again sometimes!\"",
-      "\"You don't want to play after all? That's too bad.\"",
-      "\"You're not feeling up for it? Is something troubling you?\"",
-      "The girl looks at you mischievously. \"The best way to deal with troubling thoughts is to just forget about them! I'm really good at not thinking - want me to help you out?\"",
-      "Your head spins, and you blink in confusion. You feel like you've forgotten about something. But as your head clears, you soon forget that you've even forgotten something at all.",
-      "\"Doesn't that feel better? It's much better to just let all your worries drift away, right?\"",
-      "You feel like there's something very wrong with that statement, but you can't tell what.",
-      "\"You want to keep thinking about it? That's too bad. I think people would be a lot happier if they didn't think about troubling things.\""
+      "\"What an interesting place I've found myself in. There's nothing quite like this in the City.\"",
+      "The woman eyes you with a cold, cunning glance. It gives you the feeling of a predator sizing up a potential prey.",
+      "\"Are you familiar with this area, stranger?\"",
+      "\"Oh? Would you be so kind as to tell me about it?\"",
+      "You provide what details you can about the area. The woman seems pleased by your response.",
+      "\"How fascinating. To think that a place like this exists, where so many different worlds cross. I've never seen anything like this before in my travels.\"",
+      "The woman smiles. \"As thanks for your information, how would you like to trade with me? I've picked up a few books across my travels - their information might prove useful to you.\"",
+      "You make a trade with the woman, giving up one of your trinkets in exchange for a large and hefty book.",
+      "\"A fine exchange. This was certainly a worthwhile trip - do take care, stranger.\"",
+      "\"You don't wish to trade? Very well then.\"",
+      "\"You don't know anything? A shame. I suppose I will have to ask someone else, then.\"",
+      "The woman turns away, losing interest in you."
     ],
     "OPTIONS": [
-      "No.",
-      "Sure.",
+      "I've been around here before.",
+      "It's my first time here, actually.",
+      "[Trade] ",
+      "Choose a ",
+      " Common Relic ",
+      " Uncommon Relic ",
+      " Rare Relic ",
+      " to lose.",
+      "Obtain a special Relic.",
       "No thanks.",
-      "[Play] ",
-      "Give a card in your deck Innate and",
-      "Autoplay.",
-      "On second thought . . .",
-      "[Agree] ",
+      "Locked - Requires Common Relic",
+      "Locked - Requires Uncommon Relic",
+      "Locked - Requires Rare Relic",
       "Lose ",
-      " Max HP.",
-      "Remove a card.",
-      "I'd rather not . . ."
+      "."
     ]
   }
 }
