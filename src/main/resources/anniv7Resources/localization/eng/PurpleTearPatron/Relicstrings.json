@@ -13,5 +13,12 @@
       " (Completed)",
       " (Failed)"
     ]
+  },
+  "${ModID}:BookOfRCorp": {
+    "NAME": "Book of R Corp",
+    "FLAVOR": "Many came before me. Many will come after me.",
+    "DESCRIPTIONS": [
+      "At the start of combat, add a #yClone to your hand."
+    ]
   }
 }
