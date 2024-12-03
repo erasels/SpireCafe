@@ -1,12 +1,16 @@
 package spireCafe.patches;
 
+import basemod.ReflectionHacks;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.*;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.EventRoom;
 import com.megacrit.cardcrawl.rooms.TreasureRoomBoss;
 import com.megacrit.cardcrawl.ui.buttons.ProceedButton;
+import com.megacrit.cardcrawl.vfx.combat.StrikeEffect;
 import javassist.CannotCompileException;
 import javassist.CtBehavior;
 import javassist.NotFoundException;
@@ -96,6 +100,20 @@ public class CafeEntryExitPatch {
         }
     }
 
+    @SpirePatch(clz = AbstractDungeon.class, method = "updateFading")
+    public static class CafeDontGoToNextRoomAfterFadeOutPatch {
+        @SpireInstrumentPatch
+        public static ExprEditor dontGoToNextRoomAfterFadeOut () {
+            return new ExprEditor() {
+                public void edit(MethodCall m) throws CannotCompileException {
+                    if (m.getClassName().equals(AbstractDungeon.class.getName()) && m.getMethodName().equals("nextRoomTransition")) {
+                        m.replace(String.format("{ if(!%1$s.inCafe()) { $proceed($$); } }", CafeEntryExitPatch.class.getName()));
+                    }
+                }
+            };
+        }
+    }
+
     public static boolean inCafe() {
         return AbstractDungeon.currMapNode != null && AbstractDungeon.currMapNode.room instanceof CafeEventRoom;
     }
@@ -118,6 +136,10 @@ public class CafeEntryExitPatch {
         AbstractDungeon.combatRewardScreen.clear();
         AbstractDungeon.previousScreen = null;
         AbstractDungeon.closeCurrentScreen();
+
+        AbstractDungeon.fadeOut();
+        setFadeTimer();
+        AbstractDungeon.waitingOnFadeOut = true;
     }
 
     private static void healBeforeCafe() {
@@ -134,14 +156,52 @@ public class CafeEntryExitPatch {
         }
         else {
             AbstractDungeon.player.currentHealth += healthChange;
+            AbstractDungeon.effectList.add(new StrikeEffect(AbstractDungeon.player, AbstractDungeon.player.hb.cX, AbstractDungeon.player.hb.cY, -healthChange));
+        }
+    }
+
+    private static void setFadeTimer() {
+        // Normally fast mode makes the fade out/fade in animation nearly instant (0.001 seconds), which looks slightly
+        // odd with the transition to the cafe. We make things a bit less jarring by giving it a longer animation time
+        // than normal (though still substantially shorter than the 0.8 seconds when not in fast mode).
+        if (Settings.FAST_MODE) {
+            ReflectionHacks.setPrivateStatic(AbstractDungeon.class, "fadeTimer", 0.1f);
         }
     }
 
     private static class CafeEventRoom extends EventRoom {
         public AbstractRoom originalRoom;
+        private boolean startedFadeIn;
 
         public CafeEventRoom(AbstractRoom originalRoom) {
             this.originalRoom = originalRoom;
+        }
+
+        @Override
+        public void render(SpriteBatch sb) {
+            // We continue to render the original room until the fade out finishes to avoid a jarring transition
+            if (!this.startedFadeIn) {
+                this.originalRoom.render(sb);
+            }
+            else {
+                super.render(sb);
+            }
+        }
+
+        @Override
+        public void update() {
+            // We continue to render the original room until the fade out finishes to avoid a jarring transition
+            if (!this.startedFadeIn) {
+                if (!AbstractDungeon.isFadingOut) {
+                    AbstractDungeon.fadeIn();
+                    setFadeTimer();
+                    startedFadeIn = true;
+                }
+                this.originalRoom.update();
+            }
+            else {
+                super.update();
+            }
         }
 
         @Override
