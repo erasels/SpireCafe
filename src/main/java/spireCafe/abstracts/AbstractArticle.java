@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
+import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
 public abstract class AbstractArticle {
@@ -52,6 +53,14 @@ public abstract class AbstractArticle {
 
     public abstract void onBuy();
 
+    public String getTipHeader() {
+        return null;
+    }
+
+    public String getTipBody() {
+        return null;
+    }
+
     public void onClick() {
         if (canBuy()) {
             onBuy();
@@ -74,11 +83,17 @@ public abstract class AbstractArticle {
         if (!(hb.hovered && InputHelper.isMouseDown)) {
             isGettingClicked = false;
         }
+
+
     }
 
     public void render(SpriteBatch sb) {
         renderItem(sb);
         renderPrice(sb);
+
+        if ((getTipHeader() != null || getTipBody() != null) && hb.hovered) {
+            TipHelper.renderGenericTip(InputHelper.mX + 38f * Settings.scale, InputHelper.mY, getTipHeader(), getTipBody());
+        }
     }
 
     public void renderItem(SpriteBatch sb) {

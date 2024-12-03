@@ -3,10 +3,14 @@ package spireCafe.screens;
 import basemod.abstracts.CustomScreen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireEnum;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.UIStrings;
+import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractMerchant;
 
 public class CafeMerchantScreen extends CustomScreen {
+    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(Anniv7Mod.makeID("CafeUI"));
 
     public AbstractMerchant currentMerchant;
 
@@ -14,7 +18,7 @@ public class CafeMerchantScreen extends CustomScreen {
         AbstractDungeon.screen = curScreen();
         AbstractDungeon.isScreenUp = true;
         currentMerchant = merchant;
-        AbstractDungeon.overlayMenu.cancelButton.show("TEMPSTRING");
+        AbstractDungeon.overlayMenu.cancelButton.show(uiStrings.TEXT[0]);
         AbstractDungeon.overlayMenu.hideBlackScreen();
 
     }
@@ -23,7 +27,7 @@ public class CafeMerchantScreen extends CustomScreen {
     public void reopen() {
         AbstractDungeon.screen = curScreen();
         AbstractDungeon.isScreenUp = true;
-        AbstractDungeon.overlayMenu.cancelButton.show("TEMPSTRING");
+        AbstractDungeon.overlayMenu.cancelButton.show(uiStrings.TEXT[0]);
         AbstractDungeon.overlayMenu.hideBlackScreen();
     }
 
