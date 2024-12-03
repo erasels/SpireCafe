@@ -1,0 +1,17 @@
+{
+  "${ModID}:BookOfIndex": {
+    "NAME": "Book of the Index",
+    "FLAVOR": "My own will is erroneous. Only the Prescript can lead me to the right path.",
+    "DESCRIPTIONS": [
+      "Every turn, a random #yPrescript is generated. If you complete it, you gain [E] next turn.",
+      "1st",
+      "2nd",
+      "3rd",
+      "an Attack.",
+      "a Skill.",
+      "The %s card played this turn is ",
+      " (Completed)",
+      " (Failed)"
+    ]
+  }
+}

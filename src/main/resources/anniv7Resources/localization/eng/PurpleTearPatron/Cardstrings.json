@@ -1,0 +1,7 @@
+{
+  "${ModID}:Prescript": {
+    "NAME": "Will of the Prescript",
+    "DESCRIPTION": "",
+    "EXTENDED_DESCRIPTION": ["Example Prescript"]
+  }
+}
