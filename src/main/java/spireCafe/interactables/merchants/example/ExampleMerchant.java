@@ -14,8 +14,9 @@ import spireCafe.util.TexLoader;
 
 public class ExampleMerchant extends AbstractMerchant {
 
-    private static final Texture ITEM_TEXTURE = TexLoader.getTexture(Anniv7Mod.makeUIPath("WhiteCircle.png"));
+    private static final Texture ITEM_TEXTURE = TexLoader.getTexture(Anniv7Mod.makeUIPath("RandomRareArticle.png"));
     private static final Texture BG_TEXTURE = ImageMaster.loadImage("images/npcs/rug/fra.png");
+    private static final Texture PRICE_ICON = ImageMaster.loadImage("images/ui/topPanel/gold.png");
 
     public ExampleMerchant(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
@@ -38,7 +39,7 @@ public class ExampleMerchant extends AbstractMerchant {
                 AbstractDungeon.topLevelEffectsQueue.add(new ShowCardAndObtainEffect(AbstractDungeon.getCard(AbstractCard.CardRarity.RARE), xPos, yPos));
             }
         };
-        randomRare.priceIcon = ImageMaster.UI_GOLD;
+        randomRare.priceIcon = PRICE_ICON;
         randomRare.price = 50;
         articles.add(randomRare);
     }

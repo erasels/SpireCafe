@@ -7,11 +7,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
+import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
 public abstract class AbstractArticle {
 
     private static final float HOVERED_SCALE = 1.1f;
+    private static final float PRICE_OFFSET = 75f;
 
     public String articleId;
     public AbstractMerchant merchant;
@@ -81,16 +83,20 @@ public abstract class AbstractArticle {
 
     public void renderItem(SpriteBatch sb) {
         if (itemTexture != null) {
-            sb.draw(itemTexture, xPos, yPos, 0f, 0f, itemTexture.getRegionWidth(), itemTexture.getRegionHeight(), scale, scale,0);
+            sb.draw(itemTexture, xPos, yPos, itemTexture.getRegionWidth()/2f, itemTexture.getRegionHeight()/2f, itemTexture.getRegionWidth(), itemTexture.getRegionHeight(), scale, scale,0);
         }
     }
 
     public void renderPrice(SpriteBatch sb) {
+        float priceX = xPos + hb.width/2f;
+        float priceY = yPos - PRICE_OFFSET * scale;
+        float textLength = FontHelper.getWidth(FontHelper.tipHeaderFont, String.valueOf(price), scale);
         if (priceIcon != null) {
-            sb.draw(priceIcon, xPos, yPos, 0f, 0f, priceIcon.getWidth(), priceIcon.getHeight(), scale, scale);
-            FontHelper.renderFont(sb, FontHelper.tipHeaderFont, String.valueOf(price), xPos + priceIcon.getWidth() * scale, yPos, canBuy()? Color.WHITE : Color.SALMON);
+            float lineStart = priceX - (textLength + priceIcon.getWidth())/2f;
+            sb.draw(priceIcon, lineStart, priceY, priceIcon.getWidth() * scale, priceIcon.getHeight() * scale);
+            FontHelper.renderFont(sb, FontHelper.tipHeaderFont, String.valueOf(price), lineStart + priceIcon.getWidth() * scale, priceY + priceIcon.getHeight()/2f, canBuy()? Color.WHITE : Color.SALMON);
         } else {
-            FontHelper.renderFont(sb, FontHelper.tipHeaderFont, String.valueOf(price), xPos, yPos, canBuy()? Color.WHITE : Color.SALMON);
+            FontHelper.renderFontCentered(sb, FontHelper.tipHeaderFont, String.valueOf(price), priceX, priceY, canBuy()? Color.WHITE : Color.SALMON);
         }
     }
 }
