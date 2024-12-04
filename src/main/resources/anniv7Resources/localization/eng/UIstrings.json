@@ -6,5 +6,10 @@
       "Adds a cozy café at the end of acts 1 and 2.",
       "Entering the Café costs HP."
     ]
+  },
+  "${ModID}:CafeUI": {
+    "TEXT": [
+      "Return"
+    ]
   }
 }

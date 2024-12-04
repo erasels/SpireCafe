@@ -23,6 +23,7 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import javassist.CtClass;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.abstracts.AbstractCafeInteractable;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cardvars.SecondDamage;
@@ -209,6 +210,7 @@ public class Anniv7Mod implements
         initializeConfig();
         initializeSavedData();
         BaseMod.addEvent(TestEvent.ID, TestEvent.class, Exordium.ID);
+        BaseMod.addCustomScreen(new CafeMerchantScreen());
     }
 
     public static void addPotions() {
