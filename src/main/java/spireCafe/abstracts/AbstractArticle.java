@@ -5,11 +5,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
+import com.megacrit.cardcrawl.relics.Courier;
+import com.megacrit.cardcrawl.relics.MembershipCard;
 
 public abstract class AbstractArticle {
 
@@ -28,9 +31,6 @@ public abstract class AbstractArticle {
 
     public TextureRegion itemTexture;
 
-    public int price = -1;
-    public Texture priceIcon;
-
     public AbstractArticle(String id, AbstractMerchant merchant, float x, float y, float hbWidth, float hbHeight) {
         articleId = id;
         this.merchant = merchant;
@@ -48,10 +48,30 @@ public abstract class AbstractArticle {
         hb = new Hitbox(this.itemTexture.getRegionWidth(), this.itemTexture.getRegionHeight());
     }
 
-
+    //return true if the player should be able to buy the article (also changes the text color of the price)
     public abstract boolean canBuy();
 
+    //Should both give the player what they bought and take the price from them
     public abstract void onBuy();
+
+    //Price before ascension and relic-related gold cost modifiers
+    public abstract int getBasePrice();
+
+    //Price after ascension and relic-related modifiers (actual cost)
+    //Only override if they should be different than normal
+    public int getModifiedPrice() {
+        float finalPrice = getBasePrice();
+        if (AbstractDungeon.ascensionLevel >= 16) {
+            finalPrice *= 1.1;
+        }
+        if (AbstractDungeon.player.hasRelic(MembershipCard.ID)) {
+            finalPrice *= 0.5;
+        }
+        if (AbstractDungeon.player.hasRelic(Courier.ID)) {
+            finalPrice *= 0.8;
+        }
+        return (int)finalPrice;
+    }
 
     public String getTipHeader() {
         return null;
@@ -60,6 +80,11 @@ public abstract class AbstractArticle {
     public String getTipBody() {
         return null;
     }
+
+    public Texture getPriceIcon() {
+        return ImageMaster.UI_GOLD;
+    }
+
 
     public void onClick() {
         if (canBuy()) {
@@ -103,13 +128,14 @@ public abstract class AbstractArticle {
     }
 
     public void renderPrice(SpriteBatch sb) {
+        int price = getModifiedPrice();
         float priceX = xPos + hb.width/2f;
         float priceY = yPos - PRICE_OFFSET * scale;
         float textLength = FontHelper.getWidth(FontHelper.tipHeaderFont, String.valueOf(price), scale);
-        if (priceIcon != null) {
-            float lineStart = priceX - (textLength + priceIcon.getWidth())/2f;
-            sb.draw(priceIcon, lineStart, priceY, priceIcon.getWidth() * scale, priceIcon.getHeight() * scale);
-            FontHelper.renderFont(sb, FontHelper.tipHeaderFont, String.valueOf(price), lineStart + priceIcon.getWidth() * scale, priceY + priceIcon.getHeight()/2f, canBuy()? Color.WHITE : Color.SALMON);
+        if (getPriceIcon() != null) {
+            float lineStart = priceX - (textLength + getPriceIcon().getWidth())/2f;
+            sb.draw(getPriceIcon(), lineStart, priceY, getPriceIcon().getWidth() * scale, getPriceIcon().getHeight() * scale);
+            FontHelper.renderFont(sb, FontHelper.tipHeaderFont, String.valueOf(price), lineStart + getPriceIcon().getWidth() * scale, priceY + getPriceIcon().getHeight()/2f, canBuy()? Color.WHITE : Color.SALMON);
         } else {
             FontHelper.renderFontCentered(sb, FontHelper.tipHeaderFont, String.valueOf(price), priceX, priceY, canBuy()? Color.WHITE : Color.SALMON);
         }

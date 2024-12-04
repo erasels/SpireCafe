@@ -16,18 +16,27 @@ public abstract class AbstractMerchant extends AbstractCafeInteractable {
     public TextureRegion background;
     public ArrayList<AbstractArticle> articles = new ArrayList<>();
     public ArrayList<AbstractArticle> toRemove = new ArrayList<>();
+    public boolean wasShopRolled = false;
 
     public AbstractMerchant(float animationX, float animationY, float hb_w, float hb_h) {
         super(animationX, animationY, hb_w, hb_h);
     }
 
-    public abstract void rollShop();
+    public void initialize() {
+        if (!wasShopRolled) {
+            rollShop();
+        }
+    }
+
+    //Override to populate the shop by adding AbstractArticle objects to the articles list
+    protected abstract void rollShop();
 
     @Override
     public void onInteract() {
         BaseMod.openCustomScreen(CafeMerchantScreen.ScreenEnum.CAFE_MERCHANT_SCREEN, this);
     }
 
+    //Override if you need special behavior when an article is bought
     public void onBuyArticle(AbstractArticle article) {
         toRemove.add(article);
     }

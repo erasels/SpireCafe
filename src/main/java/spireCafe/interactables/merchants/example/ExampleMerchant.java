@@ -21,7 +21,6 @@ public class ExampleMerchant extends AbstractMerchant {
 
     private static final Texture ITEM_TEXTURE = TexLoader.getTexture(Anniv7Mod.makeUIPath("RandomRareArticle.png"));
     private static final Texture BG_TEXTURE = ImageMaster.loadImage("images/npcs/rug/fra.png");
-    private static final Texture PRICE_ICON = ImageMaster.loadImage("images/ui/topPanel/gold.png");
 
     public ExampleMerchant(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
@@ -35,12 +34,12 @@ public class ExampleMerchant extends AbstractMerchant {
         AbstractArticle randomRare = new AbstractArticle("randomRare", this, Settings.WIDTH/2f, Settings.HEIGHT/2f, ITEM_TEXTURE) {
             @Override
             public boolean canBuy() {
-                return AbstractDungeon.player.gold > price;
+                return AbstractDungeon.player.gold > getModifiedPrice();
             }
 
             @Override
             public void onBuy() {
-                AbstractDungeon.player.loseGold(price);
+                AbstractDungeon.player.loseGold(getModifiedPrice());
                 AbstractDungeon.topLevelEffectsQueue.add(new ShowCardAndObtainEffect(AbstractDungeon.getCard(AbstractCard.CardRarity.RARE), xPos, yPos));
             }
 
@@ -53,9 +52,12 @@ public class ExampleMerchant extends AbstractMerchant {
             public String getTipBody() {
                 return characterStrings.TEXT[1];
             }
+
+            @Override
+            public int getBasePrice() {
+                return 50;
+            }
         };
-        randomRare.priceIcon = PRICE_ICON;
-        randomRare.price = 50;
         articles.add(randomRare);
     }
 }

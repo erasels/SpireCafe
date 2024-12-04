@@ -31,7 +31,7 @@ public class TestEvent extends AbstractEvent {
         npcs.add(new MarisaPatron(1400.0F * Settings.scale, AbstractDungeon.floorY));
         npcs.add(new ExamplePatron(1000.0F * Settings.scale, AbstractDungeon.floorY));
         merchant = new ExampleMerchant(1400.0F * Settings.scale, AbstractDungeon.floorY + 400f);
-        merchant.rollShop();
+        merchant.initialize();
     }
 
     @Override
