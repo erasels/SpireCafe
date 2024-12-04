@@ -7,10 +7,10 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import spireCafe.Anniv7Mod;
-import spireCafe.abstracts.AbstractNPC;
+import spireCafe.abstracts.AbstractPatron;
 import spireCafe.util.TexLoader;
 
-public class RedCrewPatron extends AbstractNPC {
+public class RedCrewPatron extends AbstractPatron {
     public static final String ID = RedCrewPatron.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
