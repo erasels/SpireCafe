@@ -22,8 +22,6 @@ import java.util.stream.Collectors;
 public class TestEvent extends AbstractEvent {
     public static final String ID = Anniv7Mod.makeID(TestEvent.class.getSimpleName());
     private final ArrayList<AbstractNPC> npcs = new ArrayList<>();
-    ArrayList<AbstractNPC> npcs = new ArrayList<>();
-    AbstractMerchant merchant;
 
     public TestEvent() {
         this.body = "";
@@ -81,7 +79,6 @@ public class TestEvent extends AbstractEvent {
         for (AbstractNPC npc : npcs) {
             npc.update();
         }
-        merchant.update();
     }
 
     @Override
@@ -93,6 +90,5 @@ public class TestEvent extends AbstractEvent {
         for (AbstractNPC npc : npcs) {
             npc.renderAnimation(sb);
         }
-        merchant.renderAnimation(sb);
     }
 }
