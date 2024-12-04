@@ -8,9 +8,6 @@ import com.megacrit.cardcrawl.events.RoomEventDialog;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.*;
-import spireCafe.interactables.npcs.koishi.KoishiPatron;
-import spireCafe.interactables.npcs.example.ExamplePatron;
-import spireCafe.interactables.npcs.marisa.MarisaPatron;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
