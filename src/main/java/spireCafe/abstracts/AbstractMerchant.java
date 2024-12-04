@@ -25,6 +25,7 @@ public abstract class AbstractMerchant extends AbstractCafeInteractable {
     public void initialize() {
         if (!wasShopRolled) {
             rollShop();
+            wasShopRolled = true;
         }
     }
 

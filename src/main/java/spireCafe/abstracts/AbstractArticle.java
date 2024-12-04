@@ -27,9 +27,14 @@ public abstract class AbstractArticle {
     public float xPos;
     public float yPos;
 
-    private float scale;
+    public float scale;
 
     public TextureRegion itemTexture;
+
+    public AbstractArticle(String id, AbstractMerchant merchant) {
+        articleId = id;
+        this.merchant = merchant;
+    }
 
     public AbstractArticle(String id, AbstractMerchant merchant, float x, float y, float hbWidth, float hbHeight) {
         articleId = id;
@@ -113,6 +118,7 @@ public abstract class AbstractArticle {
     }
 
     public void render(SpriteBatch sb) {
+        sb.setColor(Color.WHITE);
         renderItem(sb);
         renderPrice(sb);
 
