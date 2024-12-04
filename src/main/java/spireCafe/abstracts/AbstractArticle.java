@@ -62,13 +62,13 @@ public abstract class AbstractArticle {
     public int getModifiedPrice() {
         float finalPrice = getBasePrice();
         if (AbstractDungeon.ascensionLevel >= 16) {
-            finalPrice *= 1.1;
+            finalPrice = finalPrice * 1.1f;
         }
         if (AbstractDungeon.player.hasRelic(MembershipCard.ID)) {
-            finalPrice *= 0.5;
+            finalPrice = finalPrice * 0.5f;
         }
         if (AbstractDungeon.player.hasRelic(Courier.ID)) {
-            finalPrice *= 0.8;
+            finalPrice = finalPrice * 0.8f;
         }
         return (int)finalPrice;
     }
