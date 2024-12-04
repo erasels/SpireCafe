@@ -76,6 +76,7 @@ public class Anniv7Mod implements
     public static final Map<String, Keyword> keywords = new HashMap<>();
 
     public static List<String> unfilteredAllInteractableIDs = new ArrayList<>();
+    public static HashMap<String, Class<? extends AbstractCafeInteractable>> interactableClasses = new HashMap<>();
 
 
     public static String makeID(String idText) {
@@ -157,7 +158,14 @@ public class Anniv7Mod implements
         for (CtClass ctClass : foundClasses) {
             boolean ignore = ctClass.hasAnnotation(AutoAdd.Ignore.class);
             if (!ignore) {
-                unfilteredAllInteractableIDs.add(ctClass.getSimpleName());
+                String id = ctClass.getSimpleName();
+                unfilteredAllInteractableIDs.add(id);
+                try {
+                    Class<? extends AbstractCafeInteractable> interactableClass = (Class<? extends AbstractCafeInteractable>) Loader.getClassPool().getClassLoader().loadClass(ctClass.getName());
+                    interactableClasses.put(id, interactableClass);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
 
