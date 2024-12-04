@@ -3,6 +3,7 @@ package spireCafe;
 import basemod.AutoAdd;
 import basemod.BaseMod;
 import basemod.ModPanel;
+import basemod.abstracts.CustomSavable;
 import basemod.helpers.RelicType;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
@@ -59,6 +60,7 @@ public class Anniv7Mod implements
 
     public static Anniv7Mod thismod;
     public static SpireConfig modConfig = null;
+    public static HashSet<String> currentRunSeenInteractables = null;
 
     public static final String modID = "anniv7";
 
@@ -219,7 +221,21 @@ public class Anniv7Mod implements
     }
 
     public static void addSaveFields() {
+        BaseMod.addSaveField(SavableCurrentRunSeenInteractables.SaveKey, new SavableCurrentRunSeenInteractables());
+    }
 
+    public static class SavableCurrentRunSeenInteractables implements CustomSavable<HashSet<String>> {
+        public final static String SaveKey = "CurrentRunSeenInteractables";
+
+        @Override
+        public HashSet<String> onSave() {
+            return currentRunSeenInteractables;
+        }
+
+        @Override
+        public void onLoad(HashSet<String> s) {
+            currentRunSeenInteractables = s == null ? new HashSet<>() : s;
+        }
     }
 
     private static Consumer<String> getWidePotionsWhitelistMethod() {

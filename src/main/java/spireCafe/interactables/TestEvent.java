@@ -39,15 +39,14 @@ public class TestEvent extends AbstractEvent {
             float y = AbstractDungeon.floorY;
             AbstractNPC patron = (AbstractNPC)createInteractable(possiblePatrons.get(i), x, y);
             this.npcs.add(patron);
+            Anniv7Mod.currentRunSeenInteractables.add(patron.id);
         }
     }
 
     private static List<Class<? extends AbstractCafeInteractable>> getPossibilities(Class<? extends AbstractCafeInteractable> clz) {
-        //TODO: Track this as part of the save file and pull the previously seen interactables here
-        HashSet<String> seenInteractableIDs = new HashSet<>();
         return Anniv7Mod.interactableClasses.entrySet().stream()
                 .filter(entry -> clz.isAssignableFrom(entry.getValue()))
-                .filter(entry -> !seenInteractableIDs.contains(entry.getKey()))
+                .filter(entry -> !Anniv7Mod.currentRunSeenInteractables.contains(entry.getKey()))
                 .map(Map.Entry::getValue)
                 .collect(Collectors.toList());
     }
