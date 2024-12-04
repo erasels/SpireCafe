@@ -1,0 +1,39 @@
+{
+  "${ModID}:PurpleTearCutscene": {
+    "NAME": "Purple Tear Cutscene",
+    "BLOCKING_TEXTS": [
+      "\"If only my son had lived in a place like this instead . . .\""
+    ],
+    "DESCRIPTIONS": [
+      "\"What an interesting place I've found myself in. There's nothing quite like this in the City.\"",
+      "The woman eyes you with a cold, cunning glance. It gives you the feeling of a predator sizing up a potential prey.",
+      "\"Are you familiar with this area, stranger?\"",
+      "\"Oh? Would you be so kind as to tell me about it?\"",
+      "You provide what details you can about the area. The woman seems pleased by your response.",
+      "\"How fascinating. To think that a place like this exists, where so many different worlds cross. I've never seen anything like this before in my travels.\"",
+      "The woman smiles. \"As thanks for your information, how would you like to trade with me? I've picked up a few books across my travels - their information might prove useful to you.\"",
+      "You make a trade with the woman, giving up one of your trinkets in exchange for a large and hefty book.",
+      "\"A fine exchange. This was certainly a worthwhile trip - do take care, stranger.\"",
+      "\"You don't wish to trade? Very well then.\"",
+      "\"You don't know anything? A shame. I suppose I will have to ask someone else, then.\"",
+      "The woman turns away, losing interest in you."
+    ],
+    "OPTIONS": [
+      "I've been around here before.",
+      "It's my first time here, actually.",
+      "[Trade] ",
+      "Choose a ",
+      " Common Relic ",
+      " Uncommon Relic ",
+      " Rare Relic ",
+      " to lose.",
+      "Obtain a special Relic.",
+      "No thanks.",
+      "Locked - Requires Common Relic",
+      "Locked - Requires Uncommon Relic",
+      "Locked - Requires Rare Relic",
+      "Lose ",
+      "."
+    ]
+  }
+}

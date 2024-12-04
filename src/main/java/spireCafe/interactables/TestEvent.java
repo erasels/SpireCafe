@@ -10,10 +10,9 @@ import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.*;
 import spireCafe.abstracts.AbstractMerchant;
 import spireCafe.abstracts.AbstractNPC;
-import spireCafe.interactables.merchants.example.ExampleMerchant;
-import spireCafe.interactables.npcs.koishi.KoishiPatron;
 import spireCafe.interactables.npcs.example.ExamplePatron;
-import spireCafe.interactables.npcs.marisa.MarisaPatron;
+import spireCafe.interactables.npcs.koishi.KoishiPatron;
+import spireCafe.interactables.npcs.purpletear.PurpleTearPatron;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;

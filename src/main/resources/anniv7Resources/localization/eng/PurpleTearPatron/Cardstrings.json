@@ -1,0 +1,11 @@
+{
+  "${ModID}:Prescript": {
+    "NAME": "Will of the Prescript",
+    "DESCRIPTION": "",
+    "EXTENDED_DESCRIPTION": ["Example Prescript"]
+  },
+  "${ModID}:Clone": {
+    "NAME": "Clone",
+    "DESCRIPTION": "Retain. NL Choose a highest cost card in your hand. Add a copy of that card into your hand. NL Exhaust. "
+  }
+}
