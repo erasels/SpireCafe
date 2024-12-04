@@ -14,9 +14,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class TestEvent extends AbstractEvent {
-
     public static final String ID = Anniv7Mod.makeID(TestEvent.class.getSimpleName());
-    ArrayList<AbstractNPC> npcs = new ArrayList<>();
+    private final ArrayList<AbstractNPC> npcs = new ArrayList<>();
 
     public TestEvent() {
         this.body = "";
