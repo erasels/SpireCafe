@@ -27,6 +27,7 @@ public class TestEvent extends AbstractEvent {
     @Override
     public void onEnterRoom() {
         // TODO: Fill out the rest of these once we have them implemented
+        // 1 Bartender, 1 Merchant, ~3 total patrons and attractions (at least one of each)
         List<Class<? extends AbstractCafeInteractable>> possibleBartenders = getPossibilities(AbstractBartender.class);
         List<Class<? extends AbstractCafeInteractable>> possibleMerchants = getPossibilities(AbstractMerchant.class);
         List<Class<? extends AbstractCafeInteractable>> possiblePatrons = getPossibilities(AbstractPatron.class);
