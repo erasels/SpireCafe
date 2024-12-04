@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 public class TestEvent extends AbstractEvent {
     public static final String ID = Anniv7Mod.makeID(TestEvent.class.getSimpleName());
     private final ArrayList<AbstractNPC> npcs = new ArrayList<>();
+    private AbstractMerchant merchant;
 
     public TestEvent() {
         this.body = "";
@@ -52,6 +53,11 @@ public class TestEvent extends AbstractEvent {
             this.npcs.add(patron);
             Anniv7Mod.currentRunSeenInteractables.add(patron.id);
         }
+
+        Collections.shuffle(possibleMerchants, new java.util.Random(rng.randomLong()));
+        this.merchant = (AbstractMerchant)createInteractable(possibleMerchants.get(0), 1000*Settings.xScale, AbstractDungeon.floorY+400*Settings.yScale);
+        merchant.initialize();
+        Anniv7Mod.currentRunSeenInteractables.add(merchant.id);
     }
 
     private static List<Class<? extends AbstractCafeInteractable>> getPossibilities(Class<? extends AbstractCafeInteractable> clz) {
@@ -79,6 +85,7 @@ public class TestEvent extends AbstractEvent {
         for (AbstractNPC npc : npcs) {
             npc.update();
         }
+        merchant.update();
     }
 
     @Override
@@ -90,5 +97,6 @@ public class TestEvent extends AbstractEvent {
         for (AbstractNPC npc : npcs) {
             npc.renderAnimation(sb);
         }
+        merchant.renderAnimation(sb);
     }
 }
