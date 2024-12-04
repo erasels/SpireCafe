@@ -3,6 +3,7 @@ package spireCafe;
 import basemod.AutoAdd;
 import basemod.BaseMod;
 import basemod.ModPanel;
+import basemod.abstracts.CustomSavable;
 import basemod.helpers.RelicType;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
@@ -22,6 +23,7 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import javassist.CtClass;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.abstracts.AbstractCafeInteractable;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cardvars.SecondDamage;
@@ -38,6 +40,8 @@ import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Consumer;
+
+import static spireCafe.patches.CafeEntryExitPatch.CAFE_ENTRY_SOUND_KEY;
 
 @SuppressWarnings({"unused"})
 @SpireInitializer
@@ -57,6 +61,7 @@ public class Anniv7Mod implements
 
     public static Anniv7Mod thismod;
     public static SpireConfig modConfig = null;
+    public static HashSet<String> currentRunSeenInteractables = null;
 
     public static final String modID = "anniv7";
 
@@ -74,6 +79,7 @@ public class Anniv7Mod implements
     public static final Map<String, Keyword> keywords = new HashMap<>();
 
     public static List<String> unfilteredAllInteractableIDs = new ArrayList<>();
+    public static HashMap<String, Class<? extends AbstractCafeInteractable>> interactableClasses = new HashMap<>();
 
 
     public static String makeID(String idText) {
@@ -155,7 +161,14 @@ public class Anniv7Mod implements
         for (CtClass ctClass : foundClasses) {
             boolean ignore = ctClass.hasAnnotation(AutoAdd.Ignore.class);
             if (!ignore) {
-                unfilteredAllInteractableIDs.add(ctClass.getSimpleName());
+                String id = ctClass.getSimpleName();
+                unfilteredAllInteractableIDs.add(id);
+                try {
+                    Class<? extends AbstractCafeInteractable> interactableClass = (Class<? extends AbstractCafeInteractable>) Loader.getClassPool().getClassLoader().loadClass(ctClass.getName());
+                    interactableClasses.put(id, interactableClass);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
 
@@ -197,6 +210,7 @@ public class Anniv7Mod implements
         initializeConfig();
         initializeSavedData();
         BaseMod.addEvent(TestEvent.ID, TestEvent.class, Exordium.ID);
+        BaseMod.addCustomScreen(new CafeMerchantScreen());
     }
 
     public static void addPotions() {
@@ -209,7 +223,21 @@ public class Anniv7Mod implements
     }
 
     public static void addSaveFields() {
+        BaseMod.addSaveField(SavableCurrentRunSeenInteractables.SaveKey, new SavableCurrentRunSeenInteractables());
+    }
 
+    public static class SavableCurrentRunSeenInteractables implements CustomSavable<HashSet<String>> {
+        public final static String SaveKey = "CurrentRunSeenInteractables";
+
+        @Override
+        public HashSet<String> onSave() {
+            return currentRunSeenInteractables;
+        }
+
+        @Override
+        public void onLoad(HashSet<String> s) {
+            currentRunSeenInteractables = s == null ? new HashSet<>() : s;
+        }
     }
 
     private static Consumer<String> getWidePotionsWhitelistMethod() {
@@ -332,6 +360,7 @@ public class Anniv7Mod implements
 
     @Override
     public void receiveAddAudio() {
+        BaseMod.addAudio(CAFE_ENTRY_SOUND_KEY, makePath("audio/cafe_entry_door_chime.mp3"));
 
     }
 
