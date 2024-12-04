@@ -23,4 +23,9 @@ public class Prescript extends AbstractSCCard {
     public void upp() {
 
     }
+
+    public void upgrade() {
+        name = cardStrings.EXTENDED_DESCRIPTION[0];
+        this.initializeTitle();
+    }
 }

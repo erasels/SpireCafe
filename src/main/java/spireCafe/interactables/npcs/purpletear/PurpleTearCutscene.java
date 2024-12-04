@@ -1,5 +1,6 @@
 package spireCafe.interactables.npcs.purpletear;
 
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
@@ -20,7 +21,8 @@ public class PurpleTearCutscene extends AbstractCutscene {
     private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
 
     AbstractRelic commonBook = new BookOfRCorp();
-    AbstractRelic rareBook = new BookOfIndex();
+    BookOfIndex rareBook = new BookOfIndex();
+    AbstractCard examplePrescript = rareBook.generateExamplePrescript();
 
     public PurpleTearCutscene(AbstractNPC character) {
         super(character, cutsceneStrings);
@@ -52,7 +54,7 @@ public class PurpleTearCutscene extends AbstractCutscene {
             }
 
             if (hasRelicOfRarity(AbstractRelic.RelicTier.RARE)) {
-                this.dialog.addDialogOption(OPTIONS[2] + FontHelper.colorString(OPTIONS[3] + OPTIONS[6] + OPTIONS[7], "r") + " " + FontHelper.colorString(OPTIONS[8], "g"), rareBook).setOptionResult((i)->{
+                this.dialog.addDialogOption(OPTIONS[2] + FontHelper.colorString(OPTIONS[3] + OPTIONS[6] + OPTIONS[7], "r") + " " + FontHelper.colorString(OPTIONS[8], "g"), examplePrescript, rareBook).setOptionResult((i)->{
                     generateLoseRelicOptions(AbstractRelic.RelicTier.RARE, rareBook);
                 });
             }else {

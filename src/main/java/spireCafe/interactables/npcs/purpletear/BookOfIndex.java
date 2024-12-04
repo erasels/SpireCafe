@@ -102,4 +102,12 @@ public class BookOfIndex extends AbstractSCRelic {
             card.render(sb);
         }
     }
+
+    public AbstractCard generateExamplePrescript() {
+        AbstractCard card = new Prescript();
+        card.upgrade();
+        card.rawDescription = String.format(DESCRIPTIONS[6] + DESCRIPTIONS[5], DESCRIPTIONS[2]);
+        card.initializeDescription();
+        return card;
+    }
 }
