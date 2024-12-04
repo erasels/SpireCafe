@@ -4,6 +4,7 @@ import basemod.ReflectionHacks;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
@@ -21,7 +22,10 @@ import spireCafe.Anniv7Mod;
 import spireCafe.interactables.TestEvent;
 import spireCafe.util.ActUtil;
 
+import static spireCafe.Anniv7Mod.makeID;
+
 public class CafeEntryExitPatch {
+    public static final String CAFE_ENTRY_SOUND_KEY = makeID("CafeEntry");
     public static int HP_COST_PERCENT = 33;
 
     @SpirePatch(clz = ProceedButton.class, method = "goToNextDungeon")
@@ -132,6 +136,7 @@ public class CafeEntryExitPatch {
 
         AbstractDungeon.currMapNode.room = new CafeEventRoom(room);
         AbstractDungeon.getCurrRoom().onPlayerEntry();
+        CardCrawlGame.sound.play(CAFE_ENTRY_SOUND_KEY);
         AbstractDungeon.rs = AbstractDungeon.RenderScene.NORMAL;
 
         AbstractDungeon.combatRewardScreen.clear();
