@@ -28,7 +28,6 @@ public class TestEvent extends AbstractEvent {
     @Override
     public void onEnterRoom() {
         // TODO: Fill out the rest of these once we have them implemented
-        // TODO: Also handle non-patron NPCs?
         List<Class<? extends AbstractCafeInteractable>> possibleBartenders = getPossibilities(AbstractBartender.class);
         List<Class<? extends AbstractCafeInteractable>> possibleMerchants = getPossibilities(AbstractMerchant.class);
         List<Class<? extends AbstractCafeInteractable>> possiblePatrons = getPossibilities(AbstractPatron.class);
