@@ -3,6 +3,8 @@ package spireCafe.interactables.merchants.example;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.colorless.Discovery;
+import com.megacrit.cardcrawl.cards.red.Intimidate;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -12,6 +14,7 @@ import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractArticle;
 import spireCafe.abstracts.AbstractMerchant;
+import spireCafe.interactables.merchants.CardArticle;
 import spireCafe.interactables.npcs.example.ExamplePatron;
 import spireCafe.util.TexLoader;
 
@@ -59,5 +62,8 @@ public class ExampleMerchant extends AbstractMerchant {
             }
         };
         articles.add(randomRare);
+
+        AbstractArticle intimidate = new CardArticle("intimidate", this, 300f * Settings.xScale,700f * Settings.xScale, new Intimidate(), 75);
+        articles.add(intimidate);
     }
 }
