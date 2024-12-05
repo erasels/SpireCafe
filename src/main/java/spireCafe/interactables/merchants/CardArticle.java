@@ -3,11 +3,13 @@ package spireCafe.interactables.merchants;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
+import com.megacrit.cardcrawl.screens.SingleCardViewPopup;
 import com.megacrit.cardcrawl.vfx.FastCardObtainEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import spireCafe.abstracts.AbstractArticle;
@@ -17,6 +19,7 @@ public class CardArticle extends AbstractArticle {
     private static final float PRICE_OFFSET = 50f;
     private AbstractCard card;
     private int basePrice;
+    private boolean isGettingRightClicked;
 
     public CardArticle(String id, AbstractMerchant merchant, float x, float y, AbstractCard card, int basePrice) {
         super(id, merchant);
@@ -63,14 +66,22 @@ public class CardArticle extends AbstractArticle {
         if (!(card.hb.hovered && InputHelper.isMouseDown)) {
             isGettingClicked = false;
         }
+
+        if (card.hb.hovered && InputHelper.justClickedRight) {
+            isGettingRightClicked = true;
+        }
+        if (card.hb.hovered && InputHelper.justReleasedClickRight && isGettingRightClicked) {
+            CardCrawlGame.cardPopup.open(card);
+        }
+        if (!(card.hb.hovered && InputHelper.isMouseDown_R)) {
+            isGettingRightClicked = false;
+        }
     }
 
     @Override
     public void renderItem(SpriteBatch sb) {
         card.render(sb);
-        if (card.hoverTimer > 0.3f) {
-            card.renderCardTip(sb);
-        }
+        card.renderCardTip(sb);
     }
 
     @Override
