@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
@@ -17,13 +18,14 @@ import com.megacrit.cardcrawl.relics.MembershipCard;
 public abstract class AbstractArticle {
 
     private static final float HOVERED_SCALE = 1.1f;
-    private static final float PRICE_OFFSET = 75f;
+    private static final float PRICE_OFFSET = 60f;
 
     public String articleId;
     public AbstractMerchant merchant;
 
     public Hitbox hb;
     public boolean isGettingClicked = false;
+    public boolean isGettingRightClicked = false;
     public float xPos;
     public float yPos;
 
@@ -98,6 +100,10 @@ public abstract class AbstractArticle {
         }
     }
 
+    public void onRightClick() {
+
+    }
+
 
     public void update() {
         hb.update(xPos, yPos);
@@ -113,8 +119,15 @@ public abstract class AbstractArticle {
         if (!(hb.hovered && InputHelper.isMouseDown)) {
             isGettingClicked = false;
         }
-
-
+        if (hb.hovered && InputHelper.justClickedRight) {
+            isGettingRightClicked = true;
+        }
+        if (hb.hovered && InputHelper.justReleasedClickRight && isGettingRightClicked) {
+            onRightClick();
+        }
+        if (!(hb.hovered && InputHelper.isMouseDown_R)) {
+            isGettingRightClicked = false;
+        }
     }
 
     public void render(SpriteBatch sb) {

@@ -19,7 +19,6 @@ public class CardArticle extends AbstractArticle {
     private static final float PRICE_OFFSET = 50f;
     private AbstractCard card;
     private int basePrice;
-    private boolean isGettingRightClicked;
 
     public CardArticle(String id, AbstractMerchant merchant, float x, float y, AbstractCard card, int basePrice) {
         super(id, merchant);
@@ -48,7 +47,6 @@ public class CardArticle extends AbstractArticle {
 
     @Override
     public void update() {
-
         card.current_x = xPos;
         card.current_y = yPos;
         card.target_x = xPos;
@@ -56,26 +54,30 @@ public class CardArticle extends AbstractArticle {
         card.update();
         card.updateHoverLogic();
 
-        //I wouldn't be surprised if hitboxes had something to not have to deal with this isGettingClicked flag, but I didn't find it
-        if (card.hb.hovered && InputHelper.justClickedLeft) {
+        //can't super.update() because it would update the hb twice
+        if (hb.hovered && InputHelper.justClickedLeft) {
             isGettingClicked = true;
         }
-        if (card.hb.hovered && InputHelper.justReleasedClickLeft && isGettingClicked) {
+        if (hb.hovered && InputHelper.justReleasedClickLeft && isGettingClicked) {
             onClick();
         }
-        if (!(card.hb.hovered && InputHelper.isMouseDown)) {
+        if (!(hb.hovered && InputHelper.isMouseDown)) {
             isGettingClicked = false;
         }
-
-        if (card.hb.hovered && InputHelper.justClickedRight) {
+        if (hb.hovered && InputHelper.justClickedRight) {
             isGettingRightClicked = true;
         }
-        if (card.hb.hovered && InputHelper.justReleasedClickRight && isGettingRightClicked) {
-            CardCrawlGame.cardPopup.open(card);
+        if (hb.hovered && InputHelper.justReleasedClickRight && isGettingRightClicked) {
+            onRightClick();
         }
-        if (!(card.hb.hovered && InputHelper.isMouseDown_R)) {
+        if (!(hb.hovered && InputHelper.isMouseDown_R)) {
             isGettingRightClicked = false;
         }
+    }
+
+    @Override
+    public void onRightClick() {
+        CardCrawlGame.cardPopup.open(card);
     }
 
     @Override
