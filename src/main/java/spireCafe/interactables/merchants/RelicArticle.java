@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
@@ -22,7 +23,7 @@ public class RelicArticle extends AbstractArticle {
         this.relic = relic;
         this.basePrice = basePrice;
         itemTexture = new TextureRegion(relic.img);
-        hb = new Hitbox(relic.img.getWidth()/2f, relic.img.getHeight()/2f);
+        hb = new Hitbox(relic.img.getWidth()/2f* Settings.scale, relic.img.getHeight()/2f * Settings.scale);
     }
 
     @Override
