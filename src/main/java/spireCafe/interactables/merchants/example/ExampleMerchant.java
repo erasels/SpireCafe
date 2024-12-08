@@ -19,7 +19,6 @@ import spireCafe.abstracts.AbstractMerchant;
 import spireCafe.interactables.merchants.CardArticle;
 import spireCafe.interactables.merchants.PotionArticle;
 import spireCafe.interactables.merchants.RelicArticle;
-import spireCafe.interactables.npcs.example.ExamplePatron;
 import spireCafe.util.TexLoader;
 
 public class ExampleMerchant extends AbstractMerchant {
