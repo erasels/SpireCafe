@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Affine2;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
@@ -17,13 +19,14 @@ import com.megacrit.cardcrawl.relics.MembershipCard;
 public abstract class AbstractArticle {
 
     private static final float HOVERED_SCALE = 1.1f;
-    private static final float PRICE_OFFSET = 75f;
+    private static final float PRICE_OFFSET = 60f;
 
     public String articleId;
     public AbstractMerchant merchant;
 
     public Hitbox hb;
     public boolean isGettingClicked = false;
+    public boolean isGettingRightClicked = false;
     public float xPos;
     public float yPos;
 
@@ -41,7 +44,7 @@ public abstract class AbstractArticle {
         this.merchant = merchant;
         xPos = x;
         yPos = y;
-        hb = new Hitbox(x, y, hbWidth, hbHeight);
+        hb = new Hitbox(x, y, hbWidth * Settings.scale, hbHeight * Settings.scale);
     }
 
     public AbstractArticle(String id, AbstractMerchant merchant, float x, float y, Texture itemTexture) {
@@ -50,7 +53,8 @@ public abstract class AbstractArticle {
         xPos = x;
         yPos = y;
         this.itemTexture = new TextureRegion(itemTexture);
-        hb = new Hitbox(this.itemTexture.getRegionWidth(), this.itemTexture.getRegionHeight());
+
+        hb = new Hitbox(this.itemTexture.getRegionWidth()*Settings.scale, this.itemTexture.getRegionHeight()*Settings.scale);
     }
 
     //return true if the player should be able to buy the article (also changes the text color of the price)
@@ -98,6 +102,10 @@ public abstract class AbstractArticle {
         }
     }
 
+    public void onRightClick() {
+
+    }
+
 
     public void update() {
         hb.update(xPos, yPos);
@@ -113,8 +121,15 @@ public abstract class AbstractArticle {
         if (!(hb.hovered && InputHelper.isMouseDown)) {
             isGettingClicked = false;
         }
-
-
+        if (hb.hovered && InputHelper.justClickedRight) {
+            isGettingRightClicked = true;
+        }
+        if (hb.hovered && InputHelper.justReleasedClickRight && isGettingRightClicked) {
+            onRightClick();
+        }
+        if (!(hb.hovered && InputHelper.isMouseDown_R)) {
+            isGettingRightClicked = false;
+        }
     }
 
     public void render(SpriteBatch sb) {
@@ -129,7 +144,10 @@ public abstract class AbstractArticle {
 
     public void renderItem(SpriteBatch sb) {
         if (itemTexture != null) {
-            sb.draw(itemTexture, xPos, yPos, itemTexture.getRegionWidth()/2f, itemTexture.getRegionHeight()/2f, itemTexture.getRegionWidth(), itemTexture.getRegionHeight(), scale, scale,0);
+            Affine2 transform = new Affine2();
+            transform.translate(xPos + (hb.width - scale * itemTexture.getRegionWidth())/2f,yPos + (hb.height - scale * itemTexture.getRegionHeight())/2f);
+            transform.scale(scale,scale);
+            sb.draw(itemTexture, itemTexture.getRegionWidth(), itemTexture.getRegionHeight(), transform);
         }
     }
 
@@ -139,11 +157,12 @@ public abstract class AbstractArticle {
         float priceY = yPos - PRICE_OFFSET * scale;
         float textLength = FontHelper.getWidth(FontHelper.tipHeaderFont, String.valueOf(price), scale);
         if (getPriceIcon() != null) {
-            float lineStart = priceX - (textLength + getPriceIcon().getWidth())/2f;
+            float lineStart = priceX - (textLength + getPriceIcon().getWidth() * scale)/2f;
             sb.draw(getPriceIcon(), lineStart, priceY, getPriceIcon().getWidth() * scale, getPriceIcon().getHeight() * scale);
             FontHelper.renderFont(sb, FontHelper.tipHeaderFont, String.valueOf(price), lineStart + getPriceIcon().getWidth() * scale, priceY + getPriceIcon().getHeight()/2f, canBuy()? Color.WHITE : Color.SALMON);
         } else {
             FontHelper.renderFontCentered(sb, FontHelper.tipHeaderFont, String.valueOf(price), priceX, priceY, canBuy()? Color.WHITE : Color.SALMON);
         }
+        hb.render(sb);
     }
 }
