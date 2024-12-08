@@ -10,12 +10,14 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
+import com.megacrit.cardcrawl.potions.Ambrosia;
 import com.megacrit.cardcrawl.relics.NlothsGift;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractArticle;
 import spireCafe.abstracts.AbstractMerchant;
 import spireCafe.interactables.merchants.CardArticle;
+import spireCafe.interactables.merchants.PotionArticle;
 import spireCafe.interactables.merchants.RelicArticle;
 import spireCafe.interactables.npcs.example.ExamplePatron;
 import spireCafe.util.TexLoader;
@@ -36,6 +38,19 @@ public class ExampleMerchant extends AbstractMerchant {
 
     @Override
     public void rollShop() {
+        //Use CardArticle to add cards to your shop. You can override onBuy() and getPriceIcon() to change the price from gold (default) to something else
+        AbstractArticle intimidate = new CardArticle("intimidate", this, 320f * Settings.xScale,700f * Settings.yScale, new Intimidate(), 75);
+        articles.add(intimidate);
+
+        //Use RelicArticle to add relics to your shop. You can override onBuy() and getPriceIcon() to change the price from gold (default) to something else
+        AbstractArticle nlothGift = new RelicArticle("nlothgift", this, 500f * Settings.xScale, 700f * Settings.yScale, new NlothsGift(), 125);
+        articles.add(nlothGift);
+
+        //Use PotionArticle to add potions to your shop. You can override onBuy() and getPriceIcon() to change the price from gold (default) to something else (unlike the others, onBuy ONLY handles the price)
+        AbstractArticle potion = new PotionArticle("potion", this, 620f * Settings.xScale, 700f * Settings.yScale, new Ambrosia(), 125);
+        articles.add(potion);
+
+        //Use AbstractArticle directly or make a class that extends it for all other use cases. Note that onBuy() must handle the price AND what is being bought
         AbstractArticle randomRare = new AbstractArticle("randomRare", this, Settings.WIDTH/2f, Settings.HEIGHT/2f, ITEM_TEXTURE) {
             @Override
             public boolean canBuy() {
@@ -65,10 +80,6 @@ public class ExampleMerchant extends AbstractMerchant {
         };
         articles.add(randomRare);
 
-        AbstractArticle intimidate = new CardArticle("intimidate", this, 320f * Settings.xScale,700f * Settings.yScale, new Intimidate(), 75);
-        articles.add(intimidate);
 
-        AbstractArticle nlothGift = new RelicArticle("nlothgift", this, 500f * Settings.xScale, 700f * Settings.yScale, new NlothsGift(), 125);
-        articles.add(nlothGift);
     }
 }
