@@ -54,7 +54,7 @@ public abstract class AbstractMerchant extends AbstractCafeInteractable {
 
     public void renderShop(SpriteBatch sb) {
         sb.setColor(Color.WHITE);
-        sb.draw(background, 0f,0f,0f,0f,background.getRegionWidth(),background.getRegionHeight(), Settings.scale, Settings.scale, 0f);
+        sb.draw(background, 0f,0f, Settings.WIDTH, Settings.HEIGHT);
         for (AbstractArticle article : articles) {
             article.render(sb);
         }
