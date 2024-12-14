@@ -30,7 +30,6 @@ public class BartenderCutscene extends AbstractCutscene {
 
     @Override
     public String getBlockingDialogue() {
-        // If blocking logic is still needed for other reasons, it can remain.
         return BLOCKING_TEXTS[bartender.blockingDialogueIndex];
     }
 
@@ -46,9 +45,6 @@ public class BartenderCutscene extends AbstractCutscene {
             } else {
                 nextDialogue();
 
-                // If this new dialogue index might show options again (for repeated interactions), you can re-add them:
-                // For simplicity, if you intend only one round of option picking, you can omit this.
-                // If you DO want repeated interactions until everything is done, uncomment:
                 // addAvailableOptions();
             }
         }
@@ -56,27 +52,20 @@ public class BartenderCutscene extends AbstractCutscene {
 
     /**
      * Adds all available options that haven't been used yet.
-     * Gameplay options (heal and second) are only shown if they haven't been used.
      * Flavor and No Thanks are always added (if flavor is implemented).
      */
     private void addAvailableOptions() {
         // Clear old options, just in case
         this.dialog.clear();
 
-        // If heal not used, add heal option
         if (!bartender.healUsed) {
             addHealOption();
         }
-
-        // If second option not used and exists, add it
         if (!bartender.secondUsed && bartender.getSecondOptionDescription() != null && !bartender.getSecondOptionDescription().isEmpty()) {
             addSecondOption();
         }
 
-        // Add flavor options if any
         addFlavorOptions();
-
-        // Always add "No thanks" option
         addNoThanksOption();
     }
 
@@ -136,7 +125,6 @@ public class BartenderCutscene extends AbstractCutscene {
     private void handleAfterGameplayOptionChosen() {
         nextDialogue();
         // If there are still unselected gameplay options, we show them again along with flavor and no thanks.
-        // If not, we only show flavor and no thanks.
         if (!allGameplayOptionsDone()) {
             addAvailableOptions();
         } else {
