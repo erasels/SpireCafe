@@ -39,6 +39,7 @@ public abstract class AbstractArticle {
         this.merchant = merchant;
     }
 
+    //The X and Y positions for the articles are the bottom left spot where the image and its hitbox will start. The cost will be rendered below.
     public AbstractArticle(String id, AbstractMerchant merchant, float x, float y, float hbWidth, float hbHeight) {
         articleId = id;
         this.merchant = merchant;

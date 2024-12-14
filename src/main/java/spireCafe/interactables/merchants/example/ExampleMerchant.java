@@ -37,6 +37,8 @@ public class ExampleMerchant extends AbstractMerchant {
 
     @Override
     public void rollShop() {
+        //The X and Y positions for the articles are the bottom left spot where the image and its hitbox will start. The cost will be rendered below.
+
         //Use CardArticle to add cards to your shop. You can override onBuy() and getPriceIcon() to change the price from gold (default) to something else
         AbstractArticle intimidate = new CardArticle("intimidate", this, 320f * Settings.xScale,700f * Settings.yScale, new Intimidate(), 75);
         articles.add(intimidate);
