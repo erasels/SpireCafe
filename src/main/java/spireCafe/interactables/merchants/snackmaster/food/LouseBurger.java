@@ -1,20 +1,15 @@
 package spireCafe.interactables.merchants.snackmaster.food;
 
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.vfx.combat.HealEffect;
-import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractMerchant;
-import spireCafe.interactables.merchants.snackmaster.SnackmasterMerchant;
 
 import static spireCafe.interactables.merchants.snackmaster.SnackmasterMerchant.ZINGER_CUTOFF;
+import static spireCafe.interactables.merchants.snackmaster.SnackmasterMerchant.snackmasterStrings;
 
 public class LouseBurger extends AbstractFoodArticle{
-    private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(SnackmasterMerchant.ID));
-
     public LouseBurger(AbstractMerchant merchant, int slot) {
-        super("louseBurger", merchant, slot, "louseBurger");
+        super("LouseBurger", merchant, slot, "louseBurger");
     }
 
     @Override
@@ -29,11 +24,11 @@ public class LouseBurger extends AbstractFoodArticle{
 
     @Override
     public String getTipHeader() {
-        return characterStrings.TEXT[ZINGER_CUTOFF+1];
+        return snackmasterStrings.TEXT[ZINGER_CUTOFF+1];
     }
 
     @Override
     public String getTipBody() {
-        return characterStrings.TEXT[ZINGER_CUTOFF+2];
+        return snackmasterStrings.TEXT[ZINGER_CUTOFF+2];
     }
 }
