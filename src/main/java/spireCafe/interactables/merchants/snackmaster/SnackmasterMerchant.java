@@ -36,7 +36,7 @@ public class SnackmasterMerchant extends AbstractMerchant {
     @Override
     public void rollShop() {
         articles.add(new LouseBurger(this, 0));
-        articles.add(new LouseBurger(this, 1));
+        articles.add(new MawFillet(this, 1));
         articles.add(new LouseBurger(this, 2));
     }
 }
