@@ -1,0 +1,16 @@
+{
+  "${ModID}:StarbucksBartenderCutscene": {
+    "NAME": "InSpire Employee Cutscene",
+    "BLOCKING_TEXTS": [
+      "\"Thank you for your patronage. Goodbye.\""
+    ],
+    "DESCRIPTIONS": [
+      "\"Welcome! How may I be of service?\"",
+      "*Grumble* \"I do not get paid enough for this...\"",
+      "\"Alright!\""
+    ],
+    "OPTIONS": [
+      "I don't want anything."
+    ]
+  }
+}

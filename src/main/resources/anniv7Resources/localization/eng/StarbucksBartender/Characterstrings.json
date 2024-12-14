@@ -1,0 +1,10 @@
+{
+  "${ModID}:StarbucksBartender": {
+    "NAMES": [
+      "InSpire Employee"
+    ],
+    "TEXT": [
+      "Drink a coffee to heal #b%s HP and pay #b%s Gold."
+    ]
+  }
+}

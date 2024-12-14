@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 
 public abstract class AbstractBartender extends AbstractNPC {
+    // Flags to track if options have been used
+    public boolean healUsed = false;
+    public boolean secondUsed = false;
+
     public AbstractBartender(float animationX, float animationY, float hb_w, float hb_h) {
         super(animationX, animationY, hb_w, hb_h);
         shouldShowSpeechBubble = false;
@@ -14,7 +18,7 @@ public abstract class AbstractBartender extends AbstractNPC {
     @Override
     public void renderAnimation(SpriteBatch sb) {
         super.renderAnimation(sb);
-        FontHelper.renderFontCentered(sb, FontHelper.bannerNameFont, "Test", animationX + hitbox.width/2, animationY + hitbox.height, Color.WHITE);
+        FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, "Test", hitbox.cX, animationY + hitbox.height, Color.WHITE);
     }
 
     /**
@@ -61,6 +65,7 @@ public abstract class AbstractBartender extends AbstractNPC {
 
     /**
      * Code that gets called when the bartender is clicked. By default, this will start the cutscene.
+     * Override this and add your own Cutscene here if you made one, or use the different overload for BartenderCutscene
      */
     public void onInteract() {
         AbstractDungeon.topLevelEffectsQueue.add(new BartenderCutscene(this));
