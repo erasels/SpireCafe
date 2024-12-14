@@ -103,6 +103,10 @@ public class Anniv7Mod implements
         return modID + "Resources/images/characters/" + resourcePath;
     }
 
+    public static String makeMerchantPath(String resourcePath) {
+        return modID + "Resources/images/merchants/" + resourcePath;
+    }
+
     public static String makeUIPath(String resourcePath) {
         return modID + "Resources/images/ui/" + resourcePath;
     }
