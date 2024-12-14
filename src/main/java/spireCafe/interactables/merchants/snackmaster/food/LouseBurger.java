@@ -1,8 +1,7 @@
 package spireCafe.interactables.merchants.snackmaster.food;
 
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.vfx.combat.HealEffect;
 import spireCafe.abstracts.AbstractMerchant;
+import spireCafe.util.Wiz;
 
 import static spireCafe.interactables.merchants.snackmaster.SnackmasterMerchant.ZINGER_CUTOFF;
 import static spireCafe.interactables.merchants.snackmaster.SnackmasterMerchant.snackmasterStrings;
@@ -14,7 +13,7 @@ public class LouseBurger extends AbstractFoodArticle{
 
     @Override
     public void foodEffect() {
-        AbstractDungeon.topLevelEffectsQueue.add(new HealEffect(xPos, yPos, 10));
+        Wiz.p().heal(10);
     }
 
     @Override
