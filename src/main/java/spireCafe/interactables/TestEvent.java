@@ -10,6 +10,7 @@ import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.*;
 import spireCafe.abstracts.AbstractMerchant;
 import spireCafe.abstracts.AbstractNPC;
+import spireCafe.interactables.merchants.snackmaster.SnackmasterMerchant;
 import spireCafe.interactables.npcs.example.ExamplePatron;
 import spireCafe.interactables.npcs.koishi.KoishiPatron;
 import spireCafe.interactables.npcs.purpletear.PurpleTearPatron;
@@ -54,7 +55,8 @@ public class TestEvent extends AbstractEvent {
         }
 
         Collections.shuffle(possibleMerchants, new java.util.Random(rng.randomLong()));
-        this.merchant = (AbstractMerchant)createInteractable(possibleMerchants.get(0), 1000*Settings.xScale, AbstractDungeon.floorY+400*Settings.yScale);
+        //this.merchant = (AbstractMerchant)createInteractable(possibleMerchants.get(0), 1000*Settings.xScale, AbstractDungeon.floorY+400*Settings.yScale);
+        this.merchant = (AbstractMerchant)createInteractable(SnackmasterMerchant.class, 1000*Settings.xScale, AbstractDungeon.floorY+400*Settings.yScale);
         merchant.initialize();
         Anniv7Mod.currentRunSeenInteractables.add(merchant.id);
     }

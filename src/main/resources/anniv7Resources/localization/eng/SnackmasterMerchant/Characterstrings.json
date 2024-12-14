@@ -1,0 +1,18 @@
+{
+  "${ModID}:SnackmasterMerchant": {
+    "NAMES": [
+      "Snackmaster"
+    ],
+    "TEXT": [
+      "Bone apple tea!",
+      "I would recommend the first one.",
+      "These are my specialty!",
+      "Are you hungry?",
+      "The spire holds many great ingredients!",
+      "Deliciousness is guaranteed!",
+      "My special spireblight seasoning gives them some zest!",
+      "Louse Burger",
+      "Heals you for #b10 HP."
+    ]
+  }
+}
