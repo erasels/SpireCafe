@@ -23,6 +23,7 @@ public class TestEvent extends AbstractEvent {
     public static final String ID = Anniv7Mod.makeID(TestEvent.class.getSimpleName());
     private final ArrayList<AbstractNPC> npcs = new ArrayList<>();
     private AbstractMerchant merchant;
+    private AbstractBartender bartender;
 
     public TestEvent() {
         this.body = "";
@@ -44,6 +45,10 @@ public class TestEvent extends AbstractEvent {
         List<Class<? extends AbstractCafeInteractable>> possiblePatrons = getPossibilities(AbstractPatron.class);
         List<Class<? extends AbstractCafeInteractable>> possibleAttractions = getPossibilities(AbstractAttraction.class);
 
+        Collections.shuffle(possibleBartenders, new java.util.Random(rng.randomLong()));
+        this.bartender = (AbstractBartender) createInteractable(possibleBartenders.get(0), 800*Settings.xScale, AbstractDungeon.floorY+400*Settings.yScale);
+        Anniv7Mod.currentRunSeenInteractables.add(bartender.id);
+
         int numPatrons = 3;
         Collections.shuffle(possiblePatrons, new java.util.Random(rng.randomLong()));
         for (int i = 0; i < numPatrons && i < possiblePatrons.size(); i++) {
@@ -58,6 +63,7 @@ public class TestEvent extends AbstractEvent {
         //this.merchant = (AbstractMerchant)createInteractable(possibleMerchants.get(0), 1000*Settings.xScale, AbstractDungeon.floorY+400*Settings.yScale);
         this.merchant = (AbstractMerchant)createInteractable(SnackmasterMerchant.class, 1000*Settings.xScale, AbstractDungeon.floorY+400*Settings.yScale);
         merchant.initialize();
+
         Anniv7Mod.currentRunSeenInteractables.add(merchant.id);
     }
 
@@ -83,6 +89,7 @@ public class TestEvent extends AbstractEvent {
         if (!RoomEventDialog.waitForInput) {
             this.buttonEffect(this.roomEventText.getSelectedOption());
         }
+        bartender.update();
         for (AbstractNPC npc : npcs) {
             npc.update();
         }
@@ -95,6 +102,7 @@ public class TestEvent extends AbstractEvent {
 
     @Override
     public void render(SpriteBatch sb) {
+        bartender.renderAnimation(sb);
         for (AbstractNPC npc : npcs) {
             npc.renderAnimation(sb);
         }
