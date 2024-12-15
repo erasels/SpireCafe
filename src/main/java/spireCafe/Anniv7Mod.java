@@ -218,6 +218,7 @@ public class Anniv7Mod implements
         addSaveFields();
         initializeConfig();
         initializeSavedData();
+        BaseMod.addEvent(CafeRoom.ID, CafeRoom.class, "CafeDungeon");
         BaseMod.addCustomScreen(new CafeMerchantScreen());
     }
 
