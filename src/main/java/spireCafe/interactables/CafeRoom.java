@@ -29,7 +29,8 @@ public class CafeRoom extends AbstractEvent {
     private Texture darkerBarBackgroundFloor;
     private Texture darkerBarBackgroundWall;
     private Texture barImg;
-
+    public static float originalPlayerDrawX;
+    public static float originalPlayerDrawY;
     public CafeRoom() {
         this.body = "";
         AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.EVENT;
@@ -62,6 +63,8 @@ public class CafeRoom extends AbstractEvent {
     @Override
     public void onEnterRoom() {
         //Move Combat Sprite off screen
+        originalPlayerDrawX = AbstractDungeon.player.drawX;
+        originalPlayerDrawY = AbstractDungeon.player.drawY;
         AbstractDungeon.player.drawX = -9000.0f;
         AbstractDungeon.player.drawY = -9000.0f;
 
