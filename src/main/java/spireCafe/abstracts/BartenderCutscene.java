@@ -1,5 +1,6 @@
 package spireCafe.abstracts;
 
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import spireCafe.Anniv7Mod;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
@@ -43,9 +44,23 @@ public class BartenderCutscene extends AbstractCutscene {
                 endCutscene();
             } else {
                 nextDialogue();
-
-                // addAvailableOptions();
             }
+        }
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty() && bartender.inHealAction) {
+            bartender.doForSelectedCardsFromHeal(AbstractDungeon.gridSelectScreen.selectedCards);
+            AbstractDungeon.gridSelectScreen.selectedCards.clear();
+            backToCutscene();
+        }
+
+        if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty() && bartender.inSecondAction) {
+            bartender.doForSelectedCardsFromSecondAction(AbstractDungeon.gridSelectScreen.selectedCards);
+            AbstractDungeon.gridSelectScreen.selectedCards.clear();
+            backToCutscene();
         }
     }
 
@@ -71,6 +86,7 @@ public class BartenderCutscene extends AbstractCutscene {
     private void addHealOption() {
         String healText = bartender.getHealOptionDescription();
         this.dialog.addDialogOption(healText).setOptionResult((i) -> {
+            bartender.inHealAction = true;
             bartender.applyHealAction();
             bartender.healUsed = true;
             handleAfterGameplayOptionChosen();
@@ -80,6 +96,7 @@ public class BartenderCutscene extends AbstractCutscene {
     private void addSecondOption() {
         String secondOptionDesc = bartender.getSecondOptionDescription();
         this.dialog.addDialogOption(secondOptionDesc).setOptionResult((i) -> {
+            bartender.inSecondAction = true;
             bartender.applySecondOptionAction();
             bartender.secondUsed = true;
             handleAfterGameplayOptionChosen();
@@ -87,7 +104,7 @@ public class BartenderCutscene extends AbstractCutscene {
     }
 
     private void addNoThanksOption() {
-        String noThanks = OPTIONS[0];
+        String noThanks = bartender.getNoThanksDescription();
         this.dialog.addDialogOption(noThanks).setOptionResult((i)->{
             // If all gameplay-affecting options are done, we consider the transaction complete.
             // Move to a "goodbye" line or end directly.

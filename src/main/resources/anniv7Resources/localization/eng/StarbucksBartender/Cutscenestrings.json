@@ -10,7 +10,9 @@
       "\"Alright!\""
     ],
     "OPTIONS": [
-      "I don't want anything."
+      "I don't want anything.",
+      "[Coffee] Heal #b%s HP and lose #b%s Gold.",
+      "[Milk] Give a card #b2 additional Block and lose #b%s Gold."
     ]
   }
 }

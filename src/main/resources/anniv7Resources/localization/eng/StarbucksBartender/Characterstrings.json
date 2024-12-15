@@ -4,8 +4,8 @@
       "InSpire Employee"
     ],
     "TEXT": [
-      "Drink a coffee to heal #b%s HP and pay #b%s Gold.",
-      "InSpire Coffee"
+      "InSpire Coffee",
+      "Give a card in your deck 2 additional Block."
     ]
   }
 }
