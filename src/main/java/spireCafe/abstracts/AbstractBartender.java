@@ -34,6 +34,7 @@ public abstract class AbstractBartender extends AbstractNPC {
     /**
      * Define how much the heal will restore.
      * Contributors can return a fixed amount or a computed value (like heal a percentage of missing HP).
+     * Should be >= 50% of the player's max HP to allow them to recoup the skipped heal.
      */
     public abstract int getHealAmount();
 
