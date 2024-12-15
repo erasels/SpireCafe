@@ -13,6 +13,7 @@ public abstract class AbstractNPC extends AbstractCafeInteractable {
     public int blockingDialogueIndex = 0;
     public SpeechBubble speechBubble;
     public float speechBubbleScaleTimer = 0.3f;
+    public boolean shouldShowSpeechBubble = true;
 
     public AbstractNPC(float animationX, float animationY, float hb_w, float hb_h) {
         super(animationX, animationY, hb_w, hb_h);
@@ -32,17 +33,21 @@ public abstract class AbstractNPC extends AbstractCafeInteractable {
     @Override
     public void update() {
         super.update();
-        this.speechBubble.update();
-        if (this.hitbox.hovered && this.clickable && !AbstractDungeon.isScreenUp && !AbstractCutscene.isInCutscene) {
-            speechBubble.isGrowing = true;
-        } else {
-            speechBubble.isGrowing = false;
+        if(shouldShowSpeechBubble) {
+            this.speechBubble.update();
+            if (this.hitbox.hovered && this.clickable && !AbstractDungeon.isScreenUp && !AbstractCutscene.isInCutscene) {
+                speechBubble.isGrowing = true;
+            } else {
+                speechBubble.isGrowing = false;
+            }
         }
     }
 
     @Override
     public void renderAnimation(SpriteBatch sb) {
         super.renderAnimation(sb);
-        this.speechBubble.render(sb);
+        if(shouldShowSpeechBubble) {
+            this.speechBubble.render(sb);
+        }
     }
 }

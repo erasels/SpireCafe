@@ -3,6 +3,7 @@ package spireCafe.abstracts;
 import basemod.animations.AbstractAnimation;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -71,7 +72,7 @@ public abstract class AbstractCafeInteractable {
             AbstractMonster.sr.draw(CardCrawlGame.psb, this.skeleton);
             CardCrawlGame.psb.end();
             sb.begin();
-            sb.setBlendFunction(770, 771);
+            sb.setBlendFunction(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA); // NORMAL
         }
         this.hitbox.render(sb);
     }

@@ -1,0 +1,11 @@
+{
+  "${ModID}:StarbucksBartender": {
+    "NAMES": [
+      "InSpire Employee"
+    ],
+    "TEXT": [
+      "InSpire Coffee",
+      "Give a card in your deck 2 additional Block."
+    ]
+  }
+}
