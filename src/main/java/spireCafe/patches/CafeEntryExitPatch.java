@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.EventRoom;
 import com.megacrit.cardcrawl.rooms.TreasureRoomBoss;
+import com.megacrit.cardcrawl.scenes.AbstractScene;
 import com.megacrit.cardcrawl.ui.buttons.ProceedButton;
 import com.megacrit.cardcrawl.vfx.combat.StrikeEffect;
 import javassist.CannotCompileException;
@@ -20,6 +21,7 @@ import javassist.expr.Instanceof;
 import javassist.expr.MethodCall;
 import spireCafe.Anniv7Mod;
 import spireCafe.interactables.CafeRoom;
+import spireCafe.scene.CafeScene;
 import spireCafe.util.ActUtil;
 
 import static spireCafe.Anniv7Mod.makeID;
@@ -27,6 +29,7 @@ import static spireCafe.Anniv7Mod.makeID;
 public class CafeEntryExitPatch {
     public static final String CAFE_ENTRY_SOUND_KEY = makeID("CafeEntry");
     public static int HP_COST_PERCENT = 33;
+    private static AbstractScene originalScene;
 
     @SpirePatch(clz = ProceedButton.class, method = "goToNextDungeon")
     public static class CafeEntryNormal {
@@ -103,6 +106,7 @@ public class CafeEntryExitPatch {
                 AbstractDungeon.currMapNode.room.phase = AbstractRoom.RoomPhase.COMPLETE;
                 AbstractDungeon.player.drawX = CafeRoom.originalPlayerDrawX;
                 AbstractDungeon.player.drawY = CafeRoom.originalPlayerDrawY;
+                AbstractDungeon.scene = originalScene;
             }
         }
     }
@@ -135,7 +139,8 @@ public class CafeEntryExitPatch {
 
     private static void enterCafe(AbstractRoom room) {
         healBeforeCafe();
-
+        originalScene = AbstractDungeon.scene;
+        AbstractDungeon.scene = new CafeScene();
         AbstractDungeon.currMapNode.room = new CafeEventRoom(room);
         AbstractDungeon.getCurrRoom().onPlayerEntry();
         CardCrawlGame.sound.play(CAFE_ENTRY_SOUND_KEY);
@@ -148,6 +153,7 @@ public class CafeEntryExitPatch {
         AbstractDungeon.fadeOut();
         setFadeTimer();
         AbstractDungeon.waitingOnFadeOut = true;
+
     }
 
     private static void healBeforeCafe() {
