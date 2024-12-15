@@ -13,7 +13,6 @@ import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.*;
 import spireCafe.abstracts.AbstractMerchant;
 import spireCafe.abstracts.AbstractNPC;
-import spireCafe.interactables.merchants.snackmaster.SnackmasterMerchant;
 import spireCafe.util.TexLoader;
 
 import java.lang.reflect.InvocationTargetException;
@@ -26,8 +25,6 @@ public class CafeRoom extends AbstractEvent {
     private AbstractMerchant merchant;
     private AbstractBartender bartender;
     private Texture barBackgroundImage;
-    private Texture darkerBarBackgroundFloor;
-    private Texture darkerBarBackgroundWall;
     private Texture barImg;
     public static float originalPlayerDrawX;
     public static float originalPlayerDrawY;
@@ -37,8 +34,6 @@ public class CafeRoom extends AbstractEvent {
         this.hasDialog = true;
         this.hasFocus = true;
         this.barBackgroundImage = TexLoader.getTexture(Anniv7Mod.makeUIPath("barbackground.jpg"));
-        this.darkerBarBackgroundFloor = TexLoader.getTexture(Anniv7Mod.makeUIPath("barbackgrounddarkfloor.png"));
-        this.darkerBarBackgroundWall = TexLoader.getTexture(Anniv7Mod.makeUIPath("barbackgrounddarkwall.png"));
         this.barImg = TexLoader.getTexture(Anniv7Mod.makeUIPath("bar.png"));
 
 
@@ -95,7 +90,6 @@ public class CafeRoom extends AbstractEvent {
         }
 
         Collections.shuffle(possibleMerchants, new java.util.Random(rng.randomLong()));
-        //this.merchant = (AbstractMerchant)createInteractable(possibleMerchants.get(0), 1000*Settings.xScale, AbstractDungeon.floorY+400*Settings.yScale);
         this.merchant = (AbstractMerchant) createInteractable(possibleMerchants.get(0), 200 * Settings.xScale, AbstractDungeon.floorY);
         merchant.initialize();
         Anniv7Mod.currentRunSeenInteractables.add(merchant.id);
@@ -124,8 +118,6 @@ public class CafeRoom extends AbstractEvent {
         sb.setBlendFunction(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         sb.draw(barBackgroundImage, 0, 0, Settings.WIDTH, Settings.HEIGHT);
         bartender.renderAnimation(sb);
-        //sb.draw(barBackgroundFloor, 0, 0, barBackgroundFloor.getWidth()*Settings.scale, barBackgroundFloor.getHeight()*Settings.scale);
-        //sb.draw(barBackgroundWall, 0, AbstractDungeon.floorY, barBackgroundWall.getWidth()*Settings.scale, barBackgroundWall.getHeight()*Settings.scale);
         sb.draw(this.barImg, 800 * Settings.xScale, AbstractDungeon.floorY, (float) this.barImg.getWidth() * 2 * Settings.scale, (float) this.barImg.getHeight() * 2 * Settings.scale);
         for (AbstractNPC npc : npcs) {
             npc.renderAnimation(sb);
