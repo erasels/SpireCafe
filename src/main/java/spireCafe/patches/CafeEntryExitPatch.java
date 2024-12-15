@@ -20,7 +20,7 @@ import javassist.expr.ExprEditor;
 import javassist.expr.Instanceof;
 import javassist.expr.MethodCall;
 import spireCafe.Anniv7Mod;
-import spireCafe.interactables.CafeRoom;
+import spireCafe.CafeRoom;
 import spireCafe.scene.CafeScene;
 import spireCafe.util.ActUtil;
 

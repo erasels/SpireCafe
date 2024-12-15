@@ -1,14 +1,9 @@
 package spireCafe.util.cutsceneStrings;
 
-import basemod.ReflectionHacks;
 import com.badlogic.gdx.Gdx;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.localization.LocalizedStrings;
-import spireCafe.Anniv7Mod;
 
-import java.io.File;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;

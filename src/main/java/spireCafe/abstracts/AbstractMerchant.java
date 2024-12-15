@@ -2,11 +2,9 @@ package spireCafe.abstracts;
 
 import basemod.BaseMod;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.helpers.ImageMaster;
 import spireCafe.screens.CafeMerchantScreen;
 
 import java.util.ArrayList;

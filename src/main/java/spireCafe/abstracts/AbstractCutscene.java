@@ -1,8 +1,5 @@
 package spireCafe.abstracts;
 
-import spireCafe.Anniv7Mod;
-import spireCafe.ui.Dialog;
-import spireCafe.util.TexLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,6 +10,9 @@ import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
+import spireCafe.Anniv7Mod;
+import spireCafe.ui.Dialog;
+import spireCafe.util.TexLoader;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 
 public abstract class AbstractCutscene extends AbstractGameEffect {

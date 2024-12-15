@@ -1,4 +1,4 @@
-package spireCafe.interactables;
+package spireCafe;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
@@ -9,14 +9,14 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.AbstractEvent;
 import com.megacrit.cardcrawl.events.RoomEventDialog;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
-import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.*;
-import spireCafe.abstracts.AbstractMerchant;
-import spireCafe.abstracts.AbstractNPC;
 import spireCafe.util.TexLoader;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CafeRoom extends AbstractEvent {
