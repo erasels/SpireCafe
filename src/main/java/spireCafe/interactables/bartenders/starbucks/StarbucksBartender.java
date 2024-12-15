@@ -51,7 +51,7 @@ public class StarbucksBartender extends AbstractBartender {
         CardCrawlGame.sound.play("SLEEP_1-2");
         Wiz.p().heal(getHealAmount());
         Wiz.p().loseGold(GOLD_LOSS);
-        inHealAction = false;
+        inHealAction = false; //Important to set this to false after the logic has concluded
     }
 
     @Override
@@ -76,9 +76,9 @@ public class StarbucksBartender extends AbstractBartender {
     @Override
     public void doForSelectedCardsFromSecondAction(List<AbstractCard> selected) {
         AbstractCard c = selected.get(0);
-        AbstractDungeon.topLevelEffectsQueue.add(new UpgradeShineEffect(c.current_x, c.current_y));
+        AbstractDungeon.effectList.add(new UpgradeShineEffect(c.current_x, c.current_y));
         CardModifierManager.addModifier(c, new MoreBlockMod());
-        inSecondAction = false;
+        inSecondAction = false; //Important to set this to false after the logic has concluded
     }
 
     @Override

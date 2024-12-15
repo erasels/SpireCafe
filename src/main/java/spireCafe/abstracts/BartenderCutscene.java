@@ -51,6 +51,7 @@ public class BartenderCutscene extends AbstractCutscene {
     @Override
     public void update() {
         super.update();
+
         if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty() && bartender.inHealAction) {
             bartender.doForSelectedCardsFromHeal(AbstractDungeon.gridSelectScreen.selectedCards);
             AbstractDungeon.gridSelectScreen.selectedCards.clear();
@@ -146,6 +147,14 @@ public class BartenderCutscene extends AbstractCutscene {
         } else {
             // All gameplay done, block further dialogue, disregard flavor.
             character.alreadyPerformedTransaction = true;
+        }
+    }
+
+    @Override
+    protected void endCutscene() {
+        //Prevent cutscene from being ended before logic has been concluded
+        if(!(bartender.inSecondAction || bartender.inHealAction)) {
+            super.endCutscene(); // Takes care of setting isDone
         }
     }
 }
