@@ -21,11 +21,10 @@ public class BartenderCutscene extends AbstractCutscene {
      * Used if you don't define the cutscene strings yourself. If you make a subclass, just get them in a static variable and pass that to the overload.
      * You can access the contents via the public variables that are set in the super class (BLOCKING_TEXTS, OPTIONS, DESCRIPTIONS)
      * The cutscenes string are gotten through the id of the Bartender (with Cutscene appended) which is the name of the Bartender's class.
-     * e.g. StarbucksBartender.class -> VampireBartenderCutscene
+     * e.g. StarbucksBartender.class -> anniv7:VampireBartenderCutscene
      */
     protected static CutsceneStrings getCutsceneStrings(AbstractBartender character) {
-        //return LocalizedCutsceneStrings.getCutsceneStrings(character.id + "Cutscene");
-        return LocalizedCutsceneStrings.getCutsceneStrings(Anniv7Mod.makeID("StarbucksBartenderCutscene"));
+        return LocalizedCutsceneStrings.getCutsceneStrings(Anniv7Mod.makeID(character.id + "Cutscene"));
     }
 
     @Override

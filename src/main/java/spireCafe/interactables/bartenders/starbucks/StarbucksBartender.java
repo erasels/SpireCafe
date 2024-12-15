@@ -39,4 +39,9 @@ public class StarbucksBartender extends AbstractBartender {
         Wiz.p().heal(getHealAmount());
         Wiz.p().loseGold(GOLD_LOSS);
     }
+
+    @Override
+    protected String getLabelText() {
+        return characterStrings.TEXT[1];
+    }
 }

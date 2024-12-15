@@ -18,7 +18,7 @@ public abstract class AbstractBartender extends AbstractNPC {
     @Override
     public void renderAnimation(SpriteBatch sb) {
         super.renderAnimation(sb);
-        FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, "Test", hitbox.cX, animationY + hitbox.height, Color.WHITE);
+        FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, getLabelText(), hitbox.cX, animationY + hitbox.height, Color.WHITE);
     }
 
     /**
@@ -56,6 +56,12 @@ public abstract class AbstractBartender extends AbstractNPC {
     protected void applySecondOptionAction() {
         // Default does nothing
     }
+
+    /*
+     * This method decides what the name of the label above the bartender should show.
+     * Will be fleshed out more later.
+     */
+    abstract protected String getLabelText();
 
     @Override
     public void renderCutscenePortrait(SpriteBatch sb) {
