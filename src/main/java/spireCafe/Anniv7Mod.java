@@ -28,7 +28,7 @@ import spireCafe.abstracts.AbstractCafeInteractable;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cardvars.SecondDamage;
 import spireCafe.cardvars.SecondMagicNumber;
-import spireCafe.interactables.TestEvent;
+import spireCafe.interactables.CafeRoom;
 import spireCafe.ui.FixedModLabeledToggleButton.FixedModLabeledToggleButton;
 import spireCafe.util.TexLoader;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
@@ -218,7 +218,7 @@ public class Anniv7Mod implements
         addSaveFields();
         initializeConfig();
         initializeSavedData();
-        BaseMod.addEvent(TestEvent.ID, TestEvent.class, Exordium.ID);
+        BaseMod.addEvent(CafeRoom.ID, CafeRoom.class, Exordium.ID);
         BaseMod.addCustomScreen(new CafeMerchantScreen());
     }
 

@@ -19,7 +19,7 @@ import javassist.expr.ExprEditor;
 import javassist.expr.Instanceof;
 import javassist.expr.MethodCall;
 import spireCafe.Anniv7Mod;
-import spireCafe.interactables.TestEvent;
+import spireCafe.interactables.CafeRoom;
 import spireCafe.util.ActUtil;
 
 import static spireCafe.Anniv7Mod.makeID;
@@ -214,7 +214,7 @@ public class CafeEntryExitPatch {
 
         @Override
         public void onPlayerEntry() {
-            this.event = new TestEvent();
+            this.event = new CafeRoom();
             this.event.onEnterRoom();
         }
     }

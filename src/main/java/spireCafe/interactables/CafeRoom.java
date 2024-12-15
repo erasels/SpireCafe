@@ -20,8 +20,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TestEvent extends AbstractEvent {
-    public static final String ID = Anniv7Mod.makeID(TestEvent.class.getSimpleName());
+public class CafeRoom extends AbstractEvent {
+    public static final String ID = Anniv7Mod.makeID(CafeRoom.class.getSimpleName());
     private final ArrayList<AbstractNPC> npcs = new ArrayList<>();
     private AbstractMerchant merchant;
     private AbstractBartender bartender;
@@ -30,7 +30,7 @@ public class TestEvent extends AbstractEvent {
     private Texture darkerBarBackgroundWall;
     private Texture barImg;
 
-    public TestEvent() {
+    public CafeRoom() {
         this.body = "";
         AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.EVENT;
         this.hasDialog = true;
@@ -78,7 +78,7 @@ public class TestEvent extends AbstractEvent {
         List<Class<? extends AbstractCafeInteractable>> possibleAttractions = getPossibilities(AbstractAttraction.class);
 
         Collections.shuffle(possibleBartenders, new java.util.Random(rng.randomLong()));
-        this.bartender = (AbstractBartender) createInteractable(possibleBartenders.get(0), 1200*Settings.xScale, AbstractDungeon.floorY+100*Settings.yScale);
+        this.bartender = (AbstractBartender) createInteractable(possibleBartenders.get(0), 1200 * Settings.xScale, AbstractDungeon.floorY + 100 * Settings.yScale);
         Anniv7Mod.currentRunSeenInteractables.add(bartender.id);
 
         int numPatrons = 3;
