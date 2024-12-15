@@ -101,6 +101,8 @@ public class CafeEntryExitPatch {
         public static void markComplete(ProceedButton proceedButton) {
             if (inCafe()) {
                 AbstractDungeon.currMapNode.room.phase = AbstractRoom.RoomPhase.COMPLETE;
+                AbstractDungeon.player.drawX = (float)Settings.WIDTH * 0.25F;
+                AbstractDungeon.player.drawY = AbstractDungeon.floorY;
             }
         }
     }
