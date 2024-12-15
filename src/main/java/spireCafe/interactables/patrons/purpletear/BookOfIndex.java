@@ -1,4 +1,4 @@
-package spireCafe.interactables.npcs.purpletear;
+package spireCafe.interactables.patrons.purpletear;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.powers.EnergizedPower;
 import spireCafe.abstracts.AbstractSCRelic;
 
 import static spireCafe.Anniv7Mod.makeID;
-import static spireCafe.interactables.npcs.purpletear.PurpleTearPatron.assetID;
+import static spireCafe.interactables.patrons.purpletear.PurpleTearPatron.assetID;
 import static spireCafe.util.Wiz.*;
 
 public class BookOfIndex extends AbstractSCRelic {

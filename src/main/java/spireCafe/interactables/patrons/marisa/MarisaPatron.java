@@ -1,4 +1,4 @@
-package spireCafe.interactables.npcs.marisa;
+package spireCafe.interactables.patrons.marisa;
 
 import basemod.animations.SpriterAnimation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

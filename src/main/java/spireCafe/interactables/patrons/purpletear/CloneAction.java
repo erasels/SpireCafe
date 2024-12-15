@@ -1,4 +1,4 @@
-package spireCafe.interactables.npcs.purpletear;
+package spireCafe.interactables.patrons.purpletear;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;

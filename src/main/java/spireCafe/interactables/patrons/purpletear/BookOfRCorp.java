@@ -1,10 +1,10 @@
-package spireCafe.interactables.npcs.purpletear;
+package spireCafe.interactables.patrons.purpletear;
 
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import spireCafe.abstracts.AbstractSCRelic;
 
 import static spireCafe.Anniv7Mod.makeID;
-import static spireCafe.interactables.npcs.purpletear.PurpleTearPatron.assetID;
+import static spireCafe.interactables.patrons.purpletear.PurpleTearPatron.assetID;
 import static spireCafe.util.Wiz.*;
 
 public class BookOfRCorp extends AbstractSCRelic {

@@ -1,4 +1,4 @@
-package spireCafe.interactables.npcs.redcrew;
+package spireCafe.interactables.patrons.redcrew;
 
 import basemod.animations.SpriterAnimation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
