@@ -1,4 +1,4 @@
-package spireCafe.interactables.npcs.example;
+package spireCafe.interactables.patrons.example;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;

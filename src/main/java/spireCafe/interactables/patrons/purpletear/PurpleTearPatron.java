@@ -1,4 +1,4 @@
-package spireCafe.interactables.npcs.purpletear;
+package spireCafe.interactables.patrons.purpletear;
 
 import basemod.animations.SpriterAnimation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

@@ -1,4 +1,4 @@
-package spireCafe.interactables.npcs.example;
+package spireCafe.interactables.patrons.example;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

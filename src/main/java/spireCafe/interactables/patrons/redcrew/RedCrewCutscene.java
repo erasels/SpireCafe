@@ -1,4 +1,4 @@
-package spireCafe.interactables.npcs.marisa;
+package spireCafe.interactables.patrons.redcrew;
 
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
@@ -7,11 +7,11 @@ import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 
 import static spireCafe.Anniv7Mod.makeID;
 
-public class MarisaCutscene extends AbstractCutscene {
-    public static final String ID = makeID(MarisaCutscene.class.getSimpleName());
+public class RedCrewCutscene extends AbstractCutscene {
+    public static final String ID = makeID(RedCrewCutscene.class.getSimpleName());
     private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
 
-    public MarisaCutscene(AbstractNPC character) {
+    public RedCrewCutscene(AbstractNPC character) {
         super(character, cutsceneStrings);
     }
 

@@ -1,4 +1,4 @@
-package spireCafe.interactables.npcs.purpletear;
+package spireCafe.interactables.patrons.purpletear;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;

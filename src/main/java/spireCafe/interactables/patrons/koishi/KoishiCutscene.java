@@ -1,4 +1,4 @@
-package spireCafe.interactables.npcs.koishi;
+package spireCafe.interactables.patrons.koishi;
 
 import basemod.cardmods.InnateMod;
 import basemod.helpers.CardModifierManager;

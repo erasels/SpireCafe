@@ -1,4 +1,4 @@
-package spireCafe.interactables.npcs.koishi;
+package spireCafe.interactables.patrons.koishi;
 
 import basemod.animations.SpriterAnimation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
