@@ -25,7 +25,7 @@ public class StarbucksBartender extends AbstractBartender {
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
     private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(Anniv7Mod.makeID(ID + "Cutscene"));
 
-    private static final int MILK_COST = 40;
+    private static final int MILK_COST = 25;
     private static final int GOLD_LOSS = 70;
 
     public StarbucksBartender(float animationX, float animationY) {
