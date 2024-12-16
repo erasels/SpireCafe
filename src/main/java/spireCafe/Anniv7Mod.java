@@ -26,6 +26,7 @@ import spireCafe.abstracts.AbstractCafeInteractable;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cardvars.SecondDamage;
 import spireCafe.cardvars.SecondMagicNumber;
+import spireCafe.interactables.attractions.Makeup.MakeupTableAttraction;
 import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.ui.FixedModLabeledToggleButton.FixedModLabeledToggleButton;
 import spireCafe.util.TexLoader;
@@ -409,7 +410,17 @@ public class Anniv7Mod implements
     }
 
     private void initializeSavedData() {
+        BaseMod.addSaveField(makeID("AppliedMakeup"), new CustomSavable<Boolean>() {
+            @Override
+            public Boolean onSave() {
+                return MakeupTableAttraction.isAPrettySparklingPrincess;
+            }
 
+            @Override
+            public void onLoad(Boolean state) {
+                MakeupTableAttraction.isAPrettySparklingPrincess = state;
+            }
+        });
     }
 }
 
