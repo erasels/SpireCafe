@@ -31,7 +31,8 @@ but Patrons and Attractions are rather freeform, every abstract other than the M
 Images unique to your interactable should be saved in `...Resources/images/[type]/[interactable]/`.  
 Localization is saved in `localization/[langKey]/[interactable]/`.  
   
-To test your contribution, you can force it to spawn by modifying the CafeRoom:onEnterRoom logic and spawning the event with `event anniv7:CafeRoom`.
+To test your contribution, you can force it to spawn by modifying the CafeRoom:onEnterRoom logic and spawning the event with `event anniv7:CafeRoom`.  
+**Please make sure to add your interactable to the [Contributions List](https://docs.google.com/spreadsheets/d/1PgRwGs0OWx8RKYv1QEsrOm7HJdfaqULHRM5qSSHo_yU/edit?usp=sharing) before your PR. If it's an idea you want to code yourself, you can add it there even without having started coding it.**
 
 
 #### Cards, relics, powers, etc.
