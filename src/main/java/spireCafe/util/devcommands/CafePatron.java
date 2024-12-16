@@ -37,6 +37,10 @@ public class CafePatron extends ConsoleCommand{
             return;
         }
 
+        if (i >= CafeRoom.NUM_PATRONS || i < 0) {
+            DevConsole.log("Invalid Patron Slot");
+        }
+
         if (Anniv7Mod.interactableClasses.keySet().contains(tokens[3])){
             CafeRoom.devCommandPatrons[i] = tokens[3];
             DevConsole.log("Patron slot " + i + " set to: " + tokens[3]);
@@ -65,6 +69,11 @@ public class CafePatron extends ConsoleCommand{
         }
 
         return result;
+    }
+
+    @Override
+    protected void errorMsg() {
+        Cafe.cmdHelp();
     }
 
 }

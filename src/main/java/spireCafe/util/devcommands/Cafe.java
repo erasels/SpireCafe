@@ -20,7 +20,7 @@ public class Cafe extends ConsoleCommand{
         cmdHelp();
     }
     
-    private void cmdHelp() {
+    public static void cmdHelp() {
         DevConsole.couldNotParse();
         DevConsole.log("options are:");
         DevConsole.log("* patron *[id]");
