@@ -24,6 +24,7 @@ public class CafeRoom extends AbstractEvent {
     private final ArrayList<AbstractNPC> npcs = new ArrayList<>();
     private AbstractMerchant merchant;
     private AbstractBartender bartender;
+    private AbstractAttraction attraction;
     private Texture barBackgroundImage;
     private Texture barImg;
     public static float originalPlayerDrawX;
@@ -35,8 +36,6 @@ public class CafeRoom extends AbstractEvent {
         this.hasFocus = true;
         this.barBackgroundImage = TexLoader.getTexture(Anniv7Mod.makeUIPath("barbackground.jpg"));
         this.barImg = TexLoader.getTexture(Anniv7Mod.makeUIPath("bar.png"));
-
-
     }
 
     private static List<Class<? extends AbstractCafeInteractable>> getPossibilities(Class<? extends AbstractCafeInteractable> clz) {
@@ -63,8 +62,6 @@ public class CafeRoom extends AbstractEvent {
         AbstractDungeon.player.drawX = -9000.0f;
         AbstractDungeon.player.drawY = -9000.0f;
 
-
-        // TODO: Fill out the rest of these once we have them implemented
         // 1 Bartender, 1 Merchant, ~3 total patrons and attractions (at least one of each)
         // To prevent running out of interactables on endless, if any of the possible lists are empty or the amount of
         // patrons/attractions isn't enough, we should clear  Anniv7Mod.currentRunSeenInteractables and try again
@@ -79,6 +76,7 @@ public class CafeRoom extends AbstractEvent {
         this.bartender = (AbstractBartender) createInteractable(possibleBartenders.get(0), 1200 * Settings.xScale, AbstractDungeon.floorY + 100 * Settings.yScale);
         Anniv7Mod.currentRunSeenInteractables.add(bartender.id);
 
+        //TODO: Fix position logic so overlap is accounted for and prevented
         int numPatrons = 3;
         Collections.shuffle(possiblePatrons, new java.util.Random(rng.randomLong()));
         for (int i = 0; i < numPatrons && i < possiblePatrons.size(); i++) {
@@ -88,6 +86,10 @@ public class CafeRoom extends AbstractEvent {
             this.npcs.add(patron);
             Anniv7Mod.currentRunSeenInteractables.add(patron.id);
         }
+
+        Collections.shuffle(possibleAttractions, new java.util.Random(rng.randomLong()));
+        this.attraction = (AbstractAttraction) createInteractable(possibleAttractions.get(0), 600 * Settings.xScale, AbstractDungeon.floorY);
+        Anniv7Mod.currentRunSeenInteractables.add(attraction.id);
 
         Collections.shuffle(possibleMerchants, new java.util.Random(rng.randomLong()));
         this.merchant = (AbstractMerchant) createInteractable(possibleMerchants.get(0), 200 * Settings.xScale, AbstractDungeon.floorY);
@@ -105,6 +107,7 @@ public class CafeRoom extends AbstractEvent {
         for (AbstractNPC npc : npcs) {
             npc.update();
         }
+        attraction.update();
         merchant.update();
     }
 
@@ -122,6 +125,7 @@ public class CafeRoom extends AbstractEvent {
         for (AbstractNPC npc : npcs) {
             npc.renderAnimation(sb);
         }
+        attraction.renderAnimation(sb);
         merchant.renderAnimation(sb);
         sb.draw(AbstractDungeon.player.shoulder2Img, 0.0F, 0.0F, 1920.0F / 2 * Settings.scale, 1136.0F / 2 * Settings.scale);
     }
