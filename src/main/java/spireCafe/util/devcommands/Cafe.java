@@ -6,7 +6,7 @@ import basemod.devcommands.ConsoleCommand;
 public class Cafe extends ConsoleCommand{
 
     public Cafe() {
-        followup.put("npc", CafeNPC.class);
+        followup.put("patron", CafePatron.class);
         requiresPlayer = true;
     }
 
@@ -23,7 +23,7 @@ public class Cafe extends ConsoleCommand{
     private void cmdHelp() {
         DevConsole.couldNotParse();
         DevConsole.log("options are:");
-        DevConsole.log("* npc *[id]");
+        DevConsole.log("* patron *[id]");
     }
 
 }

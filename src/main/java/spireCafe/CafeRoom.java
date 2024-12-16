@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 public class CafeRoom extends AbstractEvent {
     public static final String ID = Anniv7Mod.makeID(CafeRoom.class.getSimpleName());
+    public static final int NUM_PATRONS = 3;
     private final ArrayList<AbstractNPC> npcs = new ArrayList<>();
     private AbstractMerchant merchant;
     private AbstractBartender bartender;
@@ -29,6 +30,9 @@ public class CafeRoom extends AbstractEvent {
     private Texture barImg;
     public static float originalPlayerDrawX;
     public static float originalPlayerDrawY;
+    // Used for initilizing the cafe with devcommands
+    public static String[] devCommandPatrons = new String[CafeRoom.NUM_PATRONS];
+
     public CafeRoom() {
         this.body = "";
         AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.EVENT;
@@ -77,12 +81,16 @@ public class CafeRoom extends AbstractEvent {
         Anniv7Mod.currentRunSeenInteractables.add(bartender.id);
 
         //TODO: Fix position logic so overlap is accounted for and prevented
-        int numPatrons = 3;
         Collections.shuffle(possiblePatrons, new java.util.Random(rng.randomLong()));
-        for (int i = 0; i < numPatrons && i < possiblePatrons.size(); i++) {
+        for (int i = 0; i < NUM_PATRONS && i < possiblePatrons.size(); i++) {
             float x = (1000 + i * 200.0f) * Settings.xScale;
             float y = AbstractDungeon.floorY;
-            AbstractNPC patron = (AbstractNPC) createInteractable(possiblePatrons.get(i), x, y);
+            AbstractNPC patron;
+            if (devCommandPatrons[i] != null){
+                patron = (AbstractNPC) createInteractable(Anniv7Mod.interactableClasses.get(devCommandPatrons[i]), x, y);
+            } else {
+                patron = (AbstractNPC) createInteractable(possiblePatrons.get(i), x, y);
+            }
             this.npcs.add(patron);
             Anniv7Mod.currentRunSeenInteractables.add(patron.id);
         }
