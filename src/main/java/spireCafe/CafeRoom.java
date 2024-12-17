@@ -152,10 +152,10 @@ public class CafeRoom extends AbstractEvent {
     }
 
     private void checkNameAndAuthors(AbstractCafeInteractable interactable, Class<? extends AbstractCafeInteractable> interactableClz){
-        if(interactable.name == null || interactable.name.length()==0){
+        if(interactable.name == null || interactable.name.isEmpty()){
             throw new NameNotSetException(interactableClz);
         }
-        if(interactable.authors == null || interactable.authors.length()==0){
+        if(interactable.authors == null || interactable.authors.isEmpty()){
             throw new AuthorsNotSetException(interactableClz);
         }
     }
