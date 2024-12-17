@@ -24,6 +24,7 @@ Images unique to your interactable should be saved in `anniv7Resources/images/[t
 Localization is saved in `anniv7Resources/localization/[langKey]/[interactable]/`.  
   
 To test your contribution, you can force it to spawn by modifying the CafeRoom:onEnterRoom logic and spawning the event with `event anniv7:CafeRoom`.  
+You can also guarantee your interactable to spawn with the new `cafe [type] [?slot]` console command.  
 **Please make sure to add your interactable to the [Contributions List](https://docs.google.com/spreadsheets/d/1PgRwGs0OWx8RKYv1QEsrOm7HJdfaqULHRM5qSSHo_yU/edit?usp=sharing) before your PR. If it's an idea you want to code yourself, you can add it there even without having started coding it.**
 
 ### Contribution guidelines
