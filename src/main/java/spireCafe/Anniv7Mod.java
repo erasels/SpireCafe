@@ -27,7 +27,7 @@ import spireCafe.abstracts.AbstractCafeInteractable;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cardvars.SecondDamage;
 import spireCafe.cardvars.SecondMagicNumber;
-import spireCafe.interactables.attractions.Makeup.MakeupTableAttraction;
+import spireCafe.interactables.attractions.makeup.MakeupTableAttraction;
 import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.ui.FixedModLabeledToggleButton.FixedModLabeledToggleButton;
 import spireCafe.util.TexLoader;

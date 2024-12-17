@@ -1,4 +1,4 @@
-package spireCafe.interactables.attractions.Makeup;
+package spireCafe.interactables.attractions.makeup;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -13,10 +13,7 @@ import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.rooms.RestRoom;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractAttraction;
-import spireCafe.interactables.bartenders.starbucks.StarbucksBartender;
 import spireCafe.util.TexLoader;
-import spireCafe.util.cutsceneStrings.CutsceneStrings;
-import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 import spireCafe.vfx.SparkleEffect;
 
 public class MakeupTableAttraction extends AbstractAttraction {
