@@ -43,7 +43,7 @@ public class CafePatron extends ConsoleCommand{
 
         if (Anniv7Mod.interactableClasses.keySet().contains(tokens[3])){
             CafeRoom.devCommandPatrons[i] = tokens[3];
-            DevConsole.log("Patron slot " + i + " set to: " + tokens[3]);
+            DevConsole.log("Cafe patron slot " + i + " set to: " + tokens[3]);
         } else {
             DevConsole.log("Invalid patron id");
         }

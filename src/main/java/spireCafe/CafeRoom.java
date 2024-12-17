@@ -32,6 +32,9 @@ public class CafeRoom extends AbstractEvent {
     public static float originalPlayerDrawY;
     // Used for initilizing the cafe with devcommands
     public static String[] devCommandPatrons = new String[CafeRoom.NUM_PATRONS];
+    public static String devCommandAttraction = null;
+    public static String devCommandMerchant = null;
+    public static String devCommandBartender = null;
 
     public CafeRoom() {
         this.body = "";
@@ -76,8 +79,14 @@ public class CafeRoom extends AbstractEvent {
         List<Class<? extends AbstractCafeInteractable>> possiblePatrons = getPossibilities(AbstractPatron.class);
         List<Class<? extends AbstractCafeInteractable>> possibleAttractions = getPossibilities(AbstractAttraction.class);
 
-        Collections.shuffle(possibleBartenders, new java.util.Random(rng.randomLong()));
-        this.bartender = (AbstractBartender) createInteractable(possibleBartenders.get(0), 1200 * Settings.xScale, AbstractDungeon.floorY + 100 * Settings.yScale);
+        Class<? extends AbstractCafeInteractable> barternderClz;
+        if (devCommandBartender != null) {
+            barternderClz = Anniv7Mod.interactableClasses.get(devCommandBartender);
+        } else {
+            Collections.shuffle(possibleBartenders, new java.util.Random(rng.randomLong()));
+            barternderClz = possibleBartenders.get(0);
+        }
+        this.bartender = (AbstractBartender) createInteractable(barternderClz, 1200 * Settings.xScale, AbstractDungeon.floorY + 100 * Settings.yScale);
         Anniv7Mod.currentRunSeenInteractables.add(bartender.id);
 
         //TODO: Fix position logic so overlap is accounted for and prevented
@@ -85,22 +94,35 @@ public class CafeRoom extends AbstractEvent {
         for (int i = 0; i < NUM_PATRONS && i < possiblePatrons.size(); i++) {
             float x = (1000 + i * 200.0f) * Settings.xScale;
             float y = AbstractDungeon.floorY;
-            AbstractNPC patron;
+            Class<? extends AbstractCafeInteractable> patronClz;
             if (devCommandPatrons[i] != null){
-                patron = (AbstractNPC) createInteractable(Anniv7Mod.interactableClasses.get(devCommandPatrons[i]), x, y);
+                patronClz = Anniv7Mod.interactableClasses.get(devCommandPatrons[i]);
             } else {
-                patron = (AbstractNPC) createInteractable(possiblePatrons.get(i), x, y);
+                patronClz = possiblePatrons.get(i);
             }
+            AbstractNPC patron = (AbstractNPC) createInteractable(patronClz, x, y);
             this.npcs.add(patron);
             Anniv7Mod.currentRunSeenInteractables.add(patron.id);
         }
 
-        Collections.shuffle(possibleAttractions, new java.util.Random(rng.randomLong()));
-        this.attraction = (AbstractAttraction) createInteractable(possibleAttractions.get(0), 600 * Settings.xScale, AbstractDungeon.floorY);
+        Class<? extends AbstractCafeInteractable> attractionClz;
+        if (devCommandAttraction != null){
+            attractionClz = Anniv7Mod.interactableClasses.get(devCommandAttraction);
+        } else {
+            Collections.shuffle(possibleAttractions, new java.util.Random(rng.randomLong()));
+            attractionClz = possibleAttractions.get(0);
+        }
+        this.attraction = (AbstractAttraction) createInteractable(attractionClz, 600 * Settings.xScale, AbstractDungeon.floorY);
         Anniv7Mod.currentRunSeenInteractables.add(attraction.id);
 
-        Collections.shuffle(possibleMerchants, new java.util.Random(rng.randomLong()));
-        this.merchant = (AbstractMerchant) createInteractable(possibleMerchants.get(0), 200 * Settings.xScale, AbstractDungeon.floorY);
+        Class<? extends AbstractCafeInteractable> merchantClz;
+        if (devCommandMerchant != null){
+            merchantClz = Anniv7Mod.interactableClasses.get(devCommandMerchant);
+        } else {
+            Collections.shuffle(possibleMerchants, new java.util.Random(rng.randomLong()));
+            merchantClz = possibleMerchants.get(0);
+        }
+        this.merchant = (AbstractMerchant) createInteractable(merchantClz, 200 * Settings.xScale, AbstractDungeon.floorY);
         merchant.initialize();
         Anniv7Mod.currentRunSeenInteractables.add(merchant.id);
     }
