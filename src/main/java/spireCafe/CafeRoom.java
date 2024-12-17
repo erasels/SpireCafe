@@ -175,6 +175,15 @@ public class CafeRoom extends AbstractEvent {
         sb.draw(AbstractDungeon.player.shoulder2Img, 0.0F, 0.0F, 1920.0F / 2 * Settings.scale, 1136.0F / 2 * Settings.scale);
     }
 
+    // Use this to get everyone that's currently in the café
+    public List<AbstractCafeInteractable> getCurrentInhabitants() {
+        List<AbstractCafeInteractable> inhabitants = new ArrayList<>();
+        inhabitants.add(bartender);
+        inhabitants.addAll(npcs);
+        inhabitants.add(attraction);
+        inhabitants.add(merchant);
+        return inhabitants;
+    }
 
     //Remove Event Text Shadow
     @Override
