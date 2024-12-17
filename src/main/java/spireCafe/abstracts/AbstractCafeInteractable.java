@@ -11,13 +11,16 @@ import com.esotericsoftware.spine.*;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
+import static spireCafe.Anniv7Mod.makeID;
+
 public abstract class AbstractCafeInteractable {
+    private static final UIStrings authorsString = CardCrawlGame.languagePack.getUIString(makeID("Authors"));
     public String id;
     public String name;
     public String authors;
@@ -88,7 +91,7 @@ public abstract class AbstractCafeInteractable {
         this.hitbox.render(sb);
 
         if(showTooltip){
-            String tooltipBody = "Authors: "  + this.authors;
+            String tooltipBody = authorsString.TEXT[0] + this.authors;
             float boxWidth = 320.0F * Settings.scale;
 
             float tooltipX = Settings.WIDTH - boxWidth - 20.0f * Settings.scale;
