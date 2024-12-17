@@ -4,6 +4,7 @@ import basemod.AutoAdd;
 import basemod.BaseMod;
 import basemod.ModPanel;
 import basemod.abstracts.CustomSavable;
+import basemod.devcommands.ConsoleCommand;
 import basemod.helpers.RelicType;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
@@ -32,6 +33,7 @@ import spireCafe.ui.FixedModLabeledToggleButton.FixedModLabeledToggleButton;
 import spireCafe.util.TexLoader;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
+import spireCafe.util.devcommands.Cafe;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -222,6 +224,7 @@ public class Anniv7Mod implements
         initializeSavedData();
         BaseMod.addEvent(CafeRoom.ID, CafeRoom.class, "CafeDungeon");
         BaseMod.addCustomScreen(new CafeMerchantScreen());
+        ConsoleCommand.addCommand("cafe", Cafe.class);
     }
 
     public static void addPotions() {
