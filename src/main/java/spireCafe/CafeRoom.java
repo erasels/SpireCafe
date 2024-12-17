@@ -10,6 +10,8 @@ import com.megacrit.cardcrawl.events.AbstractEvent;
 import com.megacrit.cardcrawl.events.RoomEventDialog;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import spireCafe.abstracts.*;
+import spireCafe.interactables.AuthorsNotSetException;
+import spireCafe.interactables.NameNotSetException;
 import spireCafe.util.TexLoader;
 
 import java.lang.reflect.InvocationTargetException;
@@ -79,14 +81,15 @@ public class CafeRoom extends AbstractEvent {
         List<Class<? extends AbstractCafeInteractable>> possiblePatrons = getPossibilities(AbstractPatron.class);
         List<Class<? extends AbstractCafeInteractable>> possibleAttractions = getPossibilities(AbstractAttraction.class);
 
-        Class<? extends AbstractCafeInteractable> barternderClz;
+        Class<? extends AbstractCafeInteractable> bartenderClz;
         if (devCommandBartender != null) {
-            barternderClz = Anniv7Mod.interactableClasses.get(devCommandBartender);
+            bartenderClz = Anniv7Mod.interactableClasses.get(devCommandBartender);
         } else {
             Collections.shuffle(possibleBartenders, new java.util.Random(rng.randomLong()));
-            barternderClz = possibleBartenders.get(0);
+            bartenderClz = possibleBartenders.get(0);
         }
-        this.bartender = (AbstractBartender) createInteractable(barternderClz, 1200 * Settings.xScale, AbstractDungeon.floorY + 100 * Settings.yScale);
+        this.bartender = (AbstractBartender) createInteractable(bartenderClz, 1200 * Settings.xScale, AbstractDungeon.floorY + 100 * Settings.yScale);
+        checkNameAndAuthors(bartender, bartenderClz);
         Anniv7Mod.currentRunSeenInteractables.add(bartender.id);
 
         //TODO: Fix position logic so overlap is accounted for and prevented
@@ -101,6 +104,7 @@ public class CafeRoom extends AbstractEvent {
                 patronClz = possiblePatrons.get(i);
             }
             AbstractNPC patron = (AbstractNPC) createInteractable(patronClz, x, y);
+            checkNameAndAuthors(patron, patronClz);
             this.npcs.add(patron);
             Anniv7Mod.currentRunSeenInteractables.add(patron.id);
         }
@@ -113,6 +117,7 @@ public class CafeRoom extends AbstractEvent {
             attractionClz = possibleAttractions.get(0);
         }
         this.attraction = (AbstractAttraction) createInteractable(attractionClz, 600 * Settings.xScale, AbstractDungeon.floorY);
+        checkNameAndAuthors(attraction, attractionClz);
         Anniv7Mod.currentRunSeenInteractables.add(attraction.id);
 
         Class<? extends AbstractCafeInteractable> merchantClz;
@@ -123,6 +128,7 @@ public class CafeRoom extends AbstractEvent {
             merchantClz = possibleMerchants.get(0);
         }
         this.merchant = (AbstractMerchant) createInteractable(merchantClz, 200 * Settings.xScale, AbstractDungeon.floorY);
+        checkNameAndAuthors(merchant, merchantClz);
         merchant.initialize();
         Anniv7Mod.currentRunSeenInteractables.add(merchant.id);
     }
@@ -143,6 +149,15 @@ public class CafeRoom extends AbstractEvent {
 
     @Override
     protected void buttonEffect(int buttonPressed) {
+    }
+
+    private void checkNameAndAuthors(AbstractCafeInteractable interactable, Class<? extends AbstractCafeInteractable> interactableClz){
+        if(interactable.name == null || interactable.name.length()==0){
+            throw new NameNotSetException(interactableClz);
+        }
+        if(interactable.authors == null || interactable.authors.length()==0){
+            throw new AuthorsNotSetException(interactableClz);
+        }
     }
 
     @Override

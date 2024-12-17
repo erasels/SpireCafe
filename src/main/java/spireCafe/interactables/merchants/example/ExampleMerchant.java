@@ -30,6 +30,7 @@ public class ExampleMerchant extends AbstractMerchant {
     public ExampleMerchant(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
+        this.authors = "Pandemonium";
         this.img = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("example/merchant.png"));
         background = new TextureRegion(BG_TEXTURE);
     }

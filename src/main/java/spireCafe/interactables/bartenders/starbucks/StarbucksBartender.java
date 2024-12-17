@@ -31,6 +31,7 @@ public class StarbucksBartender extends AbstractBartender {
     public StarbucksBartender(float animationX, float animationY) {
         super(animationX, animationY, 180.0f, 250.0f);
         name = characterStrings.NAMES[0];
+        this.authors = "Gk";
         this.img = TexLoader.getTexture(Anniv7Mod.makeBartenderPath("starbucks/image.png"));
         this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeBartenderPath("starbucks/Portrait.png")));
     }

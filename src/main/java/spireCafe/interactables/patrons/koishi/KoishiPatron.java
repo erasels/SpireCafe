@@ -17,6 +17,7 @@ public class KoishiPatron extends AbstractPatron {
     public KoishiPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
+        this.authors = "Darkglade";
         this.animation = new SpriterAnimation(Anniv7Mod.makeCharacterPath("Koishi/Spriter/KoishiAnimation.scml"));
         this.animation.setFlip(true, false);
         setCutscenePortrait("Portrait1");

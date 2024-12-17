@@ -17,6 +17,7 @@ public class MarisaPatron extends AbstractPatron {
     public MarisaPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
+        this.authors = "Darkglade";
         this.animation = new SpriterAnimation(Anniv7Mod.makeCharacterPath("Marisa/Spriter/MarisaAnimation.scml"));
         this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Marisa/Portrait.png")));
     }

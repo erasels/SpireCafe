@@ -18,6 +18,7 @@ public class PurpleTearPatron extends AbstractPatron {
     public PurpleTearPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 220.0f);
         this.name = characterStrings.NAMES[0];
+        this.authors = "Darkglade";
         this.animation = new SpriterAnimation(Anniv7Mod.makeCharacterPath("PurpleTear/Spriter/PurpleTear.scml"));
         setCutscenePortrait("Portrait1");
     }
