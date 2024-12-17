@@ -1,6 +1,6 @@
 # MtS Modding Anniversary 7: Spire Café
 ## Preamble
-A group project for the seventh anniversary of Mod the Spire. Between acts the player stops off at the renowed Spire Café, at the cost of getting a bit less healing. Within they will be able to interact with patrons, attractions, merchants and the bartender, of course.  
+A group project for the seventh anniversary of Mod the Spire. Between acts the player stops off at the renowned Spire Café, at the cost of getting a bit less healing. Within they will be able to interact with patrons, attractions, merchants and the bartender, of course.  
 For a full write-up, please see the [Design Doc](https://docs.google.com/document/d/1MN2Hh8NqupNfpMXXp6IdBxrz0AaZ2eMWuggbWKGvZLE/edit?usp=sharing)  
 For a list of contributions, take a look at the [Contributions List](https://docs.google.com/spreadsheets/d/1PgRwGs0OWx8RKYv1QEsrOm7HJdfaqULHRM5qSSHo_yU/edit?usp=sharing)
   
