@@ -11,5 +11,10 @@
     "TEXT": [
       "Return"
     ]
+  },
+  "${ModID}:Authors": {
+    "TEXT": [
+      "Authors: "
+    ]
   }
 }

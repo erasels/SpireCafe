@@ -10,7 +10,6 @@ import spireCafe.screens.CafeMerchantScreen;
 import java.util.ArrayList;
 
 public abstract class AbstractMerchant extends AbstractCafeInteractable {
-    public String name;
     public TextureRegion background;
     public ArrayList<AbstractArticle> articles = new ArrayList<>();
     public ArrayList<AbstractArticle> toRemove = new ArrayList<>();

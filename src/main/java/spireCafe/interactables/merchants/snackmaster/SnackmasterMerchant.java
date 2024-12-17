@@ -21,6 +21,7 @@ public class SnackmasterMerchant extends AbstractMerchant {
     public SnackmasterMerchant(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = snackmasterStrings.NAMES[0];
+        this.authors = "Gk";
         this.img = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("snackmaster/chef.png"));
         background = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeMerchantPath("snackmaster/shopscreen.png")));
     }

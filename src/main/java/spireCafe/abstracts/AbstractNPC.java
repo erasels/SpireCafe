@@ -8,7 +8,6 @@ import spireCafe.vfx.SpeechBubble;
 
 public abstract class AbstractNPC extends AbstractCafeInteractable {
     public TextureRegion cutscenePortrait;
-    public String name;
     public boolean alreadyPerformedTransaction = false;
     public int blockingDialogueIndex = 0;
     public SpeechBubble speechBubble;

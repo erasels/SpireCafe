@@ -12,11 +12,18 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.Hitbox;
+import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
+import static spireCafe.Anniv7Mod.makeID;
+
 public abstract class AbstractCafeInteractable {
+    private static final UIStrings authorsString = CardCrawlGame.languagePack.getUIString(makeID("Authors"));
     public String id;
+    public String name;
+    public String authors;
     public AbstractAnimation animation;
     public Texture img;
     protected TextureAtlas atlas;
@@ -26,6 +33,7 @@ public abstract class AbstractCafeInteractable {
     public boolean flipHorizontal = false;
     public boolean flipVertical = false;
     protected Hitbox hitbox;
+    private boolean showTooltip = false;
 
     public float animationX;
     public float animationY;
@@ -50,9 +58,15 @@ public abstract class AbstractCafeInteractable {
 
     public void update() {
         this.hitbox.update();
-        if (this.hitbox.hovered && InputHelper.justClickedLeft && this.clickable && !AbstractDungeon.isScreenUp && !AbstractCutscene.isInCutscene) {
-            this.onInteract();
+        if(this.hitbox.hovered && this.clickable && !AbstractDungeon.isScreenUp && !AbstractCutscene.isInCutscene){
+            showTooltip = true;
+            if (InputHelper.justClickedLeft) {
+                this.onInteract();
+            }
+        } else {
+            showTooltip = false;
         }
+
     }
 
     public void renderAnimation(SpriteBatch sb) {
@@ -75,6 +89,16 @@ public abstract class AbstractCafeInteractable {
             sb.setBlendFunction(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA); // NORMAL
         }
         this.hitbox.render(sb);
+
+        if(showTooltip){
+            String tooltipBody = authorsString.TEXT[0] + this.authors;
+            float boxWidth = 320.0F * Settings.scale;
+
+            float tooltipX = Settings.WIDTH - boxWidth - 20.0f * Settings.scale;
+            float tooltipY = 0.85f * Settings.HEIGHT - 20.0f * Settings.scale;
+
+            TipHelper.renderGenericTip(tooltipX, tooltipY, name, tooltipBody);
+        }
     }
 
     protected void loadAnimation(String atlasUrl, String skeletonUrl, float scale) {

@@ -16,6 +16,7 @@ public class ExamplePatron extends AbstractPatron {
     public ExamplePatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
+        this.authors = "Darkglade";
         this.img = TexLoader.getTexture(Anniv7Mod.makeCharacterPath("ExampleNPC/image.png"));
         this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("ExampleNPC/Portrait.png")));
     }
