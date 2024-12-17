@@ -36,6 +36,7 @@ To make suitable content and help the PR process go smoothly, follow these guide
 - All gameplay affecting interactions must have a cost, no free power increases (and keep things reasonably balanced, the Cafe should not be a huge power level boost)
 - In general avoid NPCs or attractions that are simple one-liners with no special effects (but non-gameplay affects are fine, such as Makeup Table making you sparkle for the rest of the run)
 - All cutscenes must be exitable by the player without doing a transaction
+- No combats in the Café, there are too many edge cases and the code is complex enough already
 - We expect contributions to be complete (including art) before merging, but it's okay to make a PR while still working on the art
 
 #### Cards, relics, powers, etc.
