@@ -1,0 +1,9 @@
+{
+    "${ModID}:SecretShopMerchant": {
+      "NAMES": [
+        "Gheed"
+      ],
+      "TEXT": [
+      ]
+    }
+  }

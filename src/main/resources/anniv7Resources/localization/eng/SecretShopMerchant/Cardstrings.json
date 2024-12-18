@@ -1,0 +1,22 @@
+{
+    "${ModID}:UnidentifiedCard": {
+        "NAME": "Unidentified Card",
+        "DESCRIPTION": "???",
+        "EXTENDED_DESCRIPTION": [
+            "??? NL ",
+            "Cost: ",
+            "Type: ",
+            "Rarity: ",
+            "X NL ",
+            "Unplayable NL ",
+            "Skill NL ",
+            "Attack NL ",
+            "Power NL ",
+            "Other NL ",
+            "Common",
+            "Uncommon",
+            "Rare",
+            "Other"
+        ]
+    }
+}
