@@ -237,24 +237,6 @@ public class Anniv7Mod implements
 
     }
 
-    public static void addSaveFields() {
-        BaseMod.addSaveField(SavableCurrentRunSeenInteractables.SaveKey, new SavableCurrentRunSeenInteractables());
-    }
-
-    public static class SavableCurrentRunSeenInteractables implements CustomSavable<HashSet<String>> {
-        public final static String SaveKey = "CurrentRunSeenInteractables";
-
-        @Override
-        public HashSet<String> onSave() {
-            return currentRunSeenInteractables;
-        }
-
-        @Override
-        public void onLoad(HashSet<String> s) {
-            currentRunSeenInteractables = s == null ? new HashSet<>() : s;
-        }
-    }
-
     private static Consumer<String> getWidePotionsWhitelistMethod() {
         // To avoid the need for a dependency of any kind, we call Wide Potions through reflection
         try {
@@ -414,6 +396,10 @@ public class Anniv7Mod implements
     }
 
     private void initializeSavedData() {
+    }
+
+    public static void addSaveFields() {
+        BaseMod.addSaveField(SavableCurrentRunSeenInteractables.SaveKey, new SavableCurrentRunSeenInteractables());
         BaseMod.addSaveField(makeID("AppliedMakeup"), new CustomSavable<Boolean>() {
             @Override
             public Boolean onSave() {
@@ -425,6 +411,20 @@ public class Anniv7Mod implements
                 MakeupTableAttraction.isAPrettySparklingPrincess = state;
             }
         });
+    }
+
+    public static class SavableCurrentRunSeenInteractables implements CustomSavable<HashSet<String>> {
+        public final static String SaveKey = "CurrentRunSeenInteractables";
+
+        @Override
+        public HashSet<String> onSave() {
+            return currentRunSeenInteractables;
+        }
+
+        @Override
+        public void onLoad(HashSet<String> s) {
+            currentRunSeenInteractables = s == null ? new HashSet<>() : s;
+        }
     }
 }
 
