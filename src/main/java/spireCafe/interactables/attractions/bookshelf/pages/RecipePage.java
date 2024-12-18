@@ -14,8 +14,13 @@ public class RecipePage extends AbstractPage {
     }
 
     @Override
+    public String getOption() {
+        return uiStrings.TEXT[0];
+    }
+
+    @Override
     public String getText() {
-        int recipeIndex = AbstractDungeon.miscRng.random(3);
+        int recipeIndex = AbstractDungeon.miscRng.random(2);
         StringBuilder textMaker = new StringBuilder();
         textMaker.append(uiStrings.TEXT[0]); // Title
         textMaker.append(uiStrings.TEXT[1]); //New lines

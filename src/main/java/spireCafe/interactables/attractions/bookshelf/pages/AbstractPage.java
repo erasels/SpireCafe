@@ -17,11 +17,14 @@ public abstract class AbstractPage {
         uiStrings = CardCrawlGame.languagePack.getUIString(id);
     }
 
+    //Use this to decide how the option to read this page should be worded
+    public abstract String getOption();
+
+    // Use this to decide the text that is shown on your page
     public abstract String getText();
 
     // If you want to do something when this page is selected, use this
     public void onRead() {
-
     }
 
     // Return true if this page should be able to spawn currently
