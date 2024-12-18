@@ -18,7 +18,7 @@ import static spireCafe.Anniv7Mod.modID;
 
 public class BookshelfAttraction extends AbstractAttraction {
     public static final String PAGE_CONFIG_KEY = "seenPages";
-    private static final int NUM_PAGES = 3;
+    protected static final int NUM_PAGES = 3;
 
     public static final String ID = BookshelfAttraction.class.getSimpleName();
     public static final List<AbstractPage> allPages = new ArrayList<>();
