@@ -11,6 +11,9 @@ out/
 .project
 .settings/
 
+#VS Code
+.vscode/
+
 # maven build target
 target/
 dependency-reduced-pom.xml
