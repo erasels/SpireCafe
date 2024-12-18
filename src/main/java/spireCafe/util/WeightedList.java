@@ -24,7 +24,7 @@ public class WeightedList<T> {
         items.add(new Item(object, weight));
     }
 
-    public void addAll(ArrayList<T> objects, int weight) {
+    public void addAll(List<T> objects, int weight) {
         totalWeight += (weight*objects.size());
         objects.forEach(o -> items.add(new Item(o, weight)));
     }
