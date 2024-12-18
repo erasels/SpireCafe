@@ -158,7 +158,7 @@ public class Anniv7Mod implements
         try {
             Properties defaults = new Properties();
             defaults.put("cafeEntryCost", "TRUE");
-            defaults.put("seenPages", "")
+            defaults.put("seenPages", "");
             modConfig = new SpireConfig(modID, "anniv7Config", defaults);
         } catch (Exception e) {
             e.printStackTrace();
