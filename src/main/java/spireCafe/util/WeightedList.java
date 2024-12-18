@@ -63,6 +63,10 @@ public class WeightedList<T> {
         items.remove(item);
     }
 
+    public boolean isEmpty() {
+        return items.isEmpty();
+    }
+
     private class Item {
         final int weight;
         final T object;
