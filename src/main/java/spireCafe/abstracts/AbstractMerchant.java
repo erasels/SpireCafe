@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public abstract class AbstractMerchant extends AbstractCafeInteractable {
     public TextureRegion background;
     public ArrayList<AbstractArticle> articles = new ArrayList<>();
+    public ArrayList<AbstractArticle> toAdd = new ArrayList<>();
     public ArrayList<AbstractArticle> toRemove = new ArrayList<>();
     public boolean wasShopRolled = false;
 
@@ -40,6 +41,10 @@ public abstract class AbstractMerchant extends AbstractCafeInteractable {
     }
 
     public void updateShop() {
+        for (AbstractArticle article : toAdd) {
+            articles.add(article);
+        }
+        toAdd.clear();
         for (AbstractArticle article : articles) {
             article.update();
         }
