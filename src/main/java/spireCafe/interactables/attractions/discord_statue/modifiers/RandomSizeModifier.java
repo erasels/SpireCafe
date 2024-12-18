@@ -1,14 +1,12 @@
 package spireCafe.interactables.attractions.discord_statue.modifiers;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 
 import basemod.abstracts.AbstractCardModifier;
 
+//logic for changing rendered size is in a patch (RandomSizeModifierPatch)
 public class RandomSizeModifier extends AbstractCardModifier {
-    private float size;
-    private float prevDrawScale;
-    private boolean drawScaleChanged;
+    public float size;
     private static final float MAX_SIZE = 1.3f;
     private static final float MIN_SIZE = 0.5f;
 
@@ -22,17 +20,13 @@ public class RandomSizeModifier extends AbstractCardModifier {
     }
 
     @Override
-    public void onRender(AbstractCard card, SpriteBatch sb) {
-        drawScaleChanged = card.targetDrawScale != prevDrawScale;
-        if (drawScaleChanged)
-            card.targetDrawScale *= size;
-
-        prevDrawScale = card.targetDrawScale;
+    public AbstractCardModifier makeCopy() {
+        return new RandomSizeModifier(size);
     }
 
     @Override
-    public AbstractCardModifier makeCopy() {
-        return new RandomSizeModifier(size);
+    public String identifier(AbstractCard card) {
+        return "anniv7:RandomSizeModifier";
     }
 
 }
