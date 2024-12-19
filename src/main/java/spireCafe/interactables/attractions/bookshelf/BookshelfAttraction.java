@@ -68,7 +68,9 @@ public class BookshelfAttraction extends AbstractAttraction {
             }
         }
         if(pages.size() < NUM_PAGES) {
-            pages.addAll(filteredPages, 1); // Reduced so that the last few pages have a higher chance to be seen
+            for(AbstractPage fp : filteredPages) {
+                pages.add(fp, fp.preferredSpawn(inhabitants) ? 5 : 1); // Reduced so that the last few pages have a higher chance to be seen
+            }
         }
 
         for (int i = 0; i < Math.min(NUM_PAGES, pages.size()); i++) {
