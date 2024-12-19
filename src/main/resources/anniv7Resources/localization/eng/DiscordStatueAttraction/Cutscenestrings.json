@@ -1,0 +1,15 @@
+{
+  "${ModID}:DiscordStatueCutscene": {
+    "NAME": "Statue of Discord",
+    "BLOCKING_TEXTS": [],
+    "DESCRIPTIONS": [
+      "A statue of the spirit of ~[#EAEE4C]chaos[]~ and ~[#C72535]disharmony[]~ himself looms over you. NL Do you wish to embrace the ~[#F3D97C]c[#5D5783]h[#A74544]a[#65443D]o[#2CBADE]s[#71CD6A]?[]~",
+      "You feel the chaos flow into your deck...",
+      "The statue looks disappointed..."
+    ],
+    "OPTIONS": [
+      "Embrace.",
+      "Decline."
+    ]
+  }
+}
