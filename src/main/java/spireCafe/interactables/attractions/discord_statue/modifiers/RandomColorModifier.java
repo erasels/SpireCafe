@@ -14,9 +14,7 @@ public class RandomColorModifier extends AbstractCardModifier {
         this.color = color;
     }
 
-    public RandomColorModifier() {
-        if (this.color == null)
-        this.color = getRandomColor();
+    public RandomColorModifier() { 
     }
 
     private CardColor getRandomColor() {
@@ -27,6 +25,9 @@ public class RandomColorModifier extends AbstractCardModifier {
 
     @Override
     public void onInitialApplication(AbstractCard card) {
+        while (this.color == null || this.color.equals(card.color)) {
+            this.color = getRandomColor();
+        }
         card.color = color;
     }
 

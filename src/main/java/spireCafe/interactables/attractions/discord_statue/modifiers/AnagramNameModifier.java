@@ -20,8 +20,9 @@ public class AnagramNameModifier extends AbstractCardModifier {
 
     @Override
     public void onInitialApplication(AbstractCard card) {
-        if (this.name == null)
+        while (this.name == null || this.name.equals(card.name)) {
             this.name = createAnagram(card.name);
+        }
     }
 
     private String createAnagram(String input) {

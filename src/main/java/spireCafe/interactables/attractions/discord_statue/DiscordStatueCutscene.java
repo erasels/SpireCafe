@@ -7,8 +7,10 @@ import java.util.Random;
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
+import com.megacrit.cardcrawl.vfx.cardManip.ShowCardBrieflyEffect;
 import com.megacrit.cardcrawl.vfx.combat.LightningEffect;
 
 import basemod.animations.SpriterAnimation;
@@ -46,19 +48,20 @@ public class DiscordStatueCutscene extends AbstractCutscene {
                 AbstractDungeon.topLevelEffectsQueue.add(new DiscordStatueStopCrackingEffect(character));
 
                 Random random = new Random();
-                int randomNumber;
 
                 for (AbstractCard c : Wiz.p().masterDeck.group) {
-                    randomNumber = random.nextInt(10);
-                    switch (randomNumber) {
+                    switch (random.nextInt(10)) {
                         case 0:
                             CardModifierManager.addModifier(c, new RandomSizeModifier());
+                            showChangedCard(c, random);
                             break;
                         case 1:
                             CardModifierManager.addModifier(c, new RandomColorModifier());
+                            showChangedCard(c, random);
                             break;
                         case 2:
                             CardModifierManager.addModifier(c, new RandomColorModifier());
+                            showChangedCard(c, random);
                             break;
                         case 3:
                             break;
@@ -68,6 +71,7 @@ public class DiscordStatueCutscene extends AbstractCutscene {
                             break;
                         default:
                             CardModifierManager.addModifier(c, new AnagramNameModifier());
+                            showChangedCard(c, random);
                             break;
                     }
                 }
@@ -79,5 +83,11 @@ public class DiscordStatueCutscene extends AbstractCutscene {
         } else {
             endCutscene();
         }
+    }
+
+    private void showChangedCard(AbstractCard c, Random random) {
+        float x = Settings.WIDTH * 0.5F + random.nextFloat() * Settings.WIDTH * 0.75F - Settings.WIDTH * 0.375F;
+        float y = Settings.HEIGHT * 0.5F + random.nextFloat() * Settings.HEIGHT * 0.35F - Settings.HEIGHT * 0.175F;
+        AbstractDungeon.topLevelEffectsQueue.add(new ShowCardBrieflyEffect(c.makeStatEquivalentCopy(), x, y));
     }
 }
