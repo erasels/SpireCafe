@@ -14,7 +14,7 @@
       "Louse Burger",
       "Heals you for #b10 HP.",
       "Maw Fillet",
-      "(not implemented yet)"
+      "At the start of the next #b5 combats, gain #b2 #yStrength."
     ]
   }
 }
