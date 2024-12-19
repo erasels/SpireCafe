@@ -19,6 +19,7 @@ import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 
 import static spireCafe.Anniv7Mod.makeID;
+import static spireCafe.interactables.attractions.bookshelf.BookshelfAttraction.NUM_PAGES;
 
 public class BookshelfCutscene extends AbstractCutscene {
     public static final String ID = makeID(BookshelfCutscene.class.getSimpleName());
@@ -37,7 +38,7 @@ public class BookshelfCutscene extends AbstractCutscene {
     protected void onClick() {
         if (dialogueIndex == 0) { //Shows first dialogue text and then options on click while staying on the same dialogue
             if(bookshelf.selectedPage == null) { // Only show selected page again when clicked
-                for (int i = 0; i < BookshelfAttraction.NUM_PAGES; i++) {
+                for (int i = 0; i < Math.min(NUM_PAGES, bookshelf.selectedPages.size()); i++) {
                     AbstractPage option = ((BookshelfAttraction) character).selectedPages.get(i);
                     this.dialog.addDialogOption(option.getOption()).setOptionResult((o) -> {
                         bookshelf.selectedPage = option;
