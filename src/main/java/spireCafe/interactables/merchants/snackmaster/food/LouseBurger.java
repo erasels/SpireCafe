@@ -18,7 +18,7 @@ public class LouseBurger extends AbstractFoodArticle{
 
     @Override
     public int getBasePrice() {
-        return 75;
+        return 70;
     }
 
     @Override
