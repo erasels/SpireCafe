@@ -18,12 +18,14 @@ import static spireCafe.Anniv7Mod.modID;
 
 public class BookshelfAttraction extends AbstractAttraction {
     public static final String PAGE_CONFIG_KEY = "seenPages";
-    protected static final int NUM_PAGES = 3;
+    protected static final int NUM_PAGES = 1;
 
     public static final String ID = BookshelfAttraction.class.getSimpleName();
     public static final List<AbstractPage> allPages = new ArrayList<>();
 
     public List<AbstractPage> selectedPages = new ArrayList<>(NUM_PAGES);
+    protected AbstractPage selectedPage = null;
+    protected String pageText;
 
     public BookshelfAttraction(float animationX, float animationY) {
         super(animationX, animationY, 300, 400);
@@ -73,7 +75,7 @@ public class BookshelfAttraction extends AbstractAttraction {
             }
         }
 
-        //TODO: Create cutscene and add to it
+        AbstractDungeon.topLevelEffects.add(new BookshelfCutscene(this));
     }
 
     public static List<String> getSeenPages() {

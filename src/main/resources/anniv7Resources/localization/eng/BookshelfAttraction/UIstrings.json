@@ -1,0 +1,12 @@
+{
+  "${ModID}:RecipePage": {
+    "TEXT": [
+      "#bSnackmaster's #bRecipe #bCollection #bNr.",
+      " NL NL ",
+      "Louse Burger: NL - 1 freshly killed Louse (red is preferred, green ones are too bitter) NL - ",
+      "Maw Fillet: NL - ",
+      "Lice are commonplace near the base of the Spire, and come in two distinct varieties: red and green. Red Lice are more aggressive, charging straight into battle against any percieved threat (including harmless researchers!!!), whereas Green Lice are far more cautious. The green variety are able to produce a sticky web-like substance, which they spit at enemies to immobilise them. In addition, both kinds of Lice demonstrate a behaviour known as \"curling up\" when they sense danger, which protects their soft underbelly from further attack. NL NL Lice can be placated by giving them food - they're carnivorous, so any kind of meat does the trick - and they can even become quite affectionate if consistently fed and cared for! Beware of feeding Red Lice too much, though, as they're capable of growing to more than double their original size...",
+      "#yNote: When people buy something at my stand and then XYZ(add small secret interaction here)"
+    ]
+  }
+}

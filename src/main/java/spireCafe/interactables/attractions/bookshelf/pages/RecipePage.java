@@ -15,14 +15,14 @@ public class RecipePage extends AbstractPage {
 
     @Override
     public String getOption() {
-        return uiStrings.TEXT[0];
+        return uiStrings.TEXT[0].substring(0, uiStrings.TEXT[0].lastIndexOf(" "));
     }
 
     @Override
     public String getText() {
         int recipeIndex = AbstractDungeon.miscRng.random(2);
         StringBuilder textMaker = new StringBuilder();
-        textMaker.append(uiStrings.TEXT[0]); // Title
+        textMaker.append(uiStrings.TEXT[0]).append(recipeIndex); // Title
         textMaker.append(uiStrings.TEXT[1]); //New lines
         textMaker.append(uiStrings.TEXT[2 + recipeIndex]); // Recipe
         if(AbstractDungeon.miscRng.randomBoolean()) {
