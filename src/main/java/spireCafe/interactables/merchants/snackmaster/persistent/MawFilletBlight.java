@@ -26,7 +26,7 @@ public class MawFilletBlight extends AbstractSCBlight {
             Wiz.applyToSelf(new StrengthPower(Wiz.p(), STR_AMT));
             counter--;
 
-            if(counter == 0) {
+            if(counter <= 0) {
                 usedUp();
             }
         }
