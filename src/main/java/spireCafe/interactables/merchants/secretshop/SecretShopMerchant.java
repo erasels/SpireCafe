@@ -3,8 +3,10 @@ package spireCafe.interactables.merchants.secretshop;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
@@ -15,6 +17,9 @@ import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
+import com.megacrit.cardcrawl.ui.DialogWord.AppearEffect;
+import com.megacrit.cardcrawl.vfx.ShopSpeechBubble;
+import com.megacrit.cardcrawl.vfx.SpeechTextEffect;
 
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractMerchant;
@@ -28,15 +33,25 @@ public class SecretShopMerchant extends AbstractMerchant {
     
     private static final String ID = SecretShopMerchant.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
+    private static final String[] TEXT = characterStrings.TEXT;
     private static final Texture RUG_TEXTURE = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("secretshop/rug.png"));
     private static final String MERCHANT_STR = Anniv7Mod.makeMerchantPath("secretshop/red_merchant/");
 
-    public ArrayList<AbstractCard> cards = new ArrayList<>();
+    private static final float SPEECH_DUR = 4.0F;
+    private static final float PITCH_VAR = 0.4F;
+    private static final float SPEECH_TEXT_R_X = 164.0F * Settings.scale;
+    private static final float SPEECH_TEXT_L_X = -166.0F * Settings.scale;
+    private static final float SPEECH_TEXT_Y = 126.0F * Settings.scale;
+    private float idleSpeechTimer = 0.0F;
+    private ShopSpeechBubble speechBubble = null;
+    private SpeechTextEffect speechText = null;
 
+    public ArrayList<AbstractCard> cards = new ArrayList<>();
     public ArrayList<AbstractRelic> relics = new ArrayList<>();
     public ArrayList<AbstractPotion> potions = new ArrayList<>();
     public boolean identifyMode;
     public IdentifyArticle idArticle;
+
 
     public SecretShopMerchant(float animX, float animY) {
         super(animX, animY, 150.0f, 175.0f);
@@ -95,6 +110,12 @@ public class SecretShopMerchant extends AbstractMerchant {
         }
 
     }
+
+    @Override
+    public void update() {
+        super.update();
+        updateSpeech();
+    }
         
     private void initCards() {
         AbstractCard c;
@@ -134,24 +155,23 @@ public class SecretShopMerchant extends AbstractMerchant {
     }
 
     private void initPotions() {
-        AbstractPotion p;
         for (int i = 0; i < 3; i++) {
             potions.add(AbstractDungeon.returnRandomPotion());
         }
     }
 
     public static int setCardBasePrice() {
-        int ret = (int)(AbstractCard.getPrice(CardRarity.UNCOMMON) * AbstractDungeon.merchantRng.random(0.5F, 0.8F));
+        int ret = (int)(75 * AbstractDungeon.merchantRng.random(0.2F, 0.6F));
         return ret;
     }
 
     public static int setRelicBasePrice() {
-        int ret = (int)(AbstractCard.getPrice(CardRarity.UNCOMMON) * AbstractDungeon.merchantRng.random(0.7F, 1.2F));
+        int ret = (int)(125 * AbstractDungeon.merchantRng.random(0.6F, 0.75F));
         return ret;
     }
 
     public static int setPotionBasePrice() {
-        int ret = (int)(AbstractCard.getPrice(CardRarity.UNCOMMON) * AbstractDungeon.merchantRng.random(0.7F, 1.2F));
+        int ret = (int)(75 * AbstractDungeon.merchantRng.random(0.5F, 0.75F));
         return ret;
     }
 
@@ -178,5 +198,98 @@ public class SecretShopMerchant extends AbstractMerchant {
 
         return c;
     }
+
+    public void cantBuy() {
+        int roll = MathUtils.random(2);
+        if (roll == 0) {
+            CardCrawlGame.sound.play("VO_MERCHANT_2A", PITCH_VAR);
+        } else if (roll == 1) {
+            CardCrawlGame.sound.play("VO_MERCHANT_2B", PITCH_VAR);
+        } else {
+            CardCrawlGame.sound.play("VO_MERCHANT_2C", PITCH_VAR);
+        }
+        int i = MathUtils.random(14, 21);
+        createSpeechBubble(TEXT[i]);
+    }
+
+    public void cantIdentify() {
+        int roll = MathUtils.random(2);
+        if (roll == 0) {
+            CardCrawlGame.sound.play("VO_MERCHANT_2A", PITCH_VAR);
+        } else if (roll == 1) {
+            CardCrawlGame.sound.play("VO_MERCHANT_2B", PITCH_VAR);
+        } else {
+            CardCrawlGame.sound.play("VO_MERCHANT_2C", PITCH_VAR);
+        }
+        int i = MathUtils.random(7, 13);
+        createSpeechBubble(TEXT[i]);
+    }
+        
+    private void createSpeechBubble(String msg) {
+        if (this.speechBubble != null) {
+            if (this.speechBubble.duration > 0.3F) {
+                this.speechBubble.duration = 0.3F;
+                this.speechText.duration = 0.3F;
+            }
+        }
+        boolean isRight = MathUtils.randomBoolean();
+        float x = MathUtils.random(660.0F, 1260.0F) * Settings.scale;
+        float y = Settings.HEIGHT - 380.0F * Settings.scale;
+        this.speechBubble = new ShopSpeechBubble(x, y, SPEECH_DUR, msg, isRight);
+        float offset_x = isRight ? SPEECH_TEXT_R_X : SPEECH_TEXT_L_X;
+        this.speechText = new SpeechTextEffect(x + offset_x, y + SPEECH_TEXT_Y, SPEECH_DUR, msg, AppearEffect.BUMP_IN);
+        AbstractDungeon.topLevelEffectsQueue.add(this.speechBubble);
+        AbstractDungeon.topLevelEffectsQueue.add(this.speechText);
+
+    }
+
+    private void updateSpeech() {
+        if (this.speechBubble != null) {
+            this.speechBubble.update();
+            if (this.speechBubble.hb.hovered && this.speechBubble.duration > 0.3F) {
+                this.speechBubble.duration = 0.3F;
+                this.speechText.duration = 0.3F;
+            }
+            if (this.speechBubble.isDone) {
+                this.speechBubble = null;
+            }
+        }
+        if (speechText != null) {
+            this.speechText.update();
+            if (this.speechText.isDone) {
+                this.speechText = null;
+            }
+        }
+
+        this.idleSpeechTimer -= Gdx.graphics.getDeltaTime();
+        if (this.speechBubble == null && this.speechText == null && this.idleSpeechTimer <= 0.0f) {
+            this.idleSpeechTimer = MathUtils.random(40.0f, 60.0f);
+            int roll = MathUtils.random(5);
+            if (roll == 0) {
+                CardCrawlGame.sound.play("VO_MERCHANT_MA", PITCH_VAR);
+            } else if (roll == 1) {
+                CardCrawlGame.sound.play("VO_MERCHANT_MB", PITCH_VAR);
+            } else if (roll == 2) {
+                CardCrawlGame.sound.play("VO_MERCHANT_MC", PITCH_VAR);
+            } else if (roll == 3) {
+                CardCrawlGame.sound.play("VO_MERCHANT_3A", PITCH_VAR);
+            } else if (roll == 4) {
+                CardCrawlGame.sound.play("VO_MERCHANT_3B", PITCH_VAR);
+            } else {
+                CardCrawlGame.sound.play("VO_MERCHANT_3C", PITCH_VAR);
+            }
+            createSpeechBubble(TEXT[MathUtils.random(0,6)]);
+        }
+    }
+
+    // public void createSpeechBubble(String msg) {
+    //     if (AbstractDungeon.topLevelEffects.stream().noneMatch(e -> e instanceof TopLevelSpeechEffect)) {
+    //         // float x = MathUtils.random(660.0F, 1260.0F) * Settings.scale;
+    //         float x = Settings.WIDTH - 1500.0F * Settings.scale;
+    //         float y = Settings.HEIGHT - MathUtils.random(150.0F, 930.0F) * Settings.scale;
+            
+    //         AbstractDungeon.topLevelEffects.add(new TopLevelSpeechEffect(x, y, 4.0F, msg, false));
+    //     }
+    // }
     
 }

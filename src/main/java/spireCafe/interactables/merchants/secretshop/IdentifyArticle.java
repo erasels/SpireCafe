@@ -25,9 +25,11 @@ public class IdentifyArticle extends AbstractArticle{
     private static final Texture ENABLED_TEXTURE = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("secretshop/identify_active.png"));
 
     public boolean isIdentifyMode = false;
+    private SecretShopMerchant ssMerchant;
 
     public IdentifyArticle(AbstractMerchant merchant, float x, float y) {
         super(ID, merchant, x, y, DISABLED_TEXTURE);
+        this.ssMerchant = (SecretShopMerchant) merchant;
     }
     
     @Override
@@ -41,6 +43,8 @@ public class IdentifyArticle extends AbstractArticle{
             if (canBuy()) {
                 isIdentifyMode = true;
                 return;
+            } else {
+                this.ssMerchant.cantIdentify();
             }
         }
 

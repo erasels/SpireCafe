@@ -17,6 +17,7 @@ public class IdentifyCardArticle extends CardArticle{
     private AbstractCard hiddenCard;
     private UnidentifiedCard unidentifiedCard;
     private IdentifyArticle identifyArticle;
+    private SecretShopMerchant ssMerchant;
 
     public IdentifyCardArticle(AbstractMerchant merchant, IdentifyArticle identifyArticle, float x, float y, UnidentifiedCard unidentifiedCard, AbstractCard hiddenCard, int basePrice) {
         super(ID, merchant, x, y, unidentifiedCard, basePrice);
@@ -24,6 +25,7 @@ public class IdentifyCardArticle extends CardArticle{
         this.hiddenCard = hiddenCard;
         this.identifyArticle = identifyArticle;
         this.unidentifiedCard.hiddenCard = hiddenCard;
+        this.ssMerchant = (SecretShopMerchant) merchant;
     }
 
     @Override
@@ -31,15 +33,20 @@ public class IdentifyCardArticle extends CardArticle{
         if (identifyArticle.isIdentifyMode) {
             identifyCard();
         } else {
+            if (!canBuy()) {
+                this.ssMerchant.cantBuy();
+            }
             super.onClick();
         }
     }
 
     private void identifyCard() {
         if (!identifyArticle.canBuy()) {
+            this.ssMerchant.cantIdentify();
             return;
         }
         identifyArticle.onBuy();
+        unidentifiedCard.identify();
         unidentifiedCard.identify();
         if (unidentifiedCard.isFullyIdentified) {
             this.merchant.toRemove.add(this);

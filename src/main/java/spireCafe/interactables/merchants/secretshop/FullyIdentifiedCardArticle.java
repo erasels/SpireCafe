@@ -1,6 +1,8 @@
 package spireCafe.interactables.merchants.secretshop;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.Courier;
 
@@ -12,10 +14,20 @@ public class FullyIdentifiedCardArticle extends CardArticle{
     public static final String ID = Anniv7Mod.makeID(FullyIdentifiedCardArticle.class.getSimpleName());
     
     private IdentifyArticle identifyArticle;
+    private SecretShopMerchant ssMerchant;
 
     public FullyIdentifiedCardArticle(AbstractMerchant merchant, IdentifyArticle identifyArticle, float x, float y, AbstractCard card, int basePrice) {
         super(ID, merchant, x, y, card, basePrice);
         this.identifyArticle = identifyArticle;
+        this.ssMerchant = (SecretShopMerchant) merchant;
+    }
+
+    @Override
+    public void onClick() {
+        if (!canBuy()) {
+            this.ssMerchant.cantBuy();
+        }
+        super.onClick();
     }
 
     @Override

@@ -21,12 +21,14 @@ public class IdentifyPotionArticle extends AbstractArticle{
     public AbstractPotion hiddenPotion;
     private int basePrice;
     private int slot;
+    private SecretShopMerchant ssMerchant;
 
     public IdentifyPotionArticle(AbstractMerchant merchant, int slot, AbstractPotion hiddenPotion, int basePrice) {
         super(ID, merchant, 968.0F * Settings.xScale + 150.0F * slot * Settings.xScale, POTION_Y, TEXTURE);
         this.hiddenPotion = hiddenPotion;
         this.basePrice = basePrice;
         this.slot = slot;
+        this.ssMerchant = (SecretShopMerchant) merchant;
     }
 
     @Override
@@ -37,6 +39,7 @@ public class IdentifyPotionArticle extends AbstractArticle{
     @Override
     public void onClick() {
         if (!canBuy()) {
+            this.ssMerchant.cantBuy();
             return;
         }
         if (!AbstractDungeon.player.obtainPotion(this.hiddenPotion)) {

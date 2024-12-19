@@ -23,12 +23,14 @@ public class IdentifyRelicArticle extends AbstractArticle {
     public AbstractRelic hiddenRelic;
     private int basePrice;
     private int slot;
+    private SecretShopMerchant ssMerchant;
 
     public IdentifyRelicArticle(AbstractMerchant merchant, int slot, AbstractRelic hiddenRelic, int basePrice) {
         super(ID, merchant, 964.0F * Settings.xScale + 150.0F * slot * Settings.xScale, RELIC_Y, TEXTURE);
         this.hiddenRelic = hiddenRelic;
         this.basePrice = basePrice;
         this.slot = slot;
+        this.ssMerchant = (SecretShopMerchant) merchant;
     }
 
     @Override
@@ -49,6 +51,14 @@ public class IdentifyRelicArticle extends AbstractArticle {
             this.merchant.toAdd.add(tmpArticle);
         }
 
+    }
+
+    @Override
+    public void onClick() {
+        if (!canBuy()) {
+            this.ssMerchant.cantBuy();
+        }
+        super.onClick();
     }
 
     @Override
