@@ -7,7 +7,8 @@
     "Mindbomber",
     "Darkglade",
     "Pandemonium",
-    "Coda"
+    "Coda",
+    "iry"
   ],
   "description": "${project.description}",
   "version": "${project.version}",
