@@ -2,7 +2,9 @@ package spireCafe.interactables.attractions.bookshelf;
 
 import basemod.AutoAdd;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import spireCafe.Anniv7Mod;
 import spireCafe.CafeRoom;
 import spireCafe.abstracts.AbstractAttraction;
@@ -14,6 +16,7 @@ import spireCafe.util.WeightedList;
 import java.io.IOException;
 import java.util.*;
 
+import static spireCafe.Anniv7Mod.makeID;
 import static spireCafe.Anniv7Mod.modID;
 
 public class BookshelfAttraction extends AbstractAttraction {
@@ -21,6 +24,7 @@ public class BookshelfAttraction extends AbstractAttraction {
     protected static final int NUM_PAGES = 1;
 
     public static final String ID = BookshelfAttraction.class.getSimpleName();
+    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID(ID));
     public static final List<AbstractPage> allPages = new ArrayList<>();
 
     public List<AbstractPage> selectedPages = new ArrayList<>(NUM_PAGES);
@@ -31,7 +35,7 @@ public class BookshelfAttraction extends AbstractAttraction {
         super(animationX, animationY, 300, 400);
         img = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("bookshelf/bookshelf.png"));
         authors = "Gk";
-        name = "Bookshelf"; //TODO: Localize
+        name = uiStrings.TEXT[0];
 
         if(allPages.isEmpty()) {
             new AutoAdd(modID)

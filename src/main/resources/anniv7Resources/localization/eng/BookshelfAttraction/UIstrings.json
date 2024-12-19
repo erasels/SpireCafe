@@ -1,4 +1,9 @@
 {
+  "${ModID}:BookshelfAttraction": {
+    "TEXT": [
+      "Bookshelf"
+    ]
+  },
   "${ModID}:RecipePage": {
     "TEXT": [
       "#bSnackmaster's #bRecipe #bCollection #bNr.",

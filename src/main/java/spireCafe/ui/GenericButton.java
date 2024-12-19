@@ -90,7 +90,6 @@ public class GenericButton extends ClickableUIElement {
 
             if (InputHelper.justReleasedClickRight) {
                 isBeingDragged = false;
-                //TODO: Save this position to config?
             }
         }
     }
