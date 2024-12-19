@@ -24,13 +24,12 @@ public class BookshelfCutscene extends AbstractCutscene {
     public static final String ID = makeID(BookshelfCutscene.class.getSimpleName());
     private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
     private static final Texture PAGE_IMG = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("bookshelf/page.png"));
-    private static final Color TEXT_COL = Color.BLACK.cpy();
+    private static final Color TEXT_COL = new Color(6f/255, 4f/255, 29f/255, 1f);
 
     private final BookshelfAttraction bookshelf;
 
     public BookshelfCutscene(BookshelfAttraction character) {
         super(character, cutsceneStrings);
-        TEXT_COL.a = 0.75f;
         bookshelf = character;
     }
 
