@@ -7,6 +7,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
+import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractCutscene;
@@ -14,6 +15,7 @@ import spireCafe.abstracts.AbstractNPC;
 import spireCafe.interactables.attractions.bookshelf.pages.AbstractPage;
 import spireCafe.interactables.attractions.makeup.MakeupCutscene;
 import spireCafe.interactables.attractions.makeup.MakeupTableAttraction;
+import spireCafe.util.ImageHelper;
 import spireCafe.util.TexLoader;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
@@ -67,6 +69,8 @@ public class BookshelfCutscene extends AbstractCutscene {
     @Override
     public void render(SpriteBatch sb) {
         if(bookshelf.selectedPage != null) {
+            sb.setColor(Settings.HALF_TRANSPARENT_BLACK_COLOR);
+            sb.draw(ImageMaster.WHITE_SQUARE_IMG, 0, 0, Settings.WIDTH, Settings.HEIGHT);
             sb.setColor(Color.WHITE);
             sb.draw(PAGE_IMG, 0f,0f, Settings.WIDTH, Settings.HEIGHT);
             FontHelper.renderSmartText(sb, FontHelper.turnNumFont, bookshelf.pageText, 435f * Settings.xScale, Settings.HEIGHT * 0.9f, 1050f * Settings.scale, 35f * Settings.yScale, TEXT_COL);
