@@ -14,7 +14,9 @@
       "Louse Burger",
       "Heals you for #b10 HP.",
       "Maw Fillet",
-      "At the start of the next #b5 combats, gain #b2 #yStrength."
+      "At the start of the next #b5 combats, gain #b2 #yStrength.",
+      "Spire Spaghetti",
+      "During the next #b8 combats, the first time you end your turn without playing cards, #yExhaust your hand and start a new turn."
     ]
   }
 }

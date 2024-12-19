@@ -10,6 +10,7 @@ import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractMerchant;
 import spireCafe.interactables.merchants.snackmaster.food.LouseBurger;
 import spireCafe.interactables.merchants.snackmaster.food.MawFillet;
+import spireCafe.interactables.merchants.snackmaster.food.SpireSpaghetti;
 import spireCafe.util.TexLoader;
 import spireCafe.vfx.TopLevelSpeechEffect;
 
@@ -41,7 +42,7 @@ public class SnackmasterMerchant extends AbstractMerchant {
     public void rollShop() {
         articles.add(new LouseBurger(this, 0));
         articles.add(new MawFillet(this, 1));
-        articles.add(new LouseBurger(this, 2));
+        articles.add(new SpireSpaghetti(this, 2));
     }
 
     @Override

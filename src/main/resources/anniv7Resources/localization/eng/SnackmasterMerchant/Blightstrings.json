@@ -5,5 +5,12 @@
       "At the start of the next #b%s combats, gain #b%s #yStrength.",
       "The meal is done."
     ]
+  },
+  "${ModID}:SpireSpaghettiBlight": {
+    "NAME": "Spire Spaghetti",
+    "DESCRIPTION": [
+      "During the next #b8 combats, the first time you end your turn without playing cards, #yExhaust your hand and start a new turn.",
+      "The meal is done."
+    ]
   }
 }
