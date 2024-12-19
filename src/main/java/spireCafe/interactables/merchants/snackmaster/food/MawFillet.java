@@ -1,6 +1,5 @@
 package spireCafe.interactables.merchants.snackmaster.food;
 
-import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import spireCafe.abstracts.AbstractMerchant;
 import spireCafe.interactables.merchants.snackmaster.persistent.MawFilletBlight;
@@ -20,7 +19,7 @@ public class MawFillet extends AbstractFoodArticle{
 
     @Override
     public int getBasePrice() {
-        return 120;
+        return 85;
     }
 
     @Override
