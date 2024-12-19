@@ -31,10 +31,8 @@ public class RecipePage extends AbstractPage {
         textMaker.append(uiStrings.TEXT[0]).append(recipeIndex); // Title
         textMaker.append(uiStrings.TEXT[1]); //New lines
         textMaker.append(uiStrings.TEXT[2 + recipeIndex]); // Recipe
-        if(AbstractDungeon.miscRng.randomBoolean()) {
-            textMaker.append(uiStrings.TEXT[1]);
-            textMaker.append(uiStrings.TEXT[uiStrings.TEXT.length-1]);
-        }
+        /*textMaker.append(uiStrings.TEXT[1]);
+        textMaker.append(uiStrings.TEXT[uiStrings.TEXT.length-1]);*/
         return textMaker.toString();
     }
 
