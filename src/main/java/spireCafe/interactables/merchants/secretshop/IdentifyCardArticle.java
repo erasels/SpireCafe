@@ -1,11 +1,8 @@
 package spireCafe.interactables.merchants.secretshop;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.relics.Courier;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
@@ -15,8 +12,7 @@ import spireCafe.interactables.merchants.CardArticle;
 
 
 public class IdentifyCardArticle extends CardArticle{
-    private static final float PRICE_OFFSET = 50f;
-    
+
     private static final String ID = Anniv7Mod.makeID(IdentifyCardArticle.class.getSimpleName());
     private AbstractCard hiddenCard;
     private UnidentifiedCard unidentifiedCard;
