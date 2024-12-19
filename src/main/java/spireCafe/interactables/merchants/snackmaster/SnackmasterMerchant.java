@@ -21,10 +21,10 @@ public class SnackmasterMerchant extends AbstractMerchant {
     private TopLevelSpeechEffect speechEffect;
 
     public SnackmasterMerchant(float animationX, float animationY) {
-        super(animationX, animationY, 160.0f, 200.0f);
+        super(animationX, animationY, 360.0f, 235.0f);
         this.name = snackmasterStrings.NAMES[0];
         this.authors = "Gk";
-        this.img = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("snackmaster/chef.png"));
+        this.img = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("snackmaster/chef_with_table.png"));
         background = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeMerchantPath("snackmaster/shopscreen.png")));
     }
 
