@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
 public class CafeRoom extends AbstractEvent {
     public static final String ID = Anniv7Mod.makeID(CafeRoom.class.getSimpleName());
     public static final int NUM_PATRONS = 3;
+    public static boolean isInteracting = false;
+
     private final ArrayList<AbstractNPC> npcs = new ArrayList<>();
     private AbstractMerchant merchant;
     private AbstractBartender bartender;
@@ -139,12 +141,14 @@ public class CafeRoom extends AbstractEvent {
         if (!RoomEventDialog.waitForInput) {
             this.buttonEffect(this.roomEventText.getSelectedOption());
         }
-        bartender.update();
+        //Updating NPCs first for the isINteraction flag to be set correctly. Baartender's hitbox overlaps
         for (AbstractNPC npc : npcs) {
             npc.update();
         }
+        bartender.update();
         attraction.update();
         merchant.update();
+        isInteracting = false;
     }
 
     @Override

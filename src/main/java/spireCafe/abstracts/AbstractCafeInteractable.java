@@ -16,6 +16,7 @@ import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import spireCafe.CafeRoom;
 
 import static spireCafe.Anniv7Mod.makeID;
 
@@ -60,7 +61,8 @@ public abstract class AbstractCafeInteractable {
         this.hitbox.update();
         if(this.hitbox.hovered && this.clickable && !AbstractDungeon.isScreenUp && !AbstractCutscene.isInCutscene){
             showTooltip = true;
-            if (InputHelper.justClickedLeft) {
+            if (InputHelper.justClickedLeft && !CafeRoom.isInteracting) {
+                CafeRoom.isInteracting = true; // Workaround to prevent double interactions due to overlapping hitboxes
                 this.onInteract();
             }
         } else {
