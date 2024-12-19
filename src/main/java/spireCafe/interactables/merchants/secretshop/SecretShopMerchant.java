@@ -29,6 +29,7 @@ public class SecretShopMerchant extends AbstractMerchant {
     private static final String ID = SecretShopMerchant.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
     private static final Texture RUG_TEXTURE = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("secretshop/rug.png"));
+    private static final String MERCHANT_STR = Anniv7Mod.makeMerchantPath("secretshop/red_merchant/");
 
     public ArrayList<AbstractCard> cards = new ArrayList<>();
 
@@ -38,12 +39,13 @@ public class SecretShopMerchant extends AbstractMerchant {
     public IdentifyArticle idArticle;
 
     public SecretShopMerchant(float animX, float animY) {
-        super(animX, animY, 160.0f, 200.0f);
+        super(animX, animY, 150.0f, 175.0f);
         this.name = characterStrings.NAMES[0];
         this.authors = "Coda";
         background = new TextureRegion(RUG_TEXTURE);
-        this.img = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("example/merchant.png"));
         this.identifyMode = false;
+        loadAnimation(MERCHANT_STR + "skeleton.atlas", MERCHANT_STR + "skeleton.json", 1.0F);
+        this.state.setAnimation(0, "idle", true);
         
     }
     
@@ -65,20 +67,18 @@ public class SecretShopMerchant extends AbstractMerchant {
             xPos = DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * i;
             yPos = TOP_ROW_Y;
             UnidentifiedCard unidentifiedCard = new UnidentifiedCard();
-            unidentifiedCard.hiddenCard = this.cards.get(i);
             unidentifiedCard.targetDrawScale = 0.75F;
             cost = setCardBasePrice();
-            IdentifyCardArticle tmpArticle = new IdentifyCardArticle(this, this.idArticle, xPos, yPos, unidentifiedCard, cost);
+            IdentifyCardArticle tmpArticle = new IdentifyCardArticle(this, this.idArticle, xPos, yPos, unidentifiedCard, this.cards.get(i), cost);
             articles.add(tmpArticle);
         }
         for (int i = 0; i < 2; i++) {
             xPos = DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * i;
             yPos = BOTTOM_ROW_Y;
             UnidentifiedCard unidentifiedCard = new UnidentifiedCard();
-            unidentifiedCard.hiddenCard = this.cards.get(i + 5);
             unidentifiedCard.targetDrawScale = 0.75F;
             cost = setCardBasePrice();
-            IdentifyCardArticle tmpArticle = new IdentifyCardArticle(this, this.idArticle, xPos, yPos, unidentifiedCard, cost);
+            IdentifyCardArticle tmpArticle = new IdentifyCardArticle(this, this.idArticle, xPos, yPos, unidentifiedCard, this.cards.get(i + 5), cost);
             articles.add(tmpArticle);
         }
 
@@ -88,27 +88,24 @@ public class SecretShopMerchant extends AbstractMerchant {
             articles.add(tmpArticle);
         }
 
+        initPotions();
+        for (int i = 0; i < potions.size(); i++) {
+            IdentifyPotionArticle tmpArticle = new IdentifyPotionArticle(this, i, this.potions.get(i), setPotionBasePrice());
+            articles.add(tmpArticle);
+        }
+
     }
         
     private void initCards() {
         AbstractCard c;
-        ArrayList<CardType> tmpType = new ArrayList<>();
-        tmpType.add(CardType.ATTACK);
-        tmpType.add(CardType.SKILL);
-        tmpType.add(CardType.POWER);
         
         for (int i = 0; i < 5; i++) {
-            Collections.shuffle(tmpType, new java.util.Random(AbstractDungeon.merchantRng.randomLong()));
-            c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), tmpType.get(0), true).makeCopy();
+            c = getCard(false);
             this.cards.add(c);
         }
         
         for (int i = 0; i < 2; i++) {
-            CardRarity tmpRarity = CardRarity.UNCOMMON;
-            if (AbstractDungeon.merchantRng.random() < AbstractDungeon.colorlessRareChance){
-                tmpRarity = CardRarity.RARE;
-            }
-            c = AbstractDungeon.getColorlessCardFromPool(tmpRarity).makeCopy();
+            c = getCard(true);
             this.cards.add(c);
         }
 
@@ -136,14 +133,50 @@ public class SecretShopMerchant extends AbstractMerchant {
         Collections.shuffle(this.relics, new java.util.Random(AbstractDungeon.merchantRng.randomLong()));
     }
 
-    private int setCardBasePrice() {
+    private void initPotions() {
+        AbstractPotion p;
+        for (int i = 0; i < 3; i++) {
+            potions.add(AbstractDungeon.returnRandomPotion());
+        }
+    }
+
+    public static int setCardBasePrice() {
+        int ret = (int)(AbstractCard.getPrice(CardRarity.UNCOMMON) * AbstractDungeon.merchantRng.random(0.5F, 0.8F));
+        return ret;
+    }
+
+    public static int setRelicBasePrice() {
         int ret = (int)(AbstractCard.getPrice(CardRarity.UNCOMMON) * AbstractDungeon.merchantRng.random(0.7F, 1.2F));
         return ret;
     }
 
-    private int setRelicBasePrice() {
+    public static int setPotionBasePrice() {
         int ret = (int)(AbstractCard.getPrice(CardRarity.UNCOMMON) * AbstractDungeon.merchantRng.random(0.7F, 1.2F));
         return ret;
+    }
+
+    public static AbstractCard getCard(boolean isColorless) {
+        AbstractCard c;
+        CardRarity tmpRarity;
+        
+        if (isColorless) {
+            tmpRarity = CardRarity.UNCOMMON;
+            if (AbstractDungeon.merchantRng.random() < AbstractDungeon.colorlessRareChance) {
+                tmpRarity = CardRarity.RARE;
+            }
+            c = AbstractDungeon.getColorlessCardFromPool(tmpRarity).makeCopy();
+        } else {
+            ArrayList<CardType> tmpType = new ArrayList<>();
+            tmpType.add(CardType.ATTACK);
+            tmpType.add(CardType.SKILL);
+            tmpType.add(CardType.POWER);
+            Collections.shuffle(tmpType, new java.util.Random(AbstractDungeon.merchantRng.randomLong()));
+
+            Collections.shuffle(tmpType, new java.util.Random(AbstractDungeon.merchantRng.randomLong()));
+            c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), tmpType.get(0), true).makeCopy();
+        }
+
+        return c;
     }
     
 }

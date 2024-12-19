@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
+import com.megacrit.cardcrawl.localization.UIStrings;
 
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractArticle;
@@ -19,6 +20,7 @@ public class IdentifyArticle extends AbstractArticle{
 
     private static final int IDENTIFY_COST = 2;
     private static final String ID = Anniv7Mod.makeID(IdentifyArticle.class.getSimpleName());
+    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ID);
     private static final Texture DISABLED_TEXTURE = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("secretshop/identify_inactive.png"));
     private static final Texture ENABLED_TEXTURE = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("secretshop/identify_active.png"));
 
@@ -74,6 +76,16 @@ public class IdentifyArticle extends AbstractArticle{
             itemTexture = new TextureRegion(DISABLED_TEXTURE);
         }
         super.render(sb);
+    }
+
+    @Override
+    public String getTipHeader() {
+        return uiStrings.TEXT[0];
+    }
+
+    @Override
+    public String getTipBody() {
+        return uiStrings.TEXT[1];
     }
     
 }
