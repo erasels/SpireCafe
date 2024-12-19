@@ -21,7 +21,7 @@ import static spireCafe.Anniv7Mod.modID;
 
 public class BookshelfAttraction extends AbstractAttraction {
     public static final String PAGE_CONFIG_KEY = "seenPages";
-    protected static final int NUM_PAGES = 1;
+    protected static final int NUM_PAGES = 3;
 
     public static final String ID = BookshelfAttraction.class.getSimpleName();
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID(ID));
@@ -71,7 +71,7 @@ public class BookshelfAttraction extends AbstractAttraction {
             pages.addAll(filteredPages, 1); // Reduced so that the last few pages have a higher chance to be seen
         }
 
-        for (int i = 0; i < NUM_PAGES; i++) {
+        for (int i = 0; i < Math.min(NUM_PAGES, pages.size()); i++) {
             AbstractPage p = pages.getRandom(AbstractDungeon.miscRng, true);
             selectedPages.add(p);
             if(!filteredPages.contains(p)) {
