@@ -53,31 +53,33 @@ public class BookshelfAttraction extends AbstractAttraction {
 
     @Override
     public void onInteract() {
-        List<AbstractCafeInteractable> inhabitants = ((CafeRoom) AbstractDungeon.getCurrRoom().event).getCurrentInhabitants();
-        List<String> seenPages = getSeenPages();
-        WeightedList<AbstractPage> pages = new WeightedList<>();
-        List<AbstractPage> filteredPages = new ArrayList<>();
+        if(selectedPages.isEmpty()) {
+            List<AbstractCafeInteractable> inhabitants = ((CafeRoom) AbstractDungeon.getCurrRoom().event).getCurrentInhabitants();
+            List<String> seenPages = getSeenPages();
+            WeightedList<AbstractPage> pages = new WeightedList<>();
+            List<AbstractPage> filteredPages = new ArrayList<>();
 
-        for(AbstractPage p : allPages) {
-            if(p.canSpawn()) {
-                if(!seenPages.contains(p.id)) {
-                    pages.add(p, p.preferredSpawn(inhabitants) ? 30 : 5); // Might want to add some dynamic logic in case there are a lot of pages
-                } else {
-                    filteredPages.add(p);
+            for (AbstractPage p : allPages) {
+                if (p.canSpawn()) {
+                    if (!seenPages.contains(p.id)) {
+                        pages.add(p, p.preferredSpawn(inhabitants) ? 30 : 5); // Might want to add some dynamic logic in case there are a lot of pages
+                    } else {
+                        filteredPages.add(p);
+                    }
                 }
             }
-        }
-        if(pages.size() < NUM_PAGES) {
-            for(AbstractPage fp : filteredPages) {
-                pages.add(fp, fp.preferredSpawn(inhabitants) ? 5 : 1); // Reduced so that the last few pages have a higher chance to be seen
+            if (pages.size() < NUM_PAGES) {
+                for (AbstractPage fp : filteredPages) {
+                    pages.add(fp, fp.preferredSpawn(inhabitants) ? 5 : 1); // Reduced so that the last few pages have a higher chance to be seen
+                }
             }
-        }
 
-        for (int i = 0; i < Math.min(NUM_PAGES, pages.size()); i++) {
-            AbstractPage p = pages.getRandom(AbstractDungeon.miscRng, true);
-            selectedPages.add(p);
-            if(!filteredPages.contains(p)) {
-                addSeenPage(p.id);
+            for (int i = 0; i < Math.min(NUM_PAGES, pages.size()); i++) {
+                AbstractPage p = pages.getRandom(AbstractDungeon.miscRng, true);
+                selectedPages.add(p);
+                if (!filteredPages.contains(p)) {
+                    addSeenPage(p.id);
+                }
             }
         }
 
