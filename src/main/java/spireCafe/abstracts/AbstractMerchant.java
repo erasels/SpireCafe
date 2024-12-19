@@ -61,7 +61,4 @@ public abstract class AbstractMerchant extends AbstractCafeInteractable {
             article.render(sb);
         }
     }
-
-
-    //TODO: Placement Logic
 }

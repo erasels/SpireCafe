@@ -42,6 +42,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Consumer;
 
+import static spireCafe.interactables.attractions.bookshelf.BookshelfAttraction.PAGE_CONFIG_KEY;
 import static spireCafe.patches.CafeEntryExitPatch.CAFE_ENTRY_SOUND_KEY;
 
 @SuppressWarnings({"unused"})
@@ -158,6 +159,7 @@ public class Anniv7Mod implements
         try {
             Properties defaults = new Properties();
             defaults.put("cafeEntryCost", "TRUE");
+            defaults.put(PAGE_CONFIG_KEY, "");
             modConfig = new SpireConfig(modID, "anniv7Config", defaults);
         } catch (Exception e) {
             e.printStackTrace();
@@ -230,10 +232,7 @@ public class Anniv7Mod implements
     public static void addPotions() {
         if (Loader.isModLoaded("widepotions")) {
             Consumer<String> whitelist = getWidePotionsWhitelistMethod();
-
         }
-
-
     }
 
     private static Consumer<String> getWidePotionsWhitelistMethod() {

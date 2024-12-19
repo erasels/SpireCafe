@@ -5,6 +5,4 @@ public abstract class AbstractAttraction extends AbstractNPC {
         super(animationX, animationY, hb_w, hb_h);
         shouldShowSpeechBubble = false;
     }
-
-    //TODO: Placement Logic
 }

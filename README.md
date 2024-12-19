@@ -39,6 +39,10 @@ To make suitable content and help the PR process go smoothly, follow these guide
 - No combats in the Café, there are too many edge cases and the code is complex enough already
 - We expect contributions to be complete (including art) before merging, but it's okay to make a PR while still working on the art
 
+#### Adding a Page to the Bookshelf
+To add a Page to the bookshelf you have to make a new class in the `spireCafe/interactables/attractions/bookshelf/pages` package that extends the AbstractPage class. The class contains many features which you can make use of to add a bit of logic to your pages.  
+For the actual text you'll want to add an entry to `anniv7Resources/localization/[langKey]/BookshelfAttraction/UIstrings.json` with the key being the same as the ID of your Page class.
+
 #### Cards, relics, powers, etc.
 Cards, relics, powers, patches, and everything else should go in the package you created for your interactable.
 
