@@ -18,5 +18,26 @@
     "TEXT": [
       ""
     ]
+  },
+  "${ModID}:RanwidJawWormPage": {
+    "TEXT": [
+      "#bRanwid's #bGuide #bto #bSpire #bWildlife: #bJaw #bWorm",
+      " NL NL ",
+      "An aggressive and vicious species, #yJaw #yWorms are found mostly near the base of the Spire. NL They are seemingly capable of teamwork - some packs of them have climbed even above the #yCity - but it's also not uncommon to see them fighting amongst themselves when agitated. NL NL Their biology is curious, having only two limbs in total, and no obvious sensory organs to speak of aside from their oversized maws. Upon closer inspection, they do appear to have #pvestigial #peyes, and I suspect that some of the protrusions on their back are really supposed to be legs. NL Unfortunately, we'll never get to see what this creature really looked like before the effects of the #rSpireblight, so NL NL #r(The #rrest #rof #rthe #rpage #ris #rconspicuously #rbitten #roff)"
+    ]
+  },
+  "${ModID}:RanwidLicePage": {
+    "TEXT": [
+      "#bRanwid's #bGuide #bto #bSpire #bWildlife: #bLice, #bRed #band #bGreen",
+      " NL NL ",
+      "#yLice are commonplace near the base of the Spire, and come in two distinct varieties: #rred and #ggreen. NL #yRed #yLice are more aggressive, charging straight into battle against any percieved threat (including harmless researchers!!!), whereas #yGreen #yLice are far more cautious. NL The green variety are able to produce a #psticky #pweb-like #psubstance, which they spit at enemies to immobilise them. NL In addition, both kinds of Lice demonstrate a behaviour known as #b\"curling #bup\" when they sense danger, which protects their soft underbelly from further attack. NL NL #yLice can be placated by giving them food - they're carnivorous, so any kind of #rmeat does the trick - and they can even become quite affectionate if consistently fed and cared for! NL Beware of feeding #yRed #yLice too much, though, as they're capable of growing to more than #pdouble their original size..."
+    ]
+  },
+  "${ModID}:RanwidTheMawPage": {
+    "TEXT": [
+      "#bRanwid's #bGuide #bto #bSpire #bWildlife: #bThe #bMaw",
+      " NL NL ",
+      "Seemingly related to the #yJaw #yWorm, this creature is found high up in the Spire. Its common name is #r\"The #rMaw\", though I've taken to calling it the #yMaw #yWorm myself. NL It's difficult to get up close for study since they'll bite pretty much anything that comes near their gaping mouths! What I do know is that they appear to have developed the ability to #bfloat - although ~how~ they've managed to achieve that is entirely unclear. NL NL I hope to learn more about these creatures in the future, and will update this page accordingly!"
+    ]
   }
 }
