@@ -40,6 +40,9 @@ public abstract class AbstractMerchant extends AbstractCafeInteractable {
         toRemove.add(article);
     }
 
+    //Called after the custom screen is close in case you need to take care of lingering effects or something
+    public void onCloseShop() {}
+
     public void updateShop() {
         for (AbstractArticle article : toAdd) {
             articles.add(article);

@@ -27,6 +27,8 @@ public class TopLevelSpeechEffect extends AbstractGameEffect{
     private boolean facingRight;
     private Color shadowColor = new Color(0f, 0f, 0f, 0f);
 
+    private SpeechTextEffect textEffect;
+
     public TopLevelSpeechEffect(float x, float y, String msg, boolean isPlayer) {
         this(x, y, 2f, msg, isPlayer);
     }
@@ -37,8 +39,9 @@ public class TopLevelSpeechEffect extends AbstractGameEffect{
             effect_x = 170f * Settings.scale;
         }
 
-        AbstractDungeon.topLevelEffectsQueue.add(
-                new SpeechTextEffect(x + effect_x, y + 124f * Settings.scale, duration, msg, DialogWord.AppearEffect.BUMP_IN));
+        textEffect = new SpeechTextEffect(x + effect_x, y + 124f * Settings.scale, duration, msg, DialogWord.AppearEffect.BUMP_IN);
+
+        AbstractDungeon.topLevelEffectsQueue.add(textEffect);
 
         if (isPlayer) {
             this.x = x + ADJUST_X;
@@ -67,6 +70,11 @@ public class TopLevelSpeechEffect extends AbstractGameEffect{
         } else {
             color.a = MathUtils.lerp(color.a, 0f, Gdx.graphics.getDeltaTime() * 12f);
         }
+
+        if(duration < FADE_TIME/2) {
+            textEffect.duration = -1;
+        }
+
         shadow_offset = MathUtils.lerp(shadow_offset, SHADOW_OFFSET, Gdx.graphics.getDeltaTime() * 4f);
     }
 
