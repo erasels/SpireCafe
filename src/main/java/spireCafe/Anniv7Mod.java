@@ -289,6 +289,7 @@ public class Anniv7Mod implements
         loadStringsFile(langKey, PotionStrings.class);
         loadStringsFile(langKey, EventStrings.class);
         loadStringsFile(langKey, MonsterStrings.class);
+        loadStringsFile(langKey, BlightStrings.class);
     }
 
     public void loadInteractableStrings(Collection<String> interactableIDs, String langKey) {
@@ -310,6 +311,7 @@ public class Anniv7Mod implements
             loadStringsFile(languageAndInteractable, PotionStrings.class);
             loadCutsceneStringsFile(languageAndInteractable, CutsceneStrings.class);
             loadStringsFile(languageAndInteractable, MonsterStrings.class);
+            loadStringsFile(languageAndInteractable, BlightStrings.class);
         }
     }
 
