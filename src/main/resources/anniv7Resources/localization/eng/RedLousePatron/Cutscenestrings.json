@@ -1,0 +1,18 @@
+{
+  "${ModID}:RedLouseCutscene": {
+    "NAME": "RedLouse Cutscene",
+    "BLOCKING_TEXTS": [
+      "Now there are two meat balls."
+    ],
+    "DESCRIPTIONS": [
+      "A tiny red louse is eating a plate of spaghetti and meatball.",
+      "The louse is intensely focused on nibbling on the dish's singular meatball, NL which is almost twice its size. NL NL #rScare #rit?",
+      "\" @EEEEPP!@ \" NL NL The louse lets out a tiny chirp, then curls up into a ball.",
+      "The louse continues to #y~happily~ #y~nibble~ away at the meatball."
+    ],
+    "OPTIONS": [
+      "Scare the louse.",
+      "Leave the louse alone."
+    ]
+  }
+}
