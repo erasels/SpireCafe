@@ -14,7 +14,6 @@ public abstract class AbstractMerchant extends AbstractCafeInteractable {
     public ArrayList<AbstractArticle> articles = new ArrayList<>();
     public ArrayList<AbstractArticle> toAdd = new ArrayList<>();
     public ArrayList<AbstractArticle> toRemove = new ArrayList<>();
-    public ArrayList<AbstractArticle> toAdd = new ArrayList<>();
     public boolean wasShopRolled = false;
 
     public AbstractMerchant(float animationX, float animationY, float hb_w, float hb_h) {
@@ -56,10 +55,6 @@ public abstract class AbstractMerchant extends AbstractCafeInteractable {
             articles.remove(article);
         }
         toRemove.clear();
-        for (AbstractArticle article : toAdd) {
-            articles.add(article);
-        }
-        toAdd.clear();
     }
 
     public void renderShop(SpriteBatch sb) {
