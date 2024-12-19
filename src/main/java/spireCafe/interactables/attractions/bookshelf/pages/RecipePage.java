@@ -1,14 +1,20 @@
 package spireCafe.interactables.attractions.bookshelf.pages;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractCafeInteractable;
 import spireCafe.interactables.merchants.snackmaster.SnackmasterMerchant;
+import spireCafe.util.TexLoader;
 
 import java.util.List;
 
 public class RecipePage extends AbstractPage {
+    private static final Texture IMG = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("bookshelf/pages/foodStain.png"));
     private static final String ID = Anniv7Mod.makeID(RecipePage.class.getSimpleName());
+
     public RecipePage() {
         super(ID);
     }
@@ -35,5 +41,10 @@ public class RecipePage extends AbstractPage {
     @Override
     public boolean preferredSpawn(List<AbstractCafeInteractable> currentInhabitants) {
         return currentInhabitants.stream().anyMatch(p -> p instanceof SnackmasterMerchant);
+    }
+
+    @Override
+    public void render(SpriteBatch sb) {
+        sb.draw(IMG, Settings.WIDTH * 0.66f, 100f * Settings.yScale, IMG.getWidth()*Settings.scale, IMG.getHeight()* Settings.scale);
     }
 }
