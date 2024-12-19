@@ -99,7 +99,7 @@ public abstract class AbstractCafeInteractable {
             float tooltipX = Settings.WIDTH - boxWidth - 20.0f * Settings.scale;
             float tooltipY = 0.85f * Settings.HEIGHT - 20.0f * Settings.scale;
 
-            // TipHelper.renderGenericTip(tooltipX, tooltipY, name, tooltipBody);
+            TipHelper.renderGenericTip(tooltipX, tooltipY, name, tooltipBody);
         }
     }
 
