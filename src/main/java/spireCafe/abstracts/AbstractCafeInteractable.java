@@ -90,7 +90,7 @@ public abstract class AbstractCafeInteractable {
         }
         this.hitbox.render(sb);
 
-        if(showTooltip){
+        if(showTooltip && !AbstractDungeon.isScreenUp){
             String tooltipBody = authorsString.TEXT[0] + this.authors;
             float boxWidth = 320.0F * Settings.scale;
 
