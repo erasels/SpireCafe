@@ -56,6 +56,8 @@ public class BookshelfCutscene extends AbstractCutscene {
                     nextDialogue();
                 });
             } else {
+                // Just render page again
+                CardCrawlGame.sound.play("MAP_OPEN");
                 nextDialogue();
             }
         } else {
