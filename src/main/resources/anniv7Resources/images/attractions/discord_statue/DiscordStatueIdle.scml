@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r11">
+    <folder id="0">
+        <file id="0" name="statue.png" width="295" height="520" pivot_x="0" pivot_y="1"/>
+        <file id="1" name="statue_0.png" width="295" height="520" pivot_x="0" pivot_y="1"/>
+        <file id="2" name="statue_1.png" width="295" height="520" pivot_x="0" pivot_y="1"/>
+        <file id="3" name="statue_2.png" width="295" height="520" pivot_x="0" pivot_y="1"/>
+        <file id="4" name="statue_3.png" width="295" height="520" pivot_x="0" pivot_y="1"/>
+        <file id="5" name="statue_4.png" width="295" height="520" pivot_x="0" pivot_y="1"/>
+        <file id="6" name="statue_5.png" width="295" height="520" pivot_x="0" pivot_y="1"/>
+        <file id="7" name="statue_6.png" width="295" height="520" pivot_x="0" pivot_y="1"/>
+        <file id="8" name="statue_7.png" width="295" height="520" pivot_x="0" pivot_y="1"/>
+    </folder>
+    <entity id="0" name="discord">
+        <animation id="0" name="idle" length="1000" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="statue">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="-142" y="489" angle="0"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>
