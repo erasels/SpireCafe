@@ -1,0 +1,14 @@
+{
+  "${ModID}:BookshelfCutscene": {
+    "NAME": "Bookshelf",
+    "BLOCKING_TEXTS": [
+    ],
+    "DESCRIPTIONS": [
+      "The bookshelf houses many tomes of differing size. Do you want to take a peek at #bone of the works?",
+      "You'll have to learn to read first."
+    ],
+    "OPTIONS": [
+      "You can't read."
+    ]
+  }
+}

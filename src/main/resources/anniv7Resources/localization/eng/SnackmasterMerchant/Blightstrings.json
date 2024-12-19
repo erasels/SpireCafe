@@ -1,0 +1,9 @@
+{
+  "${ModID}:MawFilletBlight": {
+    "NAME": "Maw Fillet",
+    "DESCRIPTION": [
+      "At the start of the next #b%s combats, gain #b%s #yStrength.",
+      "The meal is done."
+    ]
+  }
+}

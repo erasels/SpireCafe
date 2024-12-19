@@ -18,19 +18,22 @@ public class SnackmasterMerchant extends AbstractMerchant {
     public static final int ZINGER_CUTOFF = 6;
     public static final CharacterStrings snackmasterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
+    private TopLevelSpeechEffect speechEffect;
+
     public SnackmasterMerchant(float animationX, float animationY) {
-        super(animationX, animationY, 160.0f, 200.0f);
+        super(animationX, animationY, 360.0f, 235.0f);
         this.name = snackmasterStrings.NAMES[0];
         this.authors = "Gk";
-        this.img = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("snackmaster/chef.png"));
+        this.img = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("snackmaster/chef_with_table.png"));
         background = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeMerchantPath("snackmaster/shopscreen.png")));
     }
 
     @Override
     public void onInteract() {
         super.onInteract();
-        if(AbstractDungeon.topLevelEffects.stream().noneMatch(e -> e instanceof TopLevelSpeechEffect)) {
-            AbstractDungeon.topLevelEffects.add(new TopLevelSpeechEffect(Settings.WIDTH * 0.85f, (float) Settings.HEIGHT / 2, snackmasterStrings.TEXT[MathUtils.random(ZINGER_CUTOFF)], false));
+        if(speechEffect == null) {
+            speechEffect = new TopLevelSpeechEffect(Settings.WIDTH * 0.85f, (float) Settings.HEIGHT / 2, snackmasterStrings.TEXT[MathUtils.random(ZINGER_CUTOFF)], false);
+            AbstractDungeon.topLevelEffects.add(speechEffect);
         }
     }
 
@@ -39,5 +42,11 @@ public class SnackmasterMerchant extends AbstractMerchant {
         articles.add(new LouseBurger(this, 0));
         articles.add(new MawFillet(this, 1));
         articles.add(new LouseBurger(this, 2));
+    }
+
+    @Override
+    public void onCloseShop() {
+        speechEffect.duration = -1;
+        speechEffect = null;
     }
 }

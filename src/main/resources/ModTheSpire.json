@@ -8,7 +8,8 @@
     "Darkglade",
     "Pandemonium",
     "Coda",
-    "Indi"
+    "Indi",
+    "iry"
   ],
   "description": "${project.description}",
   "version": "${project.version}",

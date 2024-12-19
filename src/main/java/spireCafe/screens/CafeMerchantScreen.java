@@ -36,6 +36,7 @@ public class CafeMerchantScreen extends CustomScreen {
         AbstractDungeon.screen = AbstractDungeon.previousScreen;
         AbstractDungeon.isScreenUp = false;
         AbstractDungeon.overlayMenu.hideBlackScreen();
+        currentMerchant.onCloseShop();
     }
 
 

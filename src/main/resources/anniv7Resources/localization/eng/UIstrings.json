@@ -14,7 +14,7 @@
   },
   "${ModID}:Authors": {
     "TEXT": [
-      "Authors: "
+      "Author(s): "
     ]
   }
 }

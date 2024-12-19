@@ -1,6 +1,9 @@
 package spireCafe.interactables.merchants.snackmaster.food;
 
+import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import spireCafe.abstracts.AbstractMerchant;
+import spireCafe.interactables.merchants.snackmaster.persistent.MawFilletBlight;
 
 import static spireCafe.interactables.merchants.snackmaster.SnackmasterMerchant.ZINGER_CUTOFF;
 import static spireCafe.interactables.merchants.snackmaster.SnackmasterMerchant.snackmasterStrings;
@@ -12,7 +15,7 @@ public class MawFillet extends AbstractFoodArticle{
 
     @Override
     public void foodEffect() {
-        //TODO: Give relic for 3 strength at combat start for the next 5 combats?
+        AbstractDungeon.getCurrRoom().spawnBlightAndObtain(xPos, yPos, new MawFilletBlight());
     }
 
     @Override
