@@ -1,0 +1,9 @@
+{
+  "${ModID}:GoldenBallRelic": {
+    "NAME": "Golden Ball",
+    "FLAVOR": "shiny",
+    "DESCRIPTIONS": [
+      "it's a golden ball."
+    ]
+  }
+}
