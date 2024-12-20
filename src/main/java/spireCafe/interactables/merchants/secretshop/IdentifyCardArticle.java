@@ -58,7 +58,7 @@ public class IdentifyCardArticle extends CardArticle{
     @Override
     public void onBuy() {
         AbstractDungeon.player.loseGold(getModifiedPrice());
-        AbstractDungeon.topLevelEffectsQueue.add(new ShowCardAndObtainEffect(this.hiddenCard.makeCopy(), Settings.WIDTH / 2.0F, Settings.HEIGHT / 2.0F));
+        AbstractDungeon.topLevelEffectsQueue.add(new ShowCardAndObtainEffect(this.hiddenCard, Settings.WIDTH / 2.0F, Settings.HEIGHT / 2.0F));
 
         if (!AbstractDungeon.player.hasRelic(Courier.ID)) {
             return;
