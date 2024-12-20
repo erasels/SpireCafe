@@ -10,11 +10,23 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardRarity;
+import com.megacrit.cardcrawl.cards.AbstractCard.CardTags;
+import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
+import com.megacrit.cardcrawl.cards.blue.Claw;
+import com.megacrit.cardcrawl.cards.curses.AscendersBane;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
+import com.megacrit.cardcrawl.relics.Akabeko;
+import com.megacrit.cardcrawl.relics.Girya;
+import com.megacrit.cardcrawl.relics.LetterOpener;
+import com.megacrit.cardcrawl.relics.PenNib;
+import com.megacrit.cardcrawl.relics.PhilosopherStone;
+import com.megacrit.cardcrawl.relics.Shuriken;
+import com.megacrit.cardcrawl.relics.StrikeDummy;
+import com.megacrit.cardcrawl.relics.Vajra;
 import com.megacrit.cardcrawl.vfx.combat.DamageNumberEffect;
 import com.megacrit.cardcrawl.vfx.combat.FlashAtkImgEffect;
 
@@ -58,13 +70,31 @@ public class PunchingBagAttraction extends AbstractAttraction{
     }
     
     public int calculateDamageScore() {
+        AbstractPlayer p = AbstractDungeon.player;
         int score = 0;
         float multiplier = 1.0F;
+        int clawCount = 0;
+        int attackCount = 0;
+        int skillCount = 0;
+        int strength = 0;
 
-        ArrayList<AbstractCard> deck = AbstractDungeon.player.masterDeck.group;
+        ArrayList<AbstractCard> deck = p.masterDeck.group;
+
+        if (p.hasRelic(Vajra.ID)) {
+            strength += 1;
+        }
+
+        if (p.hasRelic(PhilosopherStone.ID)) {
+            strength += 1;
+        }
+
+        if (p.hasRelic(Girya.ID)) {
+            strength += p.getRelic(Girya.ID).counter;
+        }
 
         int cardMulti = 1;
         for (AbstractCard c : deck) {
+            int cardScore = 0;
             switch (c.rarity) {
                 case COMMON:
                     cardMulti = 2;
@@ -82,10 +112,12 @@ public class PunchingBagAttraction extends AbstractAttraction{
             }
             switch (c.type) {
                 case ATTACK:
-                    score += cardMulti * B_ATK;
+                    cardScore += (cardMulti * B_ATK) + strength;
+                    attackCount += 1;
                     break;
                 case SKILL:
-                    score += cardMulti * B_SKL;
+                    cardScore += cardMulti * B_SKL;
+                    skillCount += 1;
                     break;
                 case POWER:
                     if (c.rarity.equals(CardRarity.RARE)) {
@@ -98,11 +130,41 @@ public class PunchingBagAttraction extends AbstractAttraction{
                     break;
                 case CURSE:
                 case STATUS:
-                    multiplier *= CURSE;
+                    if (!c.cardID.equals(AscendersBane.ID)) {
+                        multiplier *= CURSE;
+                    }
                     break;
                 default:
                     break;
             }
+
+            // Additive bonuses
+            if (c.hasTag(CardTags.STRIKE) && p.hasRelic(StrikeDummy.ID)) {
+                score += 2;
+            }
+            if (c.cardID.equals(Claw.ID)){
+                cardScore += (2 + strength) * clawCount;
+                clawCount += 1;
+            }
+            if (p.hasRelic(Shuriken.ID) && c.type.equals(CardType.ATTACK) && attackCount % 3 == 0) {
+                strength += 1;
+            }
+            
+            // Multiplier bonuses
+            cardScore *= Math.pow(1.5F, c.timesUpgraded);
+
+            if (p.hasRelic(PenNib.ID) && c.type.equals(CardType.ATTACK) && attackCount % 10 == 0) {
+                cardScore *= 2;
+            }
+            score += cardScore;
+        }
+
+        // Additive bonuses (Total)
+        if (p.hasRelic(Akabeko.ID) && attackCount > 0) {
+            score += 8;
+        }
+        if (p.hasRelic(LetterOpener.ID) && skillCount > 0) {
+            score += 5 * (skillCount / 3);
         }
 
         return (int)(score * multiplier * 10) + MathUtils.random(9);
