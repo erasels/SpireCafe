@@ -19,7 +19,7 @@ public class IdentifyRelicArticle extends AbstractArticle {
     private static final String ID = Anniv7Mod.makeID(IdentifyRelicArticle.class.getSimpleName());
     private static final Texture TEXTURE = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("secretshop/relic.png"));
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ID);
-    private static final float RELIC_Y = 364.0F;
+    private static final float RELIC_Y = 364.0F * Settings.scale;
     public AbstractRelic hiddenRelic;
     private int basePrice;
     private int slot;
