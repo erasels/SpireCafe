@@ -15,6 +15,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractSCCard;
 
+@AutoAdd.Ignore
 public class UnidentifiedCard extends AbstractSCCard{
 
     private static final int COST = -2;
