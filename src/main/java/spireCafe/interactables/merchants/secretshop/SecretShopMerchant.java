@@ -73,7 +73,7 @@ public class SecretShopMerchant extends AbstractMerchant {
 
         initCards();
         int cost;
-        int tmp = (int)(Settings.WIDTH - DRAW_START_X * 2.0F - AbstractCard.IMG_WIDTH_S * 5.0F) / 4; // ???
+        int tmp = (int)(Settings.WIDTH - DRAW_START_X * 2.0F - AbstractCard.IMG_WIDTH_S * 5.0F) / 4;
         float padX = (int)(tmp + AbstractCard.IMG_WIDTH_S) + 10.0F * Settings.scale;
         for (int i = 0; i < 5; i++) {
             xPos = DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * i;
