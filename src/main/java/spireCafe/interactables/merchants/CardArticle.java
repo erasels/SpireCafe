@@ -84,6 +84,7 @@ public class CardArticle extends AbstractArticle {
 
     @Override
     public void renderPrice(SpriteBatch sb) {
+        sb.setColor(Color.WHITE);
         int price = getModifiedPrice();
         float priceX = xPos;
         float priceY = yPos - PRICE_OFFSET - card.hb.height/2f;
