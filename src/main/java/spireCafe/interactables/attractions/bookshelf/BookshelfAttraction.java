@@ -77,13 +77,15 @@ public class BookshelfAttraction extends AbstractAttraction {
             for (int i = 0; i < Math.min(NUM_PAGES, pages.size()); i++) {
                 AbstractPage p = pages.getRandom(AbstractDungeon.miscRng, true);
                 selectedPages.add(p);
-                if (!filteredPages.contains(p)) {
-                    addSeenPage(p.id);
-                }
             }
         }
 
         AbstractDungeon.topLevelEffects.add(new BookshelfCutscene(this));
+    }
+
+    public void setSelectedPage(AbstractPage selection) {
+        selectedPage = selection;
+        addSeenPage(selection.id);
     }
 
     public static List<String> getSeenPages() {
@@ -101,12 +103,14 @@ public class BookshelfAttraction extends AbstractAttraction {
 
     public static void addSeenPage(String pageId) {
         if (Anniv7Mod.modConfig != null) {
-            String pageList = Anniv7Mod.modConfig.getString(PAGE_CONFIG_KEY);
-            Anniv7Mod.modConfig.setString(PAGE_CONFIG_KEY, pageList + pageId + ",");
-            try {
-                Anniv7Mod.modConfig.save();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(!hasSeenPage(pageId)) {
+                String pageList = Anniv7Mod.modConfig.getString(PAGE_CONFIG_KEY);
+                Anniv7Mod.modConfig.setString(PAGE_CONFIG_KEY, pageList + pageId + ",");
+                try {
+                    Anniv7Mod.modConfig.save();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
