@@ -1,0 +1,31 @@
+{
+    "${ModID}:SecretShopMerchant": {
+      "NAMES": [
+        "Gheed"
+      ],
+      "TEXT": [
+        "Blood for information.",
+        "Let's play a game.",
+        "Gonna buy something?",
+        "Don't stare into the eye please.",
+        "Even I don't know what I'm selling.",
+        "No refunds.",
+        "???",
+        "Not enough blood in your veins.",
+        "Can't go killing my customers.",
+        "The eye says \"No.\"",
+        "You don't look so good...",
+        "There are easier ways to kill yourself.",
+        "Dead customers are bad for business.",
+        "How are you even breathing right now?",
+        "Need more money for that.",
+        "No freebies.",
+        "Come back with some more gold.",
+        "No.",
+        "I'm not a charity y'know.",
+        "Forgeting something?",
+        "I take gold, not promises.",
+        "No I.O.U.s"    
+      ]
+    }
+  }
