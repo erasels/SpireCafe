@@ -3,6 +3,7 @@ package spireCafe.interactables.merchants.secretshop;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
+import basemod.AutoAdd;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.red.IronWave;
