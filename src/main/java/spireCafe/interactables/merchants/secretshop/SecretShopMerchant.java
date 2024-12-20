@@ -3,7 +3,6 @@ package spireCafe.interactables.merchants.secretshop;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -42,7 +41,6 @@ public class SecretShopMerchant extends AbstractMerchant {
     private static final float SPEECH_TEXT_R_X = 164.0F * Settings.scale;
     private static final float SPEECH_TEXT_L_X = -166.0F * Settings.scale;
     private static final float SPEECH_TEXT_Y = 126.0F * Settings.scale;
-    private float idleSpeechTimer = 0.0F;
     private ShopSpeechBubble speechBubble = null;
     private SpeechTextEffect speechText = null;
 
@@ -115,6 +113,12 @@ public class SecretShopMerchant extends AbstractMerchant {
     public void update() {
         super.update();
         updateSpeech();
+    }
+
+    @Override
+    public void onInteract() {
+        super.onInteract();
+        createSpeechBubble(TEXT[MathUtils.random(0,6)]);
     }
         
     private void initCards() {
@@ -260,36 +264,5 @@ public class SecretShopMerchant extends AbstractMerchant {
                 this.speechText = null;
             }
         }
-
-        this.idleSpeechTimer -= Gdx.graphics.getDeltaTime();
-        if (this.speechBubble == null && this.speechText == null && this.idleSpeechTimer <= 0.0f) {
-            this.idleSpeechTimer = MathUtils.random(40.0f, 60.0f);
-            int roll = MathUtils.random(5);
-            if (roll == 0) {
-                CardCrawlGame.sound.play("VO_MERCHANT_MA", PITCH_VAR);
-            } else if (roll == 1) {
-                CardCrawlGame.sound.play("VO_MERCHANT_MB", PITCH_VAR);
-            } else if (roll == 2) {
-                CardCrawlGame.sound.play("VO_MERCHANT_MC", PITCH_VAR);
-            } else if (roll == 3) {
-                CardCrawlGame.sound.play("VO_MERCHANT_3A", PITCH_VAR);
-            } else if (roll == 4) {
-                CardCrawlGame.sound.play("VO_MERCHANT_3B", PITCH_VAR);
-            } else {
-                CardCrawlGame.sound.play("VO_MERCHANT_3C", PITCH_VAR);
-            }
-            createSpeechBubble(TEXT[MathUtils.random(0,6)]);
-        }
     }
-
-    // public void createSpeechBubble(String msg) {
-    //     if (AbstractDungeon.topLevelEffects.stream().noneMatch(e -> e instanceof TopLevelSpeechEffect)) {
-    //         // float x = MathUtils.random(660.0F, 1260.0F) * Settings.scale;
-    //         float x = Settings.WIDTH - 1500.0F * Settings.scale;
-    //         float y = Settings.HEIGHT - MathUtils.random(150.0F, 930.0F) * Settings.scale;
-            
-    //         AbstractDungeon.topLevelEffects.add(new TopLevelSpeechEffect(x, y, 4.0F, msg, false));
-    //     }
-    // }
-    
 }
