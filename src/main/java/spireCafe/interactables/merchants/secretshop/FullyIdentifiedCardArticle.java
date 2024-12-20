@@ -36,7 +36,7 @@ public class FullyIdentifiedCardArticle extends CardArticle{
             return;
         }
 
-        boolean isColorless = AbstractDungeon.miscRng.random() < 0.2F;
+        boolean isColorless = AbstractDungeon.miscRng.randomBoolean(0.2f);
         AbstractCard c = SecretShopMerchant.getCard(isColorless);
         UnidentifiedCard uC = new UnidentifiedCard();
         CardArticle identifyCardArticle = new IdentifyCardArticle(merchant, identifyArticle, xPos, yPos, uC, c, SecretShopMerchant.setCardBasePrice());
