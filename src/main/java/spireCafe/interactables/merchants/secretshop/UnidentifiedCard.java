@@ -21,6 +21,7 @@ public class UnidentifiedCard extends AbstractSCCard{
     private static final CardType TYPE = CardType.STATUS;
     private static final CardRarity RARITY = CardRarity.SPECIAL;
     private static final CardTarget TARGET = CardTarget.NONE;
+    private static final String ZONE = "SecretShopMerchant" ;
     private static final String ID = Anniv7Mod.makeID(UnidentifiedCard.class.getSimpleName());
     private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(ID);
     private static final String[] EXTENDED_DESCRIPTION = cardStrings.EXTENDED_DESCRIPTION;
@@ -30,7 +31,7 @@ public class UnidentifiedCard extends AbstractSCCard{
     public boolean isFullyIdentified = false;
 
     public UnidentifiedCard() {
-        super(ID, COST, TYPE, RARITY, TARGET);
+        super(ID, ZONE, COST, TYPE, RARITY, TARGET);
     }
 
     @Override
