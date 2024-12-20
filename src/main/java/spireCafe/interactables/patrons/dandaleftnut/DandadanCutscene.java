@@ -28,13 +28,12 @@ public class DandadanCutscene extends AbstractCutscene {
 
     @Override
     protected void onClick() {
-        if (dialogueIndex == 2) {
+        if (dialogueIndex == 1) {
             nextDialogue();
             this.dialog.addDialogOption(OPTIONS[0] + FontHelper.colorString(OPTIONS[1], "r")).setOptionResult((i) ->{
-                //nextDialogue();
                 character.alreadyPerformedTransaction = true;
                 AbstractDungeon.player.decreaseMaxHealth(Wiz.p().maxHealth / 10);
-                //AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2, );
+                AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2, new GoldenBallRelic());
                     });
             boolean disableOption = AbstractDungeon.player.gold < 10;
             this.dialog.addDialogOption(OPTIONS[2] + FontHelper.colorString(OPTIONS[3], "r"), disableOption).setOptionResult((i) ->{

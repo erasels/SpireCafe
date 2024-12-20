@@ -17,12 +17,12 @@
     ],
     "OPTIONS": [
       "Embrace the ball, inherit its power. ",
-      "Lose 10% Max HP",
-      "Receive a memento",
-      "Pay 10 Gold",
-      "Receive a special tonic fabricated by the ball",
-      "Pay 20 Gold",
-      "I don't want anything to do with you!."
+      "Lose 10% Max HP. ",
+      "Receive a memento. ",
+      "Pay 10 Gold. ",
+      "Receive a special tonic fabricated by the ball. ",
+      "Pay 20 Gold. ",
+      "I don't want anything to do with you!. "
     ]
   }
 }
