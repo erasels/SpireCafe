@@ -1,0 +1,20 @@
+{
+  "${ModID}:IdentifyRelicArticle": {
+    "TEXT": [
+      "Unidentified Relic",
+      "???"
+    ]
+  },
+  "${ModID}:IdentifyPotionArticle": {
+    "TEXT": [
+      "Unidentified Potion",
+      "???"
+    ]
+  },
+  "${ModID}:IdentifyArticle": {
+    "TEXT": [
+      "Eye-dentify",
+      "When enabled, you may select an unidentified card to exchange life for information on it's cost, type or rarity at random. If identified a second time, the card is fully revealed."
+    ]
+  }
+}

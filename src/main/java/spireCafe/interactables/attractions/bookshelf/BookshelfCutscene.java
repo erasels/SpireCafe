@@ -43,7 +43,7 @@ public class BookshelfCutscene extends AbstractCutscene {
                 for (int i = 0; i < Math.min(NUM_PAGES, bookshelf.selectedPages.size()); i++) {
                     AbstractPage option = ((BookshelfAttraction) character).selectedPages.get(i);
                     this.dialog.addDialogOption(option.getOption()).setOptionResult((o) -> {
-                        bookshelf.selectedPage = option;
+                        bookshelf.setSelectedPage(option);
                         CardCrawlGame.sound.play("MAP_OPEN");
                         bookshelf.pageText = option.getText();
                         option.onRead();
