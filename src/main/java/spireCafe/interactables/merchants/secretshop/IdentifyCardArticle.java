@@ -50,7 +50,7 @@ public class IdentifyCardArticle extends CardArticle{
         unidentifiedCard.identify();
         if (unidentifiedCard.isFullyIdentified) {
             this.merchant.toRemove.add(this);
-            FullyIdentifiedCardArticle hiddenCardArticle = new FullyIdentifiedCardArticle(this.merchant, this.identifyArticle, this.xPos, this.yPos, this.hiddenCard.makeCopy(), getBasePrice());
+            FullyIdentifiedCardArticle hiddenCardArticle = new FullyIdentifiedCardArticle(this.merchant, this.identifyArticle, this.xPos, this.yPos, this.hiddenCard, getBasePrice());
             this.merchant.toAdd.add(hiddenCardArticle);
         }
     }

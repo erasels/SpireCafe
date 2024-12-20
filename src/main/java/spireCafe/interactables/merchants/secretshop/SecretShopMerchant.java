@@ -50,7 +50,6 @@ public class SecretShopMerchant extends AbstractMerchant {
     public boolean identifyMode;
     public IdentifyArticle idArticle;
 
-
     public SecretShopMerchant(float animX, float animY) {
         super(animX, animY, 150.0f, 175.0f);
         this.name = characterStrings.NAMES[0];
@@ -80,7 +79,6 @@ public class SecretShopMerchant extends AbstractMerchant {
             xPos = DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * i;
             yPos = TOP_ROW_Y;
             UnidentifiedCard unidentifiedCard = new UnidentifiedCard();
-            unidentifiedCard.targetDrawScale = 0.75F;
             cost = setCardBasePrice();
             IdentifyCardArticle tmpArticle = new IdentifyCardArticle(this, this.idArticle, xPos, yPos, unidentifiedCard, this.cards.get(i), cost);
             articles.add(tmpArticle);
@@ -89,7 +87,6 @@ public class SecretShopMerchant extends AbstractMerchant {
             xPos = DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * i;
             yPos = BOTTOM_ROW_Y;
             UnidentifiedCard unidentifiedCard = new UnidentifiedCard();
-            unidentifiedCard.targetDrawScale = 0.75F;
             cost = setCardBasePrice();
             IdentifyCardArticle tmpArticle = new IdentifyCardArticle(this, this.idArticle, xPos, yPos, unidentifiedCard, this.cards.get(i + 5), cost);
             articles.add(tmpArticle);
