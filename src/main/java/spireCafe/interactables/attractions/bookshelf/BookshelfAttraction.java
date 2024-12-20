@@ -32,7 +32,7 @@ public class BookshelfAttraction extends AbstractAttraction {
     protected String pageText;
 
     public BookshelfAttraction(float animationX, float animationY) {
-        super(animationX, animationY, 300, 400);
+        super(animationX, animationY, 350, 470);
         img = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("bookshelf/bookshelf.png"));
         authors = "Gk";
         name = uiStrings.TEXT[0];
