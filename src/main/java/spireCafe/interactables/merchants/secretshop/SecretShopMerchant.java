@@ -107,6 +107,16 @@ public class SecretShopMerchant extends AbstractMerchant {
     }
 
     @Override
+    public void onCloseShop() {
+        if (this.speechBubble != null){
+            if (this.speechBubble.duration > 0.3F) {
+                this.speechBubble.duration = 0.3F;
+                this.speechText.duration = 0.3F;
+            }
+        }
+    }
+
+    @Override
     public void update() {
         super.update();
         updateSpeech();
