@@ -6,8 +6,10 @@ import com.megacrit.cardcrawl.cards.green.DaggerSpray;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
+import com.megacrit.cardcrawl.potions.FirePotion;
 import com.megacrit.cardcrawl.vfx.UpgradeShineEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
+import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardBrieflyEffect;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
@@ -32,6 +34,7 @@ public class DandadanCutscene extends AbstractCutscene {
             nextDialogue();
             this.dialog.addDialogOption(OPTIONS[0] + FontHelper.colorString(OPTIONS[1], "r")).setOptionResult((i) ->{
                 character.alreadyPerformedTransaction = true;
+                nextDialogue();
                 AbstractDungeon.player.decreaseMaxHealth(Wiz.p().maxHealth / 10);
                 AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2, new GoldenBallRelic());
                     });
@@ -41,14 +44,14 @@ public class DandadanCutscene extends AbstractCutscene {
                 character.alreadyPerformedTransaction = true;
                 Wiz.p().loseGold(10);
                 // Implement giving the card
-
+                AbstractDungeon.topLevelEffectsQueue.add(new ShowCardAndObtainEffect(new BallLightning(), Settings.WIDTH / 2.0F - AbstractCard.IMG_WIDTH / 2.0F - 30.0F * Settings.scale, Settings.HEIGHT / 2.0F));
             });
             disableOption = AbstractDungeon.player.gold < 20;
             this.dialog.addDialogOption(OPTIONS[4] + FontHelper.colorString(OPTIONS[5], "r"), disableOption).setOptionResult((i) -> {
                 goToDialogue(7);
                 character.alreadyPerformedTransaction = true;
                 Wiz.p().loseGold(20);
-                //AbstractDungeon.player.potions.add()
+                AbstractDungeon.player.obtainPotion(new FirePotion());
 
             });
             this.dialog.addDialogOption(OPTIONS[6]).setOptionResult((i) -> {
