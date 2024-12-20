@@ -172,17 +172,17 @@ public class SecretShopMerchant extends AbstractMerchant {
     }
 
     public static int setCardBasePrice() {
-        int ret = (int)(75 * AbstractDungeon.merchantRng.random(0.2F, 0.6F));
+        int ret = AbstractDungeon.merchantRng.random(15, 45);
         return ret;
     }
 
     public static int setRelicBasePrice() {
-        int ret = (int)(125 * AbstractDungeon.merchantRng.random(0.6F, 0.75F));
+        int ret = AbstractDungeon.merchantRng.random(100, 150);
         return ret;
     }
 
     public static int setPotionBasePrice() {
-        int ret = (int)(75 * AbstractDungeon.merchantRng.random(0.5F, 0.75F));
+        int ret = AbstractDungeon.merchantRng.random(35, 60);
         return ret;
     }
 
