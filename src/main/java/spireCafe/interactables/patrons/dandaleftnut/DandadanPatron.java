@@ -13,14 +13,14 @@ public class DandadanPatron extends AbstractPatron {
 
     public static final String ID = DandadanPatron.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
-    public DandadanPatron(float animationX, float animationY, float hb_w, float hb_h) {
-        super(animationX, animationY, hb_w, hb_h);
+    public DandadanPatron(float animationX, float animationY) {
+        super(animationX, animationY, 250, 250);
         this.name = characterStrings.NAMES[0];
         this.authors = "Indi, Keurodz";
             // IMPLEMENT LOGIC FOR SETTING ANIM OR IMG im not too sure
-        //this.img = TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Dandaleftnut/???.png"));
+        this.img = TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Dandaleftnut/Dandadanleftnut.png"));
             // Fix file path for this when we have image file
-        //this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Dandaleftnut/???.png")));
+        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Dandaleftnut/Dandadanleftnut.png")));
 
     }
 

@@ -21,8 +21,6 @@ import static spireCafe.Anniv7Mod.makeID;
 public class DandadanCutscene extends AbstractCutscene {
     public static final String ID = makeID(DandadanCutscene.class.getSimpleName());
     private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
-    private boolean forRemove = false;
-    private boolean forUpgrade = false;
 
     public DandadanCutscene(AbstractNPC character) {
         super(character, cutsceneStrings);
@@ -33,7 +31,7 @@ public class DandadanCutscene extends AbstractCutscene {
         if (dialogueIndex == 2) {
             nextDialogue();
             this.dialog.addDialogOption(OPTIONS[0] + FontHelper.colorString(OPTIONS[1], "r")).setOptionResult((i) ->{
-                nextDialogue();
+                //nextDialogue();
                 character.alreadyPerformedTransaction = true;
                 AbstractDungeon.player.decreaseMaxHealth(Wiz.p().maxHealth / 10);
                 //AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2, );
@@ -64,11 +62,6 @@ public class DandadanCutscene extends AbstractCutscene {
         else {
             nextDialogue();
         }
-    }
-
-    @Override
-    public void update() {
-
     }
 
 }
