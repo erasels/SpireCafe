@@ -6,18 +6,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.localization.UIStrings;
 
 import basemod.abstracts.AbstractCardModifier;
+import basemod.cardmods.EtherealMod;
+import basemod.helpers.CardModifierManager;
 import spireCafe.Anniv7Mod;
 import spireCafe.util.TexLoader;
 
 public class GhostModifier extends AbstractCardModifier {
 
     public static final String ID = Anniv7Mod.makeID(GhostModifier.class.getSimpleName());
-    private static final UIStrings uiStrings;
 
     private float alpha;
     private boolean fading = true;
@@ -53,23 +52,13 @@ public class GhostModifier extends AbstractCardModifier {
     }
 
     @Override
-    public void onRemove(AbstractCard card) {
-        card.isEthereal = false;
-    }
-
-    @Override
-    public String modifyDescription(String rawDescription, AbstractCard card) {
-        return String.format(uiStrings.TEXT[0], rawDescription);
-    }
-
-    @Override
     public AbstractCardModifier makeCopy() {
         return new GhostModifier(ghost_img);
     }
 
     @Override
     public void onInitialApplication(AbstractCard card) {
-        card.isEthereal = true;
+        CardModifierManager.addModifier(card, new EtherealMod());
 
         if (ghost_img == null) {
             switch (new java.util.Random().nextInt(3)) {
@@ -115,9 +104,5 @@ public class GhostModifier extends AbstractCardModifier {
     @Override
     public String identifier(AbstractCard card) {
         return ID;
-    }
-
-    static {
-        uiStrings = CardCrawlGame.languagePack.getUIString("basemod:EtherealCardModifier");
     }
 }

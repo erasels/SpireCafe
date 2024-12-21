@@ -1,9 +1,11 @@
 {
   "${ModID}:GoldenBallRelic": {
-    "NAME": "Golden Ball",
-    "FLAVOR": "shiny",
+    "NAME": "Okarun's Left Ball",
+    "FLAVOR": "Attracts the attention of spirits and yokai.",
     "DESCRIPTIONS": [
-      "it's a golden ball."
+      "Allows the ability to see ghosts.",
+      " NL [#999999]Dormant[]. Play #b%d more ghosts to awaken.",
+      "#yAwakened [REMOVE_SPACE]. NL The first card played each combat is played twice."
     ]
   }
 }
