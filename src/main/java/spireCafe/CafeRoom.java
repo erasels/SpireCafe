@@ -4,10 +4,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.AbstractEvent;
 import com.megacrit.cardcrawl.events.RoomEventDialog;
+import com.megacrit.cardcrawl.helpers.FontHelper;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import spireCafe.abstracts.*;
 import spireCafe.interactables.AuthorsNotSetException;
@@ -23,6 +26,8 @@ import java.util.stream.Collectors;
 
 public class CafeRoom extends AbstractEvent {
     public static final String ID = Anniv7Mod.makeID(CafeRoom.class.getSimpleName());
+    public static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(Anniv7Mod.makeID("CafeUI"));
+
     public static final int NUM_PATRONS = 3;
     public static boolean isInteracting = false;
 
@@ -30,8 +35,7 @@ public class CafeRoom extends AbstractEvent {
     private AbstractMerchant merchant;
     private AbstractBartender bartender;
     private AbstractAttraction attraction;
-    private Texture barBackgroundImage;
-    private Texture barImg;
+    private Texture barBackgroundImage, barImg, barSignImg;
     public static float originalPlayerDrawX;
     public static float originalPlayerDrawY;
     // Used for initilizing the cafe with devcommands
@@ -45,8 +49,9 @@ public class CafeRoom extends AbstractEvent {
         AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.EVENT;
         this.hasDialog = true;
         this.hasFocus = true;
-        this.barBackgroundImage = TexLoader.getTexture(Anniv7Mod.makeUIPath("barbackground.jpg"));
+        this.barBackgroundImage = TexLoader.getTexture(Anniv7Mod.makeUIPath("barbackground.png"));
         this.barImg = TexLoader.getTexture(Anniv7Mod.makeUIPath("bar.png"));
+        this.barSignImg = TexLoader.getTexture(Anniv7Mod.makeUIPath("sign.png"));
     }
 
     private static List<Class<? extends AbstractCafeInteractable>> getPossibilities(Class<? extends AbstractCafeInteractable> clz) {
@@ -90,7 +95,7 @@ public class CafeRoom extends AbstractEvent {
             Collections.shuffle(possibleBartenders, new java.util.Random(rng.randomLong()));
             bartenderClz = possibleBartenders.get(0);
         }
-        this.bartender = (AbstractBartender) createInteractable(bartenderClz, 1200 * Settings.xScale, AbstractDungeon.floorY + 100 * Settings.yScale);
+        this.bartender = (AbstractBartender) createInteractable(bartenderClz, 1650 * Settings.xScale, AbstractDungeon.floorY + 5 * Settings.yScale);
         checkNameAndAuthors(bartender, bartenderClz);
         Anniv7Mod.currentRunSeenInteractables.add(bartender.id);
 
@@ -98,7 +103,7 @@ public class CafeRoom extends AbstractEvent {
         Collections.shuffle(possiblePatrons, new java.util.Random(rng.randomLong()));
         for (int i = 0; i < NUM_PATRONS && i < possiblePatrons.size(); i++) {
             float x = (1000 + i * 200.0f) * Settings.xScale;
-            float y = AbstractDungeon.floorY;
+            float y = AbstractDungeon.floorY - 15 * Settings.yScale;
             Class<? extends AbstractCafeInteractable> patronClz;
             if (devCommandPatrons[i] != null){
                 patronClz = Anniv7Mod.interactableClasses.get(devCommandPatrons[i]);
@@ -118,7 +123,7 @@ public class CafeRoom extends AbstractEvent {
             Collections.shuffle(possibleAttractions, new java.util.Random(rng.randomLong()));
             attractionClz = possibleAttractions.get(0);
         }
-        this.attraction = (AbstractAttraction) createInteractable(attractionClz, 600 * Settings.xScale, AbstractDungeon.floorY);
+        this.attraction = (AbstractAttraction) createInteractable(attractionClz, 600 * Settings.xScale, AbstractDungeon.floorY - 15 * Settings.yScale);
         checkNameAndAuthors(attraction, attractionClz);
         Anniv7Mod.currentRunSeenInteractables.add(attraction.id);
 
@@ -129,7 +134,7 @@ public class CafeRoom extends AbstractEvent {
             Collections.shuffle(possibleMerchants, new java.util.Random(rng.randomLong()));
             merchantClz = possibleMerchants.get(0);
         }
-        this.merchant = (AbstractMerchant) createInteractable(merchantClz, 200 * Settings.xScale, AbstractDungeon.floorY);
+        this.merchant = (AbstractMerchant) createInteractable(merchantClz, 200 * Settings.xScale, AbstractDungeon.floorY - 15 * Settings.yScale);
         checkNameAndAuthors(merchant, merchantClz);
         merchant.initialize();
         Anniv7Mod.currentRunSeenInteractables.add(merchant.id);
@@ -141,7 +146,7 @@ public class CafeRoom extends AbstractEvent {
         if (!RoomEventDialog.waitForInput) {
             this.buttonEffect(this.roomEventText.getSelectedOption());
         }
-        //Updating NPCs first for the isINteraction flag to be set correctly. Baartender's hitbox overlaps
+        //Updating NPCs first for the isInteracting flag to be set correctly. Baartender's hitbox overlaps
         for (AbstractNPC npc : npcs) {
             npc.update();
         }
@@ -170,13 +175,20 @@ public class CafeRoom extends AbstractEvent {
         sb.setBlendFunction(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         sb.draw(barBackgroundImage, 0, 0, Settings.WIDTH, Settings.HEIGHT);
         bartender.renderAnimation(sb);
-        sb.draw(this.barImg, 800 * Settings.xScale, AbstractDungeon.floorY, (float) this.barImg.getWidth() * 2 * Settings.scale, (float) this.barImg.getHeight() * 2 * Settings.scale);
+        //draw bar
+        sb.draw(this.barImg, 800 * Settings.xScale, AbstractDungeon.floorY, (float) this.barImg.getWidth()  * 2.4f * Settings.scale, (float) this.barImg.getHeight() * 1f * Settings.scale);
+        //draw sign
+        float signStartX = 950 * Settings.xScale;
+        float signStartY = (882f - barSignImg.getHeight()) * Settings.yScale;
+        sb.draw(barSignImg, signStartX, signStartY, (float) barSignImg.getWidth() * Settings.scale, (float) barSignImg.getHeight() * Settings.scale);
+        FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, bartender.getLabelText(), signStartX + ((barSignImg.getWidth() * Settings.scale) /2f), signStartY + ((barSignImg.getHeight()/4f) * Settings.scale), Settings.CREAM_COLOR);
+
         for (AbstractNPC npc : npcs) {
             npc.renderAnimation(sb);
         }
         attraction.renderAnimation(sb);
         merchant.renderAnimation(sb);
-        sb.draw(AbstractDungeon.player.shoulder2Img, 0.0F, 0.0F, 1920.0F / 2 * Settings.scale, 1136.0F / 2 * Settings.scale);
+        sb.draw(AbstractDungeon.player.shoulder2Img, 0.0F, 0.0F, 1920.0F / 2.2f * Settings.scale, 1136.0F / 2.2f * Settings.scale);
     }
 
     // Use this to get everyone that's currently in the café
