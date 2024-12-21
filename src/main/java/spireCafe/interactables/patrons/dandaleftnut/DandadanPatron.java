@@ -20,7 +20,7 @@ public class DandadanPatron extends AbstractPatron {
             // IMPLEMENT LOGIC FOR SETTING ANIM OR IMG im not too sure
         this.img = TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Dandaleftnut/Dandadanleftnut.png"));
             // Fix file path for this when we have image file
-        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Dandaleftnut/Dandadanleftnut.png")));
+        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Dandaleftnut/Dandaleftnutportrait.png")));
 
     }
 
@@ -30,6 +30,6 @@ public class DandadanPatron extends AbstractPatron {
 
     public void renderCutscenePortrait(SpriteBatch sb) {
     // Placeholder value for the xOffset
-        simpleRenderCutscenePortrait(sb, 410.0F, 0.0F, 0.0F,0.0F, 0.0F);
+        simpleRenderCutscenePortrait(sb, 1560.0F, 0.0F, 0.0F,0.0F, 0.0F);
     }
 }
