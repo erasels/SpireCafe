@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.AbstractEvent;
 import com.megacrit.cardcrawl.events.RoomEventDialog;
+import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import spireCafe.abstracts.*;
@@ -34,8 +35,7 @@ public class CafeRoom extends AbstractEvent {
     private AbstractMerchant merchant;
     private AbstractBartender bartender;
     private AbstractAttraction attraction;
-    private Texture barBackgroundImage;
-    private Texture barImg;
+    private Texture barBackgroundImage, barImg, barSignImg;
     public static float originalPlayerDrawX;
     public static float originalPlayerDrawY;
     // Used for initilizing the cafe with devcommands
@@ -51,6 +51,7 @@ public class CafeRoom extends AbstractEvent {
         this.hasFocus = true;
         this.barBackgroundImage = TexLoader.getTexture(Anniv7Mod.makeUIPath("barbackground.png"));
         this.barImg = TexLoader.getTexture(Anniv7Mod.makeUIPath("bar.png"));
+        this.barSignImg = TexLoader.getTexture(Anniv7Mod.makeUIPath("sign.png"));
     }
 
     private static List<Class<? extends AbstractCafeInteractable>> getPossibilities(Class<? extends AbstractCafeInteractable> clz) {
@@ -174,7 +175,14 @@ public class CafeRoom extends AbstractEvent {
         sb.setBlendFunction(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         sb.draw(barBackgroundImage, 0, 0, Settings.WIDTH, Settings.HEIGHT);
         bartender.renderAnimation(sb);
+        //draw bar
         sb.draw(this.barImg, 800 * Settings.xScale, AbstractDungeon.floorY, (float) this.barImg.getWidth()  * 2.4f * Settings.scale, (float) this.barImg.getHeight() * 1f * Settings.scale);
+        //draw sign
+        float signStartX = 950 * Settings.xScale;
+        float signStartY = (882f - barSignImg.getHeight()) * Settings.yScale;
+        sb.draw(barSignImg, signStartX, signStartY, (float) barSignImg.getWidth() * Settings.scale, (float) barSignImg.getHeight() * Settings.scale);
+        FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, bartender.getLabelText(), signStartX + ((barSignImg.getWidth() * Settings.scale) /2f), signStartY + ((barSignImg.getHeight()/4f) * Settings.scale), Settings.CREAM_COLOR);
+
         for (AbstractNPC npc : npcs) {
             npc.renderAnimation(sb);
         }

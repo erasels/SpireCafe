@@ -1,10 +1,8 @@
 package spireCafe.abstracts;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.FontHelper;
 
 import java.util.List;
 
@@ -22,7 +20,6 @@ public abstract class AbstractBartender extends AbstractNPC {
     @Override
     public void renderAnimation(SpriteBatch sb) {
         super.renderAnimation(sb);
-        FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, getLabelText(), hitbox.cX, animationY + hitbox.height, Color.WHITE);
     }
 
     /**
