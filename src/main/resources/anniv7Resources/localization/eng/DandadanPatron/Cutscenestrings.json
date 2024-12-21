@@ -4,7 +4,7 @@
     "BLOCKING_TEXTS": ["\" I wonder if this was necessary.....\""],
     "DESCRIPTIONS": [
       "\"Fear the golden ball... I usually make offers that cost you more than an arm and a leg.\"",
-      "\"However... since I lost my right... erm, brother? Im willing to make a deal with ya for cheap.\"",
+      "\"However... since I lost my right... erm, brother? I'm willing to make a deal with ya for cheap.\"",
       "\"So which will it be?\"",
       "Suddenly you feel whole again, as if you had regained something you ~lost~ .",
       "\"Enjoy a ~taste~ of my power.\"",
@@ -17,12 +17,12 @@
     ],
     "OPTIONS": [
       "Embrace the ball, inherit its power. ",
-      "Lose %d%% Max HP. ",
+      "Lose %d Max HP. ",
       "Receive a memento. ",
       "Pay 10 Gold. ",
       "Receive a special tonic fabricated by the ball. ",
       "Pay 20 Gold. ",
-      "I don't want anything to do with you!. "
+      "I don't want anything to do with you! "
     ]
   }
 }
