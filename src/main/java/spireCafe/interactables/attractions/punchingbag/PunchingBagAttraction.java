@@ -1,11 +1,14 @@
 package spireCafe.interactables.attractions.punchingbag;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
@@ -27,6 +30,7 @@ import com.megacrit.cardcrawl.relics.PhilosopherStone;
 import com.megacrit.cardcrawl.relics.Shuriken;
 import com.megacrit.cardcrawl.relics.StrikeDummy;
 import com.megacrit.cardcrawl.relics.Vajra;
+import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import com.megacrit.cardcrawl.vfx.combat.DamageNumberEffect;
 import com.megacrit.cardcrawl.vfx.combat.FlashAtkImgEffect;
 
@@ -48,11 +52,17 @@ public class PunchingBagAttraction extends AbstractAttraction{
     private static float R_PWR = 1.3F;
     private static float CURSE = 0.67F;
 
+    private int currScore = 0;
+    private int hiScore = 0;
+    private boolean registeringHiScore = false;
+    private float scoreRegistrationTimer = 0.0F;
+
     public PunchingBagAttraction(float posX, float posY) {
         super (posX, posY, HB_X, HB_Y);
         img = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("punchingbag/punchingbag.png"));
         authors = "Coda";
         name = characterStrings.NAMES[0];
+        this.hiScore = loadHiScore();
     }
 
     @Override
@@ -61,12 +71,46 @@ public class PunchingBagAttraction extends AbstractAttraction{
 
     @Override
     public void onInteract() {
-        int currScore = calculateDamageScore();
+        int clickScore = calculateDamageScore();
         float x = InputHelper.mX;
         float y = InputHelper.mY;
         AttackEffect attckFX = getAttackFX();
         AbstractDungeon.topLevelEffectsQueue.add(new FlashAtkImgEffect(x, y, attckFX));
-        AbstractDungeon.topLevelEffectsQueue.add(new DamageNumberEffect(null, x, y, currScore));
+        AbstractDungeon.topLevelEffectsQueue.add(new DamageNumberEffect(null, x, y, clickScore * 10 + MathUtils.random(9)));
+
+        if (clickScore <= hiScore) {
+            return;
+        }
+        
+        if (clickScore > this.currScore) {
+            this.currScore = clickScore;
+            resetScoreTimers();
+        }
+        
+        AbstractDungeon.topLevelEffectsQueue.add(new HighScoreEffect(x, y));
+        if (!registeringHiScore) {
+            saveHiScore(currScore); // I know its confusing, but naming things is hard.
+            registeringHiScore = true;
+            scoreRegistrationTimer = HighScoreEffect.DURATION;
+        }
+    }
+
+    private void resetScoreTimers() {
+        registeringHiScore = false;
+        scoreRegistrationTimer = 0.0F;
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        if (registeringHiScore) {
+            scoreRegistrationTimer -= Gdx.graphics.getDeltaTime();
+            if (scoreRegistrationTimer <= 0.0F) {
+                resetScoreTimers();
+                this.hiScore = this.currScore;
+                this.currScore = 0;
+            }
+        }
     }
     
     public int calculateDamageScore() {
@@ -167,11 +211,32 @@ public class PunchingBagAttraction extends AbstractAttraction{
             score += 5 * (skillCount / 3);
         }
 
-        return (int)(score * multiplier * 10) + MathUtils.random(9);
+        return (int)(score * multiplier);
     }
 
     private AttackEffect getAttackFX() {
         AttackEffect[] slashFX = AbstractDungeon.player.getSpireHeartSlashEffect();
         return slashFX[MathUtils.random(slashFX.length - 1)];
+    }
+
+    private void saveHiScore(int score) {
+        try {
+            SpireConfig config = new SpireConfig(Anniv7Mod.modID, PunchingBagAttraction.class.getSimpleName());
+            config.setInt("hiscore", score);
+            config.save();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int loadHiScore() {
+        try {
+            SpireConfig config = new SpireConfig(Anniv7Mod.modID, PunchingBagAttraction.class.getSimpleName());
+            config.load();
+            return config.getInt("hiscore");
+        } catch (Exception e) {
+            saveHiScore(hiScore);
+            return hiScore;
+        }
     }
 }
