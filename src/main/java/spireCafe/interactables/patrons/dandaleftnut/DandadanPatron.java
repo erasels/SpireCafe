@@ -14,7 +14,7 @@ public class DandadanPatron extends AbstractPatron {
     public static final String ID = DandadanPatron.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
     public DandadanPatron(float animationX, float animationY) {
-        super(animationX + 25.0F, animationY, 180, 180);
+        super(animationX, animationY, 180, 180);
         this.name = characterStrings.NAMES[0];
         this.authors = "Indi, Keurodz";
             // IMPLEMENT LOGIC FOR SETTING ANIM OR IMG im not too sure
