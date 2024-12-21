@@ -1,23 +1,23 @@
 {
   "${ModID}:DandadanCutscene": {
-    "NAME": "The Left [#FFFFFF]Golden Ball[]",
+    "NAME": "The Left Golden Ball",
     "BLOCKING_TEXTS": ["\" I wonder if this was necessary.....\""],
     "DESCRIPTIONS": [
-      "\"Fear the golden ball, I usually make offers that will cost you more than a arm and a leg.\"",
+      "\"Fear the golden ball... I usually make offers that cost you more than an arm and a leg.\"",
       "\"However... since I lost my right... erm, brother? Im willing to make a deal with ya for cheap.\"",
       "\"So which will it be?\"",
-      "Suddenly you feel whole again, as if you had regained something you lost.",
-      "\"Enjoy a taste of my power.\"",
+      "Suddenly you feel whole again, as if you had regained something you ~lost~ .",
+      "\"Enjoy a ~taste~ of my power.\"",
       "You inspect the card... it seems to be autographed bootleg merch of the ball itself.",
-      "\"I was saving that one for someone special but I guess you can have it as well... hehehe.\"",
-      "You pocket a slimy potion vial that looks suspiciously like the ball you got it from...",
+      "\"I was saving that one for someone special but I guess you can have it as well... ~hehehe~ .\"",
+      "You pocket a ~slimy~ potion vial that looks suspiciously like the ball you got it from...",
       "\"Put that to good use, took me a while to save up that much.\"",
-      "\" Was I not charming enough for you\""
+      "\" Was I not charming enough for you... \""
 
     ],
     "OPTIONS": [
       "Embrace the ball, inherit its power. ",
-      "Lose 10% Max HP. ",
+      "Lose %d%% Max HP. ",
       "Receive a memento. ",
       "Pay 10 Gold. ",
       "Receive a special tonic fabricated by the ball. ",
