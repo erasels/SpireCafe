@@ -2,8 +2,10 @@ package spireCafe.util.decorationSystem;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.random.Random;
 import spireCafe.Anniv7Mod;
 import spireCafe.CafeRoom;
@@ -30,6 +32,7 @@ public class DecorationSystem {
         rng = new Random(AbstractDungeon.miscRng.randomLong());
         Collections.shuffle(allDecorations, new java.util.Random(rng.randomLong()));
 
+        decorations.add(new BarSignDecoration());
         for (int i = 0; i < NUM_DECOS; i++) {
             Decoration d = allDecorations.get(i);
             initDeco(d);
@@ -84,6 +87,18 @@ public class DecorationSystem {
     }
 
     public void update() {
+        if(Settings.isDebug && CardCrawlGame.playerName.equals("rorDev")) {
+            if(InputHelper.justClickedRight) {
+                decorations.clear();
+                Collections.shuffle(allDecorations, new java.util.Random(rng.randomLong()));
+
+                decorations.add(new BarSignDecoration());
+                for (int i = 0; i < NUM_DECOS; i++) {
+                    Decoration d = allDecorations.get(i);
+                    initDeco(d);
+                }
+            }
+        }
         if (!CafeRoom.isInteracting)
             decorations.forEach(Decoration::update);
     }
