@@ -18,6 +18,7 @@ public class Decoration {
     public float x, y;
     public String id;
     public boolean isLarge;
+    public float fixedY = 0, fixedX = 0;
 
     protected String clickSound = "UI_CLICK_1"; // Default sound
     protected boolean shakeEnabled = true; // Shake effect toggle
@@ -84,5 +85,13 @@ public class Decoration {
         if (shakeEnabled) {
             shakeDuration = 0.2f;
         }
+    }
+
+    public boolean isXFixed() {
+        return fixedX > 0;
+    }
+
+    public boolean isYFixed() {
+        return fixedY > 0;
     }
 }

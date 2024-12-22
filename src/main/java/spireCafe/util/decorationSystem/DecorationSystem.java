@@ -57,8 +57,17 @@ public class DecorationSystem {
         // Try up to 20 times to find a valid position for the decoration
         for (int attempts = 0; attempts < 20; attempts++) {
             // Generate a random position within the valid range
-            x = rng.random(START_X, CUTOFF_X - deco.width);
-            y = rng.random(START_Y, CUTOFF_Y - deco.height);
+            if(!deco.isXFixed()) {
+                x = rng.random(START_X, CUTOFF_X - deco.width);
+            } else {
+                x = deco.fixedX;
+            }
+            if(!deco.isYFixed()) {
+                y = rng.random(START_Y, CUTOFF_Y - deco.height);
+            } else {
+                y = deco.fixedY;
+            }
+
 
             // Check if the position is valid (doesn't overlap and within bounds)
             if (canPlaceDecoration(deco, x, y)) {
@@ -108,7 +117,7 @@ public class DecorationSystem {
         allDecorations.add(new Decoration("poster", TexLoader.getTexture(Anniv7Mod.makeUIPath("decoration/poster.png")), 0, 0));
         allDecorations.add(new Decoration("potted_plant", TexLoader.getTexture(Anniv7Mod.makeUIPath("decoration/potted_plant.png")), 0, 0));
         allDecorations.add(new Decoration("spire_cafe_sign", TexLoader.getTexture(Anniv7Mod.makeUIPath("decoration/spire_cafe_sign.png")), 0, 0));
-        allDecorations.add(new Decoration("stacked_shelf", TexLoader.getTexture(Anniv7Mod.makeUIPath("decoration/stacked_shelf.png")), 0, 0));
+        allDecorations.add(new StackedShelfDecoration());
 
         //allDecorations.add(new Decoration("shelf", TexLoader.getTexture(Anniv7Mod.makeUIPath("decoration/shelf.png")), 0, 0));
 
