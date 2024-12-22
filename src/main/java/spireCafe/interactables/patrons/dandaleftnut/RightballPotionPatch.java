@@ -1,17 +1,24 @@
 package spireCafe.interactables.patrons.dandaleftnut;
 
-import com.evacipated.cardcrawl.modthespire.lib.*;
+import java.util.ArrayList;
+
+import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
+import com.evacipated.cardcrawl.modthespire.lib.Matcher;
+import com.evacipated.cardcrawl.modthespire.lib.SpireInsertLocator;
+import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePatch2;
+import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.screens.CombatRewardScreen;
+
 import javassist.CannotCompileException;
 import javassist.CtBehavior;
-
-import java.util.ArrayList;
 
 @SpirePatch2(clz = CombatRewardScreen.class, method = "setupItemReward")
 public class RightballPotionPatch {
     public static RightballPotion rbp;
+
     @SpireInsertPatch(locator = Locator.class)
     public static SpireReturn<Void> returnPotionReward(ArrayList<RewardItem> ___rewards) {
         if (rbp == null) {

@@ -7,13 +7,10 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.CardHelper;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
-import com.megacrit.cardcrawl.random.Random;
-import com.megacrit.cardcrawl.rewards.RewardItem;
-import com.megacrit.cardcrawl.screens.CardRewardScreen;
+
 import spireCafe.Anniv7Mod;
 
 public class RightballPotion extends AbstractPotion {
@@ -65,7 +62,6 @@ public class RightballPotion extends AbstractPotion {
     }
 
     static {
-        // Change this to access the mod stuff instead
         potionStrings = CardCrawlGame.languagePack.getPotionString(Anniv7Mod.makeID(Potion_ID));
     }
 }
