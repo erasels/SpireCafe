@@ -58,7 +58,7 @@ public class DandadanCutscene extends AbstractCutscene {
                                 Settings.HEIGHT / 2.0F));
                     });
             disableOption = Wiz.p().gold < 20;
-            this.dialog.addDialogOption(OPTIONS[4] + FontHelper.colorString(OPTIONS[5], "r"), disableOption)
+            this.dialog.addDialogOption(OPTIONS[4] + FontHelper.colorString(OPTIONS[5], "r"), disableOption, new RightballPotion())
                     .setOptionResult((i) -> {
                         goToDialogue(7);
                         character.alreadyPerformedTransaction = true;
