@@ -16,7 +16,7 @@ import java.util.List;
 
 public class DecorationSystem {
     private static final int NUM_DECOS = 2;
-    private static final int PADDING = (int) (5 * Settings.scale);
+    private static final int PADDING = (int) (10 * Settings.scale);
     private static final float START_X = 15f * Settings.scale, CUTOFF_X = Settings.WIDTH - START_X;
     private static final float START_Y = 630f * Settings.scale, CUTOFF_Y = 870f * Settings.scale;
     private static List<Decoration> allDecorations;
@@ -43,9 +43,9 @@ public class DecorationSystem {
             Decoration d = allDecorations.get(i);
             initDeco(d);
 
-            //Spawn an extra decoration if only 2 small ones were spawned
-            if(d.isLarge) hasLarge = true;
-            if(!hasLarge && i+1 == NUM_DECOS) {
+            // Spawn an extra decoration if only 2 small ones were spawned
+            if (d.isLarge) hasLarge = true;
+            if (!hasLarge && i + 1 == NUM_DECOS) {
                 decorationAmt++;
             }
         }
@@ -54,8 +54,8 @@ public class DecorationSystem {
     private void initDeco(Decoration deco) {
         float x, y;
 
-        // Try up to 15 times to find a valid position for the decoration
-        for (int attempts = 0; attempts < 15; attempts++) {
+        // Try up to 20 times to find a valid position for the decoration
+        for (int attempts = 0; attempts < 20; attempts++) {
             // Generate a random position within the valid range
             x = rng.random(START_X, CUTOFF_X - deco.width);
             y = rng.random(START_Y, CUTOFF_Y - deco.height);
@@ -99,7 +99,7 @@ public class DecorationSystem {
         decorations.forEach(Decoration::update);
     }
 
-    private void initAllDecorations() {
+    private static void initAllDecorations() {
         allDecorations = new ArrayList<>();
 
         allDecorations.add(new Decoration("bold_and_brash", TexLoader.getTexture(Anniv7Mod.makeUIPath("decoration/bold_and_brash.png")), 0, 0));
