@@ -16,6 +16,7 @@ import java.util.List;
 
 public class DecorationSystem {
     private static final int NUM_DECOS = 2;
+    private static final int PADDING = (int) (5 * Settings.scale);
     private static final float START_X = 15f * Settings.scale, CUTOFF_X = Settings.WIDTH - START_X;
     private static final float START_Y = 630f * Settings.scale, CUTOFF_Y = 870f * Settings.scale;
     private static List<Decoration> allDecorations;
@@ -52,7 +53,6 @@ public class DecorationSystem {
 
     private void initDeco(Decoration deco) {
         float x, y;
-        boolean positioned = false;
 
         // Try up to 15 times to find a valid position for the decoration
         for (int attempts = 0; attempts < 15; attempts++) {
@@ -80,7 +80,7 @@ public class DecorationSystem {
 
     private boolean overlaps(Decoration existing, Decoration deco, float x, float y) {
         float ex = existing.x, ey = existing.y;
-        float ew = existing.width, eh = existing.height;
+        float ew = existing.width + PADDING, eh = existing.height + PADDING;
 
         return !(x + deco.width < ex || x > ex + ew || y + deco.height < ey || y > ey + eh);
     }
