@@ -65,15 +65,8 @@ public class DecorationSystem {
             if (canPlaceDecoration(deco, x, y)) {
                 deco.move(x, y); // Place the decoration
                 decorations.add(deco);
-                positioned = true;
                 break;
             }
-        }
-
-        // If no valid position is found, fallback to a default position
-        if (!positioned) {
-            deco.move(START_X, START_Y);
-            decorations.add(deco);
         }
     }
 
