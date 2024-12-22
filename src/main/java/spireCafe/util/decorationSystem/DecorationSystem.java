@@ -30,6 +30,10 @@ public class DecorationSystem {
         }
         decorations = new ArrayList<>();
         rng = new Random(AbstractDungeon.miscRng.randomLong());
+        spawnDecorations();
+    }
+
+    private void spawnDecorations() {
         Collections.shuffle(allDecorations, new java.util.Random(rng.randomLong()));
 
         decorations.add(new BarSignDecoration());
@@ -90,13 +94,7 @@ public class DecorationSystem {
         if(Settings.isDebug && CardCrawlGame.playerName.equals("rorDev")) {
             if(InputHelper.justClickedRight) {
                 decorations.clear();
-                Collections.shuffle(allDecorations, new java.util.Random(rng.randomLong()));
-
-                decorations.add(new BarSignDecoration());
-                for (int i = 0; i < NUM_DECOS; i++) {
-                    Decoration d = allDecorations.get(i);
-                    initDeco(d);
-                }
+                spawnDecorations();
             }
         }
         if (!CafeRoom.isInteracting)
