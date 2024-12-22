@@ -41,14 +41,15 @@ public class DandadanCutscene extends AbstractCutscene {
                         AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2,
                                 new GoldenBallRelic());
                     });
-            boolean disableOption = Wiz.p().gold < 10;
+            int goldForLightningCard = Wiz.p().masterMaxOrbs == 0 ? 69 : 10;
+            boolean disableOption = Wiz.p().gold < goldForLightningCard;
             this.dialog
-                    .addDialogOption(OPTIONS[2] + FontHelper.colorString(OPTIONS[3], "r"), disableOption,
-                            new BallLightning())
+                    .addDialogOption(OPTIONS[2] + String.format(FontHelper.colorString(OPTIONS[3], "r"),
+                        goldForLightningCard), disableOption, new BallLightning())
                     .setOptionResult((i) -> {
                         goToDialogue(5);
                         character.alreadyPerformedTransaction = true;
-                        Wiz.p().loseGold(10);
+                        Wiz.p().loseGold(goldForLightningCard);
                         // add 1 orb slot if player has none
                         if (Wiz.p().chosenClass != PlayerClass.DEFECT && Wiz.p().masterMaxOrbs == 0) {
                             Wiz.p().masterMaxOrbs = 1;
