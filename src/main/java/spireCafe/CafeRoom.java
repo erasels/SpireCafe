@@ -16,6 +16,7 @@ import spireCafe.abstracts.*;
 import spireCafe.interactables.AuthorsNotSetException;
 import spireCafe.interactables.NameNotSetException;
 import spireCafe.util.TexLoader;
+import spireCafe.util.decorationSystem.DecorationSystem;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class CafeRoom extends AbstractEvent {
     private AbstractBartender bartender;
     private AbstractAttraction attraction;
     private Texture barBackgroundImage, barImg, barSignImg;
+    private DecorationSystem decoSystem;
     public static float originalPlayerDrawX;
     public static float originalPlayerDrawY;
     // Used for initilizing the cafe with devcommands
@@ -138,6 +140,7 @@ public class CafeRoom extends AbstractEvent {
         checkNameAndAuthors(merchant, merchantClz);
         merchant.initialize();
         Anniv7Mod.currentRunSeenInteractables.add(merchant.id);
+        decoSystem = new DecorationSystem();
     }
 
     @Override
@@ -153,6 +156,7 @@ public class CafeRoom extends AbstractEvent {
         bartender.update();
         attraction.update();
         merchant.update();
+        decoSystem.update();
         isInteracting = false;
     }
 
@@ -174,6 +178,7 @@ public class CafeRoom extends AbstractEvent {
         sb.setColor(Color.WHITE);
         sb.setBlendFunction(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         sb.draw(barBackgroundImage, 0, 0, Settings.WIDTH, Settings.HEIGHT);
+        decoSystem.render(sb);
         bartender.renderAnimation(sb);
         //draw bar
         sb.draw(this.barImg, 800 * Settings.xScale, AbstractDungeon.floorY, (float) this.barImg.getWidth()  * 2.4f * Settings.scale, (float) this.barImg.getHeight() * 1f * Settings.scale);
