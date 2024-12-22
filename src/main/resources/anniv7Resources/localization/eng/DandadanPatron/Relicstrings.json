@@ -5,7 +5,7 @@
     "DESCRIPTIONS": [
       "Allows the ability to see ghosts.",
       " NL [#999999]Dormant[]. Play #b%d more ghosts to awaken.",
-      "#yAwakened [REMOVE_SPACE]. NL The first card played each combat is played twice."
+      " #yAwakened [REMOVE_SPACE]. NL The first card played each combat is played twice."
     ]
   }
 }

@@ -81,7 +81,7 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic {
             this.tips.add(new PowerTip(this.name, this.description));
             this.initializeTips();
         }
-        if (counter == 1) {
+        else if (counter == 1) {
             counter = -1;
             grayscale = false;
             CardCrawlGame.sound.play("ORB_PLASMA_EVOKE");

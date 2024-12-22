@@ -19,6 +19,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
+import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import javassist.CtClass;
 import org.apache.logging.log4j.LogManager;
@@ -233,6 +234,11 @@ public class Anniv7Mod implements
         if (Loader.isModLoaded("widepotions")) {
             Consumer<String> whitelist = getWidePotionsWhitelistMethod();
         }
+        new AutoAdd(modID)
+                .packageFilter(Anniv7Mod.class)
+                .any(AbstractPotion.class, (info, potion) -> {
+                    BaseMod.addPotion(potion.getClass(), null, null, null, potion.ID);
+                });
     }
 
     private static Consumer<String> getWidePotionsWhitelistMethod() {

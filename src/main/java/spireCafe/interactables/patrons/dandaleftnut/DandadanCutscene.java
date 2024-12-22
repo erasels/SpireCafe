@@ -63,7 +63,7 @@ public class DandadanCutscene extends AbstractCutscene {
                         goToDialogue(7);
                         character.alreadyPerformedTransaction = true;
                         Wiz.p().loseGold(20);
-                        Wiz.p().obtainPotion(new FirePotion());
+                        Wiz.p().obtainPotion(new RightballPotion());
 
                     });
             this.dialog.addDialogOption(OPTIONS[6]).setOptionResult((i) -> {
