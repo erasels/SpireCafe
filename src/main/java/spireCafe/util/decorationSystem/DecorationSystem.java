@@ -37,9 +37,17 @@ public class DecorationSystem {
         Collections.shuffle(allDecorations, new java.util.Random(rng.randomLong()));
 
         decorations.add(new BarSignDecoration());
-        for (int i = 0; i < NUM_DECOS; i++) {
+        boolean hasLarge = false;
+        int decorationAmt = NUM_DECOS;
+        for (int i = 0; i < decorationAmt; i++) {
             Decoration d = allDecorations.get(i);
             initDeco(d);
+
+            //Spawn an extra decoration if only 2 small ones were spawned
+            if(d.isLarge) hasLarge = true;
+            if(!hasLarge && i+1 == NUM_DECOS) {
+                decorationAmt++;
+            }
         }
     }
 

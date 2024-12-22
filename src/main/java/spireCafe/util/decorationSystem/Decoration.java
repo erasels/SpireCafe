@@ -17,6 +17,7 @@ public class Decoration {
     public float width, height;
     public float x, y;
     public String id;
+    public boolean isLarge;
 
     protected String clickSound = "UI_CLICK_1"; // Default sound
     protected boolean shakeEnabled = true; // Shake effect toggle
@@ -32,6 +33,9 @@ public class Decoration {
         width = img.getWidth() * Settings.scale;
         height = img.getHeight() * Settings.scale;
         hb = new Hitbox(x, y, width, height);
+
+        // Determine if the asset is large based on the original texture dimensions
+        isLarge = (img.getWidth() * img.getHeight()) > 25000;
     }
 
     public void update() {
