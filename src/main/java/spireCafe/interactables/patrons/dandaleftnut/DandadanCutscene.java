@@ -3,7 +3,7 @@ package spireCafe.interactables.patrons.dandaleftnut;
 import static spireCafe.Anniv7Mod.makeID;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.blue.BallLightning;
+import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
@@ -34,27 +34,31 @@ public class DandadanCutscene extends AbstractCutscene {
                     .setOptionResult((i) -> {
                         character.alreadyPerformedTransaction = true;
                         nextDialogue();
-                        AbstractDungeon.player.decreaseMaxHealth(maxHPLoss);
-                        AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2, new GoldenBallRelic());
+                        Wiz.p().decreaseMaxHealth(maxHPLoss);
+                        AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2,
+                                new GoldenBallRelic());
                     });
-            boolean disableOption = AbstractDungeon.player.gold < 10;
+            boolean disableOption = Wiz.p().gold < 10;
             this.dialog.addDialogOption(OPTIONS[2] + FontHelper.colorString(OPTIONS[3], "r"), disableOption)
                     .setOptionResult((i) -> {
                         goToDialogue(5);
                         character.alreadyPerformedTransaction = true;
                         Wiz.p().loseGold(10);
-                        // Implement giving the card
-                        AbstractDungeon.topLevelEffectsQueue.add(new ShowCardAndObtainEffect(new BallLightning(),
+                        // add 1 orb slot if player has none
+                        if (Wiz.p().chosenClass != PlayerClass.DEFECT && Wiz.p().masterMaxOrbs == 0) {
+                            Wiz.p().masterMaxOrbs = 1;
+                        }
+                        AbstractDungeon.topLevelEffectsQueue.add(new ShowCardAndObtainEffect(new GoldenBallLightning(),
                                 Settings.WIDTH / 2.0F - AbstractCard.IMG_WIDTH / 2.0F - 30.0F * Settings.scale,
                                 Settings.HEIGHT / 2.0F));
                     });
-            disableOption = AbstractDungeon.player.gold < 20;
+            disableOption = Wiz.p().gold < 20;
             this.dialog.addDialogOption(OPTIONS[4] + FontHelper.colorString(OPTIONS[5], "r"), disableOption)
                     .setOptionResult((i) -> {
                         goToDialogue(7);
                         character.alreadyPerformedTransaction = true;
                         Wiz.p().loseGold(20);
-                        AbstractDungeon.player.obtainPotion(new FirePotion());
+                        Wiz.p().obtainPotion(new FirePotion());
 
                     });
             this.dialog.addDialogOption(OPTIONS[6]).setOptionResult((i) -> {
