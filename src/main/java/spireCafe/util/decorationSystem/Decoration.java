@@ -2,7 +2,10 @@ package spireCafe.util.decorationSystem;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.Gdx;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
@@ -12,6 +15,12 @@ public class Decoration {
     public float width, height;
     public float x, y;
     public String id;
+
+    protected String clickSound = "UI_CLICK_1"; // Default sound
+    protected boolean shakeEnabled = true; // Shake effect toggle
+    protected float shakeDuration = 0f;
+    protected float shakeOffsetX = 0f;
+    protected float shakeOffsetY = 0f;
 
     public Decoration(String id, Texture img, float x, float y) {
         this.id = id;
@@ -25,24 +34,49 @@ public class Decoration {
 
     public void update() {
         hb.update();
-        if (hb.hovered) {
+
+        if (!AbstractDungeon.isScreenUp && hb.hovered) {
             if (InputHelper.justClickedLeft) {
                 onClick();
+            }
+        }
+
+        if (shakeEnabled && shakeDuration > 0) {
+            shakeDuration -= Gdx.graphics.getDeltaTime();
+
+            // Generate small random offsets within the shake range
+            shakeOffsetX = (float) ((Math.random() * 10 - 5) * Settings.scale);
+            shakeOffsetY = (float) ((Math.random() * 10 - 5) * Settings.scale);
+
+            if (shakeDuration <= 0) {
+                // Reset offsets when shaking ends
+                shakeOffsetX = 0f;
+                shakeOffsetY = 0f;
             }
         }
     }
 
     public void render(SpriteBatch sb) {
-        sb.draw(img, x, y, width, height);
+        float renderX = x + shakeOffsetX;
+        float renderY = y + shakeOffsetY;
+
+        sb.draw(img, renderX, renderY, width, height);
         hb.render(sb);
     }
 
     public void move(float x, float y) {
         this.x = x;
         this.y = y;
-        hb.move(x + width/2f, y + height /2f);
+        hb.move(x + width / 2f, y + height / 2f);
     }
 
-    // Override this to make the decoration have some kind of click effect, like the things in HS
-    public void onClick() {}
+    public void onClick() {
+        if (shakeDuration < 0.1f && clickSound != null && !clickSound.isEmpty()) {
+            CardCrawlGame.sound.play(clickSound);
+        }
+
+        if (shakeEnabled) {
+            shakeDuration = 0.2f;
+        }
+    }
 }
