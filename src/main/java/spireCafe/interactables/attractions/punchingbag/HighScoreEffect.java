@@ -1,6 +1,7 @@
 package spireCafe.interactables.attractions.punchingbag;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -15,10 +16,11 @@ public class HighScoreEffect extends AbstractGameEffect {
     public static final String ID = Anniv7Mod.makeID(HighScoreEffect.class.getSimpleName());
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ID);
     private static final String[] TEXT = uiStrings.TEXT;
-    private static final float Y_OFFSET = 150.0F * Settings.scale;
-    public static final float DURATION = 3.0F; 
+    private static final float OFFSET_Y = 300.0F * Settings.scale;
+    public static final float DURATION = 2.0F; 
 
     private float y;
+    private float initY;
     private float x;
 
     public HighScoreEffect(float xPos, float yPos) {
@@ -26,6 +28,7 @@ public class HighScoreEffect extends AbstractGameEffect {
         this.duration = DURATION;
         this.startingDuration = DURATION;
         this.x = xPos;
+        this.initY = yPos;
         this.y = yPos;
         this.color = Settings.GOLD_COLOR.cpy();
     }
@@ -38,9 +41,13 @@ public class HighScoreEffect extends AbstractGameEffect {
             this.duration = 0.0F;
         }
 
-        if (this.duration > 2.5) {
-            this.color.a = Interpolation.pow2In.apply(1.0F, 0.0F, (this.duration - 2.5F));
+        if (this.duration > 1.8) {
+            this.y = Interpolation.bounceOut.apply(this.initY + OFFSET_Y, this.initY, (this.duration - 1.8F));
+        }
+        if (this.duration > 1.5) {
+            this.color.a = Interpolation.pow2In.apply(1.0F, 0.0F, (this.duration - 1.5F));
         } else if (this.duration < 0.5F) {
+            this.color.lerp(Color.WHITE, this.duration + 0.5F);
             this.color.a = Interpolation.pow2In.apply(0.0F, 1.0F, this.duration * 2.0F);
         }
     }
