@@ -8,7 +8,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.random.Random;
 import spireCafe.Anniv7Mod;
-import spireCafe.CafeRoom;
 import spireCafe.util.TexLoader;
 
 import java.util.ArrayList;
