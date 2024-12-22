@@ -34,9 +34,9 @@ public class CafeRoom extends AbstractEvent {
 
     private final ArrayList<AbstractNPC> npcs = new ArrayList<>();
     private AbstractMerchant merchant;
-    private AbstractBartender bartender;
+    public AbstractBartender bartender;
     private AbstractAttraction attraction;
-    private Texture barBackgroundImage, barImg, barSignImg;
+    private Texture barBackgroundImage, barImg;
     private DecorationSystem decoSystem;
     public static float originalPlayerDrawX;
     public static float originalPlayerDrawY;
@@ -53,7 +53,6 @@ public class CafeRoom extends AbstractEvent {
         this.hasFocus = true;
         this.barBackgroundImage = TexLoader.getTexture(Anniv7Mod.makeUIPath("barbackground.png"));
         this.barImg = TexLoader.getTexture(Anniv7Mod.makeUIPath("bar.png"));
-        this.barSignImg = TexLoader.getTexture(Anniv7Mod.makeUIPath("sign.png"));
     }
 
     private static List<Class<? extends AbstractCafeInteractable>> getPossibilities(Class<? extends AbstractCafeInteractable> clz) {
@@ -182,11 +181,6 @@ public class CafeRoom extends AbstractEvent {
         bartender.renderAnimation(sb);
         //draw bar
         sb.draw(this.barImg, 800 * Settings.xScale, AbstractDungeon.floorY, (float) this.barImg.getWidth()  * 2.4f * Settings.scale, (float) this.barImg.getHeight() * 1f * Settings.scale);
-        //draw sign
-        float signStartX = 950 * Settings.xScale;
-        float signStartY = (882f - barSignImg.getHeight()) * Settings.yScale;
-        sb.draw(barSignImg, signStartX, signStartY, (float) barSignImg.getWidth() * Settings.scale, (float) barSignImg.getHeight() * Settings.scale);
-        FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, bartender.getLabelText(), signStartX + ((barSignImg.getWidth() * Settings.scale) /2f), signStartY + ((barSignImg.getHeight()/4f) * Settings.scale), Settings.CREAM_COLOR);
 
         for (AbstractNPC npc : npcs) {
             npc.renderAnimation(sb);
