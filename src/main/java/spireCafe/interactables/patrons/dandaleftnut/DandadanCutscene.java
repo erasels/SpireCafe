@@ -3,6 +3,7 @@ package spireCafe.interactables.patrons.dandaleftnut;
 import static spireCafe.Anniv7Mod.makeID;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.blue.BallLightning;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -30,7 +31,9 @@ public class DandadanCutscene extends AbstractCutscene {
             nextDialogue();
             int maxHPLoss = AbstractDungeon.actNum == 1 ? (int) (0.1 * Wiz.p().maxHealth)
                     : (int) (0.05 * Wiz.p().maxHealth);
-            this.dialog.addDialogOption(OPTIONS[0] + FontHelper.colorString(String.format(OPTIONS[1], maxHPLoss), "r"))
+            this.dialog
+                    .addDialogOption(OPTIONS[0] + FontHelper.colorString(String.format(OPTIONS[1], maxHPLoss), "r"),
+                            new GoldenBallRelic())
                     .setOptionResult((i) -> {
                         character.alreadyPerformedTransaction = true;
                         nextDialogue();
@@ -39,7 +42,9 @@ public class DandadanCutscene extends AbstractCutscene {
                                 new GoldenBallRelic());
                     });
             boolean disableOption = Wiz.p().gold < 10;
-            this.dialog.addDialogOption(OPTIONS[2] + FontHelper.colorString(OPTIONS[3], "r"), disableOption)
+            this.dialog
+                    .addDialogOption(OPTIONS[2] + FontHelper.colorString(OPTIONS[3], "r"), disableOption,
+                            new BallLightning())
                     .setOptionResult((i) -> {
                         goToDialogue(5);
                         character.alreadyPerformedTransaction = true;
