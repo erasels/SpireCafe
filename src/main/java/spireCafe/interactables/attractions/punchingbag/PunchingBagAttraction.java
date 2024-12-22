@@ -221,8 +221,8 @@ public class PunchingBagAttraction extends AbstractAttraction{
 
     private void saveHiScore(int score) {
         try {
-            SpireConfig config = new SpireConfig(Anniv7Mod.modID, PunchingBagAttraction.class.getSimpleName());
-            config.setInt("hiscore", score);
+            SpireConfig config = new SpireConfig(Anniv7Mod.modID, "anniv7Config");
+            config.setInt(PunchingBagAttraction.class.getSimpleName() + "/hiscore", score);
             config.save();
         } catch (Exception e) {
             e.printStackTrace();
@@ -231,9 +231,9 @@ public class PunchingBagAttraction extends AbstractAttraction{
 
     private int loadHiScore() {
         try {
-            SpireConfig config = new SpireConfig(Anniv7Mod.modID, PunchingBagAttraction.class.getSimpleName());
+            SpireConfig config = new SpireConfig(Anniv7Mod.modID, "anniv7Config");
             config.load();
-            return config.getInt("hiscore");
+            return config.getInt(PunchingBagAttraction.class.getSimpleName() + "/hiscore");
         } catch (Exception e) {
             saveHiScore(hiScore);
             return hiScore;
