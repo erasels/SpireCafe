@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
+import spireCafe.CafeRoom;
 
 public class Decoration {
     public Texture img;
@@ -35,7 +36,7 @@ public class Decoration {
     public void update() {
         hb.update();
 
-        if (!AbstractDungeon.isScreenUp && hb.hovered) {
+        if (!AbstractDungeon.isScreenUp && !CafeRoom.isInteracting && hb.hovered) {
             if (InputHelper.justClickedLeft) {
                 onClick();
             }

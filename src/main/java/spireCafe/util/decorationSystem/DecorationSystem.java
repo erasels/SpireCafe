@@ -91,14 +91,12 @@ public class DecorationSystem {
     }
 
     public void update() {
-        if(Settings.isDebug && CardCrawlGame.playerName.equals("rorDev")) {
-            if(InputHelper.justClickedRight) {
-                decorations.clear();
-                spawnDecorations();
-            }
+        if (Settings.isDebug && !AbstractDungeon.isScreenUp && InputHelper.justClickedRight && CardCrawlGame.playerName.equals("rorDev")) {
+            decorations.clear();
+            spawnDecorations();
         }
-        if (!CafeRoom.isInteracting)
-            decorations.forEach(Decoration::update);
+
+        decorations.forEach(Decoration::update);
     }
 
     private void initAllDecorations() {
