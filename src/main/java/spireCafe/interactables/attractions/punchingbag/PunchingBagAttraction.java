@@ -40,8 +40,8 @@ import spireCafe.util.TexLoader;
 
 public class PunchingBagAttraction extends AbstractAttraction{
 
-    private final static float HB_X = 170.0F;
-    private final static float HB_Y = 315.0F;
+    private final static float HB_X = 135.0F;
+    private final static float HB_Y = 250.0F;
     private static final String ID = Anniv7Mod.makeID(PunchingBagAttraction.class.getSimpleName());
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(ID);
 
