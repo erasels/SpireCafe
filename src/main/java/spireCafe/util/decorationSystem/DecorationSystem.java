@@ -130,16 +130,16 @@ public class DecorationSystem {
     }
 
     public void update() {
-        if (Settings.isDebug && !AbstractDungeon.isScreenUp && InputHelper.justClickedRight && CardCrawlGame.playerName.equals("rorDev")) {
-            decorations.clear();
-            spawnDecorations();
-        }
-
         decorations.forEach(Decoration::update);
     }
 
     public void dispose() {
         decorations.clear();
+    }
+
+    public void redecorate() {
+        decorations.clear();
+        spawnDecorations();
     }
 
     private static void initAllDecorations() {

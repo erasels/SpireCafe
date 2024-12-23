@@ -212,6 +212,11 @@ public class CafeRoom extends AbstractEvent {
         decoSystem.dispose();
     }
 
+    //Only redecorates for now, but could be expanded for a dev command
+    public void reroll() {
+        decoSystem.redecorate();
+    }
+
     //Remove Event Text Shadow
     @Override
     public void updateDialog() {
