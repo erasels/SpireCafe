@@ -152,15 +152,5 @@ public class DecorationSystem {
         allDecorations.add(new Decoration("potted_plant", TexLoader.getTexture(Anniv7Mod.makeUIPath("decoration/potted_plant.png")), 0, 0));
         allDecorations.add(new Decoration("spire_cafe_sign", TexLoader.getTexture(Anniv7Mod.makeUIPath("decoration/spire_cafe_sign.png")), 0, 0));
         allDecorations.add(new StackedShelfDecoration());
-
-        //allDecorations.add(new Decoration("shelf", TexLoader.getTexture(Anniv7Mod.makeUIPath("decoration/shelf.png")), 0, 0));
-
-        /*Could be used for bar decoration
-        allDecorations.add(new Decoration("glass", TexLoader.getTexture(Anniv7Mod.makeUIPath("decoration/glass.png")), 0, 0));
-        allDecorations.add(new Decoration("gold_liquid", TexLoader.getTexture(Anniv7Mod.makeUIPath("decoration/gold_liquid.png")), 0, 0));
-        allDecorations.add(new Decoration("honey", TexLoader.getTexture(Anniv7Mod.makeUIPath("decoration/honey.png")), 0, 0));
-        allDecorations.add(new Decoration("vinegar", TexLoader.getTexture(Anniv7Mod.makeUIPath("decoration/vinegar.png")), 0, 0));
-        allDecorations.add(new Decoration("wine", TexLoader.getTexture(Anniv7Mod.makeUIPath("decoration/wine.png")), 0, 0));
-        */
     }
 }
