@@ -1,4 +1,4 @@
-package spireCafe.interactables.patrons.dandaleftnut;
+package spireCafe.interactables.patrons.dandadan;
 
 import java.util.ArrayList;
 

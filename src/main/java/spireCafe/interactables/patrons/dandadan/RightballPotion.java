@@ -1,4 +1,4 @@
-package spireCafe.interactables.patrons.dandaleftnut;
+package spireCafe.interactables.patrons.dandadan;
 
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;

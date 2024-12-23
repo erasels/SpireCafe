@@ -1,4 +1,4 @@
-package spireCafe.interactables.patrons.dandaleftnut;
+package spireCafe.interactables.patrons.dandadan;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +24,7 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic {
     private static final int GHOSTS_TO_ACTIVATE = 12;
 
     public GoldenBallRelic() {
-        super(ID, "Dandaleftnut", RelicTier.SPECIAL, LandingSound.CLINK);
+        super(ID, "Dandadan", RelicTier.SPECIAL, LandingSound.CLINK);
         counter = GHOSTS_TO_ACTIVATE;
         grayscale = true;
     }

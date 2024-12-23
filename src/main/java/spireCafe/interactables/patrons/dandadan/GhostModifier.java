@@ -1,4 +1,4 @@
-package spireCafe.interactables.patrons.dandaleftnut;
+package spireCafe.interactables.patrons.dandadan;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -24,11 +24,11 @@ public class GhostModifier extends AbstractCardModifier {
     public static final float FADE_SPEED = 0.3F;
 
     private Texture ghost_img;
-    private static Texture crab_img = TexLoader.getTexture(Anniv7Mod.makeImagePath("characters/Dandaleftnut/crab.png"));
+    private static Texture crab_img = TexLoader.getTexture(Anniv7Mod.makeImagePath("characters/Dandadan/crab.png"));
     private static Texture granny_img = TexLoader
-            .getTexture(Anniv7Mod.makeImagePath("characters/Dandaleftnut/turbo_granny.png"));
+            .getTexture(Anniv7Mod.makeImagePath("characters/Dandadan/turbo_granny.png"));
     private static Texture silky_img = TexLoader
-            .getTexture(Anniv7Mod.makeImagePath("characters/Dandaleftnut/acrobatic_silky.png"));
+            .getTexture(Anniv7Mod.makeImagePath("characters/Dandadan/acrobatic_silky.png"));
 
     public GhostModifier() {
     }

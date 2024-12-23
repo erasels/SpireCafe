@@ -1,4 +1,4 @@
-package spireCafe.interactables.patrons.dandaleftnut;
+package spireCafe.interactables.patrons.dandadan;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.actions.defect.ChannelAction;

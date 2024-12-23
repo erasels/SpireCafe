@@ -1,7 +1,8 @@
-package spireCafe.interactables.patrons.dandaleftnut;
+package spireCafe.interactables.patrons.dandadan;
 
 import static spireCafe.Anniv7Mod.makeID;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.blue.BallLightning;
 import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
@@ -10,8 +11,10 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
+import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
+import spireCafe.util.TexLoader;
 import spireCafe.util.Wiz;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
@@ -39,16 +42,18 @@ public class DandadanCutscene extends AbstractCutscene {
                         Wiz.p().decreaseMaxHealth(maxHPLoss);
                         AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2,
                                 new GoldenBallRelic());
+                        ((DandadanPatron) character).disappear();
+                        character.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Dandadan/Empty.png")));
                     });
-            int goldForLightningCard = Wiz.p().masterMaxOrbs == 0 ? 69 : 10;
-            boolean disableOption = Wiz.p().gold < goldForLightningCard;
+            int goldForBallLightningCard = Wiz.p().masterMaxOrbs == 0 ? 69 : 10;
+            boolean disableOption = Wiz.p().gold < goldForBallLightningCard;
             this.dialog
                     .addDialogOption(OPTIONS[2] + String.format(FontHelper.colorString(OPTIONS[3], "r"),
-                        goldForLightningCard), disableOption, new BallLightning())
+                        goldForBallLightningCard), disableOption, new BallLightning())
                     .setOptionResult((i) -> {
                         goToDialogue(5);
                         character.alreadyPerformedTransaction = true;
-                        Wiz.p().loseGold(goldForLightningCard);
+                        Wiz.p().loseGold(goldForBallLightningCard);
                         // add 1 orb slot if player has none
                         if (Wiz.p().chosenClass != PlayerClass.DEFECT && Wiz.p().masterMaxOrbs == 0) {
                             Wiz.p().masterMaxOrbs = 1;
