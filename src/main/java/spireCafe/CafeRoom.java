@@ -50,7 +50,11 @@ public class CafeRoom extends AbstractEvent {
         AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.EVENT;
         this.hasDialog = true;
         this.hasFocus = true;
-        this.barBackgroundImage = TexLoader.getTexture(Anniv7Mod.makeUIPath("barbackground.png"));
+        if(AbstractDungeon.miscRng.randomBoolean()) {
+            this.barBackgroundImage = TexLoader.getTexture(Anniv7Mod.makeUIPath("barbackground_dark.png"));
+        } else {
+            this.barBackgroundImage = TexLoader.getTexture(Anniv7Mod.makeUIPath("barbackground_light.png"));
+        }
         this.barImg = TexLoader.getTexture(Anniv7Mod.makeUIPath("bar.png"));
     }
 
