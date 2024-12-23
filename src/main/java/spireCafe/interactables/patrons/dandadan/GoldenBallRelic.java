@@ -8,8 +8,9 @@ import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
-import com.megacrit.cardcrawl.cards.tempCards.Shiv;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.powers.DuplicationPower;
 
@@ -43,7 +44,8 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic {
         int i = 0;
         while (ghostIndices.size() > 0 && i < drawPileCopy.size()) {
             AbstractCard c = drawPileCopy.group.get(i);
-            if (c.type != AbstractCard.CardType.CURSE || c.type == AbstractCard.CardType.CURSE && c.isEthereal == false) {
+            if (c.type != AbstractCard.CardType.CURSE
+                    || c.type == AbstractCard.CardType.CURSE && c.isEthereal == false) {
                 CardModifierManager.addModifier(c, new GhostModifier(ghostIndices.remove(0)));
             }
             i++;
@@ -56,14 +58,27 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic {
 
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0] + String.format(DESCRIPTIONS[1], GHOSTS_TO_ACTIVATE);
+        if (grayscale) {
+            return DESCRIPTIONS[0] + String.format(DESCRIPTIONS[1], counter);
+        } else {
+            return DESCRIPTIONS[0] + DESCRIPTIONS[2];
+        }
     }
 
     @Override
     public void onRightClick() {
-        AbstractCard c = new Shiv();
-        CardModifierManager.addModifier(c, new GhostModifier());
-        Wiz.makeInHand(c);
+        speak("TESTING ~TESTING~ #rTESTING #yTESTING #bTESTING ", 3.0F);
+    }
+
+    public void speak(String msg, float duration) {
+        boolean flipX = (this.hb.cX <= Settings.WIDTH * 0.70F);
+        float draw_x;
+        if (flipX) {
+            draw_x = hb.cX + 20.0F * Settings.scale;
+        } else {
+            draw_x = hb.cX - 20.0F * Settings.scale;
+        }
+        AbstractDungeon.effectList.add(new TopLeftSpeechBubble(draw_x, hb.cY - 295.0F * Settings.scale, duration, msg, flipX));
     }
 
     @Override
@@ -80,8 +95,7 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic {
             this.tips.clear();
             this.tips.add(new PowerTip(this.name, this.description));
             this.initializeTips();
-        }
-        else if (counter == 1) {
+        } else if (counter == 1) {
             counter = -1;
             grayscale = false;
             CardCrawlGame.sound.play("ORB_PLASMA_EVOKE");

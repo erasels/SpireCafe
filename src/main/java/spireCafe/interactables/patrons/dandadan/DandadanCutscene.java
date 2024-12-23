@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
 import spireCafe.Anniv7Mod;
@@ -23,6 +24,8 @@ public class DandadanCutscene extends AbstractCutscene {
     public static final String ID = makeID(DandadanCutscene.class.getSimpleName());
     private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
 
+    private int maxHPLoss;
+
     public DandadanCutscene(AbstractNPC character) {
         super(character, cutsceneStrings);
     }
@@ -31,7 +34,7 @@ public class DandadanCutscene extends AbstractCutscene {
     protected void onClick() {
         if (dialogueIndex == 1) {
             nextDialogue();
-            int maxHPLoss = AbstractDungeon.actNum == 1 ? (int) (0.1 * Wiz.p().maxHealth)
+            maxHPLoss = AbstractDungeon.actNum == 1 ? (int) (0.1 * Wiz.p().maxHealth)
                     : (int) (0.05 * Wiz.p().maxHealth);
             this.dialog
                     .addDialogOption(OPTIONS[0] + FontHelper.colorString(String.format(OPTIONS[1], maxHPLoss), "r"),
@@ -39,17 +42,17 @@ public class DandadanCutscene extends AbstractCutscene {
                     .setOptionResult((i) -> {
                         character.alreadyPerformedTransaction = true;
                         nextDialogue();
-                        Wiz.p().decreaseMaxHealth(maxHPLoss);
                         AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2,
                                 new GoldenBallRelic());
                         ((DandadanPatron) character).disappear();
-                        character.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Dandadan/Empty.png")));
+                        character.cutscenePortrait = new TextureRegion(
+                                TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Dandadan/Empty.png")));
                     });
             int goldForBallLightningCard = Wiz.p().masterMaxOrbs == 0 ? 69 : 10;
             boolean disableOption = Wiz.p().gold < goldForBallLightningCard;
             this.dialog
                     .addDialogOption(OPTIONS[2] + String.format(FontHelper.colorString(OPTIONS[3], "r"),
-                        goldForBallLightningCard), disableOption, new BallLightning())
+                            goldForBallLightningCard), disableOption, new BallLightning())
                     .setOptionResult((i) -> {
                         goToDialogue(5);
                         character.alreadyPerformedTransaction = true;
@@ -63,7 +66,9 @@ public class DandadanCutscene extends AbstractCutscene {
                                 Settings.HEIGHT / 2.0F));
                     });
             disableOption = Wiz.p().gold < 20;
-            this.dialog.addDialogOption(OPTIONS[4] + FontHelper.colorString(OPTIONS[5], "r"), disableOption, new RightballPotion())
+            this.dialog
+                    .addDialogOption(OPTIONS[4] + FontHelper.colorString(OPTIONS[5], "r"), disableOption,
+                            new RightballPotion())
                     .setOptionResult((i) -> {
                         goToDialogue(7);
                         character.alreadyPerformedTransaction = true;
@@ -76,6 +81,13 @@ public class DandadanCutscene extends AbstractCutscene {
             });
         } else if (dialogueIndex == 4 || dialogueIndex == 6 || dialogueIndex == 8) {
             endCutscene();
+        } else if (dialogueIndex == 3) {
+            AbstractRelic ball = Wiz.p().getRelic(GoldenBallRelic.ID);
+            if (ball != null) {
+                ((GoldenBallRelic) ball).speak(DESCRIPTIONS[10], 3.0F);
+            }
+            Wiz.p().decreaseMaxHealth(maxHPLoss);
+            nextDialogue();
         } else {
             nextDialogue();
         }
