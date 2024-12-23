@@ -44,8 +44,8 @@ public class CafeRoom extends AbstractEvent {
     private AbstractAttraction attraction;
     private Texture barBackgroundImage, barImg;
     private DecorationSystem decoSystem;
-    private boolean darkBg;
 
+    public boolean darkBg;
 
     public CafeRoom() {
         this.body = "";

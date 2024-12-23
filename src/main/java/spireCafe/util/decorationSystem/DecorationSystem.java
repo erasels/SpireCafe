@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.random.Random;
 import spireCafe.Anniv7Mod;
+import spireCafe.CafeRoom;
 import spireCafe.util.TexLoader;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class DecorationSystem {
         Collections.shuffle(allDecorations, new java.util.Random(rng.randomLong()));
 
         decorations.add(new BarSignDecoration());
+        initWindows();
         boolean hasLarge = false;
         int decorationAmt = NUM_DECOS;
         for (int i = 0; i < decorationAmt; i++) {
@@ -92,6 +94,34 @@ public class DecorationSystem {
         float ew = existing.width + PADDING, eh = existing.height + PADDING;
 
         return !(x + deco.width < ex || x > ex + ew || y + deco.height < ey || y > ey + eh);
+    }
+
+    private void initWindows() {
+        float x1 = 490f * Settings.scale;
+        float x2 = 1430f * Settings.scale;
+        float maxWiggle = 50f * Settings.scale;
+
+        // Figure out which prefix to use based on dark vs. light background
+        boolean darkBg = ((CafeRoom) AbstractDungeon.getCurrRoom().event).darkBg;
+        String noLights  = darkBg ? "window_dark_noLights"  : "window_light_noLights";
+        String lights    = darkBg ? "window_dark_lights"    : "window_light_lights";
+
+        // Randomly decide which one goes first vs. second
+        boolean firstIsNoLights = rng.randomBoolean();
+        String firstWindow  = firstIsNoLights ? noLights : lights;
+        String secondWindow = firstIsNoLights ? lights   : noLights;
+
+        // Always place the first window
+        WindowDecoration w = new WindowDecoration(firstWindow);
+        w.move(x1 + rng.random(-maxWiggle, maxWiggle), w.fixedY);
+        decorations.add(w);
+
+        // Optionally place the second window
+        if (rng.randomBoolean()) {
+            w = new WindowDecoration(secondWindow);
+            w.move(x2 + rng.random(-maxWiggle, maxWiggle), w.fixedY);
+            decorations.add(w);
+        }
     }
 
     public void render(SpriteBatch sb) {
