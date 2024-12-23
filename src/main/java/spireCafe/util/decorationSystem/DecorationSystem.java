@@ -108,6 +108,10 @@ public class DecorationSystem {
         decorations.forEach(Decoration::update);
     }
 
+    public void dispose() {
+        decorations.clear();
+    }
+
     private static void initAllDecorations() {
         allDecorations = new ArrayList<>();
 

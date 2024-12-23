@@ -30,13 +30,6 @@ public class CafeRoom extends AbstractEvent {
 
     public static final int NUM_PATRONS = 3;
     public static boolean isInteracting = false;
-
-    private final ArrayList<AbstractNPC> npcs = new ArrayList<>();
-    private AbstractMerchant merchant;
-    public AbstractBartender bartender;
-    private AbstractAttraction attraction;
-    private Texture barBackgroundImage, barImg;
-    private DecorationSystem decoSystem;
     public static float originalPlayerDrawX;
     public static float originalPlayerDrawY;
     // Used for initilizing the cafe with devcommands
@@ -45,12 +38,22 @@ public class CafeRoom extends AbstractEvent {
     public static String devCommandMerchant = null;
     public static String devCommandBartender = null;
 
+    private final ArrayList<AbstractNPC> npcs = new ArrayList<>();
+    private AbstractMerchant merchant;
+    public AbstractBartender bartender;
+    private AbstractAttraction attraction;
+    private Texture barBackgroundImage, barImg;
+    private DecorationSystem decoSystem;
+    private boolean darkBg;
+
+
     public CafeRoom() {
         this.body = "";
         AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.EVENT;
         this.hasDialog = true;
         this.hasFocus = true;
-        if(AbstractDungeon.miscRng.randomBoolean()) {
+        darkBg = AbstractDungeon.miscRng.randomBoolean();
+        if(darkBg) {
             this.barBackgroundImage = TexLoader.getTexture(Anniv7Mod.makeUIPath("barbackground_dark.png"));
         } else {
             this.barBackgroundImage = TexLoader.getTexture(Anniv7Mod.makeUIPath("barbackground_light.png"));
@@ -201,6 +204,12 @@ public class CafeRoom extends AbstractEvent {
         inhabitants.add(attraction);
         inhabitants.add(merchant);
         return inhabitants;
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        decoSystem.dispose();
     }
 
     //Remove Event Text Shadow
