@@ -109,6 +109,8 @@ public class CafeEntryExitPatch {
                 AbstractDungeon.player.drawY = CafeRoom.originalPlayerDrawY;
                 AbstractDungeon.scene = originalScene;
 
+                AbstractDungeon.currMapNode.room.event.dispose();
+
                 modifyProceedButton(ReflectionHacks.getPrivateStatic(ProceedButton.class, "DRAW_Y"), true);
             }
         }

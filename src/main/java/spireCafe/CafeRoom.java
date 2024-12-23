@@ -9,13 +9,13 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.AbstractEvent;
 import com.megacrit.cardcrawl.events.RoomEventDialog;
-import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import spireCafe.abstracts.*;
 import spireCafe.interactables.AuthorsNotSetException;
 import spireCafe.interactables.NameNotSetException;
 import spireCafe.util.TexLoader;
+import spireCafe.util.decorationSystem.DecorationSystem;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -30,12 +30,6 @@ public class CafeRoom extends AbstractEvent {
 
     public static final int NUM_PATRONS = 3;
     public static boolean isInteracting = false;
-
-    private final ArrayList<AbstractNPC> npcs = new ArrayList<>();
-    private AbstractMerchant merchant;
-    private AbstractBartender bartender;
-    private AbstractAttraction attraction;
-    private Texture barBackgroundImage, barImg, barSignImg;
     public static float originalPlayerDrawX;
     public static float originalPlayerDrawY;
     // Used for initilizing the cafe with devcommands
@@ -44,14 +38,27 @@ public class CafeRoom extends AbstractEvent {
     public static String devCommandMerchant = null;
     public static String devCommandBartender = null;
 
+    private final ArrayList<AbstractNPC> npcs = new ArrayList<>();
+    private AbstractMerchant merchant;
+    public AbstractBartender bartender;
+    private AbstractAttraction attraction;
+    private Texture barBackgroundImage, barImg;
+    private DecorationSystem decoSystem;
+
+    public boolean darkBg;
+
     public CafeRoom() {
         this.body = "";
         AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.EVENT;
         this.hasDialog = true;
         this.hasFocus = true;
-        this.barBackgroundImage = TexLoader.getTexture(Anniv7Mod.makeUIPath("barbackground.png"));
+        darkBg = AbstractDungeon.miscRng.randomBoolean();
+        if(darkBg) {
+            this.barBackgroundImage = TexLoader.getTexture(Anniv7Mod.makeUIPath("barbackground_dark.png"));
+        } else {
+            this.barBackgroundImage = TexLoader.getTexture(Anniv7Mod.makeUIPath("barbackground_light.png"));
+        }
         this.barImg = TexLoader.getTexture(Anniv7Mod.makeUIPath("bar.png"));
-        this.barSignImg = TexLoader.getTexture(Anniv7Mod.makeUIPath("sign.png"));
     }
 
     private static List<Class<? extends AbstractCafeInteractable>> getPossibilities(Class<? extends AbstractCafeInteractable> clz) {
@@ -138,6 +145,7 @@ public class CafeRoom extends AbstractEvent {
         checkNameAndAuthors(merchant, merchantClz);
         merchant.initialize();
         Anniv7Mod.currentRunSeenInteractables.add(merchant.id);
+        decoSystem = new DecorationSystem();
     }
 
     @Override
@@ -153,6 +161,7 @@ public class CafeRoom extends AbstractEvent {
         bartender.update();
         attraction.update();
         merchant.update();
+        decoSystem.update();
         isInteracting = false;
     }
 
@@ -174,14 +183,10 @@ public class CafeRoom extends AbstractEvent {
         sb.setColor(Color.WHITE);
         sb.setBlendFunction(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         sb.draw(barBackgroundImage, 0, 0, Settings.WIDTH, Settings.HEIGHT);
+        decoSystem.render(sb);
         bartender.renderAnimation(sb);
         //draw bar
         sb.draw(this.barImg, 800 * Settings.xScale, AbstractDungeon.floorY, (float) this.barImg.getWidth()  * 2.4f * Settings.scale, (float) this.barImg.getHeight() * 1f * Settings.scale);
-        //draw sign
-        float signStartX = 950 * Settings.xScale;
-        float signStartY = (882f - barSignImg.getHeight()) * Settings.yScale;
-        sb.draw(barSignImg, signStartX, signStartY, (float) barSignImg.getWidth() * Settings.scale, (float) barSignImg.getHeight() * Settings.scale);
-        FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, bartender.getLabelText(), signStartX + ((barSignImg.getWidth() * Settings.scale) /2f), signStartY + ((barSignImg.getHeight()/4f) * Settings.scale), Settings.CREAM_COLOR);
 
         for (AbstractNPC npc : npcs) {
             npc.renderAnimation(sb);
@@ -199,6 +204,17 @@ public class CafeRoom extends AbstractEvent {
         inhabitants.add(attraction);
         inhabitants.add(merchant);
         return inhabitants;
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        decoSystem.dispose();
+    }
+
+    //Only redecorates for now, but could be expanded for a dev command
+    public void reroll() {
+        decoSystem.redecorate();
     }
 
     //Remove Event Text Shadow

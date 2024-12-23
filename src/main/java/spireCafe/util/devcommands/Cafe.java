@@ -11,6 +11,7 @@ public class Cafe extends ConsoleCommand{
         followup.put("patron", CafePatron.class);
         followup.put("merchant", CafeMerchant.class);
         followup.put("clear", CafeClear.class);
+        followup.put("redecorate", CafeRedecorate.class);
         requiresPlayer = true;
     }
 
@@ -32,5 +33,6 @@ public class Cafe extends ConsoleCommand{
         DevConsole.log("* patron [slot] [id]");
         DevConsole.log("* merchant [id]");
         DevConsole.log("* clear (all|attraction|bartender|patron|merchant)");
+        DevConsole.log("* redecorate");
     }
 }
