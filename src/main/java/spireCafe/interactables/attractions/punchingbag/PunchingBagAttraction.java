@@ -8,6 +8,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.esotericsoftware.spine.AnimationState;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.megacrit.cardcrawl.actions.AbstractGameAction.AttackEffect;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -44,6 +45,7 @@ public class PunchingBagAttraction extends AbstractAttraction{
     private final static float HB_Y = 250.0F;
     private static final String ID = Anniv7Mod.makeID(PunchingBagAttraction.class.getSimpleName());
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(ID);
+    private static final String RESOURCE_PATH = Anniv7Mod.makeAttractionPath("punchingbag/");
 
     private static int B_ATK = 5;
     private static int B_SKL = 2;
@@ -59,10 +61,12 @@ public class PunchingBagAttraction extends AbstractAttraction{
 
     public PunchingBagAttraction(float posX, float posY) {
         super (posX, posY, HB_X, HB_Y);
-        img = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("punchingbag/punchingbag.png"));
         authors = "Coda";
         name = characterStrings.NAMES[0];
         this.hiScore = loadHiScore();
+        loadAnimation(RESOURCE_PATH + "skeleton.atlas", RESOURCE_PATH + "skeleton.json", 1.0F);
+        this.state.setAnimation(0, "idle", true);
+        this.stateData.setMix("hit", "idle", 0.1F);
     }
 
     @Override
@@ -71,6 +75,9 @@ public class PunchingBagAttraction extends AbstractAttraction{
 
     @Override
     public void onInteract() {
+        this.state.setAnimation(0, "hit", false);
+        this.state.addAnimation(0, "idle", true, 0.0F);
+
         int clickScore = calculateDamageScore();
         float x = InputHelper.mX;
         float y = InputHelper.mY;
