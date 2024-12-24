@@ -19,6 +19,10 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.monsters.beyond.AwakenedOne;
+import com.megacrit.cardcrawl.monsters.beyond.Donu;
+import com.megacrit.cardcrawl.monsters.beyond.TimeEater;
+import com.megacrit.cardcrawl.monsters.city.SphericGuardian;
 import com.megacrit.cardcrawl.powers.DuplicationPower;
 
 import basemod.abstracts.CustomSavable;
@@ -110,7 +114,8 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
         } else {
             draw_x = hb.cX - 20.0F * Settings.scale;
         }
-        AbstractDungeon.topLevelEffectsQueue.add(0, new TopLeftSpeechBubble(draw_x, hb.cY - 295.0F * Settings.scale, duration, msg, flipX));
+        AbstractDungeon.topLevelEffectsQueue
+                .add(0, new TopLeftSpeechBubble(draw_x, hb.cY - 295.0F * Settings.scale, duration, msg, flipX));
     }
 
     @Override
@@ -166,38 +171,75 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
     @Override
     public void onPlayCard(AbstractCard c, AbstractMonster m) {
         if (CardModifierManager.hasModifier(c, GhostModifier.ID)) {
-            int randomLineIndex = rnd.nextInt(8) + 3;
-            speak(DESCRIPTIONS[randomLineIndex], 3);
+            int randomLineIndex;
+            if (ghostsPlayed == -1) {
+                randomLineIndex = rnd.nextInt(2) + 9;
+            } else if (ghostsPlayed >= MILESTONE_2) {
+                randomLineIndex = rnd.nextInt(2) + 7;
+            }
+            else if (ghostsPlayed >= MILESTONE_1) {
+                randomLineIndex = rnd.nextInt(2) + 5;
+            }
+            else {
+                randomLineIndex = rnd.nextInt(2) + 3;
+            }
+            speak(DESCRIPTIONS[randomLineIndex], 2.5f);
         }
     }
 
     @Override
     public void onObtainCard(AbstractCard c) {
-        super.onObtainCard(c);
-    }
-
-    @Override
-    public void onPreviewObtainCard(AbstractCard c) {
-        super.onPreviewObtainCard(c);
-    }
-
-    @Override
-    public void atBattleStart() {
-        super.atBattleStart();
+        int randomLineIndex;
+        if (ghostsPlayed != -1) {
+            randomLineIndex = rnd.nextInt(2) + 11;
+        } else {
+            randomLineIndex = rnd.nextInt(2) + 13;
+        }
+        speak(DESCRIPTIONS[randomLineIndex], 2.5f);
     }
 
     @Override
     public void onBloodied() {
-        speak("You're mine now...", 3);
+        int randomLineIndex;
+        if (ghostsPlayed != -1) {
+            randomLineIndex = rnd.nextInt(2) + 15;
+        } else {
+            randomLineIndex = rnd.nextInt(2) + 17;
+        }
+        speak(DESCRIPTIONS[randomLineIndex], 2.5f);
+    }
+
+    @Override
+    public void atBattleStart() {
+        int randomLineIndex;
+        if (Wiz.getEnemies().stream().anyMatch(m -> m.id.equals(SphericGuardian.ID))) {
+            randomLineIndex = 23;
+        }
+        else if (Wiz.getEnemies().stream().anyMatch(m -> m.id.equals(Donu.ID))) {
+            randomLineIndex = 24;
+        }
+        else if (Wiz.getEnemies().stream().anyMatch(m -> m.id.equals(TimeEater.ID))) {
+            randomLineIndex = 25;
+        }
+        else if (Wiz.getEnemies().stream().anyMatch(m -> m.id.equals(AwakenedOne.ID))) {
+            randomLineIndex = 26;
+        }
+        else if (ghostsPlayed != -1) {
+            randomLineIndex = rnd.nextInt(2) + 19;
+        }
+        else {
+            randomLineIndex = rnd.nextInt(2) + 21;
+        }
+
+        speak(DESCRIPTIONS[randomLineIndex], 2.5f);
     }
 
     @Override
     public void onEnterRestRoom() {
-        super.onEnterRestRoom();
+        int randomLineIndex;
+        randomLineIndex = rnd.nextInt(5) + 27;
+        speak(DESCRIPTIONS[randomLineIndex], 2.5f);
     }
 
-    @Override
-    public void onChestOpen(boolean bossChest) {
-        super.onChestOpen(bossChest);
-    }
+    
 }
