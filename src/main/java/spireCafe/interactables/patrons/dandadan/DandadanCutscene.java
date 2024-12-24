@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer.PlayerClass;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
+import com.megacrit.cardcrawl.potions.PotionSlot;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 
@@ -70,11 +71,14 @@ public class DandadanCutscene extends AbstractCutscene {
                     .addDialogOption(OPTIONS[4] + FontHelper.colorString(OPTIONS[5], "r"), disableOption,
                             new RightballPotion())
                     .setOptionResult((i) -> {
-                        goToDialogue(7);
-                        character.alreadyPerformedTransaction = true;
-                        Wiz.p().loseGold(20);
-                        Wiz.p().obtainPotion(new RightballPotion());
-
+                        if (Wiz.p().hasPotion(PotionSlot.POTION_ID)) {
+                            goToDialogue(7);
+                            character.alreadyPerformedTransaction = true;
+                            Wiz.p().loseGold(20);
+                            Wiz.p().obtainPotion(new RightballPotion());
+                        } else {
+                            AbstractDungeon.topPanel.flashRed();
+                        }
                     });
             this.dialog.addDialogOption(OPTIONS[6]).setOptionResult((i) -> {
                 goToDialogue(9);
