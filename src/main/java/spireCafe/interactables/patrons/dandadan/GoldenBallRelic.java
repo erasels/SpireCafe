@@ -1,8 +1,12 @@
 package spireCafe.interactables.patrons.dandadan;
 
+import static spireCafe.Anniv7Mod.makeRelicPath;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
@@ -19,6 +23,7 @@ import basemod.abstracts.CustomSavable;
 import basemod.helpers.CardModifierManager;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractSCRelic;
+import spireCafe.util.TexLoader;
 import spireCafe.util.Wiz;
 
 public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, CustomSavable<Integer> {
@@ -29,6 +34,18 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
     private static final int MILESTONE_1 = 4;
     private static final int MILESTONE_2 = 8;
     private int ghostsPlayed;
+    private static Texture noShine, smallShine, medShine, largeShine;
+
+    static {
+        noShine = TexLoader.getTexture(makeRelicPath("Dandadan/GoldenBallRelic.png"));
+        noShine.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        smallShine = TexLoader.getTexture(makeRelicPath("Dandadan/smallShine.png"));
+        smallShine.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        medShine = TexLoader.getTexture(makeRelicPath("Dandadan/medShine.png"));
+        medShine.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        largeShine = TexLoader.getTexture(makeRelicPath("Dandadan/largeShine.png"));
+        largeShine.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+    }
 
     public GoldenBallRelic() {
         super(ID, "Dandadan", RelicTier.SPECIAL, LandingSound.CLINK);
@@ -56,6 +73,7 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
             i++;
         }
         if (ghostsPlayed == -1) {
+            flash();
             Wiz.atb(new RelicAboveCreatureAction(Wiz.p(), this));
             Wiz.applyToSelf(new DuplicationPower(Wiz.p(), 1));
         }
@@ -72,7 +90,7 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
 
     @Override
     public void onRightClick() {
-        // speak("TESTING ~TESTING~ #rTESTING #yTESTING #bTESTING ", 3.0F);
+        speak("TESTING ~TESTING~ #rTESTING #yTESTING #bTESTING ", 3.0F);
         AbstractCard c = new Shiv();
         CardModifierManager.addModifier(c, new GhostModifier());
         Wiz.makeInHand(c);
@@ -87,8 +105,7 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
         } else {
             draw_x = hb.cX - 20.0F * Settings.scale;
         }
-        AbstractDungeon.effectList
-                .add(new TopLeftSpeechBubble(draw_x, hb.cY - 295.0F * Settings.scale, duration, msg, flipX));
+        AbstractDungeon.topLevelEffectsQueue.add(0, new TopLeftSpeechBubble(draw_x, hb.cY - 295.0F * Settings.scale, duration, msg, flipX));
     }
 
     @Override
@@ -104,20 +121,22 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
     private void updateGhosts() {
         if (ghostsPlayed == -1) { // relic is active
             this.description = DESCRIPTIONS[0] + DESCRIPTIONS[2];
-
+            this.setTexture(largeShine);
         } else {
             if (ghostsPlayed >= GHOSTS_TO_ACTIVATE) { // relic just activated
                 ghostsPlayed = -1;
                 CardCrawlGame.sound.play("ORB_PLASMA_EVOKE");
+                flash();
                 updateGhosts();
             } else { // relic is inactive
-                if (ghostsPlayed >= MILESTONE_2) {
-
-                } else if (ghostsPlayed >= MILESTONE_1) {
-
+                if (ghostsPlayed == MILESTONE_2) {
+                    this.setTexture(medShine);
+                    flash();
+                } else if (ghostsPlayed == MILESTONE_1) {
+                    this.setTexture(smallShine);
+                    flash();
                 }
                 this.description = DESCRIPTIONS[0] + String.format(DESCRIPTIONS[1], ghostsPlayed);
-                flash();
             }
         }
         this.tips.clear();
@@ -127,7 +146,11 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
 
     @Override
     public void onLoad(Integer x) {
+        if (x == null) {
+            return;
+        }
         ghostsPlayed = x;
+        updateGhosts();
     }
 
     @Override

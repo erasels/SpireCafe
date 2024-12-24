@@ -46,7 +46,7 @@ public class TopLeftSpeechBubble extends AbstractGameEffect {
             effect_x = 170.0F * Settings.scale;
         }
 
-        AbstractDungeon.effectsQueue.add(
+        AbstractDungeon.topLevelEffectsQueue.add(
                 new SpeechTextEffect(x + effect_x, y + 124.0F * Settings.scale, duration, msg, AppearEffect.BUMP_IN));
         if (flipX) {
             this.x = x + ADJUST_X;
