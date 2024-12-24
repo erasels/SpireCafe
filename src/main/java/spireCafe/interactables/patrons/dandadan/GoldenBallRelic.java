@@ -8,26 +8,30 @@ import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.cards.tempCards.Shiv;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.powers.DuplicationPower;
 
+import basemod.abstracts.CustomSavable;
 import basemod.helpers.CardModifierManager;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.util.Wiz;
 
-public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic {
+public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, CustomSavable<Integer> {
 
     public static final String ID = Anniv7Mod.makeID(GoldenBallRelic.class.getSimpleName());
+
     private static final int GHOSTS_TO_ACTIVATE = 12;
+    private static final int MILESTONE_1 = 4;
+    private static final int MILESTONE_2 = 8;
+    private int ghostsPlayed;
 
     public GoldenBallRelic() {
         super(ID, "Dandadan", RelicTier.SPECIAL, LandingSound.CLINK);
-        counter = GHOSTS_TO_ACTIVATE;
-        grayscale = true;
     }
 
     @Override
@@ -44,13 +48,14 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic {
         int i = 0;
         while (ghostIndices.size() > 0 && i < drawPileCopy.size()) {
             AbstractCard c = drawPileCopy.group.get(i);
+            // it'd be nice to not apply to unplayable cards
             if (c.type != AbstractCard.CardType.CURSE
                     || c.type == AbstractCard.CardType.CURSE && c.isEthereal == false) {
                 CardModifierManager.addModifier(c, new GhostModifier(ghostIndices.remove(0)));
             }
             i++;
         }
-        if (!grayscale) {
+        if (ghostsPlayed == -1) {
             Wiz.atb(new RelicAboveCreatureAction(Wiz.p(), this));
             Wiz.applyToSelf(new DuplicationPower(Wiz.p(), 1));
         }
@@ -58,8 +63,8 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic {
 
     @Override
     public String getUpdatedDescription() {
-        if (grayscale) {
-            return DESCRIPTIONS[0] + String.format(DESCRIPTIONS[1], counter);
+        if (ghostsPlayed != -1) {
+            return DESCRIPTIONS[0] + String.format(DESCRIPTIONS[1], ghostsPlayed);
         } else {
             return DESCRIPTIONS[0] + DESCRIPTIONS[2];
         }
@@ -67,7 +72,11 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic {
 
     @Override
     public void onRightClick() {
-        speak("TESTING ~TESTING~ #rTESTING #yTESTING #bTESTING ", 3.0F);
+        // speak("TESTING ~TESTING~ #rTESTING #yTESTING #bTESTING ", 3.0F);
+        AbstractCard c = new Shiv();
+        CardModifierManager.addModifier(c, new GhostModifier());
+        Wiz.makeInHand(c);
+
     }
 
     public void speak(String msg, float duration) {
@@ -78,32 +87,51 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic {
         } else {
             draw_x = hb.cX - 20.0F * Settings.scale;
         }
-        AbstractDungeon.effectList.add(new TopLeftSpeechBubble(draw_x, hb.cY - 295.0F * Settings.scale, duration, msg, flipX));
+        AbstractDungeon.effectList
+                .add(new TopLeftSpeechBubble(draw_x, hb.cY - 295.0F * Settings.scale, duration, msg, flipX));
     }
 
     @Override
     public void onUseCard(AbstractCard targetCard, UseCardAction useCardAction) {
         if (CardModifierManager.hasModifier(targetCard, GhostModifier.ID)) {
-            incrementCounter();
+            if (ghostsPlayed != -1) {
+                ghostsPlayed++;
+                updateGhosts();
+            }
         }
     }
 
-    private void incrementCounter() {
-        if (grayscale && counter > 1) {
-            counter--;
-            this.description = DESCRIPTIONS[0] + String.format(DESCRIPTIONS[1], counter);
-            this.tips.clear();
-            this.tips.add(new PowerTip(this.name, this.description));
-            this.initializeTips();
-        } else if (counter == 1) {
-            counter = -1;
-            grayscale = false;
-            CardCrawlGame.sound.play("ORB_PLASMA_EVOKE");
+    private void updateGhosts() {
+        if (ghostsPlayed == -1) { // relic is active
             this.description = DESCRIPTIONS[0] + DESCRIPTIONS[2];
-            this.tips.clear();
-            this.tips.add(new PowerTip(this.name, this.description));
-            this.initializeTips();
-            flash();
+
+        } else {
+            if (ghostsPlayed >= GHOSTS_TO_ACTIVATE) { // relic just activated
+                ghostsPlayed = -1;
+                CardCrawlGame.sound.play("ORB_PLASMA_EVOKE");
+                updateGhosts();
+            } else { // relic is inactive
+                if (ghostsPlayed >= MILESTONE_2) {
+
+                } else if (ghostsPlayed >= MILESTONE_1) {
+
+                }
+                this.description = DESCRIPTIONS[0] + String.format(DESCRIPTIONS[1], ghostsPlayed);
+                flash();
+            }
         }
+        this.tips.clear();
+        this.tips.add(new PowerTip(this.name, this.description));
+        this.initializeTips();
+    }
+
+    @Override
+    public void onLoad(Integer x) {
+        ghostsPlayed = x;
+    }
+
+    @Override
+    public Integer onSave() {
+        return ghostsPlayed;
     }
 }
