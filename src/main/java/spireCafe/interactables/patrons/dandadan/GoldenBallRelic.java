@@ -2,6 +2,7 @@ package spireCafe.interactables.patrons.dandadan;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
@@ -13,6 +14,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.DuplicationPower;
 
 import basemod.abstracts.CustomSavable;
@@ -30,8 +32,11 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
     private static final int MILESTONE_2 = 8;
     private int ghostsPlayed;
 
+    private Random rnd;
+
     public GoldenBallRelic() {
         super(ID, "Dandadan", RelicTier.SPECIAL, LandingSound.CLINK);
+        rnd = new Random();
     }
 
     @Override
@@ -133,5 +138,43 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
     @Override
     public Integer onSave() {
         return ghostsPlayed;
+    }
+
+    @Override
+    public void onPlayCard(AbstractCard c, AbstractMonster m) {
+        if (CardModifierManager.hasModifier(c, GhostModifier.ID)) {
+            int randomLineIndex = rnd.nextInt(8) + 3;
+            speak(DESCRIPTIONS[randomLineIndex], 3);
+        }
+    }
+
+    @Override
+    public void onObtainCard(AbstractCard c) {
+        super.onObtainCard(c);
+    }
+
+    @Override
+    public void onPreviewObtainCard(AbstractCard c) {
+        super.onPreviewObtainCard(c);
+    }
+
+    @Override
+    public void atBattleStart() {
+        super.atBattleStart();
+    }
+
+    @Override
+    public void onBloodied() {
+        speak("You're mine now...", 3);
+    }
+
+    @Override
+    public void onEnterRestRoom() {
+        super.onEnterRestRoom();
+    }
+
+    @Override
+    public void onChestOpen(boolean bossChest) {
+        super.onChestOpen(bossChest);
     }
 }
