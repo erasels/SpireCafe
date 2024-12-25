@@ -226,10 +226,8 @@ public class PunchingBagAttraction extends AbstractAttraction{
         }
 
         // Multiplier bonuses (Total)
-        for (AbstractRelic r : p.relics) {
-            if (r instanceof Circlet) {
-                multiplier *= 1.2;
-            }
+        if (p.hasRelic(Circlet.ID)) {
+            multiplier *= p.getRelic(Circlet.ID).counter * 1.2F;
         }
 
         return (int)(score * multiplier);
