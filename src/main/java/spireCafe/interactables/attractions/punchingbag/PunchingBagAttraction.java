@@ -23,7 +23,10 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.Akabeko;
+import com.megacrit.cardcrawl.relics.Circlet;
+import com.megacrit.cardcrawl.relics.DuVuDoll;
 import com.megacrit.cardcrawl.relics.Girya;
 import com.megacrit.cardcrawl.relics.LetterOpener;
 import com.megacrit.cardcrawl.relics.PenNib;
@@ -143,6 +146,10 @@ public class PunchingBagAttraction extends AbstractAttraction{
             strength += p.getRelic(Girya.ID).counter;
         }
 
+        if (p.hasRelic(DuVuDoll.ID)) {
+            strength += 1;
+        }
+
         int cardMulti = 1;
         for (AbstractCard c : deck) {
             int cardScore = 0;
@@ -216,6 +223,13 @@ public class PunchingBagAttraction extends AbstractAttraction{
         }
         if (p.hasRelic(LetterOpener.ID) && skillCount > 0) {
             score += 5 * (skillCount / 3);
+        }
+
+        // Multiplier bonuses (Total)
+        for (AbstractRelic r : p.relics) {
+            if (r instanceof Circlet) {
+                multiplier *= 1.2;
+            }
         }
 
         return (int)(score * multiplier);
