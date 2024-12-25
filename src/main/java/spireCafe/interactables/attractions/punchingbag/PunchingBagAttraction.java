@@ -198,7 +198,7 @@ public class PunchingBagAttraction extends AbstractAttraction{
 
             // Additive bonuses
             if (c.hasTag(CardTags.STRIKE) && p.hasRelic(StrikeDummy.ID)) {
-                score += 2;
+                cardScore += 3;
             }
             if (c.cardID.equals(Claw.ID)){
                 cardScore += (2 + strength) * clawCount;
