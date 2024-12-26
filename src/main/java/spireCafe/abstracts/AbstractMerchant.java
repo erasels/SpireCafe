@@ -53,7 +53,14 @@ public abstract class AbstractMerchant extends AbstractCafeInteractable {
     }
 
     //Called after the custom screen is close in case you need to take care of lingering effects or something
-    public void onCloseShop() {}
+    public void onCloseShop() {
+        if (this.speechBubble != null){
+            if (this.speechBubble.duration > 0.3F) {
+                this.speechBubble.duration = 0.3F;
+                this.speechText.duration = 0.3F;
+            }
+        }
+    }
 
     public void updateShop() {
         for (AbstractArticle article : toAdd) {
@@ -75,6 +82,12 @@ public abstract class AbstractMerchant extends AbstractCafeInteractable {
         for (AbstractArticle article : articles) {
             article.render(sb);
         }
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        updateSpeech();
     }
 
     protected void createSpeechBubble(String msg) {

@@ -16,9 +16,6 @@ import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
-import com.megacrit.cardcrawl.ui.DialogWord.AppearEffect;
-import com.megacrit.cardcrawl.vfx.ShopSpeechBubble;
-import com.megacrit.cardcrawl.vfx.SpeechTextEffect;
 
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractMerchant;
@@ -98,22 +95,6 @@ public class SecretShopMerchant extends AbstractMerchant {
             articles.add(tmpArticle);
         }
 
-    }
-
-    @Override
-    public void onCloseShop() {
-        if (this.speechBubble != null){
-            if (this.speechBubble.duration > 0.3F) {
-                this.speechBubble.duration = 0.3F;
-                this.speechText.duration = 0.3F;
-            }
-        }
-    }
-
-    @Override
-    public void update() {
-        super.update();
-        updateSpeech();
     }
 
     @Override
