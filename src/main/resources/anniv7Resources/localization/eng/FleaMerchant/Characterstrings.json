@@ -1,0 +1,11 @@
+{
+  "${ModID}:FleaMerchant": {
+    "NAMES": [
+      "Flo the Flea Merchant"
+    ],
+    "TEXT": [
+      "Used",
+      "This relic has already been used a fwe times, making it more powerful! NL "
+    ]
+  }
+}
