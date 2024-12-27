@@ -38,8 +38,7 @@ public class DandadanCutscene extends AbstractCutscene {
             maxHPLoss = AbstractDungeon.actNum == 1 ? (int) (0.1 * Wiz.p().maxHealth)
                     : (int) (0.05 * Wiz.p().maxHealth);
             this.dialog
-                    .addDialogOption(OPTIONS[0] + FontHelper.colorString(String.format(OPTIONS[1], maxHPLoss), "r"),
-                            new GoldenBallRelic())
+                    .addDialogOption(OPTIONS[0] + FontHelper.colorString(String.format(OPTIONS[1], maxHPLoss), "r"))
                     .setOptionResult((i) -> {
                         character.alreadyPerformedTransaction = true;
                         nextDialogue();
@@ -83,13 +82,16 @@ public class DandadanCutscene extends AbstractCutscene {
             this.dialog.addDialogOption(OPTIONS[6]).setOptionResult((i) -> {
                 goToDialogue(9);
             });
-        } else if (dialogueIndex == 4 || dialogueIndex == 6 || dialogueIndex == 8) {
-            endCutscene();
-        } else if (dialogueIndex == 3) {
+        } else if (dialogueIndex == 4) {
             AbstractRelic ball = Wiz.p().getRelic(GoldenBallRelic.ID);
             if (ball != null) {
                 ((GoldenBallRelic) ball).speak(DESCRIPTIONS[10], 3.0F);
             }
+            endCutscene();
+        }
+        else if (dialogueIndex == 6 || dialogueIndex == 8 || dialogueIndex == 9) {
+            endCutscene();
+        } else if (dialogueIndex == 3) {
             Wiz.p().decreaseMaxHealth(maxHPLoss);
             nextDialogue();
         } else {

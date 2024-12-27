@@ -90,11 +90,7 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
 
     @Override
     public String getUpdatedDescription() {
-        if (ghostsPlayed != -1) {
-            return DESCRIPTIONS[0] + String.format(DESCRIPTIONS[1], ghostsPlayed);
-        } else {
-            return DESCRIPTIONS[0] + DESCRIPTIONS[2];
-        }
+        return DESCRIPTIONS[0] + (ghostsPlayed == -1 ? DESCRIPTIONS[1] : "");
     }
 
     @Override
@@ -130,7 +126,7 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
 
     private void updateGhosts() {
         if (ghostsPlayed == -1) { // relic is active
-            this.description = DESCRIPTIONS[0] + DESCRIPTIONS[2];
+            this.description = DESCRIPTIONS[0] + DESCRIPTIONS[1];
             this.setTexture(largeShine);
         } else {
             if (ghostsPlayed >= GHOSTS_TO_ACTIVATE) { // relic just activated
@@ -146,7 +142,7 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
                     this.setTexture(smallShine);
                     flash();
                 }
-                this.description = DESCRIPTIONS[0] + String.format(DESCRIPTIONS[1], ghostsPlayed);
+                this.description = DESCRIPTIONS[0];
             }
         }
         this.tips.clear();
@@ -176,11 +172,9 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
                 randomLineIndex = rnd.nextInt(2) + 9;
             } else if (ghostsPlayed >= MILESTONE_2) {
                 randomLineIndex = rnd.nextInt(2) + 7;
-            }
-            else if (ghostsPlayed >= MILESTONE_1) {
+            } else if (ghostsPlayed >= MILESTONE_1) {
                 randomLineIndex = rnd.nextInt(2) + 5;
-            }
-            else {
+            } else {
                 randomLineIndex = rnd.nextInt(2) + 3;
             }
             speak(DESCRIPTIONS[randomLineIndex], 2.5f);
@@ -214,20 +208,15 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
         int randomLineIndex;
         if (Wiz.getEnemies().stream().anyMatch(m -> m.id.equals(SphericGuardian.ID))) {
             randomLineIndex = 23;
-        }
-        else if (Wiz.getEnemies().stream().anyMatch(m -> m.id.equals(Donu.ID))) {
+        } else if (Wiz.getEnemies().stream().anyMatch(m -> m.id.equals(Donu.ID))) {
             randomLineIndex = 24;
-        }
-        else if (Wiz.getEnemies().stream().anyMatch(m -> m.id.equals(TimeEater.ID))) {
+        } else if (Wiz.getEnemies().stream().anyMatch(m -> m.id.equals(TimeEater.ID))) {
             randomLineIndex = 25;
-        }
-        else if (Wiz.getEnemies().stream().anyMatch(m -> m.id.equals(AwakenedOne.ID))) {
+        } else if (Wiz.getEnemies().stream().anyMatch(m -> m.id.equals(AwakenedOne.ID))) {
             randomLineIndex = 26;
-        }
-        else if (ghostsPlayed != -1) {
+        } else if (ghostsPlayed != -1) {
             randomLineIndex = rnd.nextInt(2) + 19;
-        }
-        else {
+        } else {
             randomLineIndex = rnd.nextInt(2) + 21;
         }
 
@@ -241,5 +230,4 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
         speak(DESCRIPTIONS[randomLineIndex], 2.5f);
     }
 
-    
 }
