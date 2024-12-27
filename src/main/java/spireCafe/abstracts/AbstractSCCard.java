@@ -15,6 +15,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import spireCafe.interactables.patrons.missingno.MissingnoCard;
 import spireCafe.util.CardArtRoller;
 
 import static spireCafe.Anniv7Mod.makeImagePath;
@@ -36,7 +37,7 @@ public abstract class AbstractSCCard extends CustomCard {
     public boolean upgradedSecondDamage;
     public boolean isSecondDamageModified;
 
-    private boolean needsArtRefresh = false;
+    public boolean needsArtRefresh = false;
 
     public AbstractSCCard(final String cardID, final int cost, final CardType type, final CardRarity rarity, final CardTarget target) {
         this(cardID, null, cost, type, rarity, target, CardColor.COLORLESS);
@@ -63,7 +64,7 @@ public abstract class AbstractSCCard extends CustomCard {
         initializeDescription();
 
         if (textureImg.contains("ui/missing.png")) {
-            if (CardLibrary.cards != null && !CardLibrary.cards.isEmpty()) {
+            if (CardLibrary.cards != null && !CardLibrary.cards.isEmpty() && !this.cardID.equals(MissingnoCard.ID)) {
                 CardArtRoller.computeCard(this);
             } else
                 needsArtRefresh = true;

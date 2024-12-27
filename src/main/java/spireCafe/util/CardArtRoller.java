@@ -22,9 +22,14 @@ import com.megacrit.cardcrawl.cards.red.Strike_Red;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.random.Random;
 import spireCafe.abstracts.AbstractSCCard;
+import spireCafe.interactables.patrons.missingno.MissingnoCard;
 
+import javax.smartcardio.Card;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 public class CardArtRoller {
     public static final String partialHueRodrigues =
@@ -115,10 +120,15 @@ public class CardArtRoller {
             CardLibrary.LibraryType.CURSE
     };
 
-    public static void computeCard(AbstractSCCard c) {
+    public static void computeCard(AbstractSCCard c, boolean isRandomEveryTime) {
         c.portrait = doneCards.computeIfAbsent(c.cardID, key -> {
             ReskinInfo r = infos.computeIfAbsent(key, key2 -> {
-                Random rng = new Random((long) c.cardID.hashCode());
+                Random rng;
+                if(isRandomEveryTime) {
+                    rng = new Random();
+                } else {
+                    rng = new Random((long) c.cardID.hashCode());
+                }
                 String q;
                 if (c.cardArtCopy() != null) {
                     q = c.cardArtCopy();
@@ -196,9 +206,17 @@ public class CardArtRoller {
                 if (c.reskinInfo(q) != null) {
                     return c.reskinInfo(q);
                 } else {
-                    return new ReskinInfo(q, rng.random(0.35f, 0.65f), rng.random(0.35f, 0.65f), rng.random(0.35f, 0.65f), rng.random(0.35f, 0.65f), rng.randomBoolean());
+                    // I did this on purpose because my code was making some colorless cards in the compendium to flip back and forth.
+                    // I forget what was originally causing it to happen/couldn't figure it out, so I took a hammer to this
+                    return new ReskinInfo(q, rng.random(0.35f, 0.65f), rng.random(0.35f, 0.65f), rng.random(0.35f, 0.65f), rng.random(0.35f, 0.65f), false);
                 }
             });
+
+            // There's a check to see if the card has had an image generated before. I need it to always try to make
+            // a new image each time the card is constructed
+            if(c.cardID.equals(MissingnoCard.ID)) {
+                infos.remove(MissingnoCard.ID);
+            }
             Color HSLC = new Color(r.H, r.S, r.L, r.C);
             TextureAtlas.AtlasRegion t = CardLibrary.getCard(r.origCardID).portrait;
             t.flip(false, true);
@@ -217,10 +235,26 @@ public class CardArtRoller {
             TextureRegion a = ImageHelper.getBufferTexture(fb);
             return new TextureAtlas.AtlasRegion(a.getTexture(), 0, 0, 250, 190);
         });
+        if(c.cardID.equals(MissingnoCard.ID)) {
+            doneCards.remove(c.cardID);
+        }
+    }
+
+    public static void computeCard(AbstractSCCard c) {
+        computeCard(c, c.cardID.equals(MissingnoCard.ID));
     }
 
     public static Texture getPortraitTexture(AbstractCard c) {
-        ReskinInfo r = infos.get(c.cardID);
+        ReskinInfo r;
+        if(c.cardID.equals(MissingnoCard.ID)) { // Get a random card for portrait
+            Random rng = new Random();
+            List<AbstractCard> skillCards = CardLibrary.getAllCards().stream()
+                    .filter(card -> AbstractCard.CardType.SKILL.equals(card.type))
+                    .collect(Collectors.toList());
+            r = new ReskinInfo(skillCards.get(rng.random(skillCards.size() - 1)).cardID, rng.random(0.35f, 0.65f), rng.random(0.35f, 0.65f), rng.random(0.35f, 0.65f), rng.random(0.35f, 0.65f), false);
+        } else {
+            r = infos.get(c.cardID);
+        }
         Color HSLC = new Color(r.H, r.S, r.L, r.C);
         TextureAtlas.AtlasRegion t = new TextureAtlas.AtlasRegion(TexLoader.getTexture("images/1024Portraits/" + CardLibrary.getCard(r.origCardID).assetUrl + ".png"), 0, 0, 500, 380);
         t.flip(false, true);

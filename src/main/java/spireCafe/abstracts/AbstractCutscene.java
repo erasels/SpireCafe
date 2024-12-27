@@ -23,7 +23,7 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
     protected final Dialog dialog = new Dialog(this);
     protected int dialogueIndex;
     protected final Hitbox hb;
-    private boolean show;
+    protected boolean show;
     protected AbstractNPC character;
     protected boolean isNPCSpeaking = false;
     protected float blackScreenValue = 0.4f;
@@ -150,6 +150,10 @@ public abstract class AbstractCutscene extends AbstractGameEffect {
         } else {
             return dialogue;
         }
+    }
+
+    public AbstractNPC getCharacter() {
+        return character;
     }
 
     public void dispose() {
