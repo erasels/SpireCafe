@@ -1,6 +1,7 @@
 {
   "${ModID}:CouncilOfGhostsPatron": {
     "NAMES": [
+      "Council of Ghosts",
       "First Ghost",
       "Second Ghost",
       "Third Ghost"

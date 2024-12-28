@@ -28,36 +28,29 @@ public class CouncilOfGhostsCutscene extends AbstractCutscene {
     public static final String ID = makeID(CouncilOfGhostsCutscene.class.getSimpleName());
     private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
 
-    private static final float MAX_HP_COST = 0.4F;
-    private static final float HIGH_ASC_MAX_HP_COST = 0.5F;
-    private static final float HP_COST = 0.1F;
-    private static final float HIGH_ASC_HP_COST = 0.15F;
-    private static final float INTANGIBLE = 1;
+    private static final float MAX_HP_COST = 0.5F;
+    private static final float HP_COST = 0.25F;
     private final int maxHpCost, hpCost;
 
     public CouncilOfGhostsCutscene(AbstractNPC character) {
         super(character, cutsceneStrings);
 
-        if (AbstractDungeon.ascensionLevel >= 15) {
-            maxHpCost = AbstractDungeon.player.maxHealth == 1 ? 1 : MathUtils.ceil((float)AbstractDungeon.player.maxHealth * HIGH_ASC_MAX_HP_COST);
-            hpCost = MathUtils.ceil((float)AbstractDungeon.player.maxHealth * HIGH_ASC_HP_COST);
-        } else {
-            maxHpCost = AbstractDungeon.player.maxHealth == 1 ? 1 : MathUtils.ceil((float)AbstractDungeon.player.maxHealth * MAX_HP_COST);
-            hpCost = MathUtils.ceil((float)AbstractDungeon.player.maxHealth * HP_COST);
-        }
+        maxHpCost = AbstractDungeon.player.maxHealth == 1 ? 0 : MathUtils.ceil((float)AbstractDungeon.player.maxHealth * MAX_HP_COST);
+        hpCost = MathUtils.ceil((float)AbstractDungeon.player.maxHealth * HP_COST);
     }
+
     @Override
     protected void onClick() {
         if (dialogueIndex == 0) {
-            character.name = CouncilOfGhostsPatron.characterStrings.NAMES[0];
+            character.name = CouncilOfGhostsPatron.characterStrings.NAMES[1];
             nextDialogue();
             character.setCutscenePortrait("Ghost1");
         } else if (dialogueIndex == 1) {
-            character.name = CouncilOfGhostsPatron.characterStrings.NAMES[1];
+            character.name = CouncilOfGhostsPatron.characterStrings.NAMES[2];
             nextDialogue();
             character.setCutscenePortrait("Ghost2");
         } else if (dialogueIndex == 2) {
-            character.name = CouncilOfGhostsPatron.characterStrings.NAMES[2];
+            character.name = CouncilOfGhostsPatron.characterStrings.NAMES[3];
             nextDialogue();
             character.setCutscenePortrait("Ghost3");
             this.dialog.addDialogOption(OPTIONS[0]).setOptionResult((i)-> { // A deal?
@@ -67,15 +60,15 @@ public class CouncilOfGhostsCutscene extends AbstractCutscene {
                 goToDialogue(16);
             });
         } else if (dialogueIndex == 4) {
-            character.name = CouncilOfGhostsPatron.characterStrings.NAMES[1];
+            character.name = CouncilOfGhostsPatron.characterStrings.NAMES[2];
             nextDialogue();
             character.setCutscenePortrait("Ghost2");
         } else if (dialogueIndex == 5) {
-            character.name = CouncilOfGhostsPatron.characterStrings.NAMES[0];
+            character.name = CouncilOfGhostsPatron.characterStrings.NAMES[1];
             nextDialogue();
             character.setCutscenePortrait("Ghost1");
             this.dialog.addDialogOption(OPTIONS[2] + maxHpCost + OPTIONS[3]).setOptionResult((k)-> { // Promise
-                character.name = CouncilOfGhostsPatron.characterStrings.NAMES[2];
+                character.name = CouncilOfGhostsPatron.characterStrings.NAMES[3];
                 nextDialogue();
                 character.setCutscenePortrait("Ghost3");
                 character.alreadyPerformedTransaction = true;
@@ -83,7 +76,7 @@ public class CouncilOfGhostsCutscene extends AbstractCutscene {
                 AbstractDungeon.getCurrRoom().spawnRelicAndObtain((float) Settings.WIDTH / 2.0F, (float)Settings.HEIGHT / 2.0F, new BlankTombstone());
             });
             this.dialog.addDialogOption(OPTIONS[4] + hpCost + OPTIONS[5]).setOptionResult((l)-> { // Sacrifice
-                character.name = CouncilOfGhostsPatron.characterStrings.NAMES[1];
+                character.name = CouncilOfGhostsPatron.characterStrings.NAMES[2];
                 goToDialogue(10);
                 character.setCutscenePortrait("Ghost2");
                 character.alreadyPerformedTransaction = true;
@@ -102,11 +95,11 @@ public class CouncilOfGhostsCutscene extends AbstractCutscene {
         } else if (dialogueIndex == 9) {
             endCutscene();
         } else if (dialogueIndex == 11) {
-            character.name = CouncilOfGhostsPatron.characterStrings.NAMES[0];
+            character.name = CouncilOfGhostsPatron.characterStrings.NAMES[1];
             nextDialogue();
             character.setCutscenePortrait("Ghost1");
         } else if (dialogueIndex == 12) {
-            character.name = CouncilOfGhostsPatron.characterStrings.NAMES[1];
+            character.name = CouncilOfGhostsPatron.characterStrings.NAMES[2];
             nextDialogue();
             character.setCutscenePortrait("Ghost2");
         } else if (dialogueIndex == 13) {
@@ -115,7 +108,7 @@ public class CouncilOfGhostsCutscene extends AbstractCutscene {
         } else if (dialogueIndex == 15) {
             endCutscene();
         } else if (dialogueIndex == 16) {
-            character.name = CouncilOfGhostsPatron.characterStrings.NAMES[1];
+            character.name = CouncilOfGhostsPatron.characterStrings.NAMES[2];
             nextDialogue();
             character.setCutscenePortrait("Ghost2");
         } else if (dialogueIndex == 17) {
