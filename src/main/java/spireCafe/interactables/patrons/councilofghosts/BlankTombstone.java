@@ -5,8 +5,8 @@ import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.IntangiblePlayerPower;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import spireCafe.abstracts.AbstractSCRelic;
-import spireCafe.interactables.patrons.purpletear.BookOfIndex;
 
 import static spireCafe.Anniv7Mod.makeID;
 
@@ -23,5 +23,14 @@ public class BlankTombstone extends AbstractSCRelic {
         flash();
         addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
         addToBot(new ApplyPowerAction(AbstractDungeon.player, (AbstractCreature)null, new IntangiblePlayerPower(AbstractDungeon.player, TURNS), TURNS));
+        grayscale = true;
+    }
+
+    public void justEnteredRoom(AbstractRoom room) {
+        this.grayscale = false;
+    }
+
+    public String getUpdatedDescription() {
+        return DESCRIPTIONS[0] + TURNS + DESCRIPTIONS[1];
     }
 }

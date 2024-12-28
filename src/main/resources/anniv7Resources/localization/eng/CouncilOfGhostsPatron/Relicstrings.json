@@ -3,7 +3,8 @@
     "NAME": "Blank Tombstone",
     "FLAVOR": "A constant reminder.",
     "DESCRIPTIONS": [
-      "Start each combat with #b1 #yIntangible."
+      "Start each combat with #b",
+      " #yIntangible."
     ]
   }
 }
