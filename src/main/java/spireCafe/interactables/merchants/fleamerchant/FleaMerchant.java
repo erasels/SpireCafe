@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
-import com.megacrit.cardcrawl.potions.Ambrosia;
+import com.megacrit.cardcrawl.potions.*;
 import com.megacrit.cardcrawl.relics.*;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractArticle;
@@ -35,26 +35,35 @@ public class FleaMerchant extends AbstractMerchant {
 
     @Override
     public void rollShop() {
-        //The X and Y positions for the articles are the bottom left spot where the image and its hitbox will start. The cost will be rendered below.
+        HaggleArticle haggleArticle = new HaggleArticle(this, Settings.WIDTH * 0.75F, 164.0F * Settings.yScale);
+        articles.add(haggleArticle);
 
         //Use CardArticle to add cards to your shop. You can override onBuy() and getPriceIcon() to change the price from gold (default) to something else
         AbstractArticle intimidate = new CardArticle("intimidate", this, 320f * Settings.xScale,700f * Settings.yScale, new Intimidate(), 75);
         articles.add(intimidate);
 
-        //Use RelicArticle to add relics to your shop. You can override onBuy() and getPriceIcon() to change the price from gold (default) to something else
-        AbstractArticle nlothGift = new RelicArticle("nlothgift", this, 500f * Settings.xScale, 700f * Settings.yScale, new NlothsGift(), 125);
-        articles.add(nlothGift);
+        AbstractArticle relic = new RelicArticle("relic", this, 964.0F * Settings.xScale,364.0F * Settings.scale, AbstractDungeon.returnRandomRelic(AbstractDungeon.returnRandomRelicTier()), 200){
+            @Override
+            public int getModifiedPrice() {
+                float finalPrice = getBasePrice();
+                if (AbstractDungeon.ascensionLevel >= 16) {
+                    finalPrice = finalPrice * 1.1f;
+                }
+                if (AbstractDungeon.player.hasRelic(MembershipCard.ID)) {
+                    finalPrice = finalPrice * 0.5f;
+                }
+                if (AbstractDungeon.player.hasRelic(Courier.ID)) {
+                    finalPrice = finalPrice * 0.8f;
+                }
+                return (int)(finalPrice*haggleArticle.haggleRate);
+            }
+        };
+        articles.add(relic);
 
-        //Use PotionArticle to add potions to your shop. You can override onBuy() and getPriceIcon() to change the price from gold (default) to something else (unlike the others, onBuy ONLY handles the price)
-        AbstractArticle potion = new PotionArticle("potion", this, 620f * Settings.xScale, 700f * Settings.yScale, new Ambrosia(), 125);
-        articles.add(potion);
-
-        AbstractArticle primedRelic = new FleaMarketRelicArticle(this, 2);
+        AbstractArticle primedRelic = new FleaMarketRelicArticle(this, 1, haggleArticle);
         articles.add(primedRelic);
 
-        AbstractArticle usedRelic = new FleaMarketRelicArticle(this, 3);
+        AbstractArticle usedRelic = new FleaMarketRelicArticle(this, 2, haggleArticle);
         articles.add(usedRelic);
-
-
     }
 }

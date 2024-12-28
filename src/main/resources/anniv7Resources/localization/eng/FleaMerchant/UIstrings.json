@@ -5,5 +5,15 @@
       "This relic has already been used a few times, making it more powerful! NL ",
       "This relic has already been used a few times, with only a few remaining uses left! NL "
     ]
+  },
+  "${ModID}:HaggleArticle": {
+    "TEXT": [
+      "Haggle with Flo",
+      "Click here to haggle with Flo. There is a ",
+      "% chance to succeed. If you do, Flo will lower all his prices by 10%. If you fail, Flo will raise his prices to 150% and you can no longer haggle. NL Flo currently gives you a ",
+      "% discount.",
+      "You made Flo angry, and he is no longer willing to longer haggle. NL Flo now charges ",
+      "% of his original prices."
+    ]
   }
 }

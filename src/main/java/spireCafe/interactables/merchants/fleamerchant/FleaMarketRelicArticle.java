@@ -22,16 +22,14 @@ public class FleaMarketRelicArticle extends AbstractArticle {
     private static final String ID = Anniv7Mod.makeID(FleaMarketRelicArticle.class.getSimpleName());
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ID);
     private static final float RELIC_Y = 364.0F * Settings.scale;
-    private int slot;
-    private FleaMerchant fleaMerchant;
     private final AbstractRelic relic;
     private boolean primed;
+    private HaggleArticle haggleArticle;
 
-    public FleaMarketRelicArticle(AbstractMerchant merchant, int slot) {
+    public FleaMarketRelicArticle(AbstractMerchant merchant, int slot, HaggleArticle haggleArticle) {
         super(ID, merchant, 964.0F * Settings.xScale + 150.0F * slot * Settings.xScale, RELIC_Y, ImageMaster.loadImage("images/relics/"+new PenNib().imgUrl));
-        this.slot = slot;
-        this.fleaMerchant = (FleaMerchant) merchant;
-        this.primed = slot==3;
+        this.primed = slot==2;
+        this.haggleArticle = haggleArticle;
         this.relic = primed?getRandomPrimedRelic():getRandomUsedRelic();
         this.itemTexture = new TextureRegion(ImageMaster.loadImage("images/relics/"+relic.imgUrl));
     }
@@ -74,7 +72,7 @@ public class FleaMarketRelicArticle extends AbstractArticle {
         primedRelics.add(new TinyChest());      prCounters.add(3);
         primedRelics.add(new HappyFlower());    prCounters.add(2);
 
-        int r = AbstractDungeon.relicRng.random(primedRelics.size());
+        int r = AbstractDungeon.merchantRng.random(primedRelics.size());
         AbstractRelic primedRelic = primedRelics.get(r);
         primedRelic.setCounter(prCounters.get(r));
         return primedRelic;
@@ -87,9 +85,24 @@ public class FleaMarketRelicArticle extends AbstractArticle {
         usedRelics.add(new Omamori());      urCounters.add(1);
         usedRelics.add(new WingBoots());    urCounters.add(2);
 
-        int r = AbstractDungeon.relicRng.random(usedRelics.size());
+        int r = AbstractDungeon.merchantRng.random(usedRelics.size());
         AbstractRelic usedRelic = usedRelics.get(r);
         usedRelic.setCounter(urCounters.get(r));
         return usedRelic;
+    }
+
+    @Override
+    public int getModifiedPrice() {
+        float finalPrice = getBasePrice();
+        if (AbstractDungeon.ascensionLevel >= 16) {
+            finalPrice = finalPrice * 1.1f;
+        }
+        if (AbstractDungeon.player.hasRelic(MembershipCard.ID)) {
+            finalPrice = finalPrice * 0.5f;
+        }
+        if (AbstractDungeon.player.hasRelic(Courier.ID)) {
+            finalPrice = finalPrice * 0.8f;
+        }
+        return (int)(finalPrice*haggleArticle.haggleRate);
     }
 }
