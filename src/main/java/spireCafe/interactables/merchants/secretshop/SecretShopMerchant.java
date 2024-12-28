@@ -16,9 +16,6 @@ import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
-import com.megacrit.cardcrawl.ui.DialogWord.AppearEffect;
-import com.megacrit.cardcrawl.vfx.ShopSpeechBubble;
-import com.megacrit.cardcrawl.vfx.SpeechTextEffect;
 
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractMerchant;
@@ -36,13 +33,7 @@ public class SecretShopMerchant extends AbstractMerchant {
     private static final Texture RUG_TEXTURE = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("secretshop/rug.png"));
     private static final String MERCHANT_STR = Anniv7Mod.makeMerchantPath("secretshop/red_merchant/");
 
-    private static final float SPEECH_DUR = 4.0F;
     private static final float PITCH_VAR = 0.4F;
-    private static final float SPEECH_TEXT_R_X = 164.0F * Settings.scale;
-    private static final float SPEECH_TEXT_L_X = -166.0F * Settings.scale;
-    private static final float SPEECH_TEXT_Y = 126.0F * Settings.scale;
-    private ShopSpeechBubble speechBubble = null;
-    private SpeechTextEffect speechText = null;
 
     public ArrayList<AbstractCard> cards = new ArrayList<>();
     public ArrayList<AbstractRelic> relics = new ArrayList<>();
@@ -104,22 +95,6 @@ public class SecretShopMerchant extends AbstractMerchant {
             articles.add(tmpArticle);
         }
 
-    }
-
-    @Override
-    public void onCloseShop() {
-        if (this.speechBubble != null){
-            if (this.speechBubble.duration > 0.3F) {
-                this.speechBubble.duration = 0.3F;
-                this.speechText.duration = 0.3F;
-            }
-        }
-    }
-
-    @Override
-    public void update() {
-        super.update();
-        updateSpeech();
     }
 
     @Override
@@ -234,42 +209,5 @@ public class SecretShopMerchant extends AbstractMerchant {
         }
         int i = MathUtils.random(7, 13);
         createSpeechBubble(TEXT[i]);
-    }
-        
-    private void createSpeechBubble(String msg) {
-        if (this.speechBubble != null) {
-            if (this.speechBubble.duration > 0.3F) {
-                this.speechBubble.duration = 0.3F;
-                this.speechText.duration = 0.3F;
-            }
-        }
-        boolean isRight = MathUtils.randomBoolean();
-        float x = MathUtils.random(660.0F, 1260.0F) * Settings.scale;
-        float y = Settings.HEIGHT - 380.0F * Settings.scale;
-        this.speechBubble = new ShopSpeechBubble(x, y, SPEECH_DUR, msg, isRight);
-        float offset_x = isRight ? SPEECH_TEXT_R_X : SPEECH_TEXT_L_X;
-        this.speechText = new SpeechTextEffect(x + offset_x, y + SPEECH_TEXT_Y, SPEECH_DUR, msg, AppearEffect.BUMP_IN);
-        AbstractDungeon.topLevelEffectsQueue.add(this.speechBubble);
-        AbstractDungeon.topLevelEffectsQueue.add(this.speechText);
-
-    }
-
-    private void updateSpeech() {
-        if (this.speechBubble != null) {
-            this.speechBubble.update();
-            if (this.speechBubble.hb.hovered && this.speechBubble.duration > 0.3F) {
-                this.speechBubble.duration = 0.3F;
-                this.speechText.duration = 0.3F;
-            }
-            if (this.speechBubble.isDone) {
-                this.speechBubble = null;
-            }
-        }
-        if (speechText != null) {
-            this.speechText.update();
-            if (this.speechText.isDone) {
-                this.speechText = null;
-            }
-        }
     }
 }
