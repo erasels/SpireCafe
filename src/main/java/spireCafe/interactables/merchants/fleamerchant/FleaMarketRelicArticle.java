@@ -72,7 +72,7 @@ public class FleaMarketRelicArticle extends AbstractArticle {
         primedRelics.add(new TinyChest());      prCounters.add(3);
         primedRelics.add(new HappyFlower());    prCounters.add(2);
 
-        int r = AbstractDungeon.merchantRng.random(primedRelics.size());
+        int r = AbstractDungeon.merchantRng.random(0, primedRelics.size()-1);
         AbstractRelic primedRelic = primedRelics.get(r);
         primedRelic.setCounter(prCounters.get(r));
         return primedRelic;
@@ -85,7 +85,7 @@ public class FleaMarketRelicArticle extends AbstractArticle {
         usedRelics.add(new Omamori());      urCounters.add(1);
         usedRelics.add(new WingBoots());    urCounters.add(2);
 
-        int r = AbstractDungeon.merchantRng.random(usedRelics.size());
+        int r = AbstractDungeon.merchantRng.random(0, usedRelics.size()-1);
         AbstractRelic usedRelic = usedRelics.get(r);
         usedRelic.setCounter(urCounters.get(r));
         return usedRelic;
