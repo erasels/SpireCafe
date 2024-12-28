@@ -1,0 +1,9 @@
+{
+  "${ModID}:BlankTombstone": {
+    "NAME": "Blank Tombstone",
+    "FLAVOR": "A constant reminder.",
+    "DESCRIPTIONS": [
+      "Start each combat with #b1 #yIntangible."
+    ]
+  }
+}
