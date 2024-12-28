@@ -42,6 +42,61 @@ public class FleaMerchant extends AbstractMerchant {
         AbstractArticle intimidate = new CardArticle("intimidate", this, 320f * Settings.xScale,700f * Settings.yScale, new Intimidate(), 75);
         articles.add(intimidate);
 
+
+        AbstractArticle potion1 = new PotionArticle("potion1", this, 620f * Settings.xScale, 700f * Settings.yScale, getUsedPotion(), 55){
+            @Override
+            public int getModifiedPrice() {
+                float finalPrice = getBasePrice();
+                if (AbstractDungeon.ascensionLevel >= 16) {
+                    finalPrice = finalPrice * 1.1f;
+                }
+                if (AbstractDungeon.player.hasRelic(MembershipCard.ID)) {
+                    finalPrice = finalPrice * 0.5f;
+                }
+                if (AbstractDungeon.player.hasRelic(Courier.ID)) {
+                    finalPrice = finalPrice * 0.8f;
+                }
+                return (int)(finalPrice*haggleArticle.haggleRate);
+            }
+        };
+        articles.add(potion1);
+
+        AbstractArticle potion2 = new PotionArticle("potion2", this, 720f * Settings.xScale, 700f * Settings.yScale, getUsedPotion(), 55){
+            @Override
+            public int getModifiedPrice() {
+                float finalPrice = getBasePrice();
+                if (AbstractDungeon.ascensionLevel >= 16) {
+                    finalPrice = finalPrice * 1.1f;
+                }
+                if (AbstractDungeon.player.hasRelic(MembershipCard.ID)) {
+                    finalPrice = finalPrice * 0.5f;
+                }
+                if (AbstractDungeon.player.hasRelic(Courier.ID)) {
+                    finalPrice = finalPrice * 0.8f;
+                }
+                return (int)(finalPrice*haggleArticle.haggleRate);
+            }
+        };
+        articles.add(potion2);
+
+        AbstractArticle potion3 = new PotionArticle("potion3", this, 820f * Settings.xScale, 700f * Settings.yScale, getUsedPotion(), 55){
+            @Override
+            public int getModifiedPrice() {
+                float finalPrice = getBasePrice();
+                if (AbstractDungeon.ascensionLevel >= 16) {
+                    finalPrice = finalPrice * 1.1f;
+                }
+                if (AbstractDungeon.player.hasRelic(MembershipCard.ID)) {
+                    finalPrice = finalPrice * 0.5f;
+                }
+                if (AbstractDungeon.player.hasRelic(Courier.ID)) {
+                    finalPrice = finalPrice * 0.8f;
+                }
+                return (int)(finalPrice*haggleArticle.haggleRate);
+            }
+        };
+        articles.add(potion3);
+
         AbstractArticle relic = new RelicArticle("relic", this, 964.0F * Settings.xScale,364.0F * Settings.scale, AbstractDungeon.returnRandomRelic(AbstractDungeon.returnRandomRelicTier()), 200){
             @Override
             public int getModifiedPrice() {
@@ -65,5 +120,137 @@ public class FleaMerchant extends AbstractMerchant {
 
         AbstractArticle usedRelic = new FleaMarketRelicArticle(this, 2, haggleArticle);
         articles.add(usedRelic);
+    }
+
+    private AbstractPotion getUsedPotion(){
+        ArrayList<AbstractPotion> potions = new ArrayList<>();
+        potions.add(new StrengthPotion(){
+            @Override
+            public int getPotency(int var1){
+                return 1;
+            }});
+        potions.add(new DexterityPotion(){
+            @Override
+            public int getPotency(int var1){
+                return 1;
+            }});
+        potions.add(new FirePotion(){
+            @Override
+            public int getPotency(int var1){
+                return 10;
+            }});
+        potions.add(new ExplosivePotion(){
+            @Override
+            public int getPotency(int var1){
+                return 5;
+            }});
+        potions.add(new SwiftPotion(){
+            @Override
+            public int getPotency(int var1){
+                return 2;
+            }});
+        potions.add(new PoisonPotion(){
+            @Override
+            public int getPotency(int var1){
+                return 4;
+            }});
+        potions.add(new BlockPotion(){
+            @Override
+            public int getPotency(int var1){
+                return 6;
+            }});
+        potions.add(new RegenPotion(){
+            @Override
+            public int getPotency(int var1){
+                return 3;
+            }});
+        potions.add(new HeartOfIron(){
+            @Override
+            public int getPotency(int var1){
+                return 3;
+            }});
+        potions.add(new BloodPotion(){
+            @Override
+            public int getPotency(int var1){
+                return 10;
+            }});
+        potions.add(new BottledMiracle(){
+            @Override
+            public int getPotency(int var1){
+                return 1;
+            }});
+        potions.add(new CunningPotion(){
+            @Override
+            public int getPotency(int var1){
+                return 2;
+            }});
+        potions.add(new DistilledChaosPotion(){
+            @Override
+            public int getPotency(int var1){
+                return 2;
+            }});
+        potions.add(new EnergyPotion(){
+            @Override
+            public int getPotency(int var1){
+                return 1;
+            }});
+        potions.add(new EssenceOfSteel(){
+            @Override
+            public int getPotency(int var1){
+                return 2;
+            }});
+        potions.add(new FairyPotion(){
+            @Override
+            public int getPotency(int var1){
+                return 15;
+            }});
+        potions.add(new FearPotion(){
+            @Override
+            public int getPotency(int var1){
+                return 2;
+            }});
+        potions.add(new FocusPotion(){
+            @Override
+            public int getPotency(int var1){
+                return 1;
+            }});
+        potions.add(new FruitJuice(){
+            @Override
+            public int getPotency(int var1){
+                return 3;
+            }});
+        potions.add(new LiquidBronze(){
+            @Override
+            public int getPotency(int var1){
+                return 2;
+            }});
+        potions.add(new PotionOfCapacity(){
+            @Override
+            public int getPotency(int var1){
+                return 1;
+            }});
+        potions.add(new SneckoOil(){
+            @Override
+            public int getPotency(int var1){
+                return 3;
+            }});
+        potions.add(new SpeedPotion(){
+            @Override
+            public int getPotency(int var1){
+                return 3;
+            }});
+        potions.add(new WeakenPotion(){
+            @Override
+            public int getPotency(int var1){
+                return 2;
+            }});
+        potions.add(new SteroidPotion(){
+            @Override
+            public int getPotency(int var1){
+                return 3;
+            }});
+        int r = AbstractDungeon.merchantRng.random(potions.size());
+        return potions.get(r);
+
     }
 }
