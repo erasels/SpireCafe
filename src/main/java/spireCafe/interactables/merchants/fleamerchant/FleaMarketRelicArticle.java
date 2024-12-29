@@ -26,6 +26,7 @@ public class FleaMarketRelicArticle extends AbstractArticle {
     private boolean primed;
     private HaggleArticle haggleArticle;
     private final double priceJitter;
+    private int price;
 
     public FleaMarketRelicArticle(AbstractMerchant merchant, int slot, HaggleArticle haggleArticle) {
         super(ID, merchant, 964.0F * Settings.xScale + 150.0F * slot * Settings.xScale, RELIC_Y, ImageMaster.loadImage("images/relics/"+new PenNib().imgUrl));
@@ -56,50 +57,44 @@ public class FleaMarketRelicArticle extends AbstractArticle {
 
     @Override
     public String getTipBody() {
-        return uiStrings.TEXT[primed?1:2] + relic.description;
+        return uiStrings.TEXT[primed?1:3] + relic.counter + uiStrings.TEXT[primed?2:(relic.counter==1?4:5)] + relic.description;
     }
 
     @Override
     public int getBasePrice() {
-        return primed?250:100;
+        return price;
     }
 
     public AbstractRelic getRandomPrimedRelic(){
         ArrayList<AbstractRelic> primedRelics = new ArrayList<>();
         ArrayList<Integer> prCounters = new ArrayList<>();
-        primedRelics.add(new PenNib());         prCounters.add(9);
-        primedRelics.add(new Nunchaku());       prCounters.add(9);
-        primedRelics.add(new InkBottle());      prCounters.add(9);
-        primedRelics.add(new IncenseBurner());  prCounters.add(5);
-        primedRelics.add(new TinyChest());      prCounters.add(3);
-        primedRelics.add(new HappyFlower());    prCounters.add(2);
+        primedRelics.add(new PenNib());         prCounters.add(10);
+        primedRelics.add(new Nunchaku());       prCounters.add(10);
+        primedRelics.add(new InkBottle());      prCounters.add(10);
+        primedRelics.add(new IncenseBurner());  prCounters.add(6);
+        primedRelics.add(new TinyChest());      prCounters.add(4);
+        primedRelics.add(new HappyFlower());    prCounters.add(3);
 
         int r = AbstractDungeon.merchantRng.random(0, primedRelics.size()-1);
         AbstractRelic primedRelic = primedRelics.get(r);
-        primedRelic.setCounter(prCounters.get(r));
+        int counter = AbstractDungeon.merchantRng.random(1, prCounters.get(r)-1);
+        price = primedRelic.getPrice() + 60*(counter/prCounters.get(r));
+        primedRelic.setCounter(counter);
         return primedRelic;
     }
 
     public AbstractRelic getRandomUsedRelic(){
         ArrayList<AbstractRelic> usedRelics = new ArrayList<>();
         ArrayList<Integer> urCounters = new ArrayList<>();
-        usedRelics.add(new Matryoshka());   urCounters.add(1);
-        usedRelics.add(new Omamori());      urCounters.add(1);
-        usedRelics.add(new WingBoots());    urCounters.add(2);
+        usedRelics.add(new Matryoshka());   urCounters.add(2);
+        usedRelics.add(new Omamori());      urCounters.add(2);
+        usedRelics.add(new WingBoots());    urCounters.add(3);
 
         int r = AbstractDungeon.merchantRng.random(usedRelics.size()-1);
-        int i = 0;
-        ArrayList<Integer> counters = new ArrayList<>();
-        counters.add(0);counters.add(0);counters.add(0);
-        int c;
-        while(i<1000){
-            c = (AbstractDungeon.merchantRng.random(usedRelics.size()-1));
-            counters.set(c, counters.get(c) + 1);
-            i++;
-        }
-        System.out.println(counters);
         AbstractRelic usedRelic = usedRelics.get(r);
-        usedRelic.setCounter(urCounters.get(r));
+        int counter = AbstractDungeon.merchantRng.random(1, urCounters.get(r)-1);
+        price = (int) (usedRelic.getPrice() * (double) (counter/urCounters.get(r)));
+        usedRelic.setCounter(counter);
         return usedRelic;
     }
 

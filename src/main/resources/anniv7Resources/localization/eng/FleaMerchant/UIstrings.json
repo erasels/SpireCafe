@@ -2,8 +2,11 @@
   "${ModID}:FleaMarketRelicArticle": {
     "TEXT": [
       "Used ",
-      "This relic has already been used a few times, making it more powerful! NL ",
-      "This relic has already been used a few times, with only a few remaining uses left! NL "
+      "This relic has already been used ",
+      " times before, making it more powerful! NL ",
+      "This relic has already been used a few times, with only a ",
+      " remaining use left! NL ",
+      " remaining uses left! NL "
     ]
   },
   "${ModID}:HaggleArticle": {
