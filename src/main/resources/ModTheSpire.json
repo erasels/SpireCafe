@@ -11,7 +11,8 @@
     "Coda",
     "Indi",
     "iry",
-    "Jack Renoson"
+    "Jack Renoson",
+    "MaybeLaterx"
   ],
   "description": "${project.description}",
   "version": "${project.version}",

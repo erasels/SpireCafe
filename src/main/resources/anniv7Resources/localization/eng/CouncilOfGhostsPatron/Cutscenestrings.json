@@ -1,0 +1,38 @@
+{
+  "${ModID}:CouncilOfGhostsCutscene": {
+    "NAME": "Council Of Ghosts Cutscene",
+    "BLOCKING_TEXTS": [
+      "You return to the eerie mist. After a few silent minutes of wandering through the desolate twisting darkness, you lose hope of finding the spirits again. You turn to leave, and within a few footsteps are suddenly back in the café."
+    ],
+    "DESCRIPTIONS": [
+      "A ~swirling~ ~cloud~ of thick dark fog hangs before you. You step into the eerie black mist, its embrace cold as dew. Squinting, you make out three shadowy masked figures that are towering over you.",
+      "\"The puppet returns.\"",
+      "#r@\"WHAT@ #r@FUN!\"@",
+      "\"Quiet, you're frightening it. Can I interest you in a deal, mortal one?\"",
+      "\"Promise your soul to me and I will grant you my unwavering protection.\"",
+      "#r@\"HOW@ #r@ABOUT@ #r@A@ #r@PET@ #r@SOUL@ #r@IN@ #r@EXCHANGE@ #r@FOR@ #r@A@ #r@SMALL@ #r@SACRIFICE?@ #r@IT@ #r@WILL@ #r@ONLY@ #r@HURT@ #r@A@ #r@LITTLE.\"@",
+      "\"You forget yourselves. Need I remind you of the foolish bargain you yourselves already struck? Leave, puppet, for the good of us all.\"",
+      "\"Excellent.\"",
+      "A glowing ball of light grows from the spectre's hands, so bright it hurts your eyes. Through your fingers, you peer into the brilliant orb and see a vision of a headstone with a shadowy claw wrapped around it. The claw squeezes tighter and tighter. Cracks form then suddenly the gravestone is crushed to dust, debris flying into your face.",
+      "When you open your eyes, the trio is gone, the darkness along with it, and all that remains is a heavy feeling in your chest.",
+      "#r@\"SO@ #r@WE@ #r@HAVE@ #r@A@ #r@DEAL?\"@",
+      "The figure extends a shadowy hand out to you. You shake it, but as your hand makes contact with the black mist your entire body freezes up and daggers of cold shoot into your arm. The color drains from your face as you begin losing consciousness.",
+      "\"Enough.\"",
+      "#r@\"WHAT@ #r@A@ #r@TERRIBLE@ #r@SPORT@ #r@YOU@ #r@ARE.\"@",
+      "The grip on you loosens and you fall to your knees, panting in a cold sweat. When you look up, the figures are all but gone, the smoke has cleared, and the denizens of the café are eyeing you warily.",
+      "You feel something in your pocket. You pull out a corked bottle with some of the swirling mist inside. When you hold it against your ear you think you can hear screaming... Or is that just your imagination?",
+      "You slowly step backwards, hoping not to offend the spirits with your departure.",
+      "#r@\"YOU'LL@ #r@BE@ #r@BACK...@ #r@HA@ #r@HA@ #r@HAHAHA!\"@",
+      "The laughter subsides and the mist creeps away. You find yourself in the café once more, shivering - either with cold or fright, too shaken up to tell the difference."
+    ],
+    "OPTIONS": [
+      "A deal?",
+      "No thanks.",
+      "[Promise] #gStart #gcombat #gwith #g1 #gIntangible. #rLose #r",
+      " #rMax #rHP.",
+      "[Sacrifice] #gGet #gGhost #gIn #gA #gJar #gpotion. #rLose #r",
+      " #rHP.",
+      "[Leave]"
+    ]
+  }
+}

@@ -53,14 +53,7 @@ public abstract class AbstractMerchant extends AbstractCafeInteractable {
     }
 
     //Called after the custom screen is close in case you need to take care of lingering effects or something
-    public void onCloseShop() {
-        if (this.speechBubble != null){
-            if (this.speechBubble.duration > 0.3F) {
-                this.speechBubble.duration = 0.3F;
-                this.speechText.duration = 0.3F;
-            }
-        }
-    }
+    public void onCloseShop() {}
 
     public void updateShop() {
         for (AbstractArticle article : toAdd) {
@@ -90,6 +83,15 @@ public abstract class AbstractMerchant extends AbstractCafeInteractable {
         updateSpeech();
     }
 
+    public void closeSpeechBubble() {
+        if (this.speechBubble != null){
+            if (this.speechBubble.duration > 0.3F) {
+                this.speechBubble.duration = 0.3F;
+                this.speechText.duration = 0.3F;
+            }
+        }
+    }
+
     protected void createSpeechBubble(String msg) {
         if (this.speechBubble != null) {
             if (this.speechBubble.duration > 0.3F) {
@@ -105,7 +107,6 @@ public abstract class AbstractMerchant extends AbstractCafeInteractable {
         this.speechText = new SpeechTextEffect(x + offset_x, y + SPEECH_TEXT_Y, SPEECH_DUR, msg, DialogWord.AppearEffect.BUMP_IN);
         AbstractDungeon.topLevelEffectsQueue.add(this.speechBubble);
         AbstractDungeon.topLevelEffectsQueue.add(this.speechText);
-
     }
 
     protected void updateSpeech() {
