@@ -41,6 +41,8 @@ public class FleaMarketRelicArticle extends AbstractArticle {
     public void onClick() {
         if (!canBuy()) {
             ((FleaMerchant) merchant).cantBuy();
+        } else {
+            ((FleaMerchant) merchant).sold();
         }
         super.onClick();
     }

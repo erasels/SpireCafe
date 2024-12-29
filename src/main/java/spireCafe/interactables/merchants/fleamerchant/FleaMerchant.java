@@ -50,6 +50,7 @@ public class FleaMerchant extends AbstractMerchant {
     private static final float BOTTOM_ROW_Y = 337.0F * Settings.yScale;
     private static final float DRAW_START_X = Settings.WIDTH * 0.16F;
     private static final float POTION_Y = 168.0F * Settings.scale;
+    private double speechTimer;
 
     public FleaMerchant(float animationX, float animationY) {
         super(animationX+75.0F * Settings.xScale, animationY-150.0F * Settings.yScale, 320.0f, 400.0f);
@@ -59,6 +60,7 @@ public class FleaMerchant extends AbstractMerchant {
         background = new TextureRegion(BG_TEXTURE);
         this.haggleArticle = new HaggleArticle(this, Settings.WIDTH * 0.75F, 164.0F * Settings.yScale);
         articles.add(haggleArticle);
+        speechTimer = 1.5F;
     }
 
     @Override
@@ -88,6 +90,8 @@ public class FleaMerchant extends AbstractMerchant {
                 public void onClick() {
                     if (!canBuy()) {
                         cantBuy();
+                    } else {
+                        sold();
                     }
                     super.onClick();
                 }
@@ -117,6 +121,8 @@ public class FleaMerchant extends AbstractMerchant {
                 public void onClick() {
                     if (!canBuy()) {
                         cantBuy();
+                    } else {
+                        sold();
                     }
                     super.onClick();
                 }
@@ -145,6 +151,8 @@ public class FleaMerchant extends AbstractMerchant {
             public void onClick() {
                 if (!canBuy()) {
                     cantBuy();
+                } else {
+                    sold();
                 }
                 super.onClick();
             }
@@ -173,6 +181,8 @@ public class FleaMerchant extends AbstractMerchant {
                 public void onClick() {
                     if (!canBuy()) {
                         cantBuy();
+                    } else {
+                        sold();
                     }
                     super.onClick();
                 }
@@ -202,6 +212,8 @@ public class FleaMerchant extends AbstractMerchant {
                 public void onClick() {
                     if (!canBuy()) {
                         cantBuy();
+                    } else {
+                        sold();
                     }
                     super.onClick();
                 }
@@ -230,6 +242,8 @@ public class FleaMerchant extends AbstractMerchant {
             public void onClick() {
                 if (!canBuy()) {
                     cantBuy();
+                } else {
+                    sold();
                 }
                 super.onClick();
             }
@@ -626,21 +640,37 @@ public class FleaMerchant extends AbstractMerchant {
     @Override
     public void onInteract() {
         super.onInteract();
-        if(haggleArticle.haggleOdds==0) {
+        int roll = MathUtils.random(2);
+        if (roll == 0) {
+            CardCrawlGame.sound.playA("VO_MERCHANT_3A", 3F);
+        } else if (roll == 1) {
+            CardCrawlGame.sound.playA("VO_MERCHANT_3B", 3F);
+        } else {
+            CardCrawlGame.sound.playA("VO_MERCHANT_3C", 3F);
+        }
+        if (haggleArticle.haggleOdds == 0) {
             createSpeechBubble(characterStrings.TEXT[MathUtils.random(1, 9)]);
         } else {
             createSpeechBubble(characterStrings.TEXT[MathUtils.random(3, 11)]);
         }
     }
 
+    public void sold(){
+        if(haggleArticle.haggleOdds==0) {
+            createSpeechBubble(characterStrings.TEXT[MathUtils.random(34, 41)]);
+        } else {
+            createSpeechBubble(characterStrings.TEXT[MathUtils.random(36, 43)]);
+        }
+    }
+
     public void cantBuy() {
         int roll = MathUtils.random(2);
         if (roll == 0) {
-            CardCrawlGame.sound.play("VO_MERCHANT_2A", 0.4F);
+            CardCrawlGame.sound.playA("VO_MERCHANT_2A", 3F);
         } else if (roll == 1) {
-            CardCrawlGame.sound.play("VO_MERCHANT_2B", 0.4F);
+            CardCrawlGame.sound.playA("VO_MERCHANT_2B", 3F);
         } else {
-            CardCrawlGame.sound.play("VO_MERCHANT_2C", 0.4F);
+            CardCrawlGame.sound.playA("VO_MERCHANT_2C", 3F);
         }
         int i;
         if(haggleArticle.haggleOdds==0) {
@@ -655,30 +685,44 @@ public class FleaMerchant extends AbstractMerchant {
         if(success){
             int roll = MathUtils.random(5);
             if (roll == 0) {
-                CardCrawlGame.sound.play("VO_MERCHANT_MA");
+                CardCrawlGame.sound.playA("VO_MERCHANT_MA", 3F);
             } else if (roll == 1) {
-                CardCrawlGame.sound.play("VO_MERCHANT_MB");
+                CardCrawlGame.sound.playA("VO_MERCHANT_MB", 3F);
             } else if (roll == 2) {
-                CardCrawlGame.sound.play("VO_MERCHANT_MC");
+                CardCrawlGame.sound.playA("VO_MERCHANT_MC", 3F);
             } else if (roll == 3) {
-                CardCrawlGame.sound.play("VO_MERCHANT_3A");
+                CardCrawlGame.sound.playA("VO_MERCHANT_3A", 3F);
             } else if (roll == 4) {
-                CardCrawlGame.sound.play("VO_MERCHANT_3B");
+                CardCrawlGame.sound.playA("VO_MERCHANT_3B", 3F);
             } else {
-                CardCrawlGame.sound.play("VO_MERCHANT_3C");
+                CardCrawlGame.sound.playA("VO_MERCHANT_3C", 3F);
             }
             createSpeechBubble(characterStrings.TEXT[MathUtils.random(22, 27)]);
 
         } else {
             int roll = MathUtils.random(2);
             if (roll == 0) {
-                CardCrawlGame.sound.play("VO_MERCHANT_2A", 0.4F);
+                CardCrawlGame.sound.playA("VO_MERCHANT_2A", 3F);
             } else if (roll == 1) {
-                CardCrawlGame.sound.play("VO_MERCHANT_2B", 0.4F);
+                CardCrawlGame.sound.playA("VO_MERCHANT_2B", 3F);
             } else {
-                CardCrawlGame.sound.play("VO_MERCHANT_2C", 0.4F);
+                CardCrawlGame.sound.playA("VO_MERCHANT_2C", 3F);
             }
             createSpeechBubble(characterStrings.TEXT[MathUtils.random(28, 33)]);
+        }
+    }
+
+    @Override
+    public void updateShop(){
+        super.updateShop();
+        this.speechTimer -= Gdx.graphics.getDeltaTime();
+        if (this.speechTimer < 0.0F) {
+            if (haggleArticle.haggleOdds == 0) {
+                createSpeechBubble(characterStrings.TEXT[MathUtils.random(1, 9)]);
+            } else {
+                createSpeechBubble(characterStrings.TEXT[MathUtils.random(3, 11)]);
+                this.speechTimer = MathUtils.random(40.0F, 60.0F);
+            }
         }
     }
 }
