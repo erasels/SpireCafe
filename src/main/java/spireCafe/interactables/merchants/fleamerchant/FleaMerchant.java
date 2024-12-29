@@ -1,5 +1,9 @@
 package spireCafe.interactables.merchants.fleamerchant;
 
+import basemod.cardmods.EtherealMod;
+import basemod.cardmods.ExhaustMod;
+import basemod.cardmods.InnateMod;
+import basemod.helpers.CardModifierManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
@@ -26,6 +30,7 @@ import org.apache.logging.log4j.core.util.Integers;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractArticle;
 import spireCafe.abstracts.AbstractMerchant;
+import spireCafe.cardmods.WornMod;
 import spireCafe.interactables.merchants.CardArticle;
 import spireCafe.interactables.merchants.PotionArticle;
 import spireCafe.interactables.merchants.RelicArticle;
@@ -62,6 +67,7 @@ public class FleaMerchant extends AbstractMerchant {
         AbstractCard c;
         for (int i = 0; i < 2; i++) {
             c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.ATTACK, true).makeCopy();
+            if(c.rarity!= AbstractCard.CardRarity.COMMON){wearCardOut(c);}
             AbstractArticle card = new CardArticle("colorAttack" + i, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * i, TOP_ROW_Y, c, (int) jitter(AbstractCard.getPrice(c.rarity))){
                 @Override
                 public int getModifiedPrice() {
@@ -82,6 +88,7 @@ public class FleaMerchant extends AbstractMerchant {
         }
         for (int i = 0; i < 2; i++) {
             c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.SKILL, true).makeCopy();
+            if(c.rarity!= AbstractCard.CardRarity.COMMON){wearCardOut(c);}
             AbstractArticle card = new CardArticle("colorSkill" + i, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * (2+i), TOP_ROW_Y, c, (int) jitter(AbstractCard.getPrice(c.rarity))){
                 @Override
                 public int getModifiedPrice() {
@@ -101,6 +108,7 @@ public class FleaMerchant extends AbstractMerchant {
             articles.add(card);
         }
         c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.POWER, true).makeCopy();
+        if(c.rarity!= AbstractCard.CardRarity.COMMON){wearCardOut(c);}
         AbstractArticle card = new CardArticle("colorPower", this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * 4, TOP_ROW_Y, c, (int) jitter(AbstractCard.getPrice(c.rarity))){
             @Override
             public int getModifiedPrice() {
@@ -118,9 +126,9 @@ public class FleaMerchant extends AbstractMerchant {
             }
         };
         articles.add(card);
-
         for (int i = 0; i < 2; i++) {
             c = AbstractDungeon.getColorlessCardFromPool(i==0?AbstractCard.CardRarity.UNCOMMON: AbstractCard.CardRarity.RARE).makeCopy();
+            if(c.rarity!= AbstractCard.CardRarity.COMMON){wearCardOut(c);}
             AbstractArticle ccard = new CardArticle("ColorlessCard" + i, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * i, BOTTOM_ROW_Y, c, (int) jitter(AbstractCard.getPrice(c.rarity))){
                 @Override
                 public int getModifiedPrice() {
@@ -161,8 +169,8 @@ public class FleaMerchant extends AbstractMerchant {
             articles.add(potion);
         }
 
-        AbstractRelic r = AbstractDungeon.returnRandomRelicEnd(ShopScreen.rollRelicTier());
-        AbstractArticle relic = new RelicArticle("relic", this, 964.0F * Settings.xScale,364.0F * Settings.scale, r, (int) jitter(r.getPrice())){
+        AbstractRelic randomRelic = AbstractDungeon.returnRandomRelicEnd(ShopScreen.rollRelicTier());
+        AbstractArticle relic = new RelicArticle("relic", this, 964.0F * Settings.xScale,364.0F * Settings.scale, randomRelic, (int) jitter(randomRelic.getPrice())){
             @Override
             public int getModifiedPrice() {
                 float finalPrice = getBasePrice();
@@ -506,8 +514,8 @@ public class FleaMerchant extends AbstractMerchant {
         });
         int r = AbstractDungeon.merchantRng.random(0, potions.size()-1);
         AbstractPotion potion = potions.get(r);
-        potion.initializeData();
         potion.name = characterStrings.TEXT[0] + potion.name;
+        potion.initializeData();
         return potion;
     }
     
@@ -531,5 +539,39 @@ public class FleaMerchant extends AbstractMerchant {
 
     private double jitter(double d){
         return d*AbstractDungeon.merchantRng.random(0.95F, 1.05F);
+    }
+
+    public AbstractCard wearCardOut(AbstractCard c){
+        boolean worn = false;
+        if(!(c.baseDamage>0 || c.baseBlock>0 || c.baseMagicNumber>0 || !c.exhaust && c.type!= AbstractCard.CardType.POWER || !c.isEthereal)){
+            return c;
+        }
+        while(!worn){
+            switch(AbstractDungeon.merchantRng.random(0, 4)){
+                case 0: if(c.baseDamage>0){
+                    CardModifierManager.addModifier(c, new WornMod(1, 0, 0));
+                    worn = true;
+                } break;
+                case 1: if(c.baseBlock>0){
+                    CardModifierManager.addModifier(c, new WornMod(0, 1, 0));
+                    worn = true;
+                } break;
+                case 2: if(c.baseMagicNumber>0){
+                    CardModifierManager.addModifier(c, new WornMod(0, 0, 1));
+                    worn = true;
+                } break;
+                case 3: if(!c.exhaust && c.type!= AbstractCard.CardType.POWER){
+                    CardModifierManager.addModifier(c, new ExhaustMod());
+                    CardModifierManager.addModifier(c, new WornMod(0, 0, 0));
+                    worn = true;
+                } break;
+                case 4: if(!c.isEthereal){
+                    CardModifierManager.addModifier(c, new EtherealMod());
+                    CardModifierManager.addModifier(c, new WornMod(0, 0, 0));
+                    worn = true;
+                } break;
+            }
+        }
+        return c;
     }
 }
