@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class FleaMerchant extends AbstractMerchant {
     public static final String ID = FleaMerchant.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
-    private static final Texture BG_TEXTURE = ImageMaster.loadImage("images/npcs/rug/fra.png");
+    private static final Texture BG_TEXTURE = ImageMaster.loadImage("images/npcs/rug/deu.png");
     private final HaggleArticle haggleArticle;
 
     private static final float TOP_ROW_Y = 760.0F * Settings.yScale;
@@ -43,7 +43,7 @@ public class FleaMerchant extends AbstractMerchant {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
         this.authors = "Jack Renoson";
-        this.img = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("example/merchant.png"));
+        this.img = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("fleamerchant/merchant.png"));
         background = new TextureRegion(BG_TEXTURE);
         this.haggleArticle = new HaggleArticle(this, Settings.WIDTH * 0.75F, 164.0F * Settings.yScale);
         articles.add(haggleArticle);
