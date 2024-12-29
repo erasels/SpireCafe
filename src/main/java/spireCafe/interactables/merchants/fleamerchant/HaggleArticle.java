@@ -21,13 +21,13 @@ import spireCafe.util.Wiz;
 public class HaggleArticle extends AbstractArticle{
     private static final String ID = Anniv7Mod.makeID(HaggleArticle.class.getSimpleName());
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ID);
-    private static final Texture DISABLED_TEXTURE = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("secretshop/identify_inactive.png"));
-    private static final Texture ENABLED_TEXTURE = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("secretshop/identify_active.png"));
+    private static final Texture HAGGLE_TEXTURE = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("fleamerchant/haggleOption.png"));
+    private static final Texture NO_HAGGLE_TEXTURE = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("fleamerchant/AngryFlo.png"));
     public double haggleRate = 1;
     public double haggleOdds = 0.8;
 
     public HaggleArticle(AbstractMerchant merchant, float x, float y) {
-        super(ID, merchant, x, y, DISABLED_TEXTURE);
+        super(ID, merchant, x, y, NO_HAGGLE_TEXTURE);
     }
     
     @Override
@@ -71,11 +71,11 @@ public class HaggleArticle extends AbstractArticle{
     }
 
     @Override
-    public void render(SpriteBatch sb) { //TODO: replace with own texture
+    public void render(SpriteBatch sb) {
         if (haggleOdds>0){
-            itemTexture = new TextureRegion(ENABLED_TEXTURE);
+            itemTexture = new TextureRegion(HAGGLE_TEXTURE);
         } else {
-            itemTexture = new TextureRegion(DISABLED_TEXTURE);
+            itemTexture = new TextureRegion(NO_HAGGLE_TEXTURE);
         }
         super.render(sb);
     }
