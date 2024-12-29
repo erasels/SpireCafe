@@ -25,6 +25,7 @@ public class FleaMarketRelicArticle extends AbstractArticle {
     private final AbstractRelic relic;
     private boolean primed;
     private HaggleArticle haggleArticle;
+    private final double priceJitter;
 
     public FleaMarketRelicArticle(AbstractMerchant merchant, int slot, HaggleArticle haggleArticle) {
         super(ID, merchant, 964.0F * Settings.xScale + 150.0F * slot * Settings.xScale, RELIC_Y, ImageMaster.loadImage("images/relics/"+new PenNib().imgUrl));
@@ -32,6 +33,7 @@ public class FleaMarketRelicArticle extends AbstractArticle {
         this.haggleArticle = haggleArticle;
         this.relic = primed?getRandomPrimedRelic():getRandomUsedRelic();
         this.itemTexture = new TextureRegion(ImageMaster.loadImage("images/relics/"+relic.imgUrl));
+        priceJitter = AbstractDungeon.merchantRng.random(0.95F, 1.05F);
     }
 
     @Override
@@ -85,7 +87,17 @@ public class FleaMarketRelicArticle extends AbstractArticle {
         usedRelics.add(new Omamori());      urCounters.add(1);
         usedRelics.add(new WingBoots());    urCounters.add(2);
 
-        int r = AbstractDungeon.merchantRng.random(0, usedRelics.size()-1);
+        int r = AbstractDungeon.merchantRng.random(usedRelics.size()-1);
+        int i = 0;
+        ArrayList<Integer> counters = new ArrayList<>();
+        counters.add(0);counters.add(0);counters.add(0);
+        int c;
+        while(i<1000){
+            c = (AbstractDungeon.merchantRng.random(usedRelics.size()-1));
+            counters.set(c, counters.get(c) + 1);
+            i++;
+        }
+        System.out.println(counters);
         AbstractRelic usedRelic = usedRelics.get(r);
         usedRelic.setCounter(urCounters.get(r));
         return usedRelic;
@@ -103,6 +115,6 @@ public class FleaMarketRelicArticle extends AbstractArticle {
         if (AbstractDungeon.player.hasRelic(Courier.ID)) {
             finalPrice = finalPrice * 0.8f;
         }
-        return (int)(finalPrice*haggleArticle.haggleRate);
+        return (int)(finalPrice*haggleArticle.haggleRate*priceJitter);
     }
 }
