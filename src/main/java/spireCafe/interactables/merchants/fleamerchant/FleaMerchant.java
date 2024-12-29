@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.colorless.Blind;
 import com.megacrit.cardcrawl.cards.red.Intimidate;
@@ -83,6 +84,13 @@ public class FleaMerchant extends AbstractMerchant {
                     }
                     return (int) (finalPrice * haggleArticle.haggleRate);
                 }
+                @Override
+                public void onClick() {
+                    if (!canBuy()) {
+                        cantBuy();
+                    }
+                    super.onClick();
+                }
             };
             articles.add(card);
         }
@@ -104,6 +112,14 @@ public class FleaMerchant extends AbstractMerchant {
                     }
                     return (int) (finalPrice * haggleArticle.haggleRate);
                 }
+
+                @Override
+                public void onClick() {
+                    if (!canBuy()) {
+                        cantBuy();
+                    }
+                    super.onClick();
+                }
             };
             articles.add(card);
         }
@@ -124,6 +140,14 @@ public class FleaMerchant extends AbstractMerchant {
                 }
                 return (int) (finalPrice * haggleArticle.haggleRate);
             }
+
+            @Override
+            public void onClick() {
+                if (!canBuy()) {
+                    cantBuy();
+                }
+                super.onClick();
+            }
         };
         articles.add(card);
         for (int i = 0; i < 2; i++) {
@@ -143,6 +167,14 @@ public class FleaMerchant extends AbstractMerchant {
                         finalPrice = finalPrice * 0.8f;
                     }
                     return (int) (finalPrice * haggleArticle.haggleRate);
+                }
+
+                @Override
+                public void onClick() {
+                    if (!canBuy()) {
+                        cantBuy();
+                    }
+                    super.onClick();
                 }
             };
             articles.add(ccard);
@@ -165,6 +197,14 @@ public class FleaMerchant extends AbstractMerchant {
                     }
                     return (int) (finalPrice * haggleArticle.haggleRate);
                 }
+
+                @Override
+                public void onClick() {
+                    if (!canBuy()) {
+                        cantBuy();
+                    }
+                    super.onClick();
+                }
             };
             articles.add(potion);
         }
@@ -184,6 +224,14 @@ public class FleaMerchant extends AbstractMerchant {
                     finalPrice = finalPrice * 0.8f;
                 }
                 return (int)(finalPrice*haggleArticle.haggleRate);
+            }
+
+            @Override
+            public void onClick() {
+                if (!canBuy()) {
+                    cantBuy();
+                }
+                super.onClick();
             }
         };
         articles.add(relic);
@@ -573,5 +621,64 @@ public class FleaMerchant extends AbstractMerchant {
             }
         }
         return c;
+    }
+
+    @Override
+    public void onInteract() {
+        super.onInteract();
+        if(haggleArticle.haggleOdds==0) {
+            createSpeechBubble(characterStrings.TEXT[MathUtils.random(1, 9)]);
+        } else {
+            createSpeechBubble(characterStrings.TEXT[MathUtils.random(3, 11)]);
+        }
+    }
+
+    public void cantBuy() {
+        int roll = MathUtils.random(2);
+        if (roll == 0) {
+            CardCrawlGame.sound.play("VO_MERCHANT_2A", 0.4F);
+        } else if (roll == 1) {
+            CardCrawlGame.sound.play("VO_MERCHANT_2B", 0.4F);
+        } else {
+            CardCrawlGame.sound.play("VO_MERCHANT_2C", 0.4F);
+        }
+        int i;
+        if(haggleArticle.haggleOdds==0) {
+            i = MathUtils.random(12, 19);
+        } else {
+            i = MathUtils.random(14, 21);
+        }
+        createSpeechBubble(characterStrings.TEXT[i]);
+    }
+
+    public void haggleBubble(boolean success){
+        if(success){
+            int roll = MathUtils.random(5);
+            if (roll == 0) {
+                CardCrawlGame.sound.play("VO_MERCHANT_MA");
+            } else if (roll == 1) {
+                CardCrawlGame.sound.play("VO_MERCHANT_MB");
+            } else if (roll == 2) {
+                CardCrawlGame.sound.play("VO_MERCHANT_MC");
+            } else if (roll == 3) {
+                CardCrawlGame.sound.play("VO_MERCHANT_3A");
+            } else if (roll == 4) {
+                CardCrawlGame.sound.play("VO_MERCHANT_3B");
+            } else {
+                CardCrawlGame.sound.play("VO_MERCHANT_3C");
+            }
+            createSpeechBubble(characterStrings.TEXT[MathUtils.random(22, 27)]);
+
+        } else {
+            int roll = MathUtils.random(2);
+            if (roll == 0) {
+                CardCrawlGame.sound.play("VO_MERCHANT_2A", 0.4F);
+            } else if (roll == 1) {
+                CardCrawlGame.sound.play("VO_MERCHANT_2B", 0.4F);
+            } else {
+                CardCrawlGame.sound.play("VO_MERCHANT_2C", 0.4F);
+            }
+            createSpeechBubble(characterStrings.TEXT[MathUtils.random(28, 33)]);
+        }
     }
 }

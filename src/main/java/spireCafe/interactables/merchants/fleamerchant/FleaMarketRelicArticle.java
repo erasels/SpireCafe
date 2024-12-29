@@ -38,6 +38,14 @@ public class FleaMarketRelicArticle extends AbstractArticle {
     }
 
     @Override
+    public void onClick() {
+        if (!canBuy()) {
+            ((FleaMerchant) merchant).cantBuy();
+        }
+        super.onClick();
+    }
+
+    @Override
     public boolean canBuy() {
         return AbstractDungeon.player.gold > getModifiedPrice();
     }

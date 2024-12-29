@@ -41,13 +41,13 @@ public class HaggleArticle extends AbstractArticle{
             if (AbstractDungeon.merchantRng.random() <= haggleOdds) {
                 haggleOdds -= 0.1;
                 haggleRate -= 0.1;
-                //Happy merchant noises
+                ((FleaMerchant) merchant).haggleBubble(true);
                 return;
             }
             haggleOdds = 0;
             haggleRate = 1.5;
         }
-        //Angry merchant noises
+        ((FleaMerchant) merchant).haggleBubble(false);
     }
 
     @Override
