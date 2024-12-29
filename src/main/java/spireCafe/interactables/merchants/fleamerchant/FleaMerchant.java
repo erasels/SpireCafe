@@ -53,9 +53,10 @@ public class FleaMerchant extends AbstractMerchant {
     public void rollShop() {
         int tmp = (int)(Settings.WIDTH - DRAW_START_X * 2.0F - AbstractCard.IMG_WIDTH_S * 5.0F) / 4;
         float padX = (int)(tmp + AbstractCard.IMG_WIDTH_S) + 10.0F * Settings.scale;
-        for (int i = 0; i < 5; i++) {
-            AbstractCard c = new Intimidate();
-            AbstractArticle card = new CardArticle("colorCard" + i, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * i, TOP_ROW_Y, c, (int) jitter(AbstractCard.getPrice(c.rarity))){
+        AbstractCard c;
+        for (int i = 0; i < 2; i++) {
+            c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.ATTACK, true).makeCopy();
+            AbstractArticle card = new CardArticle("colorAttack" + i, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * i, TOP_ROW_Y, c, (int) jitter(AbstractCard.getPrice(c.rarity))){
                 @Override
                 public int getModifiedPrice() {
                     float finalPrice = getBasePrice();
@@ -73,10 +74,9 @@ public class FleaMerchant extends AbstractMerchant {
             };
             articles.add(card);
         }
-
         for (int i = 0; i < 2; i++) {
-            AbstractCard c = new Blind();
-            AbstractArticle card = new CardArticle("ColorlessCard" + i, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * i, BOTTOM_ROW_Y, c, (int) jitter(AbstractCard.getPrice(c.rarity))){
+            c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.SKILL, true).makeCopy();
+            AbstractArticle card = new CardArticle("colorSkill" + i, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * (2+i), TOP_ROW_Y, c, (int) jitter(AbstractCard.getPrice(c.rarity))){
                 @Override
                 public int getModifiedPrice() {
                     float finalPrice = getBasePrice();
@@ -93,6 +93,45 @@ public class FleaMerchant extends AbstractMerchant {
                 }
             };
             articles.add(card);
+        }
+        c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.POWER, true).makeCopy();
+        AbstractArticle card = new CardArticle("colorPower", this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * 4, TOP_ROW_Y, c, (int) jitter(AbstractCard.getPrice(c.rarity))){
+            @Override
+            public int getModifiedPrice() {
+                float finalPrice = getBasePrice();
+                if (AbstractDungeon.ascensionLevel >= 16) {
+                    finalPrice = finalPrice * 1.1f;
+                }
+                if (AbstractDungeon.player.hasRelic(MembershipCard.ID)) {
+                    finalPrice = finalPrice * 0.5f;
+                }
+                if (AbstractDungeon.player.hasRelic(Courier.ID)) {
+                    finalPrice = finalPrice * 0.8f;
+                }
+                return (int) (finalPrice * haggleArticle.haggleRate);
+            }
+        };
+        articles.add(card);
+
+        for (int i = 0; i < 2; i++) {
+            c = AbstractDungeon.getColorlessCardFromPool(i==0?AbstractCard.CardRarity.UNCOMMON: AbstractCard.CardRarity.RARE).makeCopy();
+            AbstractArticle ccard = new CardArticle("ColorlessCard" + i, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * i, BOTTOM_ROW_Y, c, (int) jitter(AbstractCard.getPrice(c.rarity))){
+                @Override
+                public int getModifiedPrice() {
+                    float finalPrice = getBasePrice();
+                    if (AbstractDungeon.ascensionLevel >= 16) {
+                        finalPrice = finalPrice * 1.1f;
+                    }
+                    if (AbstractDungeon.player.hasRelic(MembershipCard.ID)) {
+                        finalPrice = finalPrice * 0.5f;
+                    }
+                    if (AbstractDungeon.player.hasRelic(Courier.ID)) {
+                        finalPrice = finalPrice * 0.8f;
+                    }
+                    return (int) (finalPrice * haggleArticle.haggleRate);
+                }
+            };
+            articles.add(ccard);
         }
 
         for (int i = 0; i < 3; i++) {
