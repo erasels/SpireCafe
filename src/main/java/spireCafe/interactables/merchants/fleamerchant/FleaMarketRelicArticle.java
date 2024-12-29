@@ -93,7 +93,7 @@ public class FleaMarketRelicArticle extends AbstractArticle {
         int r = AbstractDungeon.merchantRng.random(usedRelics.size()-1);
         AbstractRelic usedRelic = usedRelics.get(r);
         int counter = AbstractDungeon.merchantRng.random(1, urCounters.get(r)-1);
-        price = (int) (usedRelic.getPrice() * (double) (counter/urCounters.get(r)));
+        price = (counter*usedRelic.getPrice()/urCounters.get(r));
         usedRelic.setCounter(counter);
         return usedRelic;
     }
