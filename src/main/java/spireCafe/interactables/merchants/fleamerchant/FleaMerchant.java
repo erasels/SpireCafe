@@ -1,6 +1,10 @@
 package spireCafe.interactables.merchants.fleamerchant;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.colorless.Blind;
@@ -14,6 +18,7 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.potions.*;
 import com.megacrit.cardcrawl.relics.*;
 import com.megacrit.cardcrawl.shop.ShopScreen;
@@ -27,6 +32,7 @@ import spireCafe.interactables.merchants.RelicArticle;
 import spireCafe.util.TexLoader;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class FleaMerchant extends AbstractMerchant {
     public static final String ID = FleaMerchant.class.getSimpleName();
@@ -40,7 +46,7 @@ public class FleaMerchant extends AbstractMerchant {
     private static final float POTION_Y = 168.0F * Settings.scale;
 
     public FleaMerchant(float animationX, float animationY) {
-        super(animationX, animationY, 160.0f, 200.0f);
+        super(animationX+75.0F * Settings.xScale, animationY-150.0F * Settings.yScale, 320.0f, 400.0f);
         this.name = characterStrings.NAMES[0];
         this.authors = "Jack Renoson";
         this.img = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("fleamerchant/merchant.png"));
