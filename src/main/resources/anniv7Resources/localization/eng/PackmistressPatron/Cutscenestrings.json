@@ -1,0 +1,18 @@
+{
+  "${ModID}:PackmistressCutscene": {
+    "NAME": "Packmistress Cutscene",
+    "BLOCKING_TEXTS": [
+      "TODO"
+    ],
+    "DESCRIPTIONS": [
+      "TODO",
+      "TODO",
+      "TODO",
+      "TODO"
+    ],
+    "OPTIONS": [
+      "TODO",
+      "TODO"
+    ]
+  }
+}
