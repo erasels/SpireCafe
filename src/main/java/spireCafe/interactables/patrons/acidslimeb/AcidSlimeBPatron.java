@@ -19,6 +19,8 @@ public class AcidSlimeBPatron extends AbstractPatron {
     public static final String ID = AcidSlimeBPatron.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
+    public static final String assetID = "AcidSlimeB";
+
     public AcidSlimeBPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];

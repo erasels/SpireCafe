@@ -1,8 +1,11 @@
 package spireCafe.interactables.patrons.acidslimeb;
 
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
+import spireCafe.interactables.patrons.councilofghosts.BlankTombstone;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 
@@ -28,6 +31,7 @@ public class AcidSlimeBCutscene extends AbstractCutscene {
                 curlUpOnFinish = true;
                 character.setCutscenePortrait("Portrait2");
                 CardCrawlGame.sound.play("ATTACK_PIERCING_WAIL", 0f);
+                AbstractDungeon.getCurrRoom().spawnRelicAndObtain((float) Settings.WIDTH / 2.0F, (float)Settings.HEIGHT / 2.0F, new HandfulOfSlime());
             });
             this.dialog.addDialogOption(OPTIONS[1]).setOptionResult((i)-> goToDialogue(3));
         } else if (dialogueIndex >= 2) {
