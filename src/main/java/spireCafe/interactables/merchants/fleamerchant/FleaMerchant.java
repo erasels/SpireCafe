@@ -2,32 +2,20 @@ package spireCafe.interactables.merchants.fleamerchant;
 
 import basemod.cardmods.EtherealMod;
 import basemod.cardmods.ExhaustMod;
-import basemod.cardmods.InnateMod;
 import basemod.helpers.CardModifierManager;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.colorless.Blind;
-import com.megacrit.cardcrawl.cards.red.Intimidate;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.GameDictionary;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
-import com.megacrit.cardcrawl.helpers.PowerTip;
-import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.potions.*;
 import com.megacrit.cardcrawl.relics.*;
 import com.megacrit.cardcrawl.shop.ShopScreen;
-import org.apache.logging.log4j.core.util.Integers;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractArticle;
 import spireCafe.abstracts.AbstractMerchant;
@@ -38,7 +26,6 @@ import spireCafe.interactables.merchants.RelicArticle;
 import spireCafe.util.TexLoader;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 public class FleaMerchant extends AbstractMerchant {
     public static final String ID = FleaMerchant.class.getSimpleName();
