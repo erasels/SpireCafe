@@ -228,7 +228,7 @@ public class FleaMerchant extends AbstractMerchant {
 
         for (int i = 0; i < 3; i++) {
             AbstractPotion p = getUsedPotion();
-            PotionArticle potion = new PotionArticle("potion", this, 968.0F * Settings.xScale + 150.0F * i * Settings.xScale, POTION_Y, p, p.getPrice()) {
+            PotionArticle potion = new PotionArticle("potion" + i, this, 968.0F * Settings.xScale + 150.0F * i * Settings.xScale, POTION_Y, p, p.getPrice()) {
                 @Override
                 public int getModifiedPrice() {
                     float finalPrice = getBasePrice();
@@ -252,6 +252,16 @@ public class FleaMerchant extends AbstractMerchant {
                         sold();
                     }
                     super.onClick();
+                }
+                @Override
+                public void onBuy() {
+                    super.onBuy()
+                    if (AbstractDungeon.player.hasRelic(Courier.ID)) {
+                        AbstractPotion tempP = getUsedPotion();
+                        PotionArticle tempPotion = new PotionArticle("potion" + i, this, 968.0F * Settings.xScale + 150.0F * i * Settings.xScale, POTION_Y, tempP, tempP.getPrice());
+                        this.merchant.toAdd.add(tempPotion);
+                        }
+                    }
                 }
             };
             articles.add(potion);
@@ -283,6 +293,16 @@ public class FleaMerchant extends AbstractMerchant {
                 }
                 super.onClick();
             }
+            @Override
+            public void onBuy() {
+                super.onBuy()
+                if (AbstractDungeon.player.hasRelic(Courier.ID) || randomRelic.relicId.equals(Courier.ID)) {
+                    AbstractRelic tempR = AbstractDungeon.returnRandomRelicEnd(ShopScreen.rollRelicTier());
+                    AbstractArticle tempRelic = new RelicArticle("relic", this, 964.0F * Settings.xScale,364.0F * Settings.scale, tempR, (int) jitter(tempR.getPrice()));
+                    this.merchant.toAdd.add(tempRelic);
+                }
+            }
+        }
         };
         articles.add(relic);
 
