@@ -1,0 +1,9 @@
+{
+  "${ModID}:PackmasterMerchant": {
+    "NAMES": [
+      "Packmaster"
+    ],
+    "TEXT": [
+    ]
+  }
+}
