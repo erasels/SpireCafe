@@ -82,6 +82,16 @@ public class FleaMerchant extends AbstractMerchant {
                     }
                     super.onClick();
                 }
+                @Override
+                public void onBuy() {
+                    super.onBuy()
+                    if (AbstractDungeon.player.hasRelic(Courier.ID)) {
+                        tempC = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.ATTACK, true).makeCopy();
+                        if(tempC.rarity!= AbstractCard.CardRarity.COMMON){wearCardOut(tempC);}
+                        AbstractArticle tempCard = new CardArticle("colorCard" + i, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * i, TOP_ROW_Y, tempC, (int) jitter(AbstractCard.getPrice(tempC.rarity))){
+                        this.merchant.toAdd.add(tempCard);
+                    }
+                }
             };
             articles.add(card);
         }
@@ -113,6 +123,19 @@ public class FleaMerchant extends AbstractMerchant {
                     }
                     super.onClick();
                 }
+                @Override
+                public void onBuy() {
+                    super.onBuy()
+                    if (AbstractDungeon.player.hasRelic(Courier.ID)) {
+                        tempC = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.SKILL, true).makeCopy();
+                        if (tempC.rarity != AbstractCard.CardRarity.COMMON) {
+                            wearCardOut(tempC);
+                        }
+                        AbstractArticle tempCard = new CardArticle("colorCard" + (2 + i), this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * (2+i), TOP_ROW_Y, tempC, (int) jitter(AbstractCard.getPrice(tempC.rarity))) {
+                        this.merchant.toAdd.add(tempCard);
+                        }
+                    }
+                }
             };
             articles.add(card);
         }
@@ -143,6 +166,19 @@ public class FleaMerchant extends AbstractMerchant {
                 }
                 super.onClick();
             }
+            @Override
+            public void onBuy() {
+                super.onBuy()
+                if (AbstractDungeon.player.hasRelic(Courier.ID)) {
+                    tempC = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.POWER, true).makeCopy();
+                    if (tempC.rarity != AbstractCard.CardRarity.COMMON) {
+                        wearCardOut(tempC);
+                    }
+                    AbstractArticle tempCard = new CardArticle("colorCard4", this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * 4, TOP_ROW_Y, tempC, (int) jitter(AbstractCard.getPrice(tempC.rarity))) {
+                        this.merchant.toAdd.add(tempCard);
+                    }
+                }
+            }
         };
         articles.add(card);
         for (int i = 0; i < 2; i++) {
@@ -172,6 +208,19 @@ public class FleaMerchant extends AbstractMerchant {
                         sold();
                     }
                     super.onClick();
+                }
+                @Override
+                public void onBuy() {
+                    super.onBuy()
+                    if (AbstractDungeon.player.hasRelic(Courier.ID)) {
+                        tempC = AbstractDungeon.getColorlessCardFromPool(i==0?AbstractCard.CardRarity.UNCOMMON: AbstractCard.CardRarity.RARE).makeCopy();
+                        if (tempC.rarity != AbstractCard.CardRarity.COMMON) {
+                            wearCardOut(tempC);
+                        }
+                        AbstractArticle tempCard = new CardArticle("colorlessCard" + i, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * i, BOTTOM_ROW_Y, tempC, (int) jitter(AbstractCard.getPrice(tempC.rarity))) {
+                        this.merchant.toAdd.add(tempCard);
+                        }
+                    }
                 }
             };
             articles.add(ccard);
