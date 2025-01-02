@@ -197,7 +197,8 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
         if (rnd.nextBoolean()) {
             return;
         }
-        if (AbstractDungeon.getCurrRoom() != null && !(AbstractDungeon.getCurrRoom() instanceof MonsterRoom || AbstractDungeon.getCurrRoom() instanceof TreasureRoomBoss)) {
+        if (AbstractDungeon.getCurrRoom() != null && !(AbstractDungeon.getCurrRoom() instanceof MonsterRoom
+                || AbstractDungeon.getCurrRoom() instanceof TreasureRoomBoss)) {
             return;
         }
         if (ghostsPlayed != -1) {
@@ -251,13 +252,11 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
             if (rnd.nextBoolean()) {
                 randomLineIndex = 30;
             }
-        }
-        if (Wiz.p().hasRelic(PeacePipe.ID)) {
+        } else if (Wiz.p().hasRelic(PeacePipe.ID)) {
             if (rnd.nextBoolean()) {
                 randomLineIndex = 31;
             }
-            speak(DESCRIPTIONS[randomLineIndex], 2.5f);
         }
-
+        speak(DESCRIPTIONS[randomLineIndex], 2.5f);
     }
 }
