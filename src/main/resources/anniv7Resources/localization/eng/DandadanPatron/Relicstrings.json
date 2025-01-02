@@ -1,21 +1,22 @@
 {
   "${ModID}:GoldenBallRelic": {
-    "NAME": "Okarun's Left Ball",
+    "NAME": "The Left Golden Ball",
     "FLAVOR": "I wonder what it tastes like...",
     "DESCRIPTIONS": [
-      "Stolen from the spire cafe. Attracts the attention of spirits and yokai. ",
-      "NL The first card played each combat is played twice. ",
+      "Attracts the attention of spirits and yokai. NL ",
+      "Stolen from the Spire Café. ",
+      "The first card played each combat is played twice. ",
       "That felt good... ",
-      "Keep doing that... ",
+      "More... ",
+      "I'm getting shivers... ",
       "Just a couple more! ",
-      "That hits the spot! ",
+      "Keep going... ",
       "Im almost there... ~hehehe~  ",
-      "It's only a matter of time now! ",
       "More... ~MORE~ !!! ",
-      "Give them a taste of ball ",
+      "Give them a taste of ~ball~ ",
       "You have horrible taste ",
       "Not what I would have chosen... ",
-      "Now you're in the Gold Ball mentality ",
+      "Now you're in the Golden Ball mentality ",
       "Couldn't have picked better myself ",
       "Just a hit away from freedom... ",
       "HIT HIM ONE MORE TIME MONSTER!!! ",
@@ -34,6 +35,7 @@
       "You should dig ",
       "You should try lifting ",
       "Take a hit ",
+      "Behold... my TRUE FORM!!!",
       "You know what else is crazy... ",
       "Hatsune Miku is in Fortnite "
     ]

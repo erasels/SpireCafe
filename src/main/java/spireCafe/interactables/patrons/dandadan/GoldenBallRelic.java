@@ -10,9 +10,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
-import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.cards.green.Reflex;
+import com.megacrit.cardcrawl.cards.green.Tactician;
+import com.megacrit.cardcrawl.cards.purple.DeusExMachina;
 import com.megacrit.cardcrawl.cards.tempCards.Shiv;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -24,6 +26,11 @@ import com.megacrit.cardcrawl.monsters.beyond.Donu;
 import com.megacrit.cardcrawl.monsters.beyond.TimeEater;
 import com.megacrit.cardcrawl.monsters.city.SphericGuardian;
 import com.megacrit.cardcrawl.powers.DuplicationPower;
+import com.megacrit.cardcrawl.relics.Girya;
+import com.megacrit.cardcrawl.relics.PeacePipe;
+import com.megacrit.cardcrawl.relics.Shovel;
+import com.megacrit.cardcrawl.rooms.MonsterRoom;
+import com.megacrit.cardcrawl.rooms.TreasureRoomBoss;
 
 import basemod.abstracts.CustomSavable;
 import basemod.helpers.CardModifierManager;
@@ -39,7 +46,7 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
     private static final int GHOSTS_TO_ACTIVATE = 12;
     private static final int MILESTONE_1 = 4;
     private static final int MILESTONE_2 = 8;
-    private int ghostsPlayed;
+    private int ghostsPlayed, randomLineIndex;
     private static Texture noShine, smallShine, medShine, largeShine;
 
     static {
@@ -74,9 +81,8 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
         int i = 0;
         while (ghostIndices.size() > 0 && i < drawPileCopy.size()) {
             AbstractCard c = drawPileCopy.group.get(i);
-            // it'd be nice to not apply to unplayable cards
-            if (c.type != AbstractCard.CardType.CURSE
-                    || c.type == AbstractCard.CardType.CURSE && c.isEthereal == false) {
+            if (c.type != AbstractCard.CardType.CURSE && !(c.cardID.equals(Tactician.ID)
+                    || c.cardID.equals(DeusExMachina.ID) || c.cardID.equals(Reflex.ID))) {
                 CardModifierManager.addModifier(c, new GhostModifier(ghostIndices.remove(0)));
             }
             i++;
@@ -90,9 +96,10 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
 
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0] + (ghostsPlayed == -1 ? DESCRIPTIONS[1] : "");
+        return DESCRIPTIONS[0] + (ghostsPlayed == -1 ? DESCRIPTIONS[2] : DESCRIPTIONS[1]);
     }
 
+    // TODO: remove debug code
     @Override
     public void onRightClick() {
         speak("TESTING ~TESTING~ #rTESTING #yTESTING #bTESTING ", 3.0F);
@@ -114,19 +121,9 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
                 .add(0, new TopLeftSpeechBubble(draw_x, hb.cY - 295.0F * Settings.scale, duration, msg, flipX));
     }
 
-    @Override
-    public void onUseCard(AbstractCard targetCard, UseCardAction useCardAction) {
-        if (CardModifierManager.hasModifier(targetCard, GhostModifier.ID)) {
-            if (ghostsPlayed != -1) {
-                ghostsPlayed++;
-                updateGhosts();
-            }
-        }
-    }
-
     private void updateGhosts() {
         if (ghostsPlayed == -1) { // relic is active
-            this.description = DESCRIPTIONS[0] + DESCRIPTIONS[1];
+            this.description = DESCRIPTIONS[0] + DESCRIPTIONS[2];
             this.setTexture(largeShine);
         } else {
             if (ghostsPlayed >= GHOSTS_TO_ACTIVATE) { // relic just activated
@@ -142,7 +139,7 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
                     this.setTexture(smallShine);
                     flash();
                 }
-                this.description = DESCRIPTIONS[0];
+                this.description = DESCRIPTIONS[0] + DESCRIPTIONS[1];
             }
         }
         this.tips.clear();
@@ -167,15 +164,29 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
     @Override
     public void onPlayCard(AbstractCard c, AbstractMonster m) {
         if (CardModifierManager.hasModifier(c, GhostModifier.ID)) {
-            int randomLineIndex;
+            if (ghostsPlayed != -1) {
+                ghostsPlayed++;
+                if (ghostsPlayed == GHOSTS_TO_ACTIVATE) {
+                    updateGhosts();
+                    speak(DESCRIPTIONS[32], 2.5f);
+                    return;
+                }
+                updateGhosts();
+            }
+            if (c.isInAutoplay) {
+                return;
+            }
             if (ghostsPlayed == -1) {
-                randomLineIndex = rnd.nextInt(2) + 9;
+                if (rnd.nextBoolean()) {
+                    return;
+                }
+                randomLineIndex = 10;
             } else if (ghostsPlayed >= MILESTONE_2) {
-                randomLineIndex = rnd.nextInt(2) + 7;
+                randomLineIndex = rnd.nextInt(2) + 8;
             } else if (ghostsPlayed >= MILESTONE_1) {
-                randomLineIndex = rnd.nextInt(2) + 5;
+                randomLineIndex = rnd.nextInt(2) + 6;
             } else {
-                randomLineIndex = rnd.nextInt(2) + 3;
+                randomLineIndex = rnd.nextInt(3) + 3;
             }
             speak(DESCRIPTIONS[randomLineIndex], 2.5f);
         }
@@ -183,7 +194,12 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
 
     @Override
     public void onObtainCard(AbstractCard c) {
-        int randomLineIndex;
+        if (rnd.nextBoolean()) {
+            return;
+        }
+        if (AbstractDungeon.getCurrRoom() != null && !(AbstractDungeon.getCurrRoom() instanceof MonsterRoom || AbstractDungeon.getCurrRoom() instanceof TreasureRoomBoss)) {
+            return;
+        }
         if (ghostsPlayed != -1) {
             randomLineIndex = rnd.nextInt(2) + 11;
         } else {
@@ -194,7 +210,6 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
 
     @Override
     public void onBloodied() {
-        int randomLineIndex;
         if (ghostsPlayed != -1) {
             randomLineIndex = rnd.nextInt(2) + 15;
         } else {
@@ -205,7 +220,6 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
 
     @Override
     public void atBattleStart() {
-        int randomLineIndex;
         if (Wiz.getEnemies().stream().anyMatch(m -> m.id.equals(SphericGuardian.ID))) {
             randomLineIndex = 23;
         } else if (Wiz.getEnemies().stream().anyMatch(m -> m.id.equals(Donu.ID))) {
@@ -214,10 +228,14 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
             randomLineIndex = 25;
         } else if (Wiz.getEnemies().stream().anyMatch(m -> m.id.equals(AwakenedOne.ID))) {
             randomLineIndex = 26;
-        } else if (ghostsPlayed != -1) {
-            randomLineIndex = rnd.nextInt(2) + 19;
+        } else if (rnd.nextBoolean()) {
+            return;
         } else {
-            randomLineIndex = rnd.nextInt(2) + 21;
+            if (ghostsPlayed != -1) {
+                randomLineIndex = rnd.nextInt(2) + 19;
+            } else {
+                randomLineIndex = rnd.nextInt(2) + 21;
+            }
         }
 
         speak(DESCRIPTIONS[randomLineIndex], 2.5f);
@@ -225,9 +243,21 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
 
     @Override
     public void onEnterRestRoom() {
-        int randomLineIndex;
-        randomLineIndex = rnd.nextInt(5) + 27;
-        speak(DESCRIPTIONS[randomLineIndex], 2.5f);
-    }
+        randomLineIndex = rnd.nextInt(2) + 27;
 
+        if (Wiz.p().hasRelic(Shovel.ID)) {
+            randomLineIndex = 29;
+        } else if (Wiz.p().hasRelic(Girya.ID)) {
+            if (rnd.nextBoolean()) {
+                randomLineIndex = 30;
+            }
+        }
+        if (Wiz.p().hasRelic(PeacePipe.ID)) {
+            if (rnd.nextBoolean()) {
+                randomLineIndex = 31;
+            }
+            speak(DESCRIPTIONS[randomLineIndex], 2.5f);
+        }
+
+    }
 }
