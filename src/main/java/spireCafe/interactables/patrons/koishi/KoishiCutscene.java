@@ -20,19 +20,14 @@ public class KoishiCutscene extends AbstractCutscene {
     public static final String ID = makeID(KoishiCutscene.class.getSimpleName());
     private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
 
-    private static final float MAX_HP_COST = 0.06F;
-    private static final float HIGH_ASC_MAX_HP_COST = 0.08F;
+    private static final float MAX_HP_COST = 0.08F;
     private final int maxhpCost;
     private boolean forRemove = false;
     private boolean forAugment = false;
 
     public KoishiCutscene(AbstractNPC character) {
         super(character, cutsceneStrings);
-        if (AbstractDungeon.ascensionLevel >= 15) {
-            maxhpCost = (int)(HIGH_ASC_MAX_HP_COST * AbstractDungeon.player.maxHealth);
-        } else {
-            maxhpCost = (int)(MAX_HP_COST * AbstractDungeon.player.maxHealth);
-        }
+        maxhpCost = (int)(MAX_HP_COST * AbstractDungeon.player.maxHealth);
     }
 
     @Override
