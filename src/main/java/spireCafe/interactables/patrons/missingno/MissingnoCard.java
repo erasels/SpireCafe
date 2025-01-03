@@ -17,8 +17,10 @@ import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.screens.SingleCardViewPopup;
 import javassist.CannotCompileException;
@@ -33,27 +35,29 @@ import static com.badlogic.gdx.math.MathUtils.random;
 import static spireCafe.Anniv7Mod.*;
 import static spireCafe.interactables.patrons.missingno.MarkovChain.MarkovType.CARD;
 import static spireCafe.interactables.patrons.missingno.MissingnoUtil.createBuffer;
+import static spireCafe.interactables.patrons.missingno.MissingnoUtil.hasUpdatedCardText;
 import static spireCafe.util.CardArtRoller.computeCard;
 import static spireCafe.util.Wiz.atb;
 
 public class MissingnoCard extends AbstractSCCard {
 
     public static final String ID = makeID(MissingnoCard.class.getSimpleName());
+    private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(ID);
 
     public MissingnoCard() {
         super(ID, 0, CardType.SKILL, CardRarity.SPECIAL, SelfOrEnemyTargeting.SELF_OR_ENEMY);
         exhaust = true;
         String markovText = MarkovChain.getInstance(CARD).generateText(5, 15).replaceAll("[~@]", "").replaceAll("#.", "");
-        rawDescription = rawDescription + markovText;
+        rawDescription = cardStrings.DESCRIPTION + markovText;
 
         // Here begins the art roller skullduggery
         if (CardLibrary.cards != null && !CardLibrary.cards.isEmpty()) {
             computeCard(this, true);
             needsArtRefresh = false;
         }
-        baseMagicNumber = magicNumber = random(5);
-        baseDamage = damage = random(12);
-        baseBlock = block = random(8);
+        baseMagicNumber = magicNumber = random(1, 5);
+        baseDamage = damage = random(6, 12);
+        baseBlock = block = random(3, 8);
         initializeDescription();
     }
 
@@ -80,6 +84,24 @@ public class MissingnoCard extends AbstractSCCard {
         }
         atb(new VFXAction(MissingnoUtil.getRandomEffect(target.hb.cX, target.hb.cY)));
     }
+
+    @Override
+    public void update() {
+        super.update();
+
+        //Every 3 seconds redo description
+        if(((int) time) % 3 == 0 && !hasUpdatedCardText) {
+            String markovText = MarkovChain.getInstance(CARD).generateText(5, 15).replaceAll("[~@]", "").replaceAll("#.", "");
+            rawDescription = cardStrings.DESCRIPTION + markovText;
+            baseMagicNumber = magicNumber = random(1, 5);
+            baseDamage = damage = random(6, 12);
+            baseBlock = block = random(3, 8);
+            initializeDescription();
+            hasUpdatedCardText = true;
+        }
+    }
+
+
     @SpirePatch(clz = AbstractCard.class, method = "render", paramtypez = SpriteBatch.class)
     public static class GlitchCardPatches {
         public static ShaderProgram glitchShader = null;

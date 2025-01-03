@@ -61,21 +61,32 @@ public class MarkovChain {
     }
 
     public String generateText(int startRange, int endRange) {
-        String seed = getRandomSeed();
-        int length = random.nextInt((endRange - startRange) + 1) + startRange;
-        StringBuilder result = new StringBuilder(seed);
-        String currentWord = seed.toLowerCase();
-        for (int i = 0; i < length; i++) {
-            List<String> nextWords = markovChain.get(currentWord);
-            if (nextWords == null || nextWords.isEmpty()) {
-                break;
+        String resultText = "";
+        int wordCount = 0;
+
+        while (wordCount < 3) {
+            String seed = getRandomSeed();
+            int length = random.nextInt((endRange - startRange) + 1) + startRange;
+            StringBuilder result = new StringBuilder(seed);
+            String currentWord = seed.toLowerCase();
+
+            for (int i = 0; i < length; i++) {
+                List<String> nextWords = markovChain.get(currentWord);
+                if (nextWords == null || nextWords.isEmpty()) {
+                    break;
+                }
+                String nextWord = nextWords.get(random.nextInt(nextWords.size()));
+                result.append(" ").append(nextWord);
+                currentWord = nextWord;
             }
-            String nextWord = nextWords.get(random.nextInt(nextWords.size()));
-            result.append(" ").append(nextWord);
-            currentWord = nextWord;
+
+            resultText = result.toString();
+            wordCount = resultText.split("\\s+").length;
         }
-        return result.toString();
+
+        return resultText;
     }
+
 
     public enum MarkovType {
         MISSINGNO,

@@ -1,8 +1,8 @@
 {
-  "${ModID}:MissingnoCutscene": {
+  "${ModID}:ExamplePatronCutscene": {
     "NAME": "Example patron Cutscene",
     "BLOCKING_TEXTS": [
-      "\"a̸̧̡̞̬̻̠̪̳̥̲̟̟̻̔ͅs̶̜̦͔͒̏͆̋̎ȅ̵̠͚̰̞̹̙̋̎͘̚d̸̮̙͚̦̭̙̬͕̮̥͚̱͖̾̈̏͜f̸̰͎͊̈́̎̍a̴͓̗̖̟͉̹̐̀͂ͅͅš̸̢͔̼͉͉̦͖͚̾͝͠ḑ̴͔̼̫̼̫͈̼͍̄̐̈́̔̏͐͗̏̑͊̇̚͠͝͠f̸̡̢̡͈̦̗͚̼͉̙̺̺̣̂̓a̸͍͉̜͉͌̍͒͐̿̉̾̏̈́́̑̅̃͘s̶̡͙͕͚͓̳̫͔̜͙͛̊̀̔́͝d̶͍̔͆̓̉̇f̷͙̲̗̈́͑̂͗̀̾w̶̨̢̲͎̻̼̩͈̣̤̑̈́̽̑̈́̉̒̆̌̚͠e̴͇̦̥̺͖͕̞̯̦̰͎͖̦͇̋̊̂͌̔͋̊̈̀̐͊́̈́̀͌r̴͕̖̳͔̩̱͓̓̈́̔́͗̓́͆͌̀z̵͓̠͕̫̥̘̳͎̋̈́̌͠c̵̻̜̭͍̘̠͔͉͌̓̃̃͂̀͒̚v̷̨̨̢̜͙͔͙̗͔̠̩͖̐̔͑̈́͑ͅ.\"",
+      "\"Be safe out there.\"",
       "\"Be safe.\"",
       "\"I have other customers to attend to.\"",
       "\"Please leave me alone.\"",
@@ -10,7 +10,7 @@
       "\"STOP!!\""
     ],
     "DESCRIPTIONS": [
-      "\"a̸̧̡̞̬̻̠̪̳̥̲̟̟̻̔ͅs̶̜̦͔͒̏͆̋̎ȅ̵̠͚̰̞̹̙̋̎͘̚d̸̮̙͚̦̭̙̬͕̮̥͚̱͖̾̈̏͜f̸̰͎͊̈́̎̍a̴͓̗̖̟͉̹̐̀͂ͅͅš̸̢͔̼͉͉̦͖͚̾͝͠ḑ̴͔̼̫̼̫͈̼͍̄̐̈́̔̏͐͗̏̑͊̇̚͠͝͠f̸̡̢̡͈̦̗͚̼͉̙̺̺̣̂̓a̸͍͉̜͉͌̍͒͐̿̉̾̏̈́́̑̅̃͘s̶̡͙͕͚͓̳̫͔̜͙͛̊̀̔́͝d̶͍̔͆̓̉̇f̷͙̲̗̈́͑̂͗̀̾w̶̨̢̲͎̻̼̩͈̣̤̑̈́̽̑̈́̉̒̆̌̚͠e̴͇̦̥̺͖͕̞̯̦̰͎͖̦͇̋̊̂͌̔͋̊̈̀̐͊́̈́̀͌r̴͕̖̳͔̩̱͓̓̈́̔́͗̓́͆͌̀z̵͓̠͕̫̥̘̳͎̋̈́̌͠c̵̻̜̭͍̘̠͔͉͌̓̃̃͂̀͒̚v̷̨̨̢̜͙͔͙̗͔̠̩͖̐̔͑̈́͑ͅ.\"",
+      "\"Hello, I am a blacksmith of great renown.\"",
       "\"What can I do for you, weary traveler?\"",
       "\"One smithing coming right up.\"",
       "You receive your weapon back and it feels to be greatly improved.",

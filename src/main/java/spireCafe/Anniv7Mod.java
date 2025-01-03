@@ -70,7 +70,7 @@ public class Anniv7Mod implements
     public static Anniv7Mod thismod;
     public static SpireConfig modConfig = null;
     public static HashSet<String> currentRunSeenInteractables = null;
-    public static HashSet<String> allTimeSeenInteractables = null;
+    public static ArrayList<String> allTimeSeenInteractables = null;
 
     public static final String modID = "anniv7";
 
@@ -166,6 +166,8 @@ public class Anniv7Mod implements
         try {
             Properties defaults = new Properties();
             defaults.put("cafeEntryCost", "TRUE");
+            defaults.put("disableShaders", "FALSE");
+            defaults.put("seenInteractables", "");
             defaults.put(PAGE_CONFIG_KEY, "");
             modConfig = new SpireConfig(modID, "anniv7Config", defaults);
         } catch (Exception e) {
@@ -195,6 +197,17 @@ public class Anniv7Mod implements
         }
 
         logger.info("Found interactable classes with AutoAdd: " + unfilteredAllInteractableIDs.size());
+    }
+
+    public static ArrayList<String> getSeenInteractables() {
+        if (modConfig == null) return new ArrayList<>();
+        return new ArrayList<>(Arrays.asList(modConfig.getString("seenInteractables").split(",")));
+    }
+
+    public static void saveSeenInteractables(ArrayList<String> input) throws IOException {
+        if (modConfig == null) return;
+        modConfig.setString("seenInteractables", String.join(",", input));
+        modConfig.save();
     }
 
     @Override
@@ -462,7 +475,6 @@ public class Anniv7Mod implements
 
     public static void addSaveFields() {
         BaseMod.addSaveField(SavableCurrentRunSeenInteractables.SaveKey, new SavableCurrentRunSeenInteractables());
-        BaseMod.addSaveField(SavableAllTimeSeenInteractables.SaveKey, new SavableAllTimeSeenInteractables());
         BaseMod.addSaveField(makeID("AppliedMakeup"), new CustomSavable<Boolean>() {
             @Override
             public Boolean onSave() {
@@ -490,19 +502,6 @@ public class Anniv7Mod implements
         }
     }
 
-    public static class SavableAllTimeSeenInteractables implements CustomSavable<HashSet<String>> {
-        public final static String SaveKey = "AllTimeSeenInteractables";
-
-        @Override
-        public HashSet<String> onSave() {
-            return allTimeSeenInteractables;
-        }
-
-        @Override
-        public void onLoad(HashSet<String> s) {
-            allTimeSeenInteractables = s == null ? new HashSet<>() : s;
-        }
-    }
 }
 
 

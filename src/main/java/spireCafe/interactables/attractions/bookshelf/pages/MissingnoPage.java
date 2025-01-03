@@ -33,7 +33,7 @@ public class MissingnoPage extends AbstractPage {
 
     @Override
     public boolean canSpawn() {
-        return Anniv7Mod.allTimeSeenInteractables.contains(MissingnoPatron.ID);
+        return Anniv7Mod.getSeenInteractables().contains(MissingnoPatron.ID);
     }
 
 

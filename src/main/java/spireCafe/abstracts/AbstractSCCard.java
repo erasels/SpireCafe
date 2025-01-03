@@ -37,7 +37,7 @@ public abstract class AbstractSCCard extends CustomCard {
     public boolean upgradedSecondDamage;
     public boolean isSecondDamageModified;
 
-    public boolean needsArtRefresh = false;
+    protected boolean needsArtRefresh = false;
 
     public AbstractSCCard(final String cardID, final int cost, final CardType type, final CardRarity rarity, final CardTarget target) {
         this(cardID, null, cost, type, rarity, target, CardColor.COLORLESS);

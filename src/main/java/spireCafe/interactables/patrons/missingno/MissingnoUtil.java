@@ -197,6 +197,7 @@ public class MissingnoUtil {
     private static boolean hasNameChanged;
     private static boolean hasShuffledRelics;
     private static boolean hasPlayedSfx;
+    public static boolean hasUpdatedCardText;
     public static void doMissingnoStuff() {
         if(time > 100.0f) {
             hasDribbled = false;
@@ -232,6 +233,10 @@ public class MissingnoUtil {
             if(isGlitched() && miscRng.randomBoolean(.05f)) {
                 CardCrawlGame.sound.play(getRandomPokeSFX());
             }
+        }
+
+        if((int) time % 3 != 0) {
+            hasUpdatedCardText = false;
         }
     }
 }
