@@ -8,14 +8,12 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.green.Reflex;
 import com.megacrit.cardcrawl.cards.green.Tactician;
 import com.megacrit.cardcrawl.cards.purple.DeusExMachina;
-import com.megacrit.cardcrawl.cards.tempCards.Shiv;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -39,7 +37,7 @@ import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.util.TexLoader;
 import spireCafe.util.Wiz;
 
-public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, CustomSavable<Integer> {
+public class GoldenBallRelic extends AbstractSCRelic implements CustomSavable<Integer> {
 
     public static final String ID = Anniv7Mod.makeID(GoldenBallRelic.class.getSimpleName());
 
@@ -97,16 +95,6 @@ public class GoldenBallRelic extends AbstractSCRelic implements ClickableRelic, 
     @Override
     public String getUpdatedDescription() {
         return DESCRIPTIONS[0] + (ghostsPlayed == -1 ? DESCRIPTIONS[2] : DESCRIPTIONS[1]);
-    }
-
-    // TODO: remove debug code
-    @Override
-    public void onRightClick() {
-        speak("TESTING ~TESTING~ #rTESTING #yTESTING #bTESTING ", 3.0F);
-        AbstractCard c = new Shiv();
-        CardModifierManager.addModifier(c, new GhostModifier());
-        Wiz.makeInHand(c);
-
     }
 
     public void speak(String msg, float duration) {
