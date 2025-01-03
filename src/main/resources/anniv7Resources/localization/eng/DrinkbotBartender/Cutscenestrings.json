@@ -1,0 +1,22 @@
+{
+  "${ModID}:DrinkbotBartenderCutscene": {
+    "NAME": "Gizmo Cutscene",
+    "BLOCKING_TEXTS": [
+      "\"Do you have a moment to fill out a customer satisfaction survey? It really helps us know how we're doing.\"",
+      "\"If you see Gizmo-%s, let them know it owes me money.\"",
+      "\"Legally, automatons aren't allowed to serve alcohol in this jurisdiction. But you wouldn't tell, would you?\""
+    ],
+    "DESCRIPTIONS": [
+      "\"Welcome to MechaMixers. I will be your Gizmo bartender this evening. Can I interest you in one of our singular beers on tap today? Or if you're feeling generous you can sample one of the creations my neural chip has generated.\"",
+      "\"Please don't take too long to order. Our creator monitors our throughput metrics.\"",
+      "\"Okay, and the tablet is going to ask you a question really quick.\""
+    ],
+    "OPTIONS": [
+      "[Leave] Nothing for now.",
+      "[Draft Beer] Heal #b%s HP and lose #b%s Gold.",
+      "[%s] %s",
+      "[%s%] %s Gold.",
+      "[0%] No Tip."
+    ]
+  }
+}
