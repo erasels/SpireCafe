@@ -48,23 +48,22 @@ public class PackmasterMerchant extends AbstractMerchant {
                 Method m2 = abstractSkin.getDeclaredMethod("getSkeletonAtlasPath");
                 jsonPath = (String)m1.invoke(skin);
                 atlasPath = (String)m2.invoke(skin);
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-                     InvocationTargetException | NoSuchMethodException e) {
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                 e.printStackTrace();
                 throw new RuntimeException("Error retrieving classes from Packmaster", e);
             }
-        }
 
-        this.atlas = new TextureAtlas(Gdx.files.internal(atlasPath));
-        SkeletonJson json = new SkeletonJson(this.atlas);
-        json.setScale(Settings.renderScale);
-        SkeletonData skeletonData = json.readSkeletonData(Gdx.files.internal(jsonPath));
-        this.skeleton = new Skeleton(skeletonData);
-        this.skeleton.setColor(Color.WHITE);
-        this.stateData = new AnimationStateData(skeletonData);
-        this.state = new AnimationState(this.stateData);
-        AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle", true);
-        e.setTime(e.getEndTime() * MathUtils.random());
+            this.atlas = new TextureAtlas(Gdx.files.internal(atlasPath));
+            SkeletonJson json = new SkeletonJson(this.atlas);
+            json.setScale(Settings.renderScale);
+            SkeletonData skeletonData = json.readSkeletonData(Gdx.files.internal(jsonPath));
+            this.skeleton = new Skeleton(skeletonData);
+            this.skeleton.setColor(Color.WHITE);
+            this.stateData = new AnimationStateData(skeletonData);
+            this.state = new AnimationState(this.stateData);
+            AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle", true);
+            e.setTime(e.getEndTime() * MathUtils.random());
+        }
     }
 
     @Override
