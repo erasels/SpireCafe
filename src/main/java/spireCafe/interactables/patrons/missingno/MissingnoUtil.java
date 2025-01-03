@@ -198,6 +198,8 @@ public class MissingnoUtil {
     private static boolean hasShuffledRelics;
     private static boolean hasPlayedSfx;
     public static boolean hasUpdatedCardText;
+    public static boolean cardShouldGlitch;
+
     public static void doMissingnoStuff() {
         if(time > 100.0f) {
             hasDribbled = false;
@@ -238,5 +240,6 @@ public class MissingnoUtil {
         if((int) time % 3 != 0) {
             hasUpdatedCardText = false;
         }
+        cardShouldGlitch = Math.round(time % 3) == 3;
     }
 }

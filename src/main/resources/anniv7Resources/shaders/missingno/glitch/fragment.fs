@@ -3,7 +3,6 @@
 //	MIT License
 varying vec2 v_texCoord;
 
-uniform vec2 u_screenSize;
 uniform sampler2D u_texture;
 uniform float u_time;
 uniform float u_shake_power;
@@ -11,15 +10,19 @@ uniform float u_shake_rate;
 uniform float u_shake_speed;
 uniform float u_shake_block_size;
 uniform float u_shake_color_rate;
+uniform int u_manual_enable_shift;
 
 float random(float seed) {
     return fract(543.2543 * sin(dot(vec2(seed, seed), vec2(3525.46, -54.3415))));
 }
 
 void main() {
-    float enable_shift = float(random(floor(u_time * u_shake_speed)) < u_shake_rate);
-    vec2 fixed_uv = v_texCoord;
+    float random_shift = float(random(floor(u_time * u_shake_speed)) < u_shake_rate);
+    float manual_shift = float(u_manual_enable_shift);
 
+    float enable_shift = mix(random_shift, 1.0, manual_shift);
+
+    vec2 fixed_uv = v_texCoord;
     fixed_uv.x += (random(fixed_uv.y * u_shake_block_size + u_time) - 0.5) * u_shake_power * enable_shift;
     fixed_uv.y += (random(fixed_uv.x * u_shake_block_size + u_time) - 0.5) * u_shake_power * enable_shift;
     fixed_uv = clamp(fixed_uv, 0.0, 1.0);

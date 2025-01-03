@@ -34,8 +34,7 @@ import java.util.ArrayList;
 import static com.badlogic.gdx.math.MathUtils.random;
 import static spireCafe.Anniv7Mod.*;
 import static spireCafe.interactables.patrons.missingno.MarkovChain.MarkovType.CARD;
-import static spireCafe.interactables.patrons.missingno.MissingnoUtil.createBuffer;
-import static spireCafe.interactables.patrons.missingno.MissingnoUtil.hasUpdatedCardText;
+import static spireCafe.interactables.patrons.missingno.MissingnoUtil.*;
 import static spireCafe.util.CardArtRoller.computeCard;
 import static spireCafe.util.Wiz.atb;
 
@@ -43,6 +42,9 @@ public class MissingnoCard extends AbstractSCCard {
 
     public static final String ID = makeID(MissingnoCard.class.getSimpleName());
     private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(ID);
+    private static final float rate = 0.7f;
+    private static final float speed = 2.2f;
+    private static final float size = 0.5f;
 
     public MissingnoCard() {
         super(ID, 0, CardType.SKILL, CardRarity.SPECIAL, SelfOrEnemyTargeting.SELF_OR_ENEMY);
@@ -113,17 +115,18 @@ public class MissingnoCard extends AbstractSCCard {
                 glitchShader = MissingnoUtil.initGlitchShader(glitchShader);
             }
             if (!Settings.hideCards) {
-                if (__instance.cardID.equals(MissingnoCard.ID) && !Anniv7Mod.getDisableShadersConfig()) {
+                if (__instance.cardID.equals(MissingnoCard.ID) && !Anniv7Mod.getDisableShadersConfig() && cardShouldGlitch) {
                     TextureRegion t = cardToTextureRegion(__instance, spriteBatch);
                     spriteBatch.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE_MINUS_SRC_ALPHA);
                     ShaderProgram oldShader = spriteBatch.getShader();
                     spriteBatch.setShader(glitchShader);
                     glitchShader.setUniformf("u_time", (time % 10) + random.nextInt(5));
                     glitchShader.setUniformf("u_shake_power", shake_power.get());
-                    glitchShader.setUniformf("u_shake_rate", shake_rate.get());
-                    glitchShader.setUniformf("u_shake_speed", shake_speed.get());
-                    glitchShader.setUniformf("u_shake_block_size", shake_block_size.get());
+                    glitchShader.setUniformf("u_shake_rate", rate);
+                    glitchShader.setUniformf("u_shake_speed", speed);
+                    glitchShader.setUniformf("u_shake_block_size", size);
                     glitchShader.setUniformf("u_shake_color_rate", shake_color_rate.get());
+                    glitchShader.setUniformf("u_manual_enable_shift", 1);
 
                     spriteBatch.draw(t, -Settings.VERT_LETTERBOX_AMT, -Settings.HORIZ_LETTERBOX_AMT);
                     spriteBatch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -168,15 +171,16 @@ public class MissingnoCard extends AbstractSCCard {
                 glitchShader = MissingnoUtil.initGlitchShader(glitchShader);
             }
             AbstractCard card = ReflectionHacks.getPrivate(__instance, SingleCardViewPopup.class, "card");
-            if (card.cardID.equals(MissingnoCard.ID) && !getDisableShadersConfig()) {
+            if (card.cardID.equals(MissingnoCard.ID) && !getDisableShadersConfig() && cardShouldGlitch) {
                 oldShader = sb.getShader();
                 sb.setShader(glitchShader);
                 glitchShader.setUniformf("u_time", (time % 10) + random.nextInt(5));
                 glitchShader.setUniformf("u_shake_power", shake_power.get());
-                glitchShader.setUniformf("u_shake_rate", shake_rate.get());
-                glitchShader.setUniformf("u_shake_speed", shake_speed.get());
-                glitchShader.setUniformf("u_shake_block_size", shake_block_size.get());
+                glitchShader.setUniformf("u_shake_rate", rate);
+                glitchShader.setUniformf("u_shake_speed", speed);
+                glitchShader.setUniformf("u_shake_block_size", size);
                 glitchShader.setUniformf("u_shake_color_rate", shake_color_rate.get());
+                glitchShader.setUniformf("u_manual_enable_shift", 1);
             }
         }
 
@@ -200,6 +204,61 @@ public class MissingnoCard extends AbstractSCCard {
                 Matcher finalMatcher = new Matcher.MethodCallMatcher(SingleCardViewPopup.class, "renderArrows");
                 return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
             }
+        }
+    }
+
+    @SpirePatch(clz = AbstractCard.class, method = "renderInLibrary", paramtypez = SpriteBatch.class)
+    public static class StupidLibraryCompendiumRendersDifferently {
+        public static ShaderProgram glitchShader = null;
+        private static final FrameBuffer fbo = createBuffer();
+
+        @SpirePrefixPatch
+        public static SpireReturn<Void> Prefix(AbstractCard __instance, SpriteBatch spriteBatch) {
+            if(glitchShader == null) {
+                glitchShader = MissingnoUtil.initGlitchShader(glitchShader);
+            }
+            if (!SingleCardViewPopup.isViewingUpgrade || !__instance.isSeen || __instance.isLocked) {
+                if (__instance.cardID.equals(MissingnoCard.ID) && !Anniv7Mod.getDisableShadersConfig() && cardShouldGlitch) {
+                    TextureRegion t = cardToTextureRegion(__instance, spriteBatch);
+                    spriteBatch.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE_MINUS_SRC_ALPHA);
+                    ShaderProgram oldShader = spriteBatch.getShader();
+                    spriteBatch.setShader(glitchShader);
+                    glitchShader.setUniformf("u_time", (time % 10) + random.nextInt(5));
+                    glitchShader.setUniformf("u_shake_power", shake_power.get());
+                    glitchShader.setUniformf("u_shake_rate", rate);
+                    glitchShader.setUniformf("u_shake_speed", speed);
+                    glitchShader.setUniformf("u_shake_block_size", size);
+                    glitchShader.setUniformf("u_shake_color_rate", shake_color_rate.get());
+                    glitchShader.setUniformf("u_manual_enable_shift", 1);
+
+                    spriteBatch.draw(t, -Settings.VERT_LETTERBOX_AMT, -Settings.HORIZ_LETTERBOX_AMT);
+                    spriteBatch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+                    spriteBatch.setShader(oldShader);
+                    return SpireReturn.Return();
+                }
+            }
+            return SpireReturn.Continue();
+        }
+
+        public static TextureRegion cardToTextureRegion(AbstractCard card, SpriteBatch sb) {
+            sb.end();
+            MissingnoUtil.beginBuffer(fbo);
+            sb.begin();
+            IntBuffer buf_rgb = BufferUtils.newIntBuffer(16);
+            IntBuffer buf_a = BufferUtils.newIntBuffer(16);
+            Gdx.gl.glGetIntegerv(GL30.GL_BLEND_EQUATION_RGB, buf_rgb);
+            Gdx.gl.glGetIntegerv(GL30.GL_BLEND_EQUATION_ALPHA, buf_a);
+
+            Gdx.gl.glBlendEquationSeparate(buf_rgb.get(0), GL30.GL_MAX);
+            Gdx.gl.glBlendEquationSeparate(GL30.GL_FUNC_ADD, GL30.GL_MAX);
+            card.render(sb, false);
+            Gdx.gl.glBlendEquationSeparate(GL30.GL_FUNC_ADD, GL30.GL_FUNC_ADD);
+            Gdx.gl.glBlendEquationSeparate(buf_rgb.get(0), buf_a.get(0));
+
+            sb.end();
+            fbo.end();
+            sb.begin();
+            return MissingnoUtil.getBufferTexture(fbo);
         }
     }
 }

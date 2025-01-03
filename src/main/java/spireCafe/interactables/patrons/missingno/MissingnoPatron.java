@@ -56,7 +56,7 @@ public class MissingnoPatron extends AbstractPatron {
             glitchShader = initGlitchShader(glitchShader);
             sb.setShader(glitchShader);
             glitchShader.setUniformf("u_time", (time % 10) + 200);
-            glitchShader.setUniformf("u_shake_power", shake_power.get());
+            glitchShader.setUniformf("u_shake_power", 0.033f);
             glitchShader.setUniformf("u_shake_rate", shake_rate.get());
             glitchShader.setUniformf("u_shake_speed", shake_speed.get());
             glitchShader.setUniformf("u_shake_block_size", shake_block_size.get());

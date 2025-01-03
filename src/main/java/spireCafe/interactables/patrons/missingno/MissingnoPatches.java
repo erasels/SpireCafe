@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.badlogic.gdx.math.MathUtils.random;
 import static spireCafe.Anniv7Mod.*;
 import static spireCafe.interactables.patrons.missingno.MissingnoUtil.*;
 
@@ -182,6 +183,8 @@ public class MissingnoPatches {
             if(__instance.relicId.equals(MissingnoRelic.ID)) {
                 glitchShader = initGlitchShader(glitchShader);
                 sb.setShader(glitchShader);
+                glitchShader.setUniformf("u_shake_power", 0.033f);
+                glitchShader.setUniformf("u_time", (time % 10) + random.nextInt(5));
             }
         }
 
