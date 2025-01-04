@@ -16,8 +16,10 @@ import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import spireCafe.Anniv7Mod;
 import spireCafe.CafeRoom;
 
+import static spireCafe.Anniv7Mod.allTimeSeenInteractables;
 import static spireCafe.Anniv7Mod.makeID;
 
 public abstract class AbstractCafeInteractable {
@@ -63,6 +65,10 @@ public abstract class AbstractCafeInteractable {
             showTooltip = true;
             if (InputHelper.justClickedLeft && !CafeRoom.isInteracting) {
                 CafeRoom.isInteracting = true; // Workaround to prevent double interactions due to overlapping hitboxes
+                allTimeSeenInteractables = Anniv7Mod.getSeenInteractables();
+                if(!allTimeSeenInteractables.contains(id)) {
+                    allTimeSeenInteractables.add(id);
+                }
                 this.onInteract();
             }
         } else {

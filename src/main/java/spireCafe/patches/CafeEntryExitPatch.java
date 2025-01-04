@@ -25,6 +25,9 @@ import spireCafe.CafeRoom;
 import spireCafe.scene.CafeScene;
 import spireCafe.util.ActUtil;
 
+import java.io.IOException;
+
+import static spireCafe.Anniv7Mod.allTimeSeenInteractables;
 import static spireCafe.Anniv7Mod.makeID;
 
 public class CafeEntryExitPatch {
@@ -112,6 +115,14 @@ public class CafeEntryExitPatch {
                 AbstractDungeon.currMapNode.room.event.dispose();
 
                 modifyProceedButton(ReflectionHacks.getPrivateStatic(ProceedButton.class, "DRAW_Y"), true);
+
+                if(allTimeSeenInteractables != null) {
+                    try {
+                        Anniv7Mod.saveSeenInteractables(allTimeSeenInteractables);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
         }
     }

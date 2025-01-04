@@ -1,0 +1,793 @@
+BEEP BOOP
+A combat automaton which became self-aware.  Ancient technology allows the manipulation of Orbs.
+A blind ascetic who has come to "Evaluate" the Spire.  Master of the divine Stances.
+The remaining soldier of the Ironclads.  Sold his soul to harness demonic energies.
+Hi!  Buy something!  Buy buy buy!
+I like your haircut
+Do you have the time?
+Are you a dog person or a cat person?
+You look ~dangerous,~  hehe...
+Take your time...  .....  ... or not
+Do you like this rug?  It's not for sale
+Support small business!
+Masks are cool, I would know!
+Hmm...  ...hmm...  Oh!
+Stay awhile and listen!
+It's dangerous to go alone! Give me all your gold!
+Buy somethin'
+~*YAWN*~
+I like gold.
+My favorite color is blue.  How bout you?
+~Greetings...~  ~I..~ ~am~ ~Neow...~
+~Hello...~  ~Again..~
+~Greetings...~
+~Another~  ~try...?~
+~Reach~ ~the~ ~boss...~  ~to~ ~receive~ ~more..~ ~blessings...~
+~At~ ~least...~ ~confront~  ~the~ ~first~ ~boss...~
+~I~ ~brought~ ~you~ ~back...~
+~Choose...~
+~Granted...~
+~Risk...~  ~..reward....~
+~Time~ ~for~ ~a~  ~CHALLENGE...~
+Rewards
+~Let's~ ~keep~ ~going...~
+~It~ ~oy~ ~gets~ ~harder...~
+~Impressive...~ ~more...~
+Cursed!
+Scatterbrain!
+Transformation!
+Hi!  Buy something!  Buy buy buy!
+I like your haircut
+Do you have the time?
+Are you a dog person or a cat person?
+You look ~dangerous,~  hehe...
+Take your time...  .....  ... or not
+Do you like this rug?  It's not for sale
+Support small business!
+Masks are cool, I would know!
+Have you seen my courier?
+Stay awhile and listen!
+It's dangerous to go alone! Give me all your gold!
+Buy somethin'
+~*YAWN*~
+I like gold.
+My favorite color is blue.  How bout you?
+A deadly huntress from the foglands.  Eradicates foes with daggers and poisons.
+Now... what..?  ..has it been... done....?
+...the Spire sleeps.....
+..and so...... shall...  ....I......
+You duck into a small hut. Inside, you find what appears to be a forge. The smithing tools are covered with dust, yet a fire roars inside the furnace. You feel on edge...
+You decide to put the forge to use and...  #y@CLANG@ #y@CLAAANG@ #y@CLANG!@  ...improve your arsenal!
+You decide to see if you can find anything of use. After uncovering tarps, looking through boxes, and checking nooks and crannies, you find a dust covered #y~relic!~ 
+As you go through the finishing touches, the flames of the forge jump out at you, #r@burning@ #r@and@ #r@scarring@ your arms..
+  Taking the relic, you can't shake a sudden feeling of #r~sharp~ #r~pain~ as you exit the hut. Maybe you disturbed some sort of spirit?
+There doesn't seem to be anything of use. You exit the way you came, the flames of the furnace casting #p~eerie~ #p~shadows~ on the walls inside the hut...
+While sneaking past a group of shrouded figures, one of them approaches you.  "Got anything for me friend? Please... maybe some #yCoin?"  "I just need somewhere to stay, I have treasures I can trade..."  He seems delusional, but harmless.
+"Oh yes, ~yes!~ Here here, a fair trade!"
+You snatch the precious #yrelic from his clutches and walk away.  From behind you hear,  "Have you no shame? ~HAVE~ ~YOU~ ~NO~ ~SHAAAAAME?!"~  You have some #pshame.
+Scaling the city, you notice a wall covered in the writing of #y~Ancients.~ As you try to wrap your head around what the puzzling symbols and glyphs could mean, the writing begins to #b~glow.~  Suddey, the message becomes clear...
+The answer was elegance.  Of course.
+The truth is always simple.
+An old beggar cloaked in fur reaches his hands out towards you as you pass. "Spare some coin, child?"
+The beggar looks to the floor as you pass.  "You will never make a difference... You never do."
+The beggar takes off its cloak to reveal that he is #bCleric!  @"You@ @are@ @a@ @kind@ @soul.@ @Receive@ @my@ @purification!"@ he screams.  You are unsure if he is grateful or mad.
+@"I@ @hope@ @you@ @do@ @better@ @this@ @time,@ @friend!"@ he shouts.  Wondering what was implied by this, you push forward.
+As you make your way down a long corridor you see a #ybanana, a #ydonut, and a #ybox ~floating~ about. No... upon closer inspection they are tied to strings coming from holes in the ceiling. There is a quiet @cackling@ from above as you approach the objects.  What do you do?
+You eat the #ybanana. It is nutritious and slightly #bmagical, healing you.
+You eat the #ydonut. It really hits the spot! Your Max HP increases.
+
+You grab the box. Inside you find a #yrelic!
+  However, you really craved the donut...  You are filled with ~sadness,~ but mostly #rregret.
+You happen upon a group of what looks like #ppurple #pfire #pspirits ~dancing~ around a large bonfire.  
+The spirits toss small bones and fragments into the fire, which ~brilliantly~ ~erupts~ each time.  As you approach, the spirits all turn to you, expectantly...
+You toss an offering into the bonfire.   
+However, the spirits aren't happy that you offered a #pCurse... The card fizzles a meek black smoke. You receive a... #p~something~ in return.
+Nothing happens...  The spirits seem to be ignoring you now. Disappointing...
+The flames grow slightly brighter.  The spirits continue dancing. You feel slightly warmer from their presence..  You #gheal #b5 HP.
+The flames erupt, growing significantly stronger!  The spirits dance around you excitedly, filling you with a ~sense~ ~of~ ~warmth.~  You are #ghealed to full HP.
+The flames @burst,@ nearly knocking you off your feet, as the fire @doubles@ in strength.  The spirits dance around you excitedly before ~merging~ ~into~ ~your~ ~form,~ filling you with warmth and strength.  Your Max HP increases by #b10 and you are #ghealed to full HP.
+In an abandoned temple, you find a giant book, open, riddled with #p@cryptic@ #p@writings.@   As you try to interpret the elaborate script, it begins to #b~shift~ and #b~morph~ into writing you are familiar with.
+Odd. The book seems to be about an #yAncient named #yNeow.   This piques your interest, but you have a general feeling of #p~malaise.~
+The Ancient of Resurrection, #yNeow, was exiled to the bottom of the Spire.   You feel compelled to read more, but your body begins to #r~ache.~
+Seeking vengeance, #yNeow blesses outsiders, using them for her own purposes.   You are starting to feel very #r~weak~ #r~and~ #r~tired...~
+Those resurrected by #yNeow remember oy fragments of their past selves, cursed to fight for eternity.   As you near the final page, your #r@old@ #r@wounds@ #r@begin@ #r@to@ #r@reopen!@
+Upon finishing the tome, you decide to take it with you. With proof in hand, will you retain your memories?
+You exit, feeling a #p~dark~ #p~energy~ #p~emanating~ from the book on the pedestal.
+With incredible strain and willpower, you resist the trance of the tome and @SLAM@ it shut.  You turn and exit the temple, feeling #b~drained...~
+While searching the adventurer you are caught off guard!
+You exit without a sound.
+You come across a #rdead #radventurer on the floor.  His #bpants have been stolen! Also, 
+the armor and face appear to be #r@scoured@ #r@by@ #r@flames.@ 
+it looks as though he's been #r@gouged@ #r@and@ #r@trampled@ by a horned beast. 
+he looks to have been #r@eviscerated@ #r@and@ #r@chopped@ by giant claws. 
+ Though his #ypossessions #yare #ystill #yintact, you're in no mind to find out what happened here...
+You found some #ygold!  Continue searching?
+Hmm, couldn't find anything...  Continue searching?
+You found a #yrelic!  Continue searching?
+Looks like you searched all his belongings without a hitch!
+A man with an eyepatch and a devilish grin strides up to you.  "Hey there, stranger. Interested in advancing science? I can make you stronger than any training or blessing. You're gonna need it if you're one of those heroes with a death wish."   ~"Whad'ya~ ~say?"~
+~"Excellent."~  The man hands over a dangerous looking syringe filled with a #b~glowing~ #b~liquid~ before skulking off into a shadowy alleyway.
+~"Superb."~  The man injects you with three unknown substances and pulls out a notepad. As you begin to feel light-headed, he starts to frantically write down notes.  Losing track of time completely, by the time you regain your senses, the shady character has disappeared.
+~"Marvelous."~  You quaff the mysterious substance. Immediately, you are invigorated and feel your muscle fibers @twitch.@
+Before you lies a decorated altar to some ancient entity.
+You kneel respectfully. A ghastly mirror image appears from the shrine and collides into you.
+You ignore the shrine, confident in your choice.
+As you head upwards hopping from one floating shape to another, you slip.   You begin to fall.
+While in free fall you consider your options:  Land safely with your greatest techniques.  Channel a Power to survive the fall.  Strike at the wall to hang on to it.
+You land with extreme grace before continuing on.
+Harnessing and expending some of your raw power, you manage to land unhurt.
+You are able to latch on to the wall, and manage to make a short hop onto another stable platform.
+You seem to fall as slow as a feather, reaching the bottom without a scratch.
+In front of you sits an altar to a forgotten god.  Atop the altar sits an ornate female statue with arms outstretched.  She calls out to you, demanding sacrifice.
+As you gently set the idol onto the altar a #bcold wind swirls throughout the room.  The arms of the statue begin to discolor and crumble.   Your #ygolden #yidol begins to dull in color and begins bleeding from its eyes.  The bleeding never ceases.
+You stand on the altar and cut your wrists.  As the #rblood spills out in sacrifice, the arms of the statue reach out and close around your eyes.  Everything goes dark.  You wake up a short time later feeling a new potential surging through you.
+You lash out and smash the statue in front of you, breaking the magical hold the room had placed upon you.  A dark wail echoes all around you, and you can feel the #p~cursed~ #p~magic~ seep into your bones.
+You come across #b~shimmering~ #b~water~ flowing endlessly from a fountain on a nearby wall.
+As you drink the #b~water,~ you feel a #pdark #pgrasp loosen.
+Unsure of the nature of this water, you continue on your way, parched.
+As you continue your ascent, #p~thick~ #p~black~ #p~smoke~ begins to billow out of the ground and walls around you, coalescing into three masked forms that start to speak.   ~"Another~ ~puppet~ ~of~ #y~Neow~ ~I~ ~think."~  #r@"AGREED!@ #r@SHE@ #r@ALWAYS@ #r@MAKES@ #r@THE@ #r@FUNNEST@ #r@TOYS!"@   You notice an over-sized grin as the third addresses you.  "Ignore the others... Would you like a taste of our #y~power?"~ 
+
+#y"Excellent!"  As the ghostly shape speaks, you notice its large mouth opening wider and wider. #p~Thick~ #p~black~ #p~smoke~ spews forth and envelops the room. You cannot see or breathe...   Just before you lose consciousness, the sensation stops.   Whatever those things were, they are gone now. You continue on, feeling rather #bhollow.
+"How disappointing..."  ~"You~ ~will~ ~join~ ~us~ ~sooner~ ~or~ ~later."~  #r@"HA@ #r@HA@ #r@HA@ #r@HAHAHA!"@   The shapes fade away, leaving oy the unnerving laughter ringing in your ears.
+
+Enemies drop #b25% more #yGold.
+Made of solid gold, you feel richer just holding it.
+Before you lies an elaborate shrine to an ancient spirit. 
+As your hand touches the shrine, #ygold rains from the ceiling ~showering~ ~you~ ~in~ ~riches.~ 
+Each time you strike the shrine, #ygold pours forth again and again!   As you pocket the riches, something #rweighs #rheavily #ron #ryou.
+You ignore the shrine.
+Among the stone and boulders, you notice an intricate large blue statue resembling a wing.  You find #ygold spilling from its cracks. Maybe there is more inside...
+Someone once told you of a cult that worshipped a giant bird. As you kneel in prayer, you begin to ~feel~ ... ~lightheaded~ .   You wake up some time later, feeling strangely fleet of foot.
+With all your might, you hack away at the statue.  It soon @crumbles,@ revealing a #ypile #yof #ygold. You grab as much as you can and continue onwards.
+The statue makes you feel ~uneasy.~ You walk past and continue onward.
+You find yourself in an old, decorated chamber. In the center of the room, a large skull sits atop an ornate pedestal. As you approach, the skull #g@bursts@ #g@into@ #g@flames@ and turns to face you.
+"WHAT IS IT YOU SEEK? WHAT IS IT YOU OFFER?"  In sync with its final words, the door behind you @slams@ @shut.@
+   "ANYTHING ELSE?"
+ 
+"DRINK UP!"  You obtain a potion.
+"PERHAPS THIS WILL HELP?"  You obtain a card.
+"YOU MORTALS NEVER CHANGE. IT IS DONE."  #yGold rains down on you!
+"BEHIND YOU, MORTAL."  You peek behind the skull. Surely enough, there is a door.
+You find yourself in a room filled with racks of test tubes, beakers, flasks, forceps, pinch clamps, stirring rods, tongs, goggles, funnels, pipets, cylinders, condensers, and even a rare spiral tube of glass.   Why do you know the name of all these tools? It doesn't matter, you take a look around.
+You walk into a room to find a large hole in the ground. As you approach the hole, an enormous serpent creature appears from within.   ~"Ho~ ~hooo!~ ~Hello~ ~hello!~ ~what~ ~have~ ~we~ ~got~ ~here?~ Hello adventurer, I ask a simple question.  The most fulfilling of lives is that in which you can #y~buy~ #y~anything!~  Do you agree?"
+~"Yeeeeeeessssssssssessss!~  ~Thisss~ ~will~ ~all~ ~be~ ~worthhh~ ~it.~  ~..ssSSs.....~ ~ss...~ ~sssss....!"~
+The serpent stares at you with a look of extreme disappointment.
+The serpent rears its head and blasts a stream of #ygold upwards!  It is amazing and terrifying simultaneously.  You gather all the #ygold, thank the snake, and get going.
+As you come to a dead-end and begin to turn around, walls @slam@ @down@ from the ceiling, trapping you!   Three faces materialize from the walls and speak.  #b"Forget #bwhat #byou #bknow, #band #bI'll #blet #byou #bgo."  #p"I #prequire #pchange #pto #psee #pa #pnew #pspace."  #y"If #yyou #ywant #yto #ypass #yme, #ythen #yyou #ymust #ygrow."
+Satisfied, the walls in front of you merge back into the ceiling, leaving a path forward.
+Hehehe.. Thanks for the #ygold!  Oh, I love #ygold. It's so nice.  #y~shiny~ #y~shiny~ chits they are!
+Hey #bBear, hey!  This guy gave us all his #ygold! What a sucker, right?  Get this, I just had to ask nicely. Who knew?!  I certaiy didn't! What a chump!
+Gang, let's all have a laugh for this wondrous occasion!  @Hahaah@  @Ho@ @HOH@ ~hoho!~  ~Hoh!~
+Oh? You're still here?  Did you overhear something? Didn't think so.  #r@*snerk*@ ~...loser....~ @Hahaha@ ~haaah~
+You encounter a group of bandits wearing large #rred #rmasks.  "Hello, pay up to pass... a reasonable fee of @ALL@ your #ygold will do! Heh heh!"
+" #bTwelve cards! Match them to keep them! #bFive tries, no do-overs.  Are you ready? Let's start!"
+You complete the gremlin's game and look up.  He disappeared?
+A gremlin is madly shuffling cards on a table. This monster seems to be a harmless one. You approach him out of curiosity.
+You give in to the unnatural desire to eat. As you consume mushroom after mushroom, you feel yourself entering into a daze and pass out. As you awake, you feel very odd.  You #gHeal #b25% of your HP, but you also get #rinfected.
+#r@Ambushed!!@  Rodents infested by the mushrooms appear out of nowhere!
+You enter a corridor full of #b~hypnotizing~ #b~colored~ #b~mushrooms.~  Due to your lack of specialization in mycology you are unable to identify the specimens.  You want to escape, but feel oddly compelled to eat a #b~mushroom...~
+Jutting from the chaotic terrain around you, a bony sphere surrounds a mysterious glowing object within.  While you are curious what lies inside, you notice some sentries keeping an eye on it.
+As soon as you strike the sphere, the sentries spring to life around you!
+No need to be greedy.
+An odd creature with a hunched back sprouting several tentacles is scrounging through a pile of trash and debris in front of you. As you approach, he shuffles towards you in a non-threatening manner.  "N'loth hungry. Feed N'loth."
+Holding the #yrelic out towards him, Nsnatches it out of your hand with his tentacles, dislocates his jaw, and slurps down your offer in one quick gulp.  He gives you a large, toothy grin as more tentacles appear from behind his cloak, these ones brandishing an impossibly neat looking box. He pushes it towards you until you take it.
+You shake your head. N'loth hunches even further and sighs, then scuttles away.
+[Leave]
+Before you lies an elaborate shrine to a forgotten spirit.
+As you kneel in reverence, you feel a weight lifted off your shoulders.
+You ignore the shrine.
+As you walk into the room you hear a ~gurgling~ and the @grinding@ of metals. Before you is a slime-like creature that ate too much scrap for its own good. From the center of the creature you see glints of strange light, perhaps something magical? It looks like you can get some #ytreasure if you just reach inside its... opening. However, the acid and sharp objects may #rhurt.
+#r@Ouch!@  All you find is corroded metal and a bit of #r@burning@ #r@pain.@  However, you're still convinced there's a #yrelic...
+#gSuccess!  After rummaging through the metal and burning acid, you finally grab hold of a #yrelic and yank it out.  You pull your way out of the ooze #rdamaged but rewarded.
+You decide to leave the area.  The slime pays no attention, content with its meal.
+Before you is a sight that seems out of place in the alien landscape around you. Strangely placed into one of the living walls of the Beyond is an enclosed stone entrance filled with a #p~swirling~ #p~magical~ #p~portal.~   You aren't sure where it leads, but maybe it could speed your journey through the Spire.
+Jumping through the portal, your sense of time and space is completely torn apart.   As you reorient yourself to the new surroundings, you realize that right before you is a fearsome battle.
+Careful and cautious seems the better approach for reaching the top of the Spire. Ignoring the portal you continue on.
+Navigating through the Beyond, you discover a #bglowing #btesseract @spinning@ and ~shifting~ gently in the air.
+You touch it.   A #r@sharp@ #r@pain@ flows through you, followed by vivid flashes of a distant memory.  ...whose memories are these?
+#r~FEAR.~   A demonic creature towers above you, wings spread wide as it howls with laughter. Dead bodies of a tribe surround you while the village is engulfed in terrible #p~dark~ #p~flames.~   The demon calls out, taunting you.   " #r@YOU@ #r@REALLY@ #r@ARE@ #r@THE@ #r@STRONGEST@ #r@NOW!@ #r@Haha..@ #r@HEHE...@ #r@HAHAHAAAAH!!@ "   This laughter echoes forever... 
+#g~TRIUMPH.~   The remains of a #p~ghostly~ #p~creature~ sink slowly into the mud before you, barely visible in the mooight. You have proven yourself amongst your sisters.   Standing victoriously, you wait in silence as the others ceremoniously place the #ycreature's #yskull atop your head. The ritual has concluded.   You head towards the Spire...
+#b~CONFUSION.~   #y[OBJECTIVE] #gBALANCE #gmust #gbe #gENFORCED  #y[DEFINE] #gBALANCE  #y[ERROR] #gBALANCE #gNOT #gFOUND  #y[DEFINE] #gBALANCE  #y[ERROR] #gBALANCE #gNOT #gFOUND  #y[WARNING] #rLarge #robject #rapproaching   ~"I...~ ~..am~ ~....Neow.."~
+#p~SERENITY.~   Two primitive creatures fight over a carcass on the side of the road. You observe, devoid of emotion.  #yWatch. #yRemember. #yLive. This is the Watcher's mission.   Recently, one of your peers had stopped reporting on their assignment: a Spire of unknown origin.   As the fight ends, you continue onward, unfazed by the bloody scene that took place.
+You find a shimmering #ymass #yof #ylight encompassing the center of the room.   Its ~warm~ ~glow~ and ~enchanting~ ~patterns~ invite you in.
+As you walk through the light, you notice that the light is absorbed into you.  It's #r@scorching@ #r@hot@ ! However, the pain quickly recedes.  You feel #binvigorated, as though you received a well deserved slap.
+You walk around it, wondering what could have been.
+@tu-thump@ ... @tu-thump@ ... @tu-thump@ ...  A deep pulsing dread can be felt throughout the room...  Is this the #r~heart~ of the Spire? The source of this evil?
+You deal #b
+ damage!  The heart #r@squirms@ and #r~bleeds~ ...but is ultimately still pounding.  Are your mightiest attacks not enough?
+You ask yourself, ~"Have~ ~I~ ~been~ ~here~ ~before?"~  You feel that you have dealt a total of #b
+ damage to the heart.
+  A total of #b
+ damage has been dealt by all who have challenged it.
+  The heart pulses louder and louder as your #y~consciousness~ #y~fades...~
+ You ready your blade...
+ You prepare your daggers...
+ You charge your core to its maximum...
+You ask yourself, ~"Have~ ~I~ ~been~ ~here~ ~before?"~
+  The heart pulses louder and louder as your #p~consciousness~ #p~begins~ #p~to~ #p~fade...~
+  A sudden burst of #y@energy@ emanates from inside you, #b@jolting@ you awake.
+  The heart #gretreats upwards! A large door is revealed in its place.
+ You prime your staff with divine energy...
+A strange blue humanoid with a golden helm(?) approaches you with a huge smile.  @"Hello@ @friend!@ I am #bCleric! Are you interested in my services?!" the creature shouts, loudly.
+A warm golden light envelops your body and dissipates.  The creature grins. "Cleric best healer. @Have@ @a@ @good@ @day!"@
+A cold blue flame envelops your body and dissipates.  The creature grins. "Cleric talented. @Have@ @a@ @good@ @day!"@
+You don't trust this #b"Cleric", so you leave.
+As you make your way through the large buildings you come across a long narrow bridge and spot knights on either side, facing one another. You approach...  @"Halt!"@   A knight forcefully gestures you to stop with its giant lance.
+"Today is the day I must settle the score with the #rmurderer of my beloved pet, #yNoodles. Until then, you may not pass.   Fellow witness, why don't you #bbet on who you think will emerge victorious?"
+"I can't believe you're betting against #yNoodles!"   Furious, he clamps down his helmet and rushes towards his nemesis.
+"Give me strength, #yNoodles!"   Clamping down his helmet, the knight charges forward.
+ #y@*CRASH!!!*@ #r@*KLAAAANG!*@   #g@*POW!*@
+The nemesis was slain.   
+The owner died.   
+You #gwin the bet. Unsure what to think, you grab your winnings and leave.
+You #rlost the bet, but at least you weren't gouged by a lance.
+You come across an ornate building which appears abandoned.  A plaque that has been torn free from a wall is on the floor. It reads, #b"THE #bLIBRARY".  Inside, you find countless rows of scrolls, manuscripts, and books.  You pick one and cozy yourself into a chair for some quiet time.
+Reading is for chumps.  You doze off in a comfy chair instead.  ~Zzz...~ ~zzz...~ ~..Zz....~  You wake up feeling refreshed.
+The story is about an insect-controlling teenage girl who aspires to become a hero. The book is filled with creative uses of powers, combat strategies, and varying perspectives.  Satisfying.
+The story is about a man who journeyed beyond the stars and found himself stuck on a desolate foreign planet. Ingenuity, luck, perseverance, and humor to retain his sanity were his tools to return home.  Fascinating.
+The story takes place in a giant isolated building underground as the outside conditions have become unbearable. The novel is mired with conspiracies, propaganda, and injustice. You ponder if similar dynamics are at play within the Spire.  Unsettling.
+Venturing through a series of tombs, you are faced with a large sarcophagus ~studded~ ~with~ ~gems~ in the center of a circular room.  You cannot make out the writing on the coffin, however, you do notice #p~black~ #p~fog~ seeping out from the sides.
+You push open the coffin. As you do, #p~black~ #p~fog~ spews forth and covers the entire room! Inside, you find no body, oy a #y~relic.~ You take it and move onwards, #r@coughing@ #r@violently.@
+You push open the coffin. The fog dissipates harmlessly. Inside, you find the mortal remains of a decorated soldier grasping an old #yrelic. You pilfer it and move on.
+You continue along your way, leaving the forgotten dead undisturbed.
+You stumble across something that feels *very* out of place. Before you, an enormous stony head emerges from a large wall segment that does not shift and change like the rest of this area.  The head's mouth is wide open, and it reveals large intimidating teeth stained red with blood. The surface of the statue is riddled with pictographs that seem to indicate people throwing themselves into the mouth of this head and being devoured. Why would anyone do that?
+At first when you step up into the mouth of the statue, nothing happens. As you start to feel more than a little foolish, the huge molars slam down from above, crushing you whole.  @Darkness.@  Sometime later from within the dark, you see a sliver of light, and hear what you now realize is the sound of stony teeth slowly rising upwards.    You leave confused.
+You jump back a little as the gigantic molars smash down on the idol, smashing it into dust. As the teeth start to rise up again, #ygold pours forth in a torrent from the opening, flooding you with riches.
+You leave, wondering what could have been.
+From the darkness, an arm pulls you into a small shop. As your eyes adjust, you see a pale woman in sharp clothes gesturing towards a wall of potions.  "Buy a potion. Now!" she states.
+"Good. Now leave."  You exit the shop cautiously.
+#r@WHAM@  Her gloved fist collides with your face, nearly knocking you off your feet.  "Get out before I litter the floor with your guts." You take her word and exit with your guts still safely in your body.
+You walk into a shimmering puddle... and you drop out of the ceiling right above it!  While in freefall, you consider your options.
+You flail your arms in panic and ueash all of your hidden tricks to prevent yourself from injury. Instead, you fall into the puddle again... and again... and again. Days pass before you realize how to get out. Truly miserable.
+You brace yourself for the landing but there is simply no good way to land when ejected from such a bizarre contraption. @THUD@   ...you lay there for a while, cursing the existence of puddles, both liquid and magical.
+A highly ornamented tomb can be seen on the other side of a floating path. Upon reaching the tomb, you notice a slot for #ygold coins with a scratched out inscription above it.
+You don the mask and the tomb starts to ~flake~ ~away...~ a secret passage!   The passage is lined with countless stolen goods and mounds of #ygold!
+An opening appears in the tomb and out slides a small red mask with a note attached. "Take from others as I have taken from you!"
+Before you lies an elaborate shrine to a forgotten spirit.
+As the power of the shrine flows through you, your mind feels altered.
+You ignore the shrine.
+Before you lies an elaborate shrine to a forgotten spirit.
+The shrine's energy flows into you, making you stronger.
+You ignore the shrine.
+Navigating an uit street, you come across several hooded figures in the midst of some dark ritual. As you approach, they turn to you in eerie unison. The tallest among them bares fanged teeth and extends a long, pale hand towards you.  ~"Join~ ~us~ ~brother,~ ~and~ ~feel~ ~the~ ~warmth~ ~of~ ~the~ ~Spire."~
+Navigating an uit street, you come across several hooded figures in the midst of some dark ritual. As you approach, they turn to you in eerie unison. The tallest among them bares fanged teeth and extends a long, pale hand towards you.  ~"Join~ ~us~ ~sister,~ ~and~ ~feel~ ~the~ ~warmth~ ~of~ ~the~ ~Spire."~
+The tall figure grabs your arm, pulls you forward, and sinks his fangs into your neck. You feel a @dark@ @force@ pour into your neck and @course@ through your body.  ...  You wake up some time later, alone. An intense ~hunger~ passes through your belly. You #rmust #rfeed...
+You step back and raise your weapon in defiance. The tall figure sighs. "Very well." The entire group of hooded figures morph into a thick black fog that flows away from you.  You are alone once more.
+The pale figures gasp as you take out the #yBlood #yVial.  ~"The~ ~master's~ ~blood...~ ~the~ ~master's~ ~blood!~ @THE@ @MASTER'S@ @BLOOD!"@  They all chant fervently as the tall one bows before you. "Drink from His blood, and become one with #y~Him."~  The chant growing louder, you consume the contents of the vial. Your vision immediately ~warps~ and fades to darkness.   You wake up some time later, alone. An intense ~hunger~ passes through your belly. You #rmust #rfeed.
+Navigating an uit street, you come across several hooded figures in the midst of some dark ritual. As you approach, they turn to you in eerie unison. The tallest among them bares fanged teeth and extends a long, pale hand towards you.  ~"Join~ ~us~ ~broken~ ~one,~ ~and~ ~feel~ ~the~ ~warmth~ ~of~ ~the~ ~Spire."~
+You come upon a dapper looking, cheery gremlin.  "It's time to spin the wheel! Are you ~R~ ~E~ ~A~ ~D~ ~Y~ ~?~ Of course you are!"
+"You win some #yGOLD!  YAY!!!!"
+"Ah, a #ggift!  Enjoy!"
+"Oooh, a free #gHeal for you!"
+"Looks like you won a #pCurse!  That's not good.  Oh well! Better luck next time!"
+"Ohh, the power of #r~darkness...~  Choose a card to remove from your deck!"
+"Uh oh!  You lose!"  You spot him readying a shiv...
+You slash at the crazy gremlin but he's simply too quick!  He gets you a few times with a crude shiv.  "The price has been paid!!"  and with that, both the gremlin and its wheel disappear in a puff of smoke.
+As you slowly make your way up the twisting pathways, you constantly find yourself losing your way as the walls and ground seem to inexplicably shift before your eyes.   The constant #p~whispering~ #p~voices~ in the back of your head aren't helping things either.
+Passing by a structure you are certain you have previously seen you start to question if you are going insane, or if the impossible geography of this place is starting to get to you. You need to change something, and soon.   That's what the #p~voices~ say anyway, and why would they lie?
+Something in you cracks.   Oy the truly mad can understand a place like this, so you give into the chattering voices and continue on with a #p~"new"~ perspective.  Things do seem to make so much more sense now.
+As you take a moment to stop and carefully observe the undulating landscape around you, the hint of a pattern starts to emerge from within the randomness. Whenever the demented noises begin to interrupt your thoughts, you struggle through the mental pain and ignore it.   Eventually you successfully map out a path forward, and continue on, now resistant to the nefarious nature of this alien place.
+You spend what seems like an eternity lost in the maze. Slowly but surely, you are able to retrace your steps, reorient yourself, and make it out of the twisting passages.   You feel #r~drained~ from the experience.
+You fall into a puddle.  @IT'S@ @MADE@ @OF@ #g@SLIME@ #g@GOOP!!@  Frantically, you claw yourself out over several minutes as you feel the goop starting to burn.  You can feel goop in your ears, goop in your nose, goop everywhere.   Climbing out, you notice that some of your #ygold is missing. Looking back to the puddle you see your missing coins combined with #ygold from unfortunate adventurers mixed together in the puddle.
+Feeling the sting of the goop as the prolonged exposure starts to melt away at your skin, you manage to fish out the #ygold.
+You decide that mess is not worth it.
+While walking and traversing through the chaos of the Spire, your thoughts suddey begin to feel very... #p~real...~   Imaginings of #rmonsters and #yriches begin to manifest themselves into reality.  The sensation is quickly fleeting. What do you do?
+Can it really be this easy?
+Everything makes sense now.  The lack of memories, the ascent, the #yAncient #yOne.   This is the way it always was.  This is the way it always will be.  All will be forgotten again soon...
+A long line of #b~hooded~ #b~figures~ can be seen entering  an #punassuming #pcathedral.
+Naturally, you join the line and are quickly surrounded by #rCultists!  They ignore you as they gleefully @chant@ and ~wave~ their weapons around.   #r@"MURDER!!@ #r@MURDER@ #r@MURDER!!"@  #b~"CAW~ #b~CAW~ #b~CAAAAAWWW!"~  #r@"MURDER!@ #r@MURDER@ #r@MUURDER!!"@  #b~"CAAW~ #b~CAW~ #b~CAAAAAAWW!!"~   You eye a #yDonation #yBox...
+You decide to stay in line (out of fear) to see what will happen.   Eventually, you are face-to-face with the leader. A well-dressed cultist hands you an #yOrnate #yDagger. Like the others before you, you slash your forearm and let the blood drip into a misshapen bowl.   The cultists @chant@ and @holler@ for you!   #b~"CAAW~ #b~CAW~ #b~CAAAAAAWW!!"~   You chant, too. Why not?
+They didn't even notice.
+
+
+You walk by an eerie statue holding several masks...  Something behind you softly whispers,  ~"Stop."~
+You swerve around to face the statue which is now facing you!  On closer inspection, it's not a statue but a statuesque, gaunt man. Is he even breathing?   ~"Face.~ ~Let~ ~me~ ~touch?~ ~Maybe~ ~trade?"~
+~"Compensation?~ ~Compensation."~  Mechanically, he cranes out a neat stack of #ygold and places it into your pouch.   ~"What~ ~a~ ~nice~ ~face.~ ~Nice~ ~face."~  While he touches your face, you begin to feel your life drain out of it!  During this, his mask falls off and shatters. Screaming, he quickly covers his face with all six arms dropping even more masks! Amidst all the screaming and shattering, you escape.   His face was completely blank.
+~"For~ ~me?~ @FOR@ @ME?@ ~Oh~ ~yes..~ ~Yes.~ ~Yes..~ ~mmm..."~   You see one of his arms flicker, and your face is in its hand! Your face has been swapped.   ~"Nice~ ~face.~ ~Nice~ ~face."~
+~"Stop.~ ~Stop.~ ~Stop.~ ~Stop.~ ~Stop."~   This was probably the right call.
+You spot a loose brick within a pillar that catches your eye.
+You find a folded note and a #ycard inside. It reads,  "The Heart awaits."   This is your handwriting.
+Choose a Card to Store.
+What is going on?
+"We meet again!"  A cheery disheveled fellow approaches you gleefully. You do not know this man.   "It's me, #yRanwid! Have any goods for me today? The usual? A fella like me can't make it alone, you know?"  You eye him suspiciously and consider your options...
+"Exquisite! Was feeling parched."  #b~Glup~ #b~glup~ #b~glup~   He downs the potion in one go and lets out a satisfied @burp.@
+"Magnificent! This will be quite handy if I run into those #rmask #rwearing #rhoodlums again."
+"Exemplary! I shall study this further in my chambers."
+" @Aaaaagghh!!@ What a jerk you are sometimes!"  He runs away.
+    He rummages around his various pockets...  "Here, look what I've got for you today! Take it take it!"
+You discover a #g~colorful~ shop with the banner "IN-SPIRE" and walk in to see what's inside.  "No, no way. Nope. Can't let you in!"   A man with ridiculous clothing appears at the entrance to bar you.
+"This will not do, no no. What is this style? @Disgusting!@ Are you #rbleeeeding? #p~Groooss.~ @Business??@ You a customer? Fine. ~Whaaatever."~  He lets out an exaggerated sigh and points at a list of services.   The services seem fine, but you would rather punch this smug man in his smug face.
+"Okay, bye bye now."   ...should've punched him.
+You punch him so hard your fist hurts.  "My @FACE!!@ Now I'll have to-"   He fainted. Who's #p~groooss~ and #rbleeeeding now?
+@Thwack!!!@  ..  ......  ...  ~You~ ~were~ ~knocked~ ~unconscious...~
+~Groggy~ and with a @throbbing@ head, you awaken to find yourself thrown in the center of a massive stadium with an overflowing audience of #bSlavers, #pCultists, and other denizens of the City!  
+  An armored giant with a #ygolden #ycrown bellows at you from atop,  @"WE@ @NOW@ @BEGIN@ @THE@ @
+TH@ @COMBAT!!!!"@  A gate on the opposite side opens...
+@"WELL@ @DONE,@ @WEAKLING!"@  The giant mock claps whilst he riles up the crowd with exaggerated gestures.  #y~Gold~ ~and~ #y~confetti~ ~shower~ ~you!~  @"TIME@ @FOR@ @THE@ @REAL@ @CHALLENGE!!"@   The last battle left a small opening in the Colosseum's wall, you can easily escape through there while everyone is distracted.  Do you stay and fight?
+Energy is used to play cards from your hand.
+Holding this miniature trinket, you feel heavier and more stable.
+The key to a refreshing night's rest.
+This ancient manuscript contains wisdom from a past age.
+A tool to glean invaluable knowledge from the stars.
+A once popular toy in the City. Useful for throwing enemies off balance.
+Oversized adventurer's pack. Has many pockets and straps.
+Whenever you play a #yPower card, heal #b
+ HP.
+This urn shows the crow god Mazaleth looking mischievous.
+Replaces #rBurning #rBlood. At the end of combat, heal #b
+ HP.
+The rage grows darker.
+Elites drop an additional relic when defeated.
+Originally discovered in the town of the serpent, beside a solitary candle.
+At the start of each combat, heal #b
+ HP.
+A vial containing the blood of a pure and elder vampire.
+Whenever you gain #yGold, heal #b
+ HP.
+The idol now weeps a constant stream of blood.
+#yUnplayable #rCurse cards can now be played.  Whenever you play a #rCurse, lose #b
+ HP and #yExhaust it.
+The flame ignites when shrouded in darkness.
+Upon pickup, choose an #yAttack. Start each combat with this card in your hand.
+Choose a card for 
+Start each combat with 
+ in your hand.
+Inside the bottle resides a flame that eternally burns.
+Upon pickup, choose a #ySkill. Start each combat with this card in your hand.
+Choose a card for 
+Start each combat with 
+ in your hand.
+Peering into the swirling maelstrom, you see a part of yourself staring back.
+Upon pickup, choose a #yPower card. Start each combat with this card in your hand.
+Choose a card for 
+Start each combat with 
+ in your hand.
+The bottle gently hums and whirs.
+Start each combat with #b
+ #yThorns.
+The sharp scales of the Guardian. Rearranges itself to protect its user. 
+At the end of combat, heal #b
+ HP.
+Your body's own blood burns with an undying rage.
+Your rightmost Orb triggers its passive an additional time.
+"Interesting! Even automatons are affected by placebo." - Ranwid
+At the start of your turn, lose #b
+ #yBlock rather than all of your #yBlock.
+"Mechanical precision leads to greatness" - The Architect
+Upon pickup, obtain a unique #rCurse and #b3 relics.
+The Bell Tolls...
+Skip Rewards
+Close
+This dark iron bell rang 3 times when you found it, but now stays silent.
+Upon pickup, brews #b5 random potions.
+Blup blip bloop...!
+The Merchant is actually a rather skilled potion brewer. Buy 4 get 1 free.
+The first time you lose HP each combat, draw #b
+ cards.
+Upon solving the puzzle, you feel a powerful warmth in your chest.
+You can now #yBrew at Rest Sites.
+Deprecated
+Whenever you apply #yVulnerable, apply #b
+ #yWeak.
+Oy the greatest may wear this belt.
+Whenever you #yExhaust a card, deal #b
+ damage to ALL enemies.
+Charon was said to be the god of rebirth, eternally dying and reviving in a burst of flame.
+The effects of your cost #bX cards are increased by #b
+
+WARNING: Do not combine with sugar, spice, and everything nice.
+Collect as many as you can.
+You ran out of relics to find. Impressive!
+At the start of each combat, #yChannel #b1 #yLightning.
+The mysterious life force which powers the Automatons within the Spire. It appears to be cracked.
+Replaces #bCracked #bCore. If you end your turn with any empty Orb slots, #yChannel #b1 #yFrost.
+The crack in your core has been filled with a pulsating cold energy.
+ at the start of your turn. Whenever you open a non-Boss chest, obtain a #rCurse.
+Gain [E]
+You can feel the malicious energy emanating from the key. Power comes at a price.
+Whenever you obtain a #rCurse, increase your Max HP by #b
+The stone draws power from dark energy, converting it into vitality for the wearer.
+Start each combat with #b
+ #yFocus.
+This disk contains precious data on birds and snakes.
+Whenever you #yExhaust a card, add a random card into your hand.
+The branch of a tree from a forgotten era.
+At the start of your turn, gain #b
+ Charge.  (Cannot be removed or transformed.)
+Placeholder
+Merchant prices are reduced by #b20%
+A very dapper looking monocle indeed.
+If your HP is full, gain 
+[E] at the start of your turn.
+The runes are indecipherable.
+Whenever you #yRest, you may add a card into your deck.
+The northern tribes would often use dream catchers at night, believing they led to self improvement.
+For each #rCurse in your deck, start each combat with #b
+ #yStrength.
+ You have no #rCurses.
+ You have #b
+ #rCurses.
+A doll devised to gain strength from malicious energy.
+ You can no longer gain #yGold.
+Gain [E] at the start of your turn.
+This blob of slime and energy seems to pulse with life.
+If you lost HP during the previous turn, trigger the passive ability of all Orbs at the start of your turn.
+...<3...?
+At the start of each combat, add a random #yPower card into your hand. It costs #b0 for that turn.
+The legendary journal of an ancient lich.
+For every #b
+ cards in your deck, heal #b
+ HP whenever you enter a Rest Site.
+This feather appears to be completely indestructible. What bird does this possibly come from?
+Whenever you add a #yPower card into your deck, #yUpgrade it.
+The egg lies inert and frozen, never to hatch.
+When viewing your #yDraw #yPile, the cards are now shown in order.
+Staring into the eye, you see a glimpse of your future.
+At the start of each combat, discard any number of cards, then draw that many cards.
+You can see a small inscription on one side. It reads: "Bear's Lucky Chip!"
+You can no longer become #yWeakened.
+A potent tool in many tonics.
+You can now gain #yStrength at Rest Sites (up to 3 times).
+This Girya is unfathomably heavy. You could train with this to get significantly stronger.
+Whenever an enemy dies, gain 
+[E] and draw #b1 card.
+"Gremlin Nobs are capable of growing until the day they die. Remarkable." - Ranwid
+Every #b
+ turns, gain [E] .
+This unceasingly joyous plant is a popular novelty item among nobles.
+Energy is now conserved between turns.
+"Delicious!"
+Every #b2 turns, gain #b1 Orb slot.
+Push. Pull. Stack. Repeat.
+Normal enemy combats are no longer encountered in #y? rooms.
+A ward against the unknown.
+Every time you play #b
+ #yAttacks in a single turn, gain #b
+ #yDexterity.
+A blade favored by assassins for its lethality at range.
+Start each combat with an additional 
+An eerie lantern which illuminates oy for the wielder.
+Upon pickup, raise your Max HP by #b
+ and heal all of your HP.
+"Tastiest treat you will find in all the Spire! Baked today just for you."
+Every time you play #b3 #ySkills in a single turn, deal #b
+ damage to ALL enemies.
+Unnaturally sharp.
+You can get any number of any card.
+DEPRECATED
+When you would die, heal to #b50% of your Max HP instead (works once).
+A fake tail to trick enemies during combat.
+Healing is #b50% more effective during combat.
+A flower long thought extinct, somehow preserved in perfect condition.
+Upon pickup, raise your Max HP by #b
+The most coveted forgotten fruit. Impeccably preserved with no signs of Spireblight.
+Gain [R] at the start of your turn. At the start of combat, shuffle #b2 #rWounds into your draw pile.
+This brand was used by the northern tribes to signify warriors who had mastered pain in battle.
+The next #b2 non-Boss chests you open contain #b2 #yRelics.
+The next non-Boss chest you open contains #b2 #yRelics.
+This relic has been used up.
+A stackable set of painted dolls. The paint depicts an unknown bird with white eyes and blue feathers.
+If your HP is at or below #b50% at the end of combat, heal #b
+ HP.
+The meat keeps replenishing, never seeming to fully run out.
+#yUnplayable #yStatus cards can now be played. Whenever you play a #yStatus card, #yExhaust it.
+"Has everything you need! Anti-itch, anti-burn, anti-venom, and more!"
+#b50% discount on all products!
+"Bonus membership offer for my most valuable customers!"
+At the start of your turn, deal #b
+ damage to ALL enemies.
+An enchanted hourglass that endlessly drips.
+Whenever you add an #yAttack into your deck, #yUpgrade it.
+The egg of a Phoenix. It glows red hot with a simmering lava.
+Whenever you play a #yPower card, a random card in your hand costs #b0 that turn.
+Frequently twitches, especially when your pulse is high.
+The first #yAttack played each turn that costs #b
+ or more is played twice. Upon pickup, obtain a special #rCurse.
+ or more is played twice.
+Oy a fool would try and harness this evil power. At night your dreams are haunted by images of the book devouring your mind.
+Enemies in your first #b3 combats will have #b1 HP.
+This relic has been used up.
+The blessing of lamentation bestowed by Neow.
+At the end of your turn, you may shuffle #b1 of #b3 random cards into your draw pile.
+Crafted by the infamous game master himself. Said to expand one's mind.
+At the start of each combat, add #b
+ #yShivs into your hand.
+Contains the secrets of assassination.
+Triple the chance of finding #yRare cards from combat rewards.
+The strange gift from N'loth. Whenever you try and unwrap it, another wrapped box of the same size lies within.
+At the start of each combat, #yChannel #b1 #yPlasma.
+Ooooh...
+Negate the next debuff you receive from an enemy.  Recharges in #b10 turns.
+DEPRECATED.
+When #yVulnerable, take #b25% more attack damage rather than #b50%.
+"After consuming trichella parastius I felt larger and less... susceptible." - Ranwid 
+Start each combat with #b
+ #yDexterity.
+You have never seen something so smooth and pristine. This must be the work of the Ancients.
+Upon pickup, gain #b300 #yGold.
+Unique coins are highly valued by merchants for their historical value and rare metallic composition.
+Negate the next #b2 #rCurses you obtain.
+Negate the next #rCurse you obtain.
+This relic has been used up.
+A common charm for staving off vile spirits. This one seems to possess a spark of divine energy.
+If you end your turn without #yBlock, gain #b
+ #yBlock.
+A green tinted metal of an unknown origin. Seemingly indestructible.
+Every time you play #b3 #yAttacks in a single turn, gain #b
+ #yBlock.
+The fan seems to extend and harden as blood is spilled.
+Upon pickup, choose and add #b5 cards to your deck.
+Knowledge!
+"Once you understand the universe..." - Zoroth
+Upon pickup, #bTransform all Strike and Defend cards.
+Pandora's Box has been opened...
+You have a bad feeling about opening this.
+At the start of Boss combats, heal #b
+ HP.
+"Solid foundations are not accidental. Tools for planning are a must." - The Architect
+Enemies with #yWeak deal #b40% less damage rather than #b25%.
+An origami of a creature from a past age.
+Enemies with #yVulnerable take #b75% more damage rather than #b50%.
+The paper continually folds and unfolds itself into the shape of a small creature.
+You can now remove cards from your deck at Rest Sites.
+Clears the mind and cleanses the soul.
+Upon pickup, raise your Max HP by #b
+A common fruit before the Spireblight.
+Every #b10th #yAttack you play deals double damage.
+Holding the nib, you can see everyone ever slain by a previous owner of the pen. A violent history.
+Gain [E] at the start of your turn. ALL enemies start combat with #b
+ #yStrength.
+Raw energy emanates from the stone, empowering all nearby.
+Upon pickup, gain #b2 Potion slots.
+I can hold more Potions using this belt!
+Normal enemies drop an additional card reward.
+The wheel continues to spin, never stopping.
+Future card rewards have #b1 additional card to choose from.
+"Those with more choices minimize the downside to chaos." - Kublai the Great
+Looks very pretty.
+You ran out of relics. Impressive!
+At the start of each combat, apply #b
+ #yWeak to ALL enemies.
+This very stylish looking mask belongs to the leader of the Red Mask Bandits. Technically that makes you the leader now?
+While your HP is at or below #b50%, you have #b
+ additional #yStrength.
+A small skull covered in ornamental paint.
+Whenever you #yRest, heal an additional #b
+ HP.
+Now you can get a proper night's rest.
+Replaces #gRing #gof #gthe #gSnake. 
+At the start of your turn, draw #b1 additional card.
+Your ring has morphed and changed forms.
+At the start of each combat, draw #b
+ additional cards.
+Made from a fossilized snake. Represents great skill as a huntress.
+Start each combat with #b3 additional Orb slots.
+More is better.
+Whenever you lose HP, draw #b
+ card.
+
+The runes are indecipherable.
+ at the start of your turn. You can no longer see enemy intents.
+Gain [E]
+The runes are indecipherable.
+At the end of your turn, you no longer discard your hand.
+
+The runes are indecipherable.
+Whenever you lose HP, gain #b
+ #yBlock next turn.
+"Most curious! It appears to form itself loosely on my thoughts! Tele-clay?" - Ranwid
+You can now #yDig for relics at Rest Sites.
+The Spire houses all number of relics from past civilizations and powerful adventurers lost to time. Time to go dig them up!
+Every time you play #b
+ #yAttacks in a single turn, gain #b
+ #yStrength.
+Lightweight throwing weapons. Recommend going for the eyes.
+When adding cards into your deck, you may raise your Max HP by #b2 instead.
+This well-used artifact rings out with a beautiful melody when struck.
+The Merchant's card removal service now always costs #b
+ #yGold.
+Mask worn by the Merchant. He must have spares...
+Whenever you apply #yPoison, apply an additional #b
+ #yPoison.
+A snecko skull in pristine condition. Mysteriously clean and smooth, dirt and grime fall off inexplicably.
+At the start of your turn, draw #b2 additional cards. Start each combat #yConfused.
+An eye of a fallen snecko. Much larger than you imagined.
+ at the start of your turn. You can no longer obtain potions.
+Gain [E]
+You notice that magical liquids seem to lose their properties when near this relic.
+It's unpleasant.
+The charred remains of your offering to the spirits.
+Cards which #yExhaust when played will instead discard #b50% of the time.
+Staring at the spoon, it appears to bend and twist around before your eyes.
+Upon pickup, raise your Max HP by #b
+"Delicious! Haven't seen any of these since the blight." - Ranwid
+Every #b
+ times you shuffle your draw pile, gain [E] [E] .
+"Early man's foolish obsession with time caused them to look to the sky for guidance, hoping for something permanent." - Zoroth
+At the start of each combat, #yChannel #b1 #yDark.
+A little bit of bad can do a lot of good...
+The Merchant restocks cards, relics, and potions. All prices are reduced by #b20%.
+The Merchant's personal pet!
+Whenever an enemy dies, transfer any #yPoison it has to a random enemy.
+"Fascinating! I found a mutated creature demonstrating astounding toxic properties. Storing a sample for later examination." - Ranwid
+Start each combat with #b
+ #yPlated #yArmor.
+Wrapping the magical thread around your body, you feel harder to the touch.
+Whenever you discard a card during your turn, deal #b
+ damage to a random enemy.
+The sound this instrument generates seems to be capable of reverberating to painful levels of volume.
+Every #b
+th #y? room is a #yTreasure room.
+"A fine prototype." - The Architect
+Upon pickup, obtain #b1 potion.  Gain #b
+ #yGold.  Raise your Max HP by #b
+.  Obtain #b1 card.  Upgrade #b1 random card.
+Tiny House!
+"A near perfect implementation of miniaturization. My finest work to date, but still not adequate." - The Architect
+At the start of each combat, choose #b1 of #b3 random Colorless cards and add the chosen card into your hand.
+A tool for every job.
+Whenever you would receive #b
+ or less unblocked attack damage, reduce it to #b1.
+Holding the small Torii, you feel a sense of calm and safety drift through your mind.
+Whenever you discard a card during your turn, gain #b
+ #yBlock.
+Loss gives strength.
+Whenever you add a #ySkill into your deck, #yUpgrade it.
+"What a marvelous discovery! This appears to be the inert egg of some magical creature. Who or what created this?" - Ranwid
+Whenever you use a potion, heal #b
+ HP.
+"This little toy is the perfect companion for the lone adventurer!"
+You can no longer become #yFrail.
+Best with Ginger.
+Whenever you have no cards in hand during your turn, draw a card.
+The top continues to spin effortlessly as if you were in a dream.
+Start each combat with #b
+ #yStrength.
+An ornamental relic given to warriors displaying glory in battle.
+ at the start of your turn. You cannot play more than #b
+ cards per turn.
+Gain [E]
+I can oy play up to  #r
+"Immense power, but too limited." - Kublai the Great
+Upon pickup, #yUpgrade #b
+ random #ySkills.
+In the past, Ironclads would create wards using enchanted war paint before charging into battle.
+Upon pickup, #yUpgrade #b
+ random #yAttacks.
+"Flesh never beats steel." - Kublai the Great
+Potions always appear in combat rewards.
+A small white statue of a creature you have never seen before.
+Whenever you would deal #b
+ or less unblocked attack damage, increase it to #b5.
+When wound up, the boot grows larger in size.
+You can no longer heal.
+In the Beyond, thoughts and reality are one.
+ at the start of your turn. Future card rewards have #b2 less cards to choose from.
+Gain [E]
+The Champ's crown... or a pale imitation?
+Every #b6 turns, gain #b1 #yIntangible.
+The smoke imbues its owner with the spirit of the burned.
+Upon pickup, remove #b2 cards from your deck.
+Choose 2 Cards to Remove.
+"How unusual to cage that which you worship." - Ranwid
+ at the start of your turn. You can no longer #ySmith at Rest Sites.
+Gain [E]
+Once wielded, the owner can never let go.
+ at the start of your turn. You can no longer #yRest at Rest Sites.
+Gain [E]
+"Yes, another cup please. Back to work. Back to work!" - The Architect
+Whenever you enter a #y? room, gain #b
+ #yGold.
+The most fulfilling of lives is that in which you can buy anything!
+Start each combat with #b
+ #yStrength. At the end of your first turn, lose #b
+ #yStrength.
+"The results seem fleeting, triggering when the subject is in danger." - Unknown
+At the end of combat, raise your Max HP by #b1.
+Everyone loves Cleric.
+The next non-Boss chest you open is empty.
+You feel hungry.
+Start each combat with #b1 #yWeak.
+Time to run.
+You feel more talkative.
+@CAW!@  @CAAAW@
+Part of the Flock!
+Whenever you shuffle your draw pile, gain #b
+ #yBlock.
+"One...Two...Three..."
+Upon pickup, obtain an additional copy of a card in your deck.
+Choose 1 Card to Copy.
+"I look funny in this."
+Start each combat with #b1 #yArtifact.
+"So many intricate gears."
+Whenever you enter a shop, heal #b
+ HP.
+"Complimentary meatballs with every visit!"
+At the start of each combat, apply #b4 #yPoison to ALL enemies.
+"I wouldn't drink out of it."
+Whenever you break an enemy's #yBlock, apply #b2 #yVulnerable.
+"Spirals are dangerous."
+The first time you discard a card each turn, gain [E] .
+The Kite floats around you in battle, propelled by a mysterious force.
+Start each Elite combat with #b
+ #yStrength.
+"A handy tool for dealing with particularly tough opponents."
+Whenever you play a #yPower, #yAttack, and #ySkill in the same turn, remove all of your debuffs.
+"Made from various fungi found throughout the Spire, they will stave off any affliction."
+#yAttacks that cost #b0 deal #b4 additional damage.
+Handy for assassinations.
+At the end of turn #b
+, deal #b
+ damage to ALL enemies.
+The passage of time is imperceptible in the Spire.
+Every time you play #b
+ #yAttacks, gain [E] .
+A good training tool. Improves the posture and agility of the wielder.
+At the start of your turn, gain #b
+ #yStrength and ALL enemies gain #b
+ #yStrength.
+Emanates an infernal heat.
+Enemies in Elite combats have #b
+% less HP.
+The insect seems to create a shrinking aura that targets particularly large enemies.
+Whenever you play #b3 or less cards during your turn, draw #b3 additional cards at the start of your next turn.
+The hands seem stuck on the 3 o'clock position.
+Prevent the first time you would lose HP each combat.
+Seemingly indestructible, you wonder what kind of creature this belonged to.
+Combat reward screens now contain Colorless cards and cards from other colors.
+Looking through the shard, you are able to see entirely new perspectives.
+At the start of your turn, #yUpgrade a random card in your hand for the rest of combat.
+The cursed tongs emit a strong desire to return to where they were stolen from.
+You may ignore paths when choosing the next room to travel to #b3 times.
+Stylish.
+Whenever you climb a floor, gain #b
+ #yGold. No longer works when you spend any #yGold at a shop.
+This relic has been used up.
+Surprisingly popular, despite maw attacks being a regular occurrence.
+Whenever you shuffle your draw pile, #yScry #b
+Mysterious sands from an unknown origin. Smells of cinnamon.
+At the start of each combat, add a #yMiracle into your hand.
+Filtered through fine sand and free of impurities.
+Replaces #pPure #pWater. At the start of each combat, add #b3 #yMiracles into your hand.
+Collected from a time before the Spire.
+Double the effectiveness of potions.
+A bark rumored to originate from the World tree.
+Whenever you play #b10 cards, draw #b1 card.
+Once exhausted, appears to refill itself in a different color.
+Whenever you play a #ySkill, gain #b1 temporary #yStrength.
+You cannot have light without dark. Or can you?
+Whenever you play an #yAttack, gain #b1 temporary #yDexterity.
+"And the sun was extinguished forever, as if curtains fell before it." - Zoroth
+Your first Attack each combat deals #b
+ additional damage.
+"Muuu~"
+Whenever you exit #yCalm, gain an additional [E] .
+The old texts describe that the surface of "mana pools" were littered with these flowers.
+Start each combat in #yCalm.
+Its owner blind, its contents unseen.
+Whenever you add a card to your deck, gain #b
+ #yGold.
+Meticulously painted, these fish were revered to bring great fortune.
+During Boss and Elite combats, gain [E] at the start of your turn.
+Rusty miserable chains.
+Cards containing "Strike" deal #b
+ additional damage.
+It's beat up.
+At the end of your turn, gain #b
+ #yBlock for each card in your hand.
+A simple but sturdy design.
+Whenever you would lose HP, lose #b
+ less.
+It's very very heavy.
+At the start of your 2nd turn, gain #b
+ #yBlock.
+Pleasant to hold in the hand. What was it for?
+At the start of your 3rd turn, gain #b
+ #yBlock.
+Wooden trinket carved with delicate precision. A name is carved into it but the language is foreign.
+Whenever you #yScry, #yScry #b
+ additional cards.
+See into the minds of those nearby, predicting their future moves.
+At the start of your turn, gain #b
+ #yMantra.
+The sound of the small drum keeps your mind awake, revealing a path forward.
