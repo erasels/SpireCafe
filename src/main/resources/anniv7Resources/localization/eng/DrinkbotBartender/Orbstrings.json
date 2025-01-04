@@ -1,0 +1,10 @@
+{
+    "${ModID}:BloodAlcoholOrb": {
+      "NAMES": [
+        "Blood Alcohol"
+      ],
+      "DESCRIPTION": [
+        "6"
+      ]
+    }
+  }

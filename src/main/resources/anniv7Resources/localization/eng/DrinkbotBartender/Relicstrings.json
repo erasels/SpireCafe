@@ -1,0 +1,9 @@
+{
+    "${ModID}:DrinkInserterRelic": {
+        "NAME": "Drink Inserter",
+        "FLAVOR": "Boozy",
+        "DESCRIPTIONS": [
+          "Every 3 turns, channel a Blood Alcohol orb."
+        ]
+      }
+}
