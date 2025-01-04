@@ -42,6 +42,11 @@ public class StarbucksBartender extends AbstractBartender {
     }
 
     @Override
+    public boolean getHealOptionCondition() {
+        return Wiz.p().gold >= GOLD_LOSS;
+    }
+
+    @Override
     public int getHealAmount() {
         // Heal 50% of max HP or 10, whichever is larger
         return (int) NumberUtils.max(Wiz.p().maxHealth * 0.5, 10);
@@ -58,6 +63,11 @@ public class StarbucksBartender extends AbstractBartender {
     @Override
     public String getSecondOptionDescription() {
         return String.format(cutsceneStrings.OPTIONS[2], MILK_COST);
+    }
+
+    @Override
+    public boolean getSecondOptionCondition() {
+        return Wiz.p().gold >= MILK_COST;
     }
 
     @Override

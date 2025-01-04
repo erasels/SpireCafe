@@ -22,7 +22,7 @@ public class BartenderCutscene extends AbstractCutscene {
      * Used if you don't define the cutscene strings yourself. If you make a subclass, just get them in a static variable and pass that to the overload.
      * You can access the contents via the public variables that are set in the super class (BLOCKING_TEXTS, OPTIONS, DESCRIPTIONS)
      * The cutscenes string are gotten through the id of the Bartender (with Cutscene appended) which is the name of the Bartender's class.
-     * e.g. StarbucksBartender.class -> anniv7:VampireBartenderCutscene
+     * e.g. StarbucksBartender.class -> anniv7:StarbucksBartenderCutscene
      */
     protected static CutsceneStrings getCutsceneStrings(AbstractBartender character) {
         return LocalizedCutsceneStrings.getCutsceneStrings(Anniv7Mod.makeID(character.id + "Cutscene"));
@@ -86,7 +86,7 @@ public class BartenderCutscene extends AbstractCutscene {
 
     private void addHealOption() {
         String healText = bartender.getHealOptionDescription();
-        this.dialog.addDialogOption(healText).setOptionResult((i) -> {
+        this.dialog.addDialogOption(healText, !bartender.getHealOptionCondition()).setOptionResult((i) -> {
             bartender.inHealAction = true;
             bartender.applyHealAction();
             bartender.healUsed = true;
@@ -96,7 +96,7 @@ public class BartenderCutscene extends AbstractCutscene {
 
     private void addSecondOption() {
         String secondOptionDesc = bartender.getSecondOptionDescription();
-        this.dialog.addDialogOption(secondOptionDesc).setOptionResult((i) -> {
+        this.dialog.addDialogOption(secondOptionDesc, !bartender.getSecondOptionCondition()).setOptionResult((i) -> {
             bartender.inSecondAction = true;
             bartender.applySecondOptionAction();
             bartender.secondUsed = true;
