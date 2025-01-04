@@ -19,6 +19,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
+import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import imgui.ImGui;
 import imgui.type.ImFloat;
@@ -254,6 +255,11 @@ public class Anniv7Mod implements
             Consumer<String> whitelist = getWidePotionsWhitelistMethod();
 
         }
+        new AutoAdd(modID)
+                .packageFilter(Anniv7Mod.class)
+                .any(AbstractPotion.class, (info, potion) -> {
+                    BaseMod.addPotion(potion.getClass(), null, null, null, potion.ID);
+                });
     }
 
     public static final ImFloat shake_power = new ImFloat(0.007f);
