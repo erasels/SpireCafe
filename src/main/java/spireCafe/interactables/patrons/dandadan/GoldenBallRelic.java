@@ -71,20 +71,15 @@ public class GoldenBallRelic extends AbstractSCRelic implements CustomSavable<In
         drawPileCopy.group.addAll(Wiz.p().drawPile.group);
         Collections.shuffle(drawPileCopy.group);
 
-        ArrayList<Integer> ghostIndices = new ArrayList<>();
-        ghostIndices.add(0);
-        ghostIndices.add(1);
-        ghostIndices.add(2);
-
-        int i = 0;
-        while (ghostIndices.size() > 0 && i < drawPileCopy.size()) {
-            AbstractCard c = drawPileCopy.group.get(i);
-            if (c.type != AbstractCard.CardType.CURSE && !(c.cardID.equals(Tactician.ID)
-                    || c.cardID.equals(DeusExMachina.ID) || c.cardID.equals(Reflex.ID))) {
-                CardModifierManager.addModifier(c, new GhostModifier(ghostIndices.remove(0)));
+        int ghostIndex = 0;
+        for (AbstractCard c : drawPileCopy.group) {
+            if (ghostIndex >= 3)
+                break;
+            if (c.type != AbstractCard.CardType.CURSE && c.cost != -2 && c.costForTurn != -2) {
+                CardModifierManager.addModifier(c, new GhostModifier(ghostIndex++));
             }
-            i++;
         }
+        
         if (ghostsPlayed == -1) {
             flash();
             Wiz.atb(new RelicAboveCreatureAction(Wiz.p(), this));

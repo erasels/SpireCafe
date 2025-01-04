@@ -6,10 +6,14 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.orbs.Lightning;
 
+import basemod.patches.com.megacrit.cardcrawl.dungeons.AbstractDungeon.NoPools;
+import basemod.patches.com.megacrit.cardcrawl.screens.compendium.CardLibraryScreen.NoCompendium;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractSCCard;
 import spireCafe.util.Wiz;
 
+@NoPools
+@NoCompendium
 public class GoldenBallLightning extends AbstractSCCard {
     public static final String ID = Anniv7Mod.makeID(GoldenBallLightning.class.getSimpleName());
 
@@ -21,7 +25,7 @@ public class GoldenBallLightning extends AbstractSCCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        Wiz.doDmg(m, damage, AttackEffect.SLASH_HEAVY);
+        dmg(m, AttackEffect.SLASH_HEAVY);
 
         for (int i = 0; i < magicNumber; ++i) {
             Wiz.atb(new ChannelAction(new Lightning()));

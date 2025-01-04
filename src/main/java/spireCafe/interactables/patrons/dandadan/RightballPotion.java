@@ -1,6 +1,5 @@
 package spireCafe.interactables.patrons.dandadan;
 
-import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -11,11 +10,12 @@ import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 
+import basemod.abstracts.CustomPotion;
 import spireCafe.Anniv7Mod;
 
-public class RightballPotion extends AbstractPotion {
+public class RightballPotion extends CustomPotion {
 
-    public static final String Potion_ID = RightballPotion.class.getSimpleName(); // This is temporary
+    public static final String Potion_ID = Anniv7Mod.makeID(RightballPotion.class.getSimpleName());
 
     private static final PotionStrings potionStrings;
     private int returnChance;
@@ -27,7 +27,7 @@ public class RightballPotion extends AbstractPotion {
     }
 
     public RightballPotion() {
-        super(potionStrings.NAME, Potion_ID, PotionRarity.PLACEHOLDER, PotionSize.SPHERE, PotionEffect.NONE, new Color(254/255f, 193/255f, 27/255f, 1f), null, null);
+        super(potionStrings.NAME, Potion_ID, PotionRarity.PLACEHOLDER, PotionSize.SPHERE, PotionColor.NONE);
         isThrown = true;
         targetRequired = true;
         returnChance = 100;
@@ -46,7 +46,7 @@ public class RightballPotion extends AbstractPotion {
         DamageInfo info = new DamageInfo(AbstractDungeon.player, this.potency, DamageInfo.DamageType.THORNS);
         info.applyEnemyPowersOnly(target);
         this.addToBot(new DamageAction(target, info, AbstractGameAction.AttackEffect.BLUNT_HEAVY));
-        if (AbstractDungeon.potionRng.randomBoolean(returnChance / 100.0f)) {
+        if (AbstractDungeon.cardRandomRng.randomBoolean(returnChance / 100.0f)) {
             RightballPotionPatch.rbp = this;
         }
         returnChance -= 10;
@@ -62,6 +62,6 @@ public class RightballPotion extends AbstractPotion {
     }
 
     static {
-        potionStrings = CardCrawlGame.languagePack.getPotionString(Anniv7Mod.makeID(Potion_ID));
+        potionStrings = CardCrawlGame.languagePack.getPotionString(Potion_ID);
     }
 }

@@ -29,6 +29,7 @@ import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cardvars.SecondDamage;
 import spireCafe.cardvars.SecondMagicNumber;
 import spireCafe.interactables.attractions.makeup.MakeupTableAttraction;
+import spireCafe.interactables.patrons.dandadan.RightballPotion;
 import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.ui.FixedModLabeledToggleButton.FixedModLabeledToggleButton;
 import spireCafe.util.TexLoader;
@@ -234,11 +235,8 @@ public class Anniv7Mod implements
         if (Loader.isModLoaded("widepotions")) {
             Consumer<String> whitelist = getWidePotionsWhitelistMethod();
         }
-        new AutoAdd(modID)
-                .packageFilter(Anniv7Mod.class)
-                .any(AbstractPotion.class, (info, potion) -> {
-                    BaseMod.addPotion(potion.getClass(), null, null, null, potion.ID);
-                });
+        BaseMod.addPotion(RightballPotion.class, 
+                new Color(254 / 255f, 193 / 255f, 27 / 255f, 1f), null, null, RightballPotion.Potion_ID);
     }
 
     private static Consumer<String> getWidePotionsWhitelistMethod() {

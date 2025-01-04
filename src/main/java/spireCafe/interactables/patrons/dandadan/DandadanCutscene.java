@@ -72,10 +72,6 @@ public class DandadanCutscene extends AbstractCutscene {
                             goToDialogue(BALL_LIGHTNING);
                             character.alreadyPerformedTransaction = true;
                             Wiz.p().loseGold(goldForBallLightningCard);
-                            // add 1 orb slot if player has none
-                            if (Wiz.p().masterMaxOrbs == 0) {
-                                Wiz.p().masterMaxOrbs = 1;
-                            }
                             AbstractDungeon.topLevelEffectsQueue
                                     .add(new ShowCardAndObtainEffect(
                                             new GoldenBallLightning(), Settings.WIDTH / 2.0F
