@@ -13,6 +13,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import spireCafe.Anniv7Mod;
@@ -23,8 +24,11 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class PackmasterMerchant extends AbstractMerchant {
@@ -42,7 +46,7 @@ public class PackmasterMerchant extends AbstractMerchant {
     private static Class<?> abstractCardPack;
 
     private float speechTimer;
-    private int shopType;
+    private ShopType shopType;
 
     public PackmasterMerchant(float animationX, float animationY) {
         super(animationX, animationY, 360.0f, 235.0f);
@@ -98,25 +102,47 @@ public class PackmasterMerchant extends AbstractMerchant {
 
     @Override
     public void rollShop() {
-        this.shopType = AbstractDungeon.miscRng.random(2);
+        this.shopType = this.rollShopType();
         ArrayList<Object> allPacks = new ArrayList<>(ReflectionHacks.getPrivateStatic(anniv5, "allPacks"));
         Collections.shuffle(allPacks, new java.util.Random(AbstractDungeon.miscRng.randomLong()));
         ArrayList<AbstractCard> cards = new ArrayList<>();
         switch (this.shopType) {
-            case 0:
+            case OnePack:
                 cards.addAll(this.getPackCards(allPacks.get(0)));
                 break;
-            case 1:
+            case TwoPacks:
                 int roll = AbstractDungeon.miscRng.random(2);
                 AbstractCard.CardRarity rarity = roll == 0 ? AbstractCard.CardRarity.COMMON : roll == 1 ? AbstractCard.CardRarity.UNCOMMON : AbstractCard.CardRarity.RARE;
                 cards.addAll(this.getPackCards(allPacks.get(0)));
                 cards.addAll(this.getPackCards(allPacks.get(1)));
                 cards.removeIf(c -> c.rarity != rarity);
                 break;
-            case 2:
+            case Rares:
                 for (int i = 0; i < 10; i++) {
-                    List<AbstractCard> rares = this.getPackCards(allPacks.get(i)).stream().filter(c -> c.rarity == AbstractCard.CardRarity.RARE).collect(Collectors.toList());
-                    cards.add(rares.get(AbstractDungeon.miscRng.random(rares.size() - 1)));
+                    List<AbstractCard> rares = this.getOneCardPerPack(allPacks, c -> c.rarity == AbstractCard.CardRarity.RARE);
+                    cards.addAll(rares);
+                }
+                break;
+            case Skims:
+                String[] skims = new String[] { "HandOfGulDan", "Divination", "RangersSetup", "Voices", "ReadTheFlames", "SurprisePack", "SleeveUp", "Whispers", "DynamicVial", "OverwhelmingPower" };
+                for (String id : skims) {
+                    cards.add(CardLibrary.getCard("anniv5:" + id));
+                }
+                break;
+            case Strikes:
+                List<AbstractCard> strikes = this.getOneCardPerPack(allPacks, c -> c.hasTag(AbstractCard.CardTags.STRIKE));
+                cards.addAll(strikes);
+                break;
+            case IronWaves:
+                String[] ironWaves = new String[] { "Reroller", "LotsOfIronWaves", "Repel", "Midnight", "EnGarde", "WaveMotionCannon", "StrikeOfGenius", "Slam", "Shifting", "Synergize" };
+                for (String id : ironWaves) {
+                    cards.add(CardLibrary.getCard("anniv5:" + id));
+                }
+                break;
+            case Energy:
+                String[] energy = new String[] { "Flashlight", "Luciferium", "IcyFloe", "Excitement", "Novile", "MidnightOil", "HuttsGamble", "Trash", "WindUp", "HeartOfTheForge" };
+                for (String id : energy) {
+                    cards.add(CardLibrary.getCard("anniv5:" + id));
                 }
                 break;
         }
@@ -128,8 +154,35 @@ public class PackmasterMerchant extends AbstractMerchant {
             float yPos = i < 5 ? TOP_ROW_Y : BOTTOM_ROW_Y;
             AbstractCard card = cards.get(i);
             int price = (int)(AbstractCard.getPrice(card.rarity) * AbstractDungeon.miscRng.random(0.9f, 1.1f));
-            articles.add(new CardArticle(card.cardID, this, xPos, yPos, card, price));
+            articles.add(new CardArticle(card.cardID, this, xPos, yPos, card.makeCopy(), price));
         }
+    }
+
+    private ShopType rollShopType() {
+        List<ShopType> possibleShopTypes;
+        if (AbstractDungeon.miscRng.random(99) < 75) {
+            possibleShopTypes = Arrays.asList(ShopType.OnePack, ShopType.TwoPacks, ShopType.Rares);
+        }
+        else {
+            possibleShopTypes = Arrays.asList(ShopType.Skims, ShopType.Strikes, ShopType.IronWaves, ShopType.Energy);
+        }
+
+        return possibleShopTypes.get(AbstractDungeon.miscRng.random(possibleShopTypes.size() - 1));
+    }
+
+    private ArrayList<AbstractCard> getOneCardPerPack(ArrayList<Object> allPacks, Function<AbstractCard, Boolean> f) {
+        ArrayList<AbstractCard> cards = new ArrayList<>();
+        Supplier<Boolean> check = () -> cards.size() < 10;
+        for (int i = 0; check.get() || i < allPacks.size(); i++) {
+            List<AbstractCard> validCards = this.getPackCards(allPacks.get(i)).stream().filter(f::apply).collect(Collectors.toList());
+            if (validCards.size() == 1) {
+                cards.add(validCards.get(0));
+            }
+            else if (validCards.size() > 1) {
+                cards.add(validCards.get(AbstractDungeon.miscRng.random(validCards.size() - 1)));
+            }
+        }
+        return cards;
     }
 
     @SuppressWarnings("unchecked")
@@ -167,12 +220,22 @@ public class PackmasterMerchant extends AbstractMerchant {
         if (AbstractDungeon.player.chosenClass.toString().equals("THE_PACKMASTER")) {
             possibleMessages.add(s[5]);
         }
-        possibleMessages.add(s[baseMessageCount + 1 + this.shopType]);
+        possibleMessages.add(s[baseMessageCount + 1 + Arrays.asList(ShopType.values()).indexOf(this.shopType)]);
 
         return possibleMessages.get(MathUtils.random(possibleMessages.size() - 1));
     }
 
     @Override
     public void onCloseShop() {
+    }
+
+    private enum ShopType {
+        OnePack,
+        TwoPacks,
+        Rares,
+        Skims,
+        Strikes,
+        IronWaves,
+        Energy
     }
 }
