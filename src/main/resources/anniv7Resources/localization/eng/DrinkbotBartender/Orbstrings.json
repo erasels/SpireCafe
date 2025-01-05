@@ -4,7 +4,7 @@
         "Blood Alcohol"
       ],
       "DESCRIPTION": [
-        "6"
+        "#yPassive: At the start of every third turn, increase this Orb's heal by #b%s. NL #yEvoke: Heal #b%s at the end of combat. NL This orb is unaffected by #yFocus."
       ]
     }
   }

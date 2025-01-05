@@ -21,11 +21,11 @@ public class BloodAlcoholOrb extends CustomOrb {
     private static final String ID = Anniv7Mod.makeID(BloodAlcoholOrb.class.getSimpleName());
     private static final OrbStrings orbStrings = CardCrawlGame.languagePack.getOrbString(ID);
     private static final String NAME = orbStrings.NAME;
-    private static final String[] DESCRIPTIONS = orbStrings.DESCRIPTION;
+    private static final String[] DESCRIPTION = orbStrings.DESCRIPTION;
     private static final String SFX = "SOTE_SFX_FireIgnite_2_v1.ogg";
     private static final String IMG = Anniv7Mod.makeOrbPath("bloodalcohol.png");
 
-    private static final int BASE_PASSIVE = 2;
+    private static final int BASE_PASSIVE = 3;
     private static final int BASE_EVOKE = 0;
     private int timer = 0;
 
@@ -40,12 +40,13 @@ public class BloodAlcoholOrb extends CustomOrb {
     }
 
     @Override
-    public void onEndOfTurn() {
+    public void onStartOfTurn() {
         this.timer += 1;
         if (this.timer >= TIMER) {
             this.evokeAmount += this.passiveAmount;
             this.timer = 0;
         }
+        updateDescription();
     }
 
     @Override
@@ -58,9 +59,9 @@ public class BloodAlcoholOrb extends CustomOrb {
     @Override
     protected void renderText(SpriteBatch sb) {
         FontHelper.renderFontCentered(sb, FontHelper.cardEnergyFont_L, Integer.toString(this.timer), this.cX + NUM_X_OFFSET,
-                this.cY + this.bobEffect.y / 2.0F + NUM_Y_OFFSET, this.c, this.fontScale);
+                this.cY + this.bobEffect.y / 2.0F + NUM_Y_OFFSET + 20.0F * Settings.scale, this.c, this.fontScale);
         FontHelper.renderFontCentered(sb, FontHelper.cardEnergyFont_L, Integer.toString(this.evokeAmount), this.cX + NUM_X_OFFSET,
-                this.cY + this.bobEffect.y / 2.0F + NUM_Y_OFFSET, new Color(0.7F, 0.0F, 0.0F, this.c.a), this.fontScale);
+                this.cY + this.bobEffect.y / 2.0F + NUM_Y_OFFSET - 4.0F * Settings.scale, new Color(0.7F, 0.0F, 0.0F, this.c.a), this.fontScale);
     }
 
     @Override
@@ -74,7 +75,7 @@ public class BloodAlcoholOrb extends CustomOrb {
 
     @Override
     public void updateDescription() {
-        description = "";
+        this.description = String.format(DESCRIPTION[0], this.passiveAmount, this.evokeAmount);
     }
     
 }
