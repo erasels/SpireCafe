@@ -130,9 +130,22 @@ public class PackmasterMerchant extends AbstractMerchant {
         this.speechTimer -= Gdx.graphics.getDeltaTime();
         if (this.speechBubble == null && this.speechTimer <= 0.0f) {
             this.speechTimer = MathUtils.random(40.0f, 60.0f);
-            String message = packmasterStrings.TEXT[MathUtils.random(4)];
-            this.createSpeechBubble(message);
+            this.createSpeechBubble(this.getRandomMessage());
         }
+    }
+
+    private String getRandomMessage() {
+        String[] s = packmasterStrings.TEXT;
+        ArrayList<String> possibleMessages = new ArrayList<>();
+        int baseMessageCount = 5;
+        for (int i = 0; i < baseMessageCount; i++) {
+            possibleMessages.add(s[i]);
+        }
+        if (AbstractDungeon.player.chosenClass.toString().equals("THE_PACKMASTER")) {
+            possibleMessages.add(s[5]);
+        }
+
+        return possibleMessages.get(MathUtils.random(possibleMessages.size() - 1));
     }
 
     @Override
