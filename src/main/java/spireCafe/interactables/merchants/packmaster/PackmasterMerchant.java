@@ -160,7 +160,7 @@ public class PackmasterMerchant extends AbstractMerchant {
     private String getRandomMessage() {
         String[] s = packmasterStrings.TEXT;
         ArrayList<String> possibleMessages = new ArrayList<>();
-        int baseMessageCount = 5;
+        int baseMessageCount = 6;
         for (int i = 0; i < baseMessageCount; i++) {
             possibleMessages.add(s[i]);
         }
