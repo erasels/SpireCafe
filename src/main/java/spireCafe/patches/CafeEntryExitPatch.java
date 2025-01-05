@@ -162,6 +162,7 @@ public class CafeEntryExitPatch {
         CardCrawlGame.sound.play(CAFE_ENTRY_SOUND_KEY);
         AbstractDungeon.rs = AbstractDungeon.RenderScene.NORMAL;
 
+        AbstractDungeon.overlayMenu.proceedButton.hideInstantly();
         modifyProceedButton(120f * Settings.scale, false);
 
         AbstractDungeon.combatRewardScreen.clear();
@@ -227,6 +228,7 @@ public class CafeEntryExitPatch {
                 if (!AbstractDungeon.isFadingOut) {
                     AbstractDungeon.fadeIn();
                     setFadeTimer();
+                    AbstractDungeon.overlayMenu.proceedButton.show();
                     startedFadeIn = true;
                 }
                 this.originalRoom.update();
