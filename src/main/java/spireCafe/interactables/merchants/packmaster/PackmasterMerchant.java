@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.*;
+import com.evacipated.cardcrawl.mod.stslib.cards.interfaces.OnObtainCard;
+import com.evacipated.cardcrawl.mod.stslib.cards.interfaces.StartupCard;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -145,6 +147,22 @@ public class PackmasterMerchant extends AbstractMerchant {
                     cards.add(CardLibrary.getCard("anniv5:" + id));
                 }
                 break;
+            case Ethereal:
+                List<AbstractCard> ethereal = this.getOneCardPerPack(allPacks, c -> c.isEthereal);
+                cards.addAll(ethereal);
+                break;
+            case Startup:
+                List<AbstractCard> startup = this.getOneCardPerPack(allPacks, c -> c.isInnate || c instanceof StartupCard || c instanceof OnObtainCard);
+                cards.addAll(startup);
+                break;
+            case ZeroCost:
+                List<AbstractCard> zeroCost = this.getOneCardPerPack(allPacks, c -> c.cost == 0);
+                cards.addAll(zeroCost);
+                break;
+            case XCost:
+                List<AbstractCard> xCost = this.getOneCardPerPack(allPacks, c -> c.cost == -1);
+                cards.addAll(xCost);
+                break;
         }
 
         int tmp = (int)(Settings.WIDTH - DRAW_START_X * 2.0F - AbstractCard.IMG_WIDTH_S * 5.0F) / 4;
@@ -159,21 +177,14 @@ public class PackmasterMerchant extends AbstractMerchant {
     }
 
     private ShopType rollShopType() {
-        List<ShopType> possibleShopTypes;
-        if (AbstractDungeon.miscRng.random(99) < 75) {
-            possibleShopTypes = Arrays.asList(ShopType.OnePack, ShopType.TwoPacks, ShopType.Rares);
-        }
-        else {
-            possibleShopTypes = Arrays.asList(ShopType.Skims, ShopType.Strikes, ShopType.IronWaves, ShopType.Energy);
-        }
-
-        return possibleShopTypes.get(AbstractDungeon.miscRng.random(possibleShopTypes.size() - 1));
+        ShopType[] shopTypes = ShopType.values();
+        return shopTypes[AbstractDungeon.miscRng.random(shopTypes.length - 1)];
     }
 
     private ArrayList<AbstractCard> getOneCardPerPack(ArrayList<Object> allPacks, Function<AbstractCard, Boolean> f) {
         ArrayList<AbstractCard> cards = new ArrayList<>();
         Supplier<Boolean> check = () -> cards.size() < 10;
-        for (int i = 0; check.get() || i < allPacks.size(); i++) {
+        for (int i = 0; check.get() && i < allPacks.size(); i++) {
             List<AbstractCard> validCards = this.getPackCards(allPacks.get(i)).stream().filter(f::apply).collect(Collectors.toList());
             if (validCards.size() == 1) {
                 cards.add(validCards.get(0));
@@ -236,6 +247,10 @@ public class PackmasterMerchant extends AbstractMerchant {
         Skims,
         Strikes,
         IronWaves,
-        Energy
+        Energy,
+        Ethereal,
+        Startup,
+        ZeroCost,
+        XCost
     }
 }
