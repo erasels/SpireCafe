@@ -43,8 +43,6 @@ public class PackmasterMerchant extends AbstractMerchant {
     private static final float BOTTOM_ROW_Y = 337.0F * Settings.yScale;
     private static final float DRAW_START_X = Settings.WIDTH * 0.16F;
 
-    private static Class<?> packmasterSkin;
-    private static Class<?> abstractSkin;
     private static Class<?> anniv5;
     private static Class<?> abstractCardPack;
 
@@ -62,8 +60,8 @@ public class PackmasterMerchant extends AbstractMerchant {
         String atlasPath = null;
         if (Loader.isModLoaded("anniv5")) {
             try {
-                packmasterSkin = Class.forName("thePackmaster.skins.instances.PackmasterSkin");
-                abstractSkin = Class.forName("thePackmaster.skins.AbstractSkin");
+                Class<?> packmasterSkin = Class.forName("thePackmaster.skins.instances.PackmasterSkin");
+                Class<?> abstractSkin = Class.forName("thePackmaster.skins.AbstractSkin");
                 Constructor<?> constructor = packmasterSkin.getDeclaredConstructor();
                 constructor.setAccessible(true);
                 skin = constructor.newInstance();
