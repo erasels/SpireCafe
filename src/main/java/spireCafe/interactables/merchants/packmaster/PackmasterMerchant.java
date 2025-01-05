@@ -15,19 +15,17 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
-import com.megacrit.cardcrawl.random.Random;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractMerchant;
 import spireCafe.interactables.merchants.CardArticle;
-import spireCafe.interactables.merchants.secretshop.IdentifyCardArticle;
-import spireCafe.interactables.merchants.secretshop.UnidentifiedCard;
-import spireCafe.vfx.TopLevelSpeechEffect;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PackmasterMerchant extends AbstractMerchant {
     public static final String ID = PackmasterMerchant.class.getSimpleName();
@@ -43,7 +41,8 @@ public class PackmasterMerchant extends AbstractMerchant {
     private static Class<?> anniv5;
     private static Class<?> abstractCardPack;
 
-    private float speechTimer = 0.0f;
+    private float speechTimer;
+    private int shopType;
 
     public PackmasterMerchant(float animationX, float animationY) {
         super(animationX, animationY, 360.0f, 235.0f);
@@ -99,28 +98,52 @@ public class PackmasterMerchant extends AbstractMerchant {
 
     @Override
     public void rollShop() {
+        this.shopType = AbstractDungeon.miscRng.random(2);
         ArrayList<Object> allPacks = new ArrayList<>(ReflectionHacks.getPrivateStatic(anniv5, "allPacks"));
         Collections.shuffle(allPacks, new java.util.Random(AbstractDungeon.miscRng.randomLong()));
-        Object pack = allPacks.get(0);
         ArrayList<AbstractCard> cards = new ArrayList<>();
-        try {
-            for (AbstractCard card : (ArrayList<AbstractCard>)ReflectionHacks.getCachedField(abstractCardPack, "cards").get(pack)) {
-                if (card.rarity == AbstractCard.CardRarity.COMMON || card.rarity == AbstractCard.CardRarity.UNCOMMON || card.rarity == AbstractCard.CardRarity.RARE) {
-                    cards.add(card);
+        switch (this.shopType) {
+            case 0:
+                cards.addAll(this.getPackCards(allPacks.get(0)));
+                break;
+            case 1:
+                int roll = AbstractDungeon.miscRng.random(2);
+                AbstractCard.CardRarity rarity = roll == 0 ? AbstractCard.CardRarity.COMMON : roll == 1 ? AbstractCard.CardRarity.UNCOMMON : AbstractCard.CardRarity.RARE;
+                cards.addAll(this.getPackCards(allPacks.get(0)));
+                cards.addAll(this.getPackCards(allPacks.get(1)));
+                cards.removeIf(c -> c.rarity != rarity);
+                break;
+            case 2:
+                for (int i = 0; i < 10; i++) {
+                    List<AbstractCard> rares = this.getPackCards(allPacks.get(i)).stream().filter(c -> c.rarity == AbstractCard.CardRarity.RARE).collect(Collectors.toList());
+                    cards.add(rares.get(AbstractDungeon.miscRng.random(rares.size() - 1)));
                 }
-            }
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
+                break;
         }
 
         int tmp = (int)(Settings.WIDTH - DRAW_START_X * 2.0F - AbstractCard.IMG_WIDTH_S * 5.0F) / 4;
         float padX = (int)(tmp + AbstractCard.IMG_WIDTH_S) + 10.0F * Settings.scale;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < Math.min(cards.size(), 10); i++) {
             float xPos = DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * (i % 5);
             float yPos = i < 5 ? TOP_ROW_Y : BOTTOM_ROW_Y;
             AbstractCard card = cards.get(i);
             int price = (int)(AbstractCard.getPrice(card.rarity) * AbstractDungeon.miscRng.random(0.9f, 1.1f));
             articles.add(new CardArticle(card.cardID, this, xPos, yPos, card, price));
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private ArrayList<AbstractCard> getPackCards(Object pack) {
+        try {
+            ArrayList<AbstractCard> cards = new ArrayList<>();
+            for (AbstractCard card : (ArrayList<AbstractCard>)ReflectionHacks.getCachedField(abstractCardPack, "cards").get(pack)) {
+                if (card.rarity == AbstractCard.CardRarity.COMMON || card.rarity == AbstractCard.CardRarity.UNCOMMON || card.rarity == AbstractCard.CardRarity.RARE) {
+                    cards.add(card);
+                }
+            }
+            return cards;
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -144,6 +167,7 @@ public class PackmasterMerchant extends AbstractMerchant {
         if (AbstractDungeon.player.chosenClass.toString().equals("THE_PACKMASTER")) {
             possibleMessages.add(s[5]);
         }
+        possibleMessages.add(s[baseMessageCount + 1 + this.shopType]);
 
         return possibleMessages.get(MathUtils.random(possibleMessages.size() - 1));
     }
