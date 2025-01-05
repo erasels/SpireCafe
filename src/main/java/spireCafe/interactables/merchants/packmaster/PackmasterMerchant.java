@@ -43,6 +43,8 @@ public class PackmasterMerchant extends AbstractMerchant {
     private static Class<?> anniv5;
     private static Class<?> abstractCardPack;
 
+    private float speechTimer = 0.0f;
+
     public PackmasterMerchant(float animationX, float animationY) {
         super(animationX, animationY, 360.0f, 235.0f);
         this.name = packmasterStrings.NAMES[0];
@@ -92,6 +94,7 @@ public class PackmasterMerchant extends AbstractMerchant {
     @Override
     public void onInteract() {
         super.onInteract();
+        this.speechTimer = MathUtils.random(5.0f, 10.0f);
     }
 
     @Override
@@ -118,6 +121,17 @@ public class PackmasterMerchant extends AbstractMerchant {
             AbstractCard card = cards.get(i);
             int price = (int)(AbstractCard.getPrice(card.rarity) * AbstractDungeon.miscRng.random(0.9f, 1.1f));
             articles.add(new CardArticle(card.cardID, this, xPos, yPos, card, price));
+        }
+    }
+
+    @Override
+    public void updateShop() {
+        super.updateShop();
+        this.speechTimer -= Gdx.graphics.getDeltaTime();
+        if (this.speechBubble == null && this.speechTimer <= 0.0f) {
+            this.speechTimer = MathUtils.random(40.0f, 60.0f);
+            String message = packmasterStrings.TEXT[MathUtils.random(4)];
+            this.createSpeechBubble(message);
         }
     }
 
