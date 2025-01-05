@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.*;
 import com.evacipated.cardcrawl.mod.stslib.cards.interfaces.OnObtainCard;
 import com.evacipated.cardcrawl.mod.stslib.cards.interfaces.StartupCard;
+import com.evacipated.cardcrawl.mod.stslib.fields.cards.AbstractCard.ExhaustiveField;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -163,6 +164,10 @@ public class PackmasterMerchant extends AbstractMerchant {
                 List<AbstractCard> xCost = this.getOneCardPerPack(allPacks, c -> c.cost == -1);
                 cards.addAll(xCost);
                 break;
+            case Exhaust:
+                List<AbstractCard> exhaust = this.getOneCardPerPack(allPacks, c -> c.exhaust || ExhaustiveField.ExhaustiveFields.baseExhaustive.get(c) > 0);
+                cards.addAll(exhaust);
+                break;
         }
 
         int tmp = (int)(Settings.WIDTH - DRAW_START_X * 2.0F - AbstractCard.IMG_WIDTH_S * 5.0F) / 4;
@@ -251,6 +256,7 @@ public class PackmasterMerchant extends AbstractMerchant {
         Ethereal,
         Startup,
         ZeroCost,
-        XCost
+        XCost,
+        Exhaust
     }
 }
