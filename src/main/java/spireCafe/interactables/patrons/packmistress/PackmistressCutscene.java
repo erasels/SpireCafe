@@ -2,7 +2,6 @@ package spireCafe.interactables.patrons.packmistress;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.curses.Clumsy;
-import com.megacrit.cardcrawl.cards.curses.Writhe;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
