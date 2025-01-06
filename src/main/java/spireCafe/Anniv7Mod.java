@@ -32,6 +32,7 @@ import spireCafe.cardvars.SecondMagicNumber;
 import spireCafe.interactables.attractions.makeup.MakeupTableAttraction;
 import spireCafe.interactables.patrons.missingno.MissingnoUtil;
 import spireCafe.screens.CafeMerchantScreen;
+import spireCafe.screens.JukeboxScreen;
 import spireCafe.ui.FixedModLabeledToggleButton.FixedModLabeledToggleButton;
 import spireCafe.util.TexLoader;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
@@ -246,6 +247,7 @@ public class Anniv7Mod implements
         initializeSavedData();
         BaseMod.addEvent(CafeRoom.ID, CafeRoom.class, "CafeDungeon");
         BaseMod.addCustomScreen(new CafeMerchantScreen());
+        BaseMod.addCustomScreen(new JukeboxScreen());
         ConsoleCommand.addCommand("cafe", Cafe.class);
     }
 

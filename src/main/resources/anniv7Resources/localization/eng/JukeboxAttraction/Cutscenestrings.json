@@ -1,0 +1,15 @@
+{
+  "${ModID}:JukeboxCutscene": {
+    "NAME": "Jukebox",
+    "BLOCKING_TEXTS": [],
+    "DESCRIPTIONS": [
+      "A jukebox plays in front of you, there are an assortment of buttons on the front, what do you do?",
+      "You look over the buttons.",
+      "You leave the jukebox to do its job."
+    ],
+    "OPTIONS": [
+      "Look at the buttons.",
+      "The music is fine the way it is."
+    ]
+  }
+}
