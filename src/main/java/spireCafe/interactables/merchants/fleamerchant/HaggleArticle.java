@@ -88,8 +88,8 @@ public class HaggleArticle extends AbstractArticle{
     @Override
     public String getTipBody() {
         if(haggleOdds>0) {
-            return uiStrings.TEXT[1] + (int) (100*haggleOdds) + uiStrings.TEXT[2] + (int) (100 - 100*haggleRate) + uiStrings.TEXT[3];
-        } return uiStrings.TEXT[4] + (int) (100*haggleRate) + uiStrings.TEXT[5];
+            return uiStrings.TEXT[1].replace("{0}", String.valueOf((int) (100*haggleOdds))).replace("{1}", String.valueOf((int) (100 - 100*haggleRate)));
+        } return uiStrings.TEXT[2].replace("{0}", String.valueOf((int) (100*haggleRate)));
     }
 
     public void renderPrice(SpriteBatch sb) {

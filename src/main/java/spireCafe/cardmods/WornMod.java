@@ -2,17 +2,20 @@ package spireCafe.cardmods;
 
 import basemod.abstracts.AbstractCardModifier;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import spireCafe.Anniv7Mod;
 
 public class WornMod extends AbstractCardModifier {
     public static String ID = Anniv7Mod.makeID(WornMod.class.getSimpleName());
-    private int damageDown;
-    private int blockDown;
-    private int magicDown;
+    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ID);
+    private final float damageMod;
+    private final float blockMod;
+    private final int magicDown;
 
-    public WornMod(int damageDown, int blockDown, int magicDown) {
-        this.damageDown = damageDown;
-        this.blockDown = blockDown;
+    public WornMod(float damageMod, float blockMod, int magicDown) {
+        this.damageMod = damageMod;
+        this.blockMod = blockMod;
         this.magicDown = magicDown;
     }
 
@@ -23,15 +26,15 @@ public class WornMod extends AbstractCardModifier {
 
     @Override
     public void onInitialApplication(AbstractCard card) {
-        card.baseDamage -= damageDown;
-        card.baseBlock -= blockDown;
+        card.baseDamage = (int) (card.baseDamage * damageMod);
+        card.baseBlock = (int) (card.baseBlock * blockMod);
         card.baseMagicNumber -= magicDown;
         card.rarity = AbstractCard.CardRarity.COMMON;
-        card.name = "Worn " + card.name;
+        card.name = uiStrings.TEXT[0].replace("{0}", card.name);
     }
 
     @Override
     public AbstractCardModifier makeCopy() {
-        return new WornMod(damageDown, blockDown, magicDown);
+        return new WornMod(damageMod, blockMod, magicDown);
     }
 }

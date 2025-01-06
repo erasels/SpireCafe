@@ -1,6 +1,5 @@
 package spireCafe.interactables.merchants.fleamerchant;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -8,13 +7,9 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.relics.*;
-import com.megacrit.cardcrawl.shop.ShopScreen;
-import com.megacrit.cardcrawl.vfx.RelicAboveCreatureEffect;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractArticle;
 import spireCafe.abstracts.AbstractMerchant;
-import spireCafe.interactables.merchants.secretshop.SecretShopMerchant;
-import spireCafe.util.TexLoader;
 
 import java.util.ArrayList;
 
@@ -58,16 +53,17 @@ public class FleaMarketRelicArticle extends AbstractArticle {
         AbstractDungeon.getCurrRoom().relics.add(relic);
         relic.instantObtain(AbstractDungeon.player, AbstractDungeon.player.relics.size(), false);
         relic.flash();
+        ((FleaMerchant) merchant).relicCourierCheck(relic, primed?2:1);
     }
 
     @Override
     public String getTipHeader() {
-        return uiStrings.TEXT[0] + relic.name;
+        return uiStrings.TEXT[0].replace("{0}", relic.name);
     }
 
     @Override
     public String getTipBody() {
-        return uiStrings.TEXT[primed?1:3] + relic.counter + uiStrings.TEXT[primed?2:(relic.counter==1?4:5)] + relic.description;
+        return uiStrings.TEXT[primed?1:(relic.counter==1?2:3)].replace("{0}", String.valueOf(relic.counter)).replace("{1}", relic.description);
     }
 
     @Override
@@ -103,23 +99,14 @@ public class FleaMarketRelicArticle extends AbstractArticle {
         int r = AbstractDungeon.merchantRng.random(usedRelics.size()-1);
         AbstractRelic usedRelic = usedRelics.get(r);
         int counter = AbstractDungeon.merchantRng.random(1, urCounters.get(r)-1);
-        price = (counter*usedRelic.getPrice()/urCounters.get(r));
+        price = (int) ((FleaMerchant) merchant).jitter((double) (counter * usedRelic.getPrice()) /urCounters.get(r));
         usedRelic.setCounter(counter);
         return usedRelic;
     }
 
     @Override
     public int getModifiedPrice() {
-        float finalPrice = getBasePrice();
-        if (AbstractDungeon.ascensionLevel >= 16) {
-            finalPrice = finalPrice * 1.1f;
-        }
-        if (AbstractDungeon.player.hasRelic(MembershipCard.ID)) {
-            finalPrice = finalPrice * 0.5f;
-        }
-        if (AbstractDungeon.player.hasRelic(Courier.ID)) {
-            finalPrice = finalPrice * 0.8f;
-        }
-        return (int)(finalPrice*haggleArticle.haggleRate*priceJitter);
+        float finalPrice = super.getModifiedPrice();
+        return (int)(finalPrice*haggleArticle.haggleRate);
     }
 }

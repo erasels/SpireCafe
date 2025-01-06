@@ -23,13 +23,14 @@ import spireCafe.cardmods.WornMod;
 import spireCafe.interactables.merchants.CardArticle;
 import spireCafe.interactables.merchants.PotionArticle;
 import spireCafe.interactables.merchants.RelicArticle;
+import spireCafe.patches.PotencySaverPatch;
 import spireCafe.util.TexLoader;
 
 import java.util.ArrayList;
 
 public class FleaMerchant extends AbstractMerchant {
-    public static final String ID = FleaMerchant.class.getSimpleName();
-    private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
+    public static final String ID = Anniv7Mod.makeID(FleaMerchant.class.getSimpleName());
+    private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(ID);
     private static final Texture BG_TEXTURE = ImageMaster.loadImage("images/npcs/rug/deu.png");
     private final HaggleArticle haggleArticle;
 
@@ -38,6 +39,8 @@ public class FleaMerchant extends AbstractMerchant {
     private static final float DRAW_START_X = Settings.WIDTH * 0.16F;
     private static final float POTION_Y = 168.0F * Settings.scale;
     private double speechTimer;
+
+    private final float upsellValue = 1.1f;
 
     public FleaMerchant(float animationX, float animationY) {
         super(animationX+75.0F * Settings.xScale, animationY-150.0F * Settings.yScale, 320.0f, 400.0f);
@@ -58,19 +61,12 @@ public class FleaMerchant extends AbstractMerchant {
         for (int i = 0; i < 2; i++) {
             c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.ATTACK, true).makeCopy();
             if(c.rarity!= AbstractCard.CardRarity.COMMON){wearCardOut(c);}
-            AbstractArticle card = new CardArticle("colorAttack" + i, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * i, TOP_ROW_Y, c, (int) jitter(AbstractCard.getPrice(c.rarity))){
+            AbstractCard finalC3 = c;
+            int finalI = i;
+            AbstractArticle card = new CardArticle("colorAttack" + finalI, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * finalI, TOP_ROW_Y, finalC3, (int) jitter(AbstractCard.getPrice(c.rarity))){
                 @Override
                 public int getModifiedPrice() {
-                    float finalPrice = getBasePrice();
-                    if (AbstractDungeon.ascensionLevel >= 16) {
-                        finalPrice = finalPrice * 1.1f;
-                    }
-                    if (AbstractDungeon.player.hasRelic(MembershipCard.ID)) {
-                        finalPrice = finalPrice * 0.5f;
-                    }
-                    if (AbstractDungeon.player.hasRelic(Courier.ID)) {
-                        finalPrice = finalPrice * 0.8f;
-                    }
+                    float finalPrice = super.getModifiedPrice();
                     return (int) (finalPrice * haggleArticle.haggleRate);
                 }
                 @Override
@@ -84,13 +80,8 @@ public class FleaMerchant extends AbstractMerchant {
                 }
                 @Override
                 public void onBuy() {
-                    super.onBuy()
-                    if (AbstractDungeon.player.hasRelic(Courier.ID)) {
-                        tempC = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.ATTACK, true).makeCopy();
-                        if(tempC.rarity!= AbstractCard.CardRarity.COMMON){wearCardOut(tempC);}
-                        AbstractArticle tempCard = new CardArticle("colorCard" + i, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * i, TOP_ROW_Y, tempC, (int) jitter(AbstractCard.getPrice(tempC.rarity))){
-                        this.merchant.toAdd.add(tempCard);
-                    }
+                    super.onBuy();
+                    cardCourierCheck(finalC3, finalI);
                 }
             };
             articles.add(card);
@@ -98,19 +89,12 @@ public class FleaMerchant extends AbstractMerchant {
         for (int i = 0; i < 2; i++) {
             c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.SKILL, true).makeCopy();
             if(c.rarity!= AbstractCard.CardRarity.COMMON){wearCardOut(c);}
-            AbstractArticle card = new CardArticle("colorSkill" + i, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * (2+i), TOP_ROW_Y, c, (int) jitter(AbstractCard.getPrice(c.rarity))){
+            AbstractCard finalC = c;
+            int finalI = i;
+            AbstractArticle card = new CardArticle("colorSkill" + finalI, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * (2+ finalI), TOP_ROW_Y, finalC, (int) jitter(AbstractCard.getPrice(c.rarity))){
                 @Override
                 public int getModifiedPrice() {
-                    float finalPrice = getBasePrice();
-                    if (AbstractDungeon.ascensionLevel >= 16) {
-                        finalPrice = finalPrice * 1.1f;
-                    }
-                    if (AbstractDungeon.player.hasRelic(MembershipCard.ID)) {
-                        finalPrice = finalPrice * 0.5f;
-                    }
-                    if (AbstractDungeon.player.hasRelic(Courier.ID)) {
-                        finalPrice = finalPrice * 0.8f;
-                    }
+                    float finalPrice = super.getModifiedPrice();
                     return (int) (finalPrice * haggleArticle.haggleRate);
                 }
 
@@ -125,35 +109,19 @@ public class FleaMerchant extends AbstractMerchant {
                 }
                 @Override
                 public void onBuy() {
-                    super.onBuy()
-                    if (AbstractDungeon.player.hasRelic(Courier.ID)) {
-                        tempC = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.SKILL, true).makeCopy();
-                        if (tempC.rarity != AbstractCard.CardRarity.COMMON) {
-                            wearCardOut(tempC);
-                        }
-                        AbstractArticle tempCard = new CardArticle("colorCard" + (2 + i), this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * (2+i), TOP_ROW_Y, tempC, (int) jitter(AbstractCard.getPrice(tempC.rarity))) {
-                        this.merchant.toAdd.add(tempCard);
-                        }
-                    }
+                    super.onBuy();
+                    cardCourierCheck(finalC, 2+ finalI);
                 }
             };
             articles.add(card);
         }
         c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.POWER, true).makeCopy();
         if(c.rarity!= AbstractCard.CardRarity.COMMON){wearCardOut(c);}
-        AbstractArticle card = new CardArticle("colorPower", this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * 4, TOP_ROW_Y, c, (int) jitter(AbstractCard.getPrice(c.rarity))){
+        AbstractCard finalC1 = c;
+        AbstractArticle card = new CardArticle("colorPower", this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * 4, TOP_ROW_Y, finalC1, (int) jitter(AbstractCard.getPrice(c.rarity))){
             @Override
             public int getModifiedPrice() {
-                float finalPrice = getBasePrice();
-                if (AbstractDungeon.ascensionLevel >= 16) {
-                    finalPrice = finalPrice * 1.1f;
-                }
-                if (AbstractDungeon.player.hasRelic(MembershipCard.ID)) {
-                    finalPrice = finalPrice * 0.5f;
-                }
-                if (AbstractDungeon.player.hasRelic(Courier.ID)) {
-                    finalPrice = finalPrice * 0.8f;
-                }
+                float finalPrice = super.getModifiedPrice();
                 return (int) (finalPrice * haggleArticle.haggleRate);
             }
 
@@ -168,35 +136,20 @@ public class FleaMerchant extends AbstractMerchant {
             }
             @Override
             public void onBuy() {
-                super.onBuy()
-                if (AbstractDungeon.player.hasRelic(Courier.ID)) {
-                    tempC = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.POWER, true).makeCopy();
-                    if (tempC.rarity != AbstractCard.CardRarity.COMMON) {
-                        wearCardOut(tempC);
-                    }
-                    AbstractArticle tempCard = new CardArticle("colorCard4", this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * 4, TOP_ROW_Y, tempC, (int) jitter(AbstractCard.getPrice(tempC.rarity))) {
-                        this.merchant.toAdd.add(tempCard);
-                    }
-                }
+                super.onBuy();
+                cardCourierCheck(finalC1, 4);
             }
         };
         articles.add(card);
         for (int i = 0; i < 2; i++) {
             c = AbstractDungeon.getColorlessCardFromPool(i==0?AbstractCard.CardRarity.UNCOMMON: AbstractCard.CardRarity.RARE).makeCopy();
             if(c.rarity!= AbstractCard.CardRarity.COMMON){wearCardOut(c);}
-            AbstractArticle ccard = new CardArticle("ColorlessCard" + i, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * i, BOTTOM_ROW_Y, c, (int) jitter(AbstractCard.getPrice(c.rarity))){
+            AbstractCard finalC2 = c;
+            int finalI = i;
+            AbstractArticle ccard = new CardArticle("ColorlessCard" + finalI, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * finalI, BOTTOM_ROW_Y, finalC2, (int) jitter(AbstractCard.getPrice(c.rarity))){
                 @Override
                 public int getModifiedPrice() {
-                    float finalPrice = getBasePrice();
-                    if (AbstractDungeon.ascensionLevel >= 16) {
-                        finalPrice = finalPrice * 1.1f;
-                    }
-                    if (AbstractDungeon.player.hasRelic(MembershipCard.ID)) {
-                        finalPrice = finalPrice * 0.5f;
-                    }
-                    if (AbstractDungeon.player.hasRelic(Courier.ID)) {
-                        finalPrice = finalPrice * 0.8f;
-                    }
+                    float finalPrice = super.getModifiedPrice();
                     return (int) (finalPrice * haggleArticle.haggleRate);
                 }
 
@@ -211,16 +164,8 @@ public class FleaMerchant extends AbstractMerchant {
                 }
                 @Override
                 public void onBuy() {
-                    super.onBuy()
-                    if (AbstractDungeon.player.hasRelic(Courier.ID)) {
-                        tempC = AbstractDungeon.getColorlessCardFromPool(i==0?AbstractCard.CardRarity.UNCOMMON: AbstractCard.CardRarity.RARE).makeCopy();
-                        if (tempC.rarity != AbstractCard.CardRarity.COMMON) {
-                            wearCardOut(tempC);
-                        }
-                        AbstractArticle tempCard = new CardArticle("colorlessCard" + i, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + padX * i, BOTTOM_ROW_Y, tempC, (int) jitter(AbstractCard.getPrice(tempC.rarity))) {
-                        this.merchant.toAdd.add(tempCard);
-                        }
-                    }
+                    super.onBuy();
+                    cardCourierCheck(finalC2, finalI);
                 }
             };
             articles.add(ccard);
@@ -228,19 +173,11 @@ public class FleaMerchant extends AbstractMerchant {
 
         for (int i = 0; i < 3; i++) {
             AbstractPotion p = getUsedPotion();
-            PotionArticle potion = new PotionArticle("potion" + i, this, 968.0F * Settings.xScale + 150.0F * i * Settings.xScale, POTION_Y, p, p.getPrice()) {
+            int finalI = i;
+            PotionArticle potion = new PotionArticle("potion" + finalI, this, 968.0F * Settings.xScale + 150.0F * finalI * Settings.xScale, POTION_Y, p, p.getPrice()) {
                 @Override
                 public int getModifiedPrice() {
-                    float finalPrice = getBasePrice();
-                    if (AbstractDungeon.ascensionLevel >= 16) {
-                        finalPrice = finalPrice * 1.1f;
-                    }
-                    if (AbstractDungeon.player.hasRelic(MembershipCard.ID)) {
-                        finalPrice = finalPrice * 0.5f;
-                    }
-                    if (AbstractDungeon.player.hasRelic(Courier.ID)) {
-                        finalPrice = finalPrice * 0.8f;
-                    }
+                    float finalPrice = super.getModifiedPrice();
                     return (int) (finalPrice * haggleArticle.haggleRate);
                 }
 
@@ -255,32 +192,18 @@ public class FleaMerchant extends AbstractMerchant {
                 }
                 @Override
                 public void onBuy() {
-                    super.onBuy()
-                    if (AbstractDungeon.player.hasRelic(Courier.ID)) {
-                        AbstractPotion tempP = getUsedPotion();
-                        PotionArticle tempPotion = new PotionArticle("potion" + i, this, 968.0F * Settings.xScale + 150.0F * i * Settings.xScale, POTION_Y, tempP, tempP.getPrice());
-                        this.merchant.toAdd.add(tempPotion);
-                        }
-                    }
+                    super.onBuy();
+                    potionCourierCheck(finalI);
                 }
             };
             articles.add(potion);
         }
 
         AbstractRelic randomRelic = AbstractDungeon.returnRandomRelicEnd(ShopScreen.rollRelicTier());
-        AbstractArticle relic = new RelicArticle("relic", this, 964.0F * Settings.xScale,364.0F * Settings.scale, randomRelic, (int) jitter(randomRelic.getPrice())){
+        AbstractArticle relic = new RelicArticle("relic0", this, 964.0F * Settings.xScale,364.0F * Settings.scale, randomRelic, (int) jitter(randomRelic.getPrice())){
             @Override
             public int getModifiedPrice() {
-                float finalPrice = getBasePrice();
-                if (AbstractDungeon.ascensionLevel >= 16) {
-                    finalPrice = finalPrice * 1.1f;
-                }
-                if (AbstractDungeon.player.hasRelic(MembershipCard.ID)) {
-                    finalPrice = finalPrice * 0.5f;
-                }
-                if (AbstractDungeon.player.hasRelic(Courier.ID)) {
-                    finalPrice = finalPrice * 0.8f;
-                }
+                float finalPrice = super.getModifiedPrice();
                 return (int)(finalPrice*haggleArticle.haggleRate);
             }
 
@@ -295,14 +218,9 @@ public class FleaMerchant extends AbstractMerchant {
             }
             @Override
             public void onBuy() {
-                super.onBuy()
-                if (AbstractDungeon.player.hasRelic(Courier.ID) || randomRelic.relicId.equals(Courier.ID)) {
-                    AbstractRelic tempR = AbstractDungeon.returnRandomRelicEnd(ShopScreen.rollRelicTier());
-                    AbstractArticle tempRelic = new RelicArticle("relic", this, 964.0F * Settings.xScale,364.0F * Settings.scale, tempR, (int) jitter(tempR.getPrice()));
-                    this.merchant.toAdd.add(tempRelic);
-                }
+                super.onBuy();
+		        relicCourierCheck(randomRelic, 0);
             }
-        }
         };
         articles.add(relic);
 
@@ -316,66 +234,36 @@ public class FleaMerchant extends AbstractMerchant {
     private AbstractPotion getUsedPotion(){
         ArrayList<AbstractPotion> potions = new ArrayList<>();
         potions.add(new StrengthPotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new DexterityPotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new FirePotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new ExplosivePotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new SwiftPotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new PoisonPotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 double mod = (double) (this.getPotency()*this.getPotency())/(this.makeCopy().getPotency()*this.makeCopy().getPotency())*haggleArticle.haggleRate; //^2 to account for poison stacking benefit
@@ -392,22 +280,12 @@ public class FleaMerchant extends AbstractMerchant {
             }
         });
         potions.add(new BlockPotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new RegenPotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 double mod = (double) (this.getPotency()*this.getPotency())/(this.makeCopy().getPotency()*this.makeCopy().getPotency())*haggleArticle.haggleRate; //^2 to account for regen stacking benefit
@@ -424,88 +302,48 @@ public class FleaMerchant extends AbstractMerchant {
             }
         });
         potions.add(new HeartOfIron(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new BloodPotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new BottledMiracle(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new CunningPotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new DistilledChaosPotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new EnergyPotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new EssenceOfSteel(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new FairyPotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 double mod = (double) (10+this.getPotency())/(10+this.makeCopy().getPotency())*haggleArticle.haggleRate; //+10 to account for always reviving
@@ -522,66 +360,36 @@ public class FleaMerchant extends AbstractMerchant {
             }
         });
         potions.add(new FearPotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new FocusPotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new FruitJuice(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new LiquidBronze(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new PotionOfCapacity(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new SneckoOil(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 double mod = (double) (1 + this.getPotency()) /(1+this.makeCopy().getPotency())*haggleArticle.haggleRate; //+1 to account for always getting confused
@@ -598,33 +406,18 @@ public class FleaMerchant extends AbstractMerchant {
             }
         });
         potions.add(new SpeedPotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new WeakenPotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
             }
         });
         potions.add(new SteroidPotion(){
-            private int tempPotency = getPotionPotency(this);
-            @Override
-            public int getPotency(int var1){
-                return tempPotency;
-            }
             @Override
             public int getPrice(){
                 return getPotionPrice(this);
@@ -632,7 +425,8 @@ public class FleaMerchant extends AbstractMerchant {
         });
         int r = AbstractDungeon.merchantRng.random(0, potions.size()-1);
         AbstractPotion potion = potions.get(r);
-        potion.name = characterStrings.TEXT[0] + potion.name;
+        PotencySaverPatch.PotionUseField.isDepleted.set(potion, getPotionPotency(potion));
+        potion.name = characterStrings.TEXT[0].replace("{0}", potion.name);
         potion.initializeData();
         return potion;
     }
@@ -655,37 +449,37 @@ public class FleaMerchant extends AbstractMerchant {
         return AbstractDungeon.merchantRng.random(1, p.makeCopy().getPotency()-1);
     }
 
-    private double jitter(double d){
-        return d*AbstractDungeon.merchantRng.random(0.95F, 1.05F);
+    public double jitter(double d){
+        return upsellValue*d*AbstractDungeon.merchantRng.random(0.95F, 1.05F);
     }
 
     public AbstractCard wearCardOut(AbstractCard c){
         boolean worn = false;
-        if(!(c.baseDamage>0 || c.baseBlock>0 || c.baseMagicNumber>0 || !c.exhaust && c.type!= AbstractCard.CardType.POWER || !c.isEthereal)){
+        if(!(c.baseDamage>1 || c.baseBlock>1 || c.baseMagicNumber>1 || !c.exhaust && c.type!= AbstractCard.CardType.POWER || !c.isEthereal)){
             return c;
         }
         while(!worn){
             switch(AbstractDungeon.merchantRng.random(0, 4)){
-                case 0: if(c.baseDamage>0){
-                    CardModifierManager.addModifier(c, new WornMod(1, 0, 0));
+                case 0: if(c.baseDamage>1){
+                    CardModifierManager.addModifier(c, new WornMod(c.rarity == AbstractCard.CardRarity.RARE?0.8f:0.9f, 1, 0));
                     worn = true;
                 } break;
-                case 1: if(c.baseBlock>0){
-                    CardModifierManager.addModifier(c, new WornMod(0, 1, 0));
+                case 1: if(c.baseBlock>1){
+                    CardModifierManager.addModifier(c, new WornMod(1, c.rarity == AbstractCard.CardRarity.RARE?0.8f:0.9f, 0));
                     worn = true;
                 } break;
-                case 2: if(c.baseMagicNumber>0){
-                    CardModifierManager.addModifier(c, new WornMod(0, 0, 1));
+                case 2: if(c.baseMagicNumber>1){
+                    CardModifierManager.addModifier(c, new WornMod(1, 1, 1));
                     worn = true;
                 } break;
                 case 3: if(!c.exhaust && c.type!= AbstractCard.CardType.POWER){
                     CardModifierManager.addModifier(c, new ExhaustMod());
-                    CardModifierManager.addModifier(c, new WornMod(0, 0, 0));
+                    CardModifierManager.addModifier(c, new WornMod(1, 1, 0));
                     worn = true;
                 } break;
                 case 4: if(!c.isEthereal){
                     CardModifierManager.addModifier(c, new EtherealMod());
-                    CardModifierManager.addModifier(c, new WornMod(0, 0, 0));
+                    CardModifierManager.addModifier(c, new WornMod(1, 1, 0));
                     worn = true;
                 } break;
             }
@@ -777,8 +571,104 @@ public class FleaMerchant extends AbstractMerchant {
                 createSpeechBubble(characterStrings.TEXT[MathUtils.random(1, 9)]);
             } else {
                 createSpeechBubble(characterStrings.TEXT[MathUtils.random(3, 11)]);
-                this.speechTimer = MathUtils.random(40.0F, 60.0F);
             }
+            this.speechTimer = MathUtils.random(40.0F, 60.0F);
+        }
+    }
+
+    public void cardCourierCheck(AbstractCard c, int i){
+        if (AbstractDungeon.player.hasRelic(Courier.ID)) {
+            float y = TOP_ROW_Y;
+            String id = "ColoredCard" + i;
+            float colorlessBump = 1f;
+            AbstractCard tempC = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), c.type, true).makeCopy();
+            if(c.color == AbstractCard.CardColor.COLORLESS){
+                boolean uncommon = AbstractDungeon.merchantRng.random() > AbstractDungeon.colorlessRareChance;
+                tempC = AbstractDungeon.getColorlessCardFromPool(uncommon?AbstractCard.CardRarity.UNCOMMON: AbstractCard.CardRarity.RARE).makeCopy();
+                id = "ColorlessCard" + i;
+                y = BOTTOM_ROW_Y;
+                colorlessBump = 1.2f;
+            }
+            if(tempC.rarity!= AbstractCard.CardRarity.COMMON){wearCardOut(tempC);}
+            AbstractCard finalTempC = tempC;
+            AbstractArticle tempCard = new CardArticle(id, this, DRAW_START_X + AbstractCard.IMG_WIDTH_S / 2.0F + ((int)((int)(Settings.WIDTH - DRAW_START_X * 2.0F - AbstractCard.IMG_WIDTH_S * 5.0F) / 4 + AbstractCard.IMG_WIDTH_S) + 10.0F) * Settings.scale * i, y, finalTempC, (int) jitter(colorlessBump*AbstractCard.getPrice(tempC.rarity))){
+                @Override
+                public int getModifiedPrice() {
+                    int finalPrice = super.getModifiedPrice();
+                    return (int) (finalPrice * haggleArticle.haggleRate);
+                }
+                @Override
+                public void onClick() {
+                    if (!canBuy()) {
+                        cantBuy();
+                    } else {
+                        sold();
+                    }
+                    super.onClick();
+                }
+                @Override
+                public void onBuy(){
+                    super.onBuy();
+                    cardCourierCheck(finalTempC, i);
+                }
+            };
+            toAdd.add(tempCard);
+        }
+    }
+
+    public void potionCourierCheck(int i){
+        if (AbstractDungeon.player.hasRelic(Courier.ID)) {
+            AbstractPotion tempP = getUsedPotion();
+                PotionArticle tempPotion = new PotionArticle("potion" + i, this, 968.0F * Settings.xScale + 150.0F * i * Settings.xScale, POTION_Y, tempP, (int) jitter(tempP.getPrice())){
+                    @Override
+                    public int getModifiedPrice() {
+                        int finalPrice = super.getModifiedPrice();
+                        return (int) (finalPrice * haggleArticle.haggleRate);
+                    }
+                    @Override
+                    public void onClick() {
+                        if (!canBuy()) {
+                            cantBuy();
+                        } else {
+                            sold();
+                        }
+                        super.onClick();
+                    }
+                @Override
+                public void onBuy(){
+                    super.onBuy();
+                    potionCourierCheck(i);
+                }
+            };
+            toAdd.add(tempPotion);
+        }
+    }
+
+    public void relicCourierCheck(AbstractRelic r, int i){
+        if (AbstractDungeon.player.hasRelic(Courier.ID) || r.relicId.equals(Courier.ID)) {
+            AbstractRelic tempR = AbstractDungeon.returnRandomRelicEnd(ShopScreen.rollRelicTier());
+            AbstractArticle tempRelic = new RelicArticle("relic" + i, this, 964.0F * Settings.xScale + 150.0F * i * Settings.xScale,364.0F * Settings.scale, tempR, (int) jitter(tempR.getPrice())){
+                @Override
+                public int getModifiedPrice() {
+                    int finalPrice = super.getModifiedPrice();
+                    return (int) (finalPrice * haggleArticle.haggleRate);
+                }
+                @Override
+                public void onClick() {
+                    if (!canBuy()) {
+                        cantBuy();
+                    } else {
+                        sold();
+                    }
+                    super.onClick();
+                }
+                @Override
+                public void onBuy(){
+                    super.onBuy();
+                    relicCourierCheck(r, i);
+                    }
+                };
+            toAdd.add(tempRelic);
         }
     }
 }
