@@ -1,10 +1,10 @@
 {
   "${ModID}:HandfulOfSlime": {
     "NAME": "Handful of Slime",
-    "FLAVOR": "A constant reminder.",
+    "FLAVOR": "The slime will wash off... eventually.",
     "DESCRIPTIONS": [
-      "Start each combat with #b",
-      " #yIntangible."
+      "At the start of your next #b",
+      " combats, shuffle a #rSlimed into your draw pile."
     ]
   }
 }

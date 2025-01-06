@@ -33,7 +33,10 @@ public class AcidSlimeBCutscene extends AbstractCutscene {
                 CardCrawlGame.sound.play("ATTACK_PIERCING_WAIL", 0f);
                 AbstractDungeon.getCurrRoom().spawnRelicAndObtain((float) Settings.WIDTH / 2.0F, (float)Settings.HEIGHT / 2.0F, new HandfulOfSlime());
             });
-            this.dialog.addDialogOption(OPTIONS[1]).setOptionResult((i)-> goToDialogue(3));
+            this.dialog.addDialogOption(OPTIONS[1]).setOptionResult((i)-> {
+                goToDialogue(3);
+                AbstractDungeon.getCurrRoom().spawnRelicAndObtain((float) Settings.WIDTH / 2.0F, (float)Settings.HEIGHT / 2.0F, new HandfulOfSlime(10));
+            });
         } else if (dialogueIndex >= 2) {
             endCutscene();
             if(curlUpOnFinish){
