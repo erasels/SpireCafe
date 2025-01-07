@@ -4,7 +4,8 @@
       "Spire Café",
       "StS Modding Community",
       "Adds a cozy café at the end of acts 1 and 2.",
-      "Entering the Café costs HP."
+      "Entering the Café costs HP.",
+      "Disable shaders."
     ]
   },
   "${ModID}:CafeUI": {
@@ -16,6 +17,11 @@
   "${ModID}:Authors": {
     "TEXT": [
       "Author(s): "
+    ]
+  },
+  "${ModID}:Missingno": {
+    "TEXT": [
+      "The Missingno"
     ]
   }
 }

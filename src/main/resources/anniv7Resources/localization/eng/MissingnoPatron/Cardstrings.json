@@ -1,0 +1,6 @@
+{
+  "${ModID}:MissingnoCard": {
+    "NAME": "Missingno",
+    "DESCRIPTION": "Draw 1 card. NL Exhaust. NL "
+  }
+}

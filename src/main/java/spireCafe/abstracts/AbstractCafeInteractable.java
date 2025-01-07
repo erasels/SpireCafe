@@ -16,8 +16,10 @@ import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import spireCafe.Anniv7Mod;
 import spireCafe.CafeRoom;
 
+import static spireCafe.Anniv7Mod.allTimeSeenInteractables;
 import static spireCafe.Anniv7Mod.makeID;
 
 public abstract class AbstractCafeInteractable {
@@ -63,6 +65,10 @@ public abstract class AbstractCafeInteractable {
             showTooltip = true;
             if (InputHelper.justClickedLeft && !CafeRoom.isInteracting) {
                 CafeRoom.isInteracting = true; // Workaround to prevent double interactions due to overlapping hitboxes
+                allTimeSeenInteractables = Anniv7Mod.getSeenInteractables();
+                if(!allTimeSeenInteractables.contains(id)) {
+                    allTimeSeenInteractables.add(id);
+                }
                 this.onInteract();
             }
         } else {
@@ -72,34 +78,40 @@ public abstract class AbstractCafeInteractable {
     }
 
     public void renderAnimation(SpriteBatch sb) {
-        sb.setColor(Color.WHITE);
-        if (animation != null) {
-            animation.renderSprite(sb, animationX, animationY);
-        } else if (this.img != null) {
-            sb.draw(this.img, this.animationX - (float)this.img.getWidth() * Settings.scale / 2.0F, this.animationY, (float)this.img.getWidth() * Settings.scale, (float)this.img.getHeight() * Settings.scale, 0, 0, this.img.getWidth(), this.img.getHeight(), this.flipHorizontal, this.flipVertical);
-        } else {
-            this.state.update(Gdx.graphics.getDeltaTime());
-            this.state.apply(this.skeleton);
-            this.skeleton.updateWorldTransform();
-            this.skeleton.setPosition(this.animationX, this.animationY + AbstractDungeon.sceneOffsetY);
-            this.skeleton.setFlip(this.flipHorizontal, this.flipVertical);
-            sb.end();
-            CardCrawlGame.psb.begin();
-            AbstractMonster.sr.draw(CardCrawlGame.psb, this.skeleton);
-            CardCrawlGame.psb.end();
-            sb.begin();
-            sb.setBlendFunction(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA); // NORMAL
+        try {
+            sb.setColor(Color.WHITE);
+            if (animation != null) {
+                animation.renderSprite(sb, animationX, animationY);
+            } else if (this.img != null) {
+                sb.draw(this.img, this.animationX - (float)this.img.getWidth() * Settings.scale / 2.0F, this.animationY, (float)this.img.getWidth() * Settings.scale, (float)this.img.getHeight() * Settings.scale, 0, 0, this.img.getWidth(), this.img.getHeight(), this.flipHorizontal, this.flipVertical);
+            } else {
+                this.state.update(Gdx.graphics.getDeltaTime());
+                this.state.apply(this.skeleton);
+                this.skeleton.updateWorldTransform();
+                this.skeleton.setPosition(this.animationX, this.animationY + AbstractDungeon.sceneOffsetY);
+                this.skeleton.setFlip(this.flipHorizontal, this.flipVertical);
+                sb.end();
+                CardCrawlGame.psb.begin();
+                AbstractMonster.sr.draw(CardCrawlGame.psb, this.skeleton);
+                CardCrawlGame.psb.end();
+                sb.begin();
+                sb.setBlendFunction(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA); // NORMAL
+            }
+            this.hitbox.render(sb);
+
+            if(showTooltip && !AbstractDungeon.isScreenUp){
+                String tooltipBody = authorsString.TEXT[0] + this.authors;
+                float boxWidth = 320.0F * Settings.scale;
+
+                float tooltipX = Settings.WIDTH - boxWidth - 20.0f * Settings.scale;
+                float tooltipY = 0.85f * Settings.HEIGHT - 20.0f * Settings.scale;
+
+                TipHelper.renderGenericTip(tooltipX, tooltipY, name, tooltipBody);
+            }
+
         }
-        this.hitbox.render(sb);
-
-        if(showTooltip && !AbstractDungeon.isScreenUp){
-            String tooltipBody = authorsString.TEXT[0] + this.authors;
-            float boxWidth = 320.0F * Settings.scale;
-
-            float tooltipX = Settings.WIDTH - boxWidth - 20.0f * Settings.scale;
-            float tooltipY = 0.85f * Settings.HEIGHT - 20.0f * Settings.scale;
-
-            TipHelper.renderGenericTip(tooltipX, tooltipY, name, tooltipBody);
+        catch (Exception e) {
+            throw new RuntimeException("Error rendering patron " + this.id, e);
         }
     }
 

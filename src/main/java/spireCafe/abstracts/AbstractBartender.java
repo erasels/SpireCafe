@@ -29,6 +29,14 @@ public abstract class AbstractBartender extends AbstractNPC {
     public abstract String getHealOptionDescription();
 
     /**
+     * Override in case your heal option has an associated cost that the player isn't guaranteed to meet. Like a gold cost.
+     * @return if false, the option is disabled and the player can't select it.
+     */
+    public boolean getHealOptionCondition() {
+        return true;
+    }
+
+    /**
      * Define how much the heal will restore.
      * Contributors can return a fixed amount or a computed value (like heal a percentage of missing HP).
      * Should be >= 50% of the player's max HP to allow them to recoup the skipped heal.
@@ -56,6 +64,13 @@ public abstract class AbstractBartender extends AbstractNPC {
      */
     public String getSecondOptionDescription() {
         return null;
+    }
+
+    /*
+     * Condition for the second option.
+     */
+    public boolean getSecondOptionCondition() {
+        return true;
     }
 
     /**
