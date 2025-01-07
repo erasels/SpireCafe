@@ -233,28 +233,6 @@ public class Anniv7Mod implements
         BaseMod.addEvent(CafeRoom.ID, CafeRoom.class, "CafeDungeon");
         BaseMod.addCustomScreen(new CafeMerchantScreen());
         ConsoleCommand.addCommand("cafe", Cafe.class);
-
-        BaseMod.addSaveField("Anniv7DepletedPotion", new CustomSavable<List<Integer>>() {
-            @Override
-            public List<Integer> onSave() {
-                return AbstractDungeon.player.potions.stream().map(p -> PotencySaverPatch.PotionUseField.isDepleted.get(p)).collect(Collectors.toCollection(ArrayList::new));
-            }
-
-            @Override
-            public void onLoad(List<Integer> l) {
-                int c = 0;
-                if (l != null && !l.isEmpty()) {
-                    for (AbstractPotion p : AbstractDungeon.player.potions) {
-                        int i = l.get(NumberUtils.min(c++, AbstractDungeon.player.potions.size() - 1));
-                        if(i!=-1) {
-                            PotencySaverPatch.PotionUseField.isDepleted.set(p, i);
-                            p.name = CardCrawlGame.languagePack.getCharacterString(FleaMerchant.ID).TEXT[0].replace("{0}", p.name);
-                        }
-                        p.initializeData();
-                    }
-                }
-            }
-        });
     }
 
     public static void addPotions() {
@@ -437,6 +415,27 @@ public class Anniv7Mod implements
             @Override
             public void onLoad(Boolean state) {
                 MakeupTableAttraction.isAPrettySparklingPrincess = state;
+            }
+        });
+	BaseMod.addSaveField("Anniv7DepletedPotion", new CustomSavable<List<Integer>>() {
+            @Override
+            public List<Integer> onSave() {
+                return AbstractDungeon.player.potions.stream().map(p -> PotencySaverPatch.PotionUseField.isDepleted.get(p)).collect(Collectors.toCollection(ArrayList::new));
+            }
+
+            @Override
+            public void onLoad(List<Integer> l) {
+                int c = 0;
+                if (l != null && !l.isEmpty()) {
+                    for (AbstractPotion p : AbstractDungeon.player.potions) {
+                        int i = l.get(NumberUtils.min(c++, AbstractDungeon.player.potions.size() - 1));
+                        if(i!=-1) {
+                            PotencySaverPatch.PotionUseField.isDepleted.set(p, i);
+                            p.name = CardCrawlGame.languagePack.getCharacterString(FleaMerchant.ID).TEXT[0].replace("{0}", p.name);
+                        }
+                        p.initializeData();
+                    }
+                }
             }
         });
     }
