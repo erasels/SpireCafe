@@ -5,6 +5,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 
@@ -24,14 +25,17 @@ public class DrinkbotBartender extends AbstractBartender {
     private static final float HB_W = 240.0F;
     private static final float HB_H = 272.0F;
     private static final int BASE_COST = 70;
+    private static final int BASE2_COST = 200;
     public int serialNum = 0;
     public int nemesisNum = 0;
     public int amountSpent = 0;
+    private int secondCost = 0;
     
     public DrinkbotBartender(float animationX, float animationY) {
         super(animationX, animationY, HB_W, HB_H);
         this.serialNum = MathUtils.random(100, 999);
         this.nemesisNum = MathUtils.random(10, 999);
+        this.secondCost = BASE2_COST + AbstractDungeon.miscRng.random(0, 25);
         
         name = characterStrings.NAMES[0] + serialNum;
         this.authors = "Coda";
@@ -54,11 +58,15 @@ public class DrinkbotBartender extends AbstractBartender {
 
     @Override
     public String getSecondOptionDescription() {
-        return "";
+        return String.format(cutsceneStrings.OPTIONS[2], this.secondCost);
     }
 
     @Override
     public void applySecondOptionAction() {
+        CardCrawlGame.sound.play("SLEEP_1-2");
+        AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2, new DrinkInserterRelic());
+        AbstractDungeon.player.loseGold(this.secondCost);
+        inSecondAction = false;
     }
 
     @Override

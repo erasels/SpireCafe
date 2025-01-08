@@ -3,7 +3,9 @@
         "NAME": "Drink Inserter",
         "FLAVOR": "Boozy",
         "DESCRIPTIONS": [
-          "Every 3 turns, channel a Blood Alcohol orb."
+          "Every #b7 turns, heal for #b20% of your missing HP.",
+          "HP gained: %s",
+          " NL Gained this combat: %s"
         ]
       }
 }

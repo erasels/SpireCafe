@@ -69,7 +69,7 @@ public class BartenderCutscene extends AbstractCutscene {
      * Adds all available options that haven't been used yet.
      * Flavor and No Thanks are always added (if flavor is implemented).
      */
-    private void addAvailableOptions() {
+    protected void addAvailableOptions() {
         // Clear old options, just in case
         this.dialog.clear();
 

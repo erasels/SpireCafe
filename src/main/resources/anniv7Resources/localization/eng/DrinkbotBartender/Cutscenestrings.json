@@ -7,16 +7,15 @@
       "\"Legally, automatons aren't allowed to serve alcohol in this jurisdiction. But you wouldn't tell, would you?\""
     ],
     "DESCRIPTIONS": [
-      "\"Welcome to MechaMixers. I will be your Gizmo bartender this evening. Can I interest you in one of our singular beers on tap today? Or if you're feeling generous you can sample one of the creations my neural chip has generated.\"",
-      "\"Please don't take too long to order. Our creator monitors our throughput metrics.\"",
+      "\"Welcome to MechaMixers. I will be your Gizmo bartender this evening. Can I interest you in one of our singular beers on tap today?\"",
+      "\"Perhaps you would like to be fitted for our new subcontaneous delivery mechanism?\"",
+      "\"Please don't take too long to decide. Our creator monitors our throughput metrics.\"",
       "\"Okay, and the tablet is going to ask you a question really quick.\""
     ],
     "OPTIONS": [
       "[Leave] Nothing for now.",
       "[Draft Beer] Heal #b%s HP and lose #b%s Gold.",
-      "[%s] %s",
-      "[%s%] %s Gold.",
-      "[0%] No Tip."
+      "[Implant] Obtain Drink Inserter and lose #b%s Gold."
     ]
   }
 }

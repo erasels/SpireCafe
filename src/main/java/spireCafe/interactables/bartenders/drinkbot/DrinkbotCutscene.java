@@ -15,6 +15,21 @@ public class DrinkbotCutscene extends BartenderCutscene {
     }
 
     @Override
+    protected void onClick() {
+        if (this.dialogueIndex == 1) {
+            nextDialogue();
+            addAvailableOptions();
+        } else {
+            if (this.dialogueIndex >= DESCRIPTIONS.length - 1) {
+                endCutscene();
+            } else {
+                nextDialogue();
+            }
+        }
+
+    }
+
+    @Override
     public void update() {
         super.update();
     }
