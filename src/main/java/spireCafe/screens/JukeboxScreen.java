@@ -28,6 +28,8 @@ public class JukeboxScreen extends CustomScreen {
     private static final String BUTTONGLOW_PATH = "anniv7Resources/images/attractions/jukebox/ButtonGlow.png";
     private static final String BUTTONHOVER_PATH = "anniv7Resources/images/attractions/jukebox/ButtonHover.png";
     private static final String BUTTONLONG_PATH = "anniv7Resources/images/attractions/jukebox/ButtonLong.png";
+    private static final String BUTTONON_PATH = "anniv7Resources/images/attractions/jukebox/ButtonOn.png";
+    private static final String BUTTONOFF_PATH = "anniv7Resources/images/attractions/jukebox/ButtonOff.png";
     private static final String WINDOW_PATH = "anniv7Resources/images/attractions/jukebox/Window.png";
     private static final String CUSTOM_MUSIC_FOLDER = "audio/music/custom";
     private static final int BUTTONS_PER_PAGE = 5;
@@ -38,6 +40,8 @@ public class JukeboxScreen extends CustomScreen {
     private final Texture buttonglowTexture;
     private final Texture buttonhoverTexture;
     private final Texture buttonlongTexture;
+    private final Texture buttononTexture;
+    private final Texture buttonoffTexture;
     private final Texture windowTexture;
 
     private final List<LargeDialogOptionButton> buttons = new ArrayList<>();
@@ -67,6 +71,8 @@ public class JukeboxScreen extends CustomScreen {
         buttonglowTexture = new Texture(BUTTONGLOW_PATH);
         buttonhoverTexture = new Texture(BUTTONHOVER_PATH);
         buttonlongTexture = new Texture(BUTTONLONG_PATH);
+        buttononTexture = new Texture(BUTTONON_PATH);
+        buttonoffTexture = new Texture(BUTTONOFF_PATH);
         windowTexture = new Texture(WINDOW_PATH);
 
 
@@ -74,6 +80,7 @@ public class JukeboxScreen extends CustomScreen {
         loadCustomTracks();
         combineTracks();
         createButtons();
+        initializeOverrides();
     }
     private void initializeOverrides() {
         overrideEnabled = preferences.getBoolean("overrideEnabled", false);
@@ -176,6 +183,36 @@ public class JukeboxScreen extends CustomScreen {
         float mouseY = InputHelper.mY;
         float horizontalRadius = 165f * Settings.scale; // Wider horizontal radius
         float verticalRadius = 43f * Settings.scale; // Smaller vertical radius
+        // Check toggle buttons
+        float baseX = 450f; // Starting X position
+        float baseY = 650f; // Y position for buttons
+        float horizontalSpacing = 160f; // Spacing between buttons
+        float buttonWidth = 64f * Settings.scale; // Button width
+        float buttonHeight = 42f * Settings.scale; // Button height
+
+        Consumer<Boolean>[] actions = new Consumer[]{
+                (value) -> overrideEnabled = (boolean) value,
+                (value) -> shopOverride = (boolean) value,
+                (value) -> shrineOverride = (boolean) value,
+                (value) -> bossOverride = (boolean) value,
+                (value) -> eliteOverride = (boolean) value,
+                (value) -> eventOverride = (boolean) value
+        };
+
+        boolean[] states = {overrideEnabled, shopOverride, shrineOverride, bossOverride, eliteOverride, eventOverride};
+        String[] labels = {"Override", "Shop Music", "Shrine Music", "Boss Music", "Elite Music", "Event Music"};
+
+        for (int i = 0; i < labels.length; i++) {
+            float buttonX = baseX + (i * horizontalSpacing);
+            float buttonY = baseY;
+
+            if (InputHelper.justClickedLeft && isMouseWithinBounds(mouseX, mouseY, buttonX, buttonY, buttonWidth, buttonHeight)) {
+                System.out.println("Button clicked: " + labels[i]); // Debug log
+                actions[i].accept(!states[i]); // Toggle state
+                saveOverrides(); // Save updated state
+                break; // Prevent other buttons from being toggled
+            }
+        }
 
         for (int i = 0; i < buttons.size(); i++) {
             LargeDialogOptionButton button = buttons.get(i);
@@ -232,9 +269,9 @@ public class JukeboxScreen extends CustomScreen {
             FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, button.msg, x + (199f * Settings.scale), y + (99f * Settings.scale), Color.WHITE);
         }
         float windowX = (Settings.WIDTH / 2f);
-        float windowY = Settings.HEIGHT - (575f * Settings.scale);
-        sb.draw(windowTexture, windowX-450f, windowY, 900f * Settings.scale, 450f * Settings.scale);
-        FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, textField, Settings.WIDTH / 2f, Settings.HEIGHT - (350f * Settings.scale), Color.GOLD);
+        float windowY = (Settings.HEIGHT / 2f);
+        sb.draw(windowTexture, windowX-450f, windowY+170f, 900f * Settings.scale, 250f * Settings.scale);
+        FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, textField, Settings.WIDTH / 2f, Settings.HEIGHT - (242f * Settings.scale), Color.GOLD);
 
         renderPaginationButtons(sb);
         addOverrideSettingsToJukebox(sb);
@@ -242,6 +279,7 @@ public class JukeboxScreen extends CustomScreen {
     private boolean isMouseWithinBounds(float mouseX, float mouseY, float x, float y, float width, float height) {
         return mouseX >= x && mouseX <= x + width && mouseY >= y - height && mouseY <= y;
     }
+
 
     private void renderPaginationButtons(SpriteBatch sb) {
         float nextX = 1208f * Settings.scale;
@@ -258,68 +296,62 @@ public class JukeboxScreen extends CustomScreen {
         FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, label,
                 (x + 100f) * Settings.scale, (y + 40f) * Settings.scale, Color.WHITE);
     }
-
     private void addOverrideSettingsToJukebox(SpriteBatch sb) {
-        FontHelper.renderFontLeft(sb, FontHelper.charDescFont, "Music Override Options", 200.0f, 700.0f, Settings.CREAM_COLOR);
+        // Title for override settings
+        FontHelper.renderFontLeft(sb, FontHelper.charDescFont, "Music Override Options", 450.0f, 700.0f, Settings.CREAM_COLOR);
 
-        renderToggleButton(sb, "Enable Override", 200.0f, 650.0f, overrideEnabled, (value) -> {
+        // Initial position for the buttons and text
+        float baseX = 450.0f; // Starting X position for the first button
+        float baseY = 650.0f; // Y position for both buttons and text
+        float horizontalSpacing = 160.0f; // Spacing between buttons
+// Render each button with its corresponding text
+        renderOverrideOption(sb, "Override", baseX - 10f * Settings.scale, baseY - 30f * Settings.scale, overrideEnabled, (value) -> {
             overrideEnabled = value;
             saveOverrides();
         });
 
-        renderToggleButton(sb, "Override Shop Music", 200.0f, 600.0f, shopOverride, (value) -> {
+        renderOverrideOption(sb, "Shop Music", baseX + horizontalSpacing - 10f * Settings.scale, baseY - 30f * Settings.scale, shopOverride, (value) -> {
             shopOverride = value;
             saveOverrides();
         });
 
-        renderToggleButton(sb, "Override Shrine Music", 200.0f, 550.0f, shrineOverride, (value) -> {
+        renderOverrideOption(sb, "Shrine Music", baseX + (2 * horizontalSpacing) - 10f * Settings.scale, baseY - 30f * Settings.scale, shrineOverride, (value) -> {
             shrineOverride = value;
             saveOverrides();
         });
 
-        renderToggleButton(sb, "Override Boss Music", 200.0f, 500.0f, bossOverride, (value) -> {
+        renderOverrideOption(sb, "Boss Music", baseX + (3 * horizontalSpacing) - 10f * Settings.scale, baseY - 30f * Settings.scale, bossOverride, (value) -> {
             bossOverride = value;
             saveOverrides();
         });
 
-        renderToggleButton(sb, "Override Elite Music", 200.0f, 450.0f, eliteOverride, (value) -> {
+        renderOverrideOption(sb, "Elite Music", baseX + (4 * horizontalSpacing) - 10f * Settings.scale, baseY - 30f * Settings.scale, eliteOverride, (value) -> {
             eliteOverride = value;
             saveOverrides();
         });
 
-        renderToggleButton(sb, "Override Event Music", 200.0f, 400.0f, eventOverride, (value) -> {
+        renderOverrideOption(sb, "Event Music", baseX + (5 * horizontalSpacing) - 10f * Settings.scale, baseY - 30f * Settings.scale, eventOverride, (value) -> {
             eventOverride = value;
             saveOverrides();
         });
+
     }
-    private void renderToggleButton(SpriteBatch sb, String label, float x, float y, boolean isActive, Consumer<Boolean> onClick) {
-        float buttonWidth = 400f * Settings.scale;
-        float buttonHeight = 80f * Settings.scale;
+    private void renderOverrideOption(SpriteBatch sb, String label, float buttonX, float buttonY, boolean isActive, Consumer<Boolean> onClick) {
+        float buttonWidth = 64f * Settings.scale;
+        float buttonHeight = 42f * Settings.scale;
 
-        // Draw the base button texture
-        sb.draw(buttonTexture, x, y - buttonHeight, buttonWidth, buttonHeight);
+        // Render the button
+        Texture currentTexture = isActive ? buttononTexture : buttonoffTexture;
+        sb.draw(currentTexture, buttonX, buttonY, buttonWidth, buttonHeight);
 
-        // Draw the glow texture if the button is active
-        if (isActive) {
-            sb.draw(buttonglowTexture, x, y - buttonHeight, buttonWidth, buttonHeight);
-        } else if (isMouseWithinBounds(InputHelper.mX, InputHelper.mY, x, y, buttonWidth, buttonHeight)) {
-            // Draw hover texture if hovered
-            sb.draw(buttonhoverTexture, x, y - buttonHeight, buttonWidth, buttonHeight);
-        }
-
-        // Render the button label
-        FontHelper.renderFontCentered(sb, FontHelper.charDescFont, label, x + (buttonWidth / 2f), y - (buttonHeight / 2f), Settings.CREAM_COLOR);
-
-        // Log click detection for debugging
-        if (InputHelper.justClickedLeft) {
-            System.out.println("Mouse clicked at: " + InputHelper.mX + ", " + InputHelper.mY);
-        }
-
-        // Handle mouse click
-        if (InputHelper.justClickedLeft && isMouseWithinBounds(InputHelper.mX, InputHelper.mY, x, y, buttonWidth, buttonHeight)) {
+        // Handle click detection
+        if (InputHelper.justClickedLeft && isMouseWithinBounds(InputHelper.mX, InputHelper.mY, buttonX, buttonY, buttonWidth, buttonHeight)) {
             System.out.println("Button clicked: " + label);
             onClick.accept(!isActive); // Toggle the active state
         }
+
+        // Render the label above the button
+        FontHelper.renderFontCentered(sb, FontHelper.charDescFont, label, buttonX + (buttonWidth / 2f), buttonY + (buttonHeight + 20f), Settings.CREAM_COLOR);
     }
 
 
