@@ -2,7 +2,6 @@ package spireCafe.interactables.patrons.packmistress;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.curses.Clumsy;
-import com.megacrit.cardcrawl.cards.curses.Writhe;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
@@ -39,19 +38,20 @@ public class PackmistressCutscene extends AbstractCutscene {
         }
         else if (dialogueIndex == 1) {
             nextDialogue();
+            int completeDialogue = AbstractDungeon.player.chosenClass.toString().equals("THE_PACKMASTER") ? 4 : 3;
             this.dialog.addDialogOption(OPTIONS[0].replace("{0}", this.relic1.name).replace("{1}", this.maxHp + ""), this.relic1).setOptionResult((i)->{
                 AbstractDungeon.getCurrRoom().spawnRelicAndObtain((float)(Settings.WIDTH / 2), (float)(Settings.HEIGHT / 2), this.relic1);
                 AbstractDungeon.player.decreaseMaxHealth(this.maxHp);
                 character.alreadyPerformedTransaction = true;
-                goToDialogue(3);
+                goToDialogue(completeDialogue);
             });
             this.dialog.addDialogOption(OPTIONS[1].replace("{0}", this.relic2.name), this.relic2).setOptionResult((i)->{
                 AbstractDungeon.getCurrRoom().spawnRelicAndObtain((float)(Settings.WIDTH / 2), (float)(Settings.HEIGHT / 2), this.relic2);
                 AbstractDungeon.effectList.add(new ShowCardAndObtainEffect(this.curse, (float)(Settings.WIDTH / 2), (float)(Settings.HEIGHT / 2)));
                 character.alreadyPerformedTransaction = true;
-                goToDialogue(3);
+                goToDialogue(completeDialogue);
             });
-            this.dialog.addDialogOption(OPTIONS[2]).setOptionResult((i)-> goToDialogue(4));
+            this.dialog.addDialogOption(OPTIONS[2]).setOptionResult((i)-> goToDialogue(5));
         } else if (dialogueIndex >= 2) {
             endCutscene();
         }

@@ -71,6 +71,9 @@ public abstract class AbstractMerchant extends AbstractCafeInteractable {
 
     public void renderShop(SpriteBatch sb) {
         sb.setColor(Color.WHITE);
+        if (background == null) {
+            throw new RuntimeException("Missing background for merchant");
+        }
         sb.draw(background, 0f,0f, Settings.WIDTH, Settings.HEIGHT);
         for (AbstractArticle article : articles) {
             article.render(sb);
