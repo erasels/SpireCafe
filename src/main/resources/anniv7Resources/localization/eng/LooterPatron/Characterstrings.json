@@ -1,0 +1,9 @@
+{
+  "${ModID}:LooterPatron": {
+    "NAMES": [
+      "Looter"
+    ],
+    "TEXT": [
+    ]
+  }
+}
