@@ -10,6 +10,7 @@ import spireCafe.abstracts.AbstractSCRelic;
 
 import static spireCafe.Anniv7Mod.makeID;
 
+// "At the start of your next 6/99 combats, shuffle a Slimed into your draw pile."
 public class HandfulOfSlime extends AbstractSCRelic {
     public static final String ID = makeID(HandfulOfSlime.class.getSimpleName());
 

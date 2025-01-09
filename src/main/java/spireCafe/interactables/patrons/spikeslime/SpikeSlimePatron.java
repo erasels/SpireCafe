@@ -15,6 +15,10 @@ import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractPatron;
 import spireCafe.util.TexLoader;
 
+/*
+    iry - SpikeSlimePatron:
+    Help choking(?) slime for healing/meat on the bone at the cost of slimes for your next 6/99 combats.
+ */
 public class SpikeSlimePatron extends AbstractPatron {
     public static final String ID = SpikeSlimePatron.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
@@ -27,6 +31,7 @@ public class SpikeSlimePatron extends AbstractPatron {
         this.name = characterStrings.NAMES[0];
         this.authors = "iry";
 
+        //set heal amount on initialize, so it is independent of max hp changes in the cafe
         this.healAmount = AbstractDungeon.player.maxHealth/4;
 
         //directly copied loadAnimation from AbstractCreature class

@@ -40,7 +40,7 @@ public class SpikeSlimeCutscene extends AbstractCutscene {
             this.dialog.addDialogOption(OPTIONS[4]).setOptionResult((i)-> {
                 goToDialogue(6);
             });
-        } else if (dialogueIndex == 2){
+        } else if (dialogueIndex == 2){ //the heal effect is delayed to the second button press to make sense for flavor
             nextDialogue();
             this.dialog.addDialogOption(OPTIONS[2]).setOptionResult((i)->{
                 AbstractDungeon.player.heal(((SpikeSlimePatron)character).healAmount, true);
