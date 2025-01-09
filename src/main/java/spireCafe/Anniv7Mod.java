@@ -94,8 +94,6 @@ public class Anniv7Mod implements
 
     public Anniv7Mod() {
         BaseMod.subscribe(this);
-
-        BaseMod.addSaveField("anniv7:ballPotion", new RightBallPotionSavable());
     }
 
     public static String makePath(String resourcePath) {
@@ -418,6 +416,7 @@ public class Anniv7Mod implements
                 MakeupTableAttraction.isAPrettySparklingPrincess = state;
             }
         });
+        BaseMod.addSaveField(makeID("ballPotion"), new RightBallPotionSavable());
     }
 
     public static class SavableCurrentRunSeenInteractables implements CustomSavable<HashSet<String>> {

@@ -8,7 +8,7 @@ public class RightBallPotionSavable implements CustomSavable<Integer> {
 
     @Override
     public void onLoad(Integer chance) {
-        if (chance == 0) {
+        if (chance == null || chance == 0) {
             return;
         } else {
             RightballPotionPatch.potionReward = new RewardItem(new RightballPotion(chance));
