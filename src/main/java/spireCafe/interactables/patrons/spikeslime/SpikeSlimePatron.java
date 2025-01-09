@@ -1,4 +1,4 @@
-package spireCafe.interactables.patrons.acidslimeb;
+package spireCafe.interactables.patrons.spikeslime;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -15,14 +15,14 @@ import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractPatron;
 import spireCafe.util.TexLoader;
 
-public class AcidSlimeBPatron extends AbstractPatron {
-    public static final String ID = AcidSlimeBPatron.class.getSimpleName();
+public class SpikeSlimePatron extends AbstractPatron {
+    public static final String ID = SpikeSlimePatron.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
-    public static final String assetID = "AcidSlimeB";
+    public static final String assetID = "SpikeSlime";
     public int healAmount;
 
-    public AcidSlimeBPatron(float animationX, float animationY) {
+    public SpikeSlimePatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
         this.authors = "iry";
@@ -42,11 +42,11 @@ public class AcidSlimeBPatron extends AbstractPatron {
         e.setTime(e.getEndTime() * MathUtils.random());
         //////
 
-        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("AcidSlimeB/Portrait3.png")));
+        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("SpikeSlime/Portrait3.png")));
     }
 
     public void setCutscenePortrait(String texture) {
-        String resourcePath = String.format("AcidSlimeB/%s.png", texture);
+        String resourcePath = String.format("SpikeSlime/%s.png", texture);
         this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath(resourcePath)));
     }
 
@@ -55,6 +55,6 @@ public class AcidSlimeBPatron extends AbstractPatron {
     }
 
     public void onInteract() {
-        AbstractDungeon.topLevelEffectsQueue.add(new AcidSlimeBCutscene(this));
+        AbstractDungeon.topLevelEffectsQueue.add(new SpikeSlimeCutscene(this));
     }
 }

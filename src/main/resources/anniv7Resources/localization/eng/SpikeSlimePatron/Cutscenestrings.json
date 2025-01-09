@@ -1,6 +1,6 @@
 {
-  "${ModID}:AcidSlimeBCutscene": {
-    "NAME": "AcidSlimeB Cutscene",
+  "${ModID}:SpikeSlimeCutscene": {
+    "NAME": "SpikeSlime Cutscene",
     "BLOCKING_TEXTS": [
       "\"uh... ~hey...\"~ NL NL \"you ~can...~ buy your own ~food...~ at the ~counter......\"~",
       "\"Bartender! One more order of byrd legs please!\""

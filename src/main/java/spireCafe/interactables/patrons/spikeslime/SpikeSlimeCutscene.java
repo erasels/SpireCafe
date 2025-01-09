@@ -1,4 +1,4 @@
-package spireCafe.interactables.patrons.acidslimeb;
+package spireCafe.interactables.patrons.spikeslime;
 
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -10,11 +10,11 @@ import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 
 import static spireCafe.Anniv7Mod.makeID;
 
-public class AcidSlimeBCutscene extends AbstractCutscene {
-    public static final String ID = makeID(AcidSlimeBCutscene.class.getSimpleName());
+public class SpikeSlimeCutscene extends AbstractCutscene {
+    public static final String ID = makeID(SpikeSlimeCutscene.class.getSimpleName());
     private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
 
-    public AcidSlimeBCutscene(AbstractNPC character) {
+    public SpikeSlimeCutscene(AbstractNPC character) {
         super(character, cutsceneStrings);
     }
 
@@ -22,7 +22,7 @@ public class AcidSlimeBCutscene extends AbstractCutscene {
     protected void onClick() {
         if (dialogueIndex == 0) {
             nextDialogue();
-            this.dialog.addDialogOption(OPTIONS[0]+((AcidSlimeBPatron)character).healAmount+OPTIONS[1], false, new HandfulOfSlime()).setOptionResult((i)->{
+            this.dialog.addDialogOption(OPTIONS[0]+((SpikeSlimePatron)character).healAmount+OPTIONS[1], false, new HandfulOfSlime()).setOptionResult((i)->{
                 character.alreadyPerformedTransaction = true;
                 goToDialogue(2);
                 character.setCutscenePortrait("Portrait2");
@@ -43,7 +43,7 @@ public class AcidSlimeBCutscene extends AbstractCutscene {
         } else if (dialogueIndex == 2){
             nextDialogue();
             this.dialog.addDialogOption(OPTIONS[2]).setOptionResult((i)->{
-                AbstractDungeon.player.heal(((AcidSlimeBPatron)character).healAmount, true);
+                AbstractDungeon.player.heal(((SpikeSlimePatron)character).healAmount, true);
                 endCutscene();
                 this.dialog.clear();
             });

@@ -1,4 +1,4 @@
-package spireCafe.interactables.patrons.acidslimeb;
+package spireCafe.interactables.patrons.spikeslime;
 
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDrawPileAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
@@ -21,7 +21,7 @@ public class HandfulOfSlime extends AbstractSCRelic {
     }
 
     public HandfulOfSlime(int sliminess) {
-        super(ID, AcidSlimeBPatron.assetID, AbstractRelic.RelicTier.SPECIAL, AbstractRelic.LandingSound.SOLID);
+        super(ID, SpikeSlimePatron.assetID, AbstractRelic.RelicTier.SPECIAL, AbstractRelic.LandingSound.SOLID);
         this.counter = sliminess;
 
         updateNameAndDescription();
