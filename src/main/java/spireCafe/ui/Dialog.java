@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
+import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.ui.DialogWord;
 import com.megacrit.cardcrawl.ui.DialogWord.AppearEffect;
@@ -142,6 +143,12 @@ public class Dialog {
         return button;
     }
 
+    public OptionButton addDialogOption(String text, AbstractPotion previewPotion) {
+        OptionButton button = new OptionButton(this, optionList.size(), text, previewPotion);
+        optionList.add(button);
+        return button;
+    }
+
     public OptionButton addDialogOption(String text, AbstractCard previewCard, AbstractRelic previewRelic) {
         OptionButton button = new OptionButton(this, optionList.size(), text, previewCard, previewRelic);
         optionList.add(button);
@@ -166,8 +173,14 @@ public class Dialog {
         return button;
     }
 
+    public OptionButton addDialogOption(String text, boolean isDisabled, AbstractPotion previewPotion) {
+        OptionButton button = new OptionButton(this, optionList.size(), text, isDisabled, previewPotion);
+        optionList.add(button);
+        return button;
+    }
+
     public OptionButton addDialogOption(String text, boolean isDisabled, AbstractCard previewCard, AbstractRelic previewRelic) {
-        OptionButton button = new OptionButton(this, optionList.size(), text, isDisabled, previewCard, previewRelic);
+        OptionButton button = new OptionButton(this, optionList.size(), text, isDisabled, previewCard, previewRelic, null);
         optionList.add(button);
         return button;
     }
@@ -292,6 +305,7 @@ public class Dialog {
             for (OptionButton button : optionList) {
                 button.renderCardPreview(sb);
                 button.renderRelicPreview(sb);
+                button.renderPotionPreview(sb);
             }
         }
     }

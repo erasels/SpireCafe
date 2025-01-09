@@ -1,0 +1,6 @@
+{
+    "${ModID}:GoldenBallLightning": {
+        "NAME": "Ball Lightning",
+        "DESCRIPTION": "Deal !D! damage. Channel !M! Lightning."
+    }
+}
