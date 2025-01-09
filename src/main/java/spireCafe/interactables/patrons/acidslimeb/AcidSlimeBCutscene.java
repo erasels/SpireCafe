@@ -1,12 +1,10 @@
 package spireCafe.interactables.patrons.acidslimeb;
 
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.MeatOnTheBone;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
-import spireCafe.interactables.patrons.councilofghosts.BlankTombstone;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 
