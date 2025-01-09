@@ -1,0 +1,9 @@
+{
+  "${ModID}:MissingnoPatron": {
+    "NAMES": [
+      "Missingno"
+    ],
+    "TEXT": [
+    ]
+  }
+}

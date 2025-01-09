@@ -22,9 +22,6 @@ public class PackmistressPatron extends AbstractPatron {
     public static final String ID = PackmistressPatron.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
-    private static Class<?> packmistressSkin;
-    private static Class<?> abstractSkin;
-
     public PackmistressPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
@@ -35,8 +32,8 @@ public class PackmistressPatron extends AbstractPatron {
         String atlasPath = null;
         if (Loader.isModLoaded("anniv5")) {
             try {
-                packmistressSkin = Class.forName("thePackmaster.skins.instances.PackmistressSkin");
-                abstractSkin = Class.forName("thePackmaster.skins.AbstractSkin");
+                Class<?> packmistressSkin = Class.forName("thePackmaster.skins.instances.PackmistressSkin");
+                Class<?> abstractSkin = Class.forName("thePackmaster.skins.AbstractSkin");
                 Constructor<?> constructor = packmistressSkin.getDeclaredConstructor();
                 constructor.setAccessible(true);
                 skin = constructor.newInstance();
@@ -48,19 +45,18 @@ public class PackmistressPatron extends AbstractPatron {
                 e.printStackTrace();
                 throw new RuntimeException("Error retrieving classes from Packmaster", e);
             }
+
+            this.atlas = new TextureAtlas(Gdx.files.internal(atlasPath));
+            SkeletonJson json = new SkeletonJson(this.atlas);
+            json.setScale(Settings.renderScale);
+            SkeletonData skeletonData = json.readSkeletonData(Gdx.files.internal(jsonPath));
+            this.skeleton = new Skeleton(skeletonData);
+            this.skeleton.setColor(Color.WHITE);
+            this.stateData = new AnimationStateData(skeletonData);
+            this.state = new AnimationState(this.stateData);
+            AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle", true);
+            e.setTime(e.getEndTime() * MathUtils.random());
         }
-
-        this.atlas = new TextureAtlas(Gdx.files.internal(atlasPath));
-        SkeletonJson json = new SkeletonJson(this.atlas);
-        json.setScale(Settings.renderScale);
-        SkeletonData skeletonData = json.readSkeletonData(Gdx.files.internal(jsonPath));
-        this.skeleton = new Skeleton(skeletonData);
-        this.skeleton.setColor(Color.WHITE);
-        this.stateData = new AnimationStateData(skeletonData);
-        this.state = new AnimationState(this.stateData);
-        AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle", true);
-        e.setTime(e.getEndTime() * MathUtils.random());
-
     }
 
     @Override

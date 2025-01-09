@@ -1,0 +1,25 @@
+{
+  "${ModID}:SpikeSlimeCutscene": {
+    "NAME": "SpikeSlime Cutscene",
+    "BLOCKING_TEXTS": [
+      "\"uh... ~hey...\"~ NL NL \"you ~can...~ buy your own ~food...~ at the ~counter......\"~",
+      "\"Bartender! One more order of byrd legs please!\""
+    ],
+    "DESCRIPTIONS": [
+      "@\"*bloop*@ @*squelch*@ @*blorp*\"@ NL NL The slime seems to be speaking in a language that you cannot understand.",
+      "Or is it... #r@choking!?@ If it is, you need to act quickly if you want to save its life! NL NL You ready your hands. #yHow #ywill #yyou #yhandle #ythe #ysituation?",
+      "You quickly plunge your hands into an orifice you assume to be the slime's mouth and yoink out the first object you feel. Your now goopy hands emerge with a #g~slimy~ #g~chunk~ #g~of~ #g~meat.~",
+      "\"uh... ~hey...\"~ The slime suddenly speaks with #bcoherent #bwords. NL \"i was... ~uhh...~ if you really wanted... my food that ~much...~ i ~guess...~ you can have ~it......\"~",
+      "You carefully stick your hands into the slime and feel a #yfleshy #yobject inside its body: it's a chunk of meat with the bone still on it! NL Cautiously, you pull out the entire object... along with large globs of slime which are now irrevocably stuck on to your hands.",
+      "\"Wow!\" The slime suddenly speaks in #bperfect #bclarity, NL \"I've been having a stuffy nose all week, thanks for clearing it up!\" NL NL \"If you want to, you can go ahead and keep that thing!\"",
+      "You decide the risk isn't worth the potential social embarrassment. NL It would be #rreal #rawkward to something dramatic to the slime if it isn't actually choking."
+    ],
+    "OPTIONS": [
+      "[Quickly] #gHeal #g",
+      " #gHP. #rBecome #rSlimy.",
+      "[Eat] #gEat #gthe #gslimy #gmeat.",
+      "[Carefully] #gObtain #gMeat #gon #gthe #gBone. #rBecome #rVery #rSlimy.",
+      "[Leave] Leave the slime alone."
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "${ModID}:PackmasterMerchant": {
+    "NAMES": [
+      "Packmaster"
+    ],
+    "TEXT": [
+      "You wouldn't believe all the stuff I've got in here.",
+      "There's a pack where every card is a Claw, how awesome is that?",
+      "One day they will make the final pack.",
+      "I've got over a thousand different cards I can sell.",
+      "Cards from the same pack often synergize with each other.",
+      "Hope you're enjoying the Café!",
+      "Hey, I recognize you.",
+      "I've prepared a full spread from this delightful pack, just for you.",
+      "I wonder what you can do by mixing together these two packs?",
+      "I've got a might fine selection of rares for you today.",
+      "Check out all these Skims.",
+      "This is a very striking shop.",
+      "Ended up with too many iron waves in my pack, want to take some off my hands?",
+      "Enough energy to power a whole country.",
+      "Use these cards before they fade away.",
+      "First turn best turn.",
+      "These cards are free... but they still cost gold. And a card draw.",
+      "Don't you wish you had Chemical X right now?",
+      "One use per fight only! Or sometimes more."
+    ]
+  }
+}

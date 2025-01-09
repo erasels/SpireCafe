@@ -25,6 +25,9 @@ import spireCafe.CafeRoom;
 import spireCafe.scene.CafeScene;
 import spireCafe.util.ActUtil;
 
+import java.io.IOException;
+
+import static spireCafe.Anniv7Mod.allTimeSeenInteractables;
 import static spireCafe.Anniv7Mod.makeID;
 
 public class CafeEntryExitPatch {
@@ -112,6 +115,14 @@ public class CafeEntryExitPatch {
                 AbstractDungeon.currMapNode.room.event.dispose();
 
                 modifyProceedButton(ReflectionHacks.getPrivateStatic(ProceedButton.class, "DRAW_Y"), true);
+
+                if(allTimeSeenInteractables != null) {
+                    try {
+                        Anniv7Mod.saveSeenInteractables(allTimeSeenInteractables);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
         }
     }
@@ -151,6 +162,7 @@ public class CafeEntryExitPatch {
         CardCrawlGame.sound.play(CAFE_ENTRY_SOUND_KEY);
         AbstractDungeon.rs = AbstractDungeon.RenderScene.NORMAL;
 
+        AbstractDungeon.overlayMenu.proceedButton.hideInstantly();
         modifyProceedButton(120f * Settings.scale, false);
 
         AbstractDungeon.combatRewardScreen.clear();
@@ -216,6 +228,7 @@ public class CafeEntryExitPatch {
                 if (!AbstractDungeon.isFadingOut) {
                     AbstractDungeon.fadeIn();
                     setFadeTimer();
+                    AbstractDungeon.overlayMenu.proceedButton.show();
                     startedFadeIn = true;
                 }
                 this.originalRoom.update();

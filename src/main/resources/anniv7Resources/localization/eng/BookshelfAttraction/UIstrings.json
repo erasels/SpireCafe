@@ -13,5 +13,10 @@
       "Spire Spaghetti: NL - 1 squirming #gWrithing #gMass (pick one with extra tendrils for more servings) NL - Some Nemesis ectoplasm (disappears if not well-sealed!) NL - A squeeze of Mango juice  (offset cursed energies) NL NL Preparation: NL - Pin the Writhing Mass with a bag-full of #gShivs to its tentacles. NL - Detangle the freshest tendrils and blanch them in a bubbling cauldron at a campfire. NL - Pour the Nemesis ectoplasm and Mango juice in there. NL - Arrange the tendrils on a plate. NL - Optional: Garnish with a #bglowing #borb (for ambiance). NL NL Bone apple tea!",
       "#yNote: When people buy something at my stand and then XYZ(add small secret interaction here)"
     ]
+  },
+  "${ModID}:MissingnoPage": {
+    "TEXT": [
+      ""
+    ]
   }
 }

@@ -2,6 +2,7 @@ package spireCafe.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -15,6 +16,8 @@ import com.megacrit.cardcrawl.ui.DialogWord.AppearEffect;
 import com.megacrit.cardcrawl.ui.DialogWord.WordColor;
 import com.megacrit.cardcrawl.ui.DialogWord.WordEffect;
 import spireCafe.abstracts.AbstractCutscene;
+import spireCafe.interactables.patrons.missingno.MissingnoCutscene;
+import spireCafe.interactables.patrons.missingno.MissingnoPatron;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -31,6 +34,7 @@ public class Dialog {
     private AppearEffect a_effect;
     private Scanner s;
     private final GlyphLayout gl = new GlyphLayout();
+    private static BitmapFont font;
     private final ArrayList<DialogWord> words = new ArrayList<>();
     private boolean textDone = true;
     private float wordTimer = 0.0F;
@@ -60,6 +64,12 @@ public class Dialog {
             for(int i = 0; i < optionList.size(); i++) {
                 (optionList.get(i)).update(optionList.size());
             }
+        }
+
+        if(cutscene.getCharacter() != null && cutscene.getCharacter().id.equals(MissingnoPatron.ID)){
+            font = MissingnoCutscene.font;
+        } else {
+            font = FontHelper.charDescFont;
         }
 
         if (Settings.lineBreakViaCharacter) {
@@ -181,6 +191,7 @@ public class Dialog {
 
     public void updateBodyText(String text, AppearEffect ae) {
         this.s = new Scanner(text);
+
         this.words.clear();
         this.textDone = false;
         this.a_effect = ae;
@@ -217,7 +228,7 @@ public class Dialog {
 
                 for(int i = 0; i < word.length(); i++) {
                     String tmp = Character.toString(word.charAt(i));
-                    this.gl.setText(FontHelper.charDescFont, tmp);
+                    this.gl.setText(font, tmp);
                     if (this.curLineWidth + this.gl.width > DIALOG_MSG_W) {
                         this.curLine++;
                         this.curLineWidth = this.gl.width;
@@ -225,7 +236,7 @@ public class Dialog {
                         this.curLineWidth += this.gl.width;
                     }
 
-                    this.words.add(new DialogWord(FontHelper.charDescFont, tmp, this.a_effect, effect, color, DIALOG_MSG_X + this.curLineWidth - this.gl.width, DIALOG_MSG_Y - LINE_SPACING * (float)this.curLine, this.curLine));
+                    this.words.add(new DialogWord(font, tmp, this.a_effect, effect, color, DIALOG_MSG_X + this.curLineWidth - this.gl.width, DIALOG_MSG_Y - LINE_SPACING * (float)this.curLine, this.curLine));
                     if (!this.show) {
                         this.words.get(this.words.size() - 1).dialogFadeOut();
                     }
@@ -264,7 +275,7 @@ public class Dialog {
                     word = word.substring(1, word.length() - 1);
                 }
 
-                this.gl.setText(FontHelper.charDescFont, word);
+                this.gl.setText(font, word);
                 if (this.curLineWidth + this.gl.width > DIALOG_MSG_W) {
                     this.curLine++;
                     this.curLineWidth = this.gl.width + CHAR_SPACING;
@@ -272,7 +283,7 @@ public class Dialog {
                     this.curLineWidth += this.gl.width + CHAR_SPACING;
                 }
 
-                this.words.add(new DialogWord(FontHelper.charDescFont, word, this.a_effect, effect, color, DIALOG_MSG_X + this.curLineWidth - this.gl.width, DIALOG_MSG_Y - LINE_SPACING * (float)this.curLine, this.curLine));
+                this.words.add(new DialogWord(font, word, this.a_effect, effect, color, DIALOG_MSG_X + this.curLineWidth - this.gl.width, DIALOG_MSG_Y - LINE_SPACING * (float)this.curLine, this.curLine));
                 if (!this.show) {
                     this.words.get(this.words.size() - 1).dialogFadeOut();
                 }
