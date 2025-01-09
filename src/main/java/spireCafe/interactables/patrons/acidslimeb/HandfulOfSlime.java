@@ -28,8 +28,11 @@ import static spireCafe.util.Wiz.*;
 public class HandfulOfSlime extends AbstractSCRelic {
     public static final String ID = makeID(HandfulOfSlime.class.getSimpleName());
 
+    public static final int SMALL_SLIMY = 6;
+    public static final int BIG_SLIMY = 99;
+
     public HandfulOfSlime() {
-        this(5);
+        this(SMALL_SLIMY);
     }
 
     public HandfulOfSlime(int sliminess) {

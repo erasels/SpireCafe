@@ -20,17 +20,20 @@ public class AcidSlimeBPatron extends AbstractPatron {
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
     public static final String assetID = "AcidSlimeB";
+    public int healAmount;
 
     public AcidSlimeBPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
         this.authors = "iry";
 
+        this.healAmount = AbstractDungeon.player.maxHealth/4;
+
         //directly copied loadAnimation from AbstractCreature class
-        this.atlas = new TextureAtlas(Gdx.files.internal("images/monsters/theBottom/louseRed/skeleton.atlas"));
+        this.atlas = new TextureAtlas(Gdx.files.internal("images/monsters/theBottom/slimeAltM/skeleton.atlas"));
         SkeletonJson json = new SkeletonJson(this.atlas);
         json.setScale(Settings.renderScale);
-        SkeletonData skeletonData = json.readSkeletonData(Gdx.files.internal("images/monsters/theBottom/louseRed/skeleton.json"));
+        SkeletonData skeletonData = json.readSkeletonData(Gdx.files.internal("images/monsters/theBottom/slimeAltM/skeleton.json"));
         this.skeleton = new Skeleton(skeletonData);
         this.skeleton.setColor(Color.WHITE);
         this.stateData = new AnimationStateData(skeletonData);
@@ -39,17 +42,12 @@ public class AcidSlimeBPatron extends AbstractPatron {
         e.setTime(e.getEndTime() * MathUtils.random());
         //////
 
-        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("AcidSlimeB/Portrait.png")));
+        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("AcidSlimeB/Portrait3.png")));
     }
 
     public void setCutscenePortrait(String texture) {
         String resourcePath = String.format("AcidSlimeB/%s.png", texture);
         this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath(resourcePath)));
-    }
-
-    public void curlUp(){
-        this.state.setAnimation(0, "transitiontoclosed", false);
-        this.state.addAnimation(0, "idle closed", true, 0.0F);
     }
 
     public void renderCutscenePortrait(SpriteBatch sb) {
