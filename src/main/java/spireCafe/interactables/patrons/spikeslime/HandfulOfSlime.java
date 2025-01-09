@@ -1,5 +1,6 @@
 package spireCafe.interactables.patrons.spikeslime;
 
+import basemod.helpers.CardPowerTip;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDrawPileAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.cards.status.Slimed;
@@ -34,7 +35,6 @@ public class HandfulOfSlime extends AbstractSCRelic {
             this.addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
             this.addToBot(new MakeTempCardInDrawPileAction(new Slimed(), 1, true, true));
             this.setCounter(this.counter-1);
-            updateNameAndDescription();
         }
     }
 
@@ -42,8 +42,10 @@ public class HandfulOfSlime extends AbstractSCRelic {
     public void setCounter(int setCounter) {
         this.counter = setCounter;
         if (setCounter <= 0) {
+            this.counter = -2;
             this.usedUp();
         }
+        updateNameAndDescription();
     }
 
     //have relic description update to the remaining count since the patron can add it at different amounts
@@ -51,10 +53,14 @@ public class HandfulOfSlime extends AbstractSCRelic {
         this.description = this.getUpdatedDescription();
         this.tips.clear();
         this.tips.add(new PowerTip(this.name, this.description));
+        this.tips.add(new CardPowerTip(new Slimed()));
         this.initializeTips();
     }
 
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0] + this.counter + DESCRIPTIONS[1];
+        if(this.counter > 0){
+            return DESCRIPTIONS[0] + this.counter + DESCRIPTIONS[1];
+        }
+        return DESCRIPTIONS[2];
     }
 }
