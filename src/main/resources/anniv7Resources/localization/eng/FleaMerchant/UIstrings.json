@@ -1,0 +1,22 @@
+{
+  "${ModID}:FleaMarketRelicArticle": {
+    "TEXT": [
+      "Used {0}",
+      "This relic has already been used {0} times before, making it more powerful! NL {1}",
+      "This relic has already been used a few times, with only a {0} remaining use left! NL {1}",
+      "This relic has already been used a few times, with only a {0} remaining uses left! NL {1}"
+    ]
+  },
+  "${ModID}:HaggleArticle": {
+    "TEXT": [
+      "Haggle with Flo",
+      "Click here to haggle with Flo. There is a {0}% chance to succeed. If you do, Flo will lower all his prices by 10%. If you fail, Flo will raise his prices to 150% and you can no longer haggle. NL Flo currently gives you a {1}% discount.",
+      "You made Flo angry, and he is no longer willing to haggle. NL Flo now charges {0}% of his original prices."
+    ]
+  },
+  "${ModID}:WornMod": {
+    "TEXT": [
+      "Worn {0}"
+    ]
+  }
+}

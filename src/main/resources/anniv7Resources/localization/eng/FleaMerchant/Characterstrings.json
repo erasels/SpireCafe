@@ -1,0 +1,53 @@
+{
+  "${ModID}:FleaMerchant": {
+    "NAMES": [
+      "Flo the Flea Merchant"
+    ],
+    "TEXT": [
+      "Depleted {0}",
+      "I don't like you, but I still like gold",
+      "No more no rush. NL ... NL RUSH",
+      "One fleas trash is another slayers treasure!",
+      "No Refunds.",
+      "My name is Flo, what is your name?",
+      "Do you like this rug? NL I made it myself. NL And no, it's not for sale",
+      "The potions all work, I tried them myself!",
+      "I used to be like you.",
+      "My favorite color is orange. NL How bout you?",
+      "No rush. NL No rush.",
+      "If these prices are not to your liking, perhaps I can offer you a better deal?",
+      "You pushed your luck too far.",
+      "Sorry, that one is reserved for nice slayers.",
+      "Hey now, NL you need NL more #rGold.",
+      "Hey buddy, you got no #rMoney!",
+      "You broke?",
+      "You don't got enough #rGold.",
+      "You can't afford that.",
+      "This isn't a charity.",
+      "Prices are no set in stone, but for now you cannot afford that.",
+      "Let me think about that.",
+      "Good point.",
+      "I'll see what I can do.",
+      "What do you think of these prices?",
+      "Fine.",
+      "Have the friends and family discount.",
+      "Only because I like you.",
+      "Enough! NL Either you pay or you leave.",
+      "I have a family to feed.",
+      "That's just rude.",
+      "I'd rather find other slayers to sell to.",
+      "Selfish slayer you are.",
+      "You've gone too far now.",
+      "Happy doing business with you",
+      "Glad we could come to an agreement",
+      "One fleas trash is another slayers treasure!",
+      "~Thaaaanks~",
+      "Another sale... NL hohoho! NL Cha - @Ching!@",
+      "@SOLD!@",
+      "Glad to see that getting some more use.",
+      "Careful, that one has seen better days.",
+      "Ha, sucker!",
+      "Bet you have regrets now."
+    ]
+  }
+}
