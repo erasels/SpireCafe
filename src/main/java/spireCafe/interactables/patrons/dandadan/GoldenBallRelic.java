@@ -2,7 +2,6 @@ package spireCafe.interactables.patrons.dandadan;
 
 import static spireCafe.Anniv7Mod.makeRelicPath;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
@@ -11,9 +10,6 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
-import com.megacrit.cardcrawl.cards.green.Reflex;
-import com.megacrit.cardcrawl.cards.green.Tactician;
-import com.megacrit.cardcrawl.cards.purple.DeusExMachina;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -69,7 +65,7 @@ public class GoldenBallRelic extends AbstractSCRelic implements CustomSavable<In
     public void atBattleStartPreDraw() {
         CardGroup drawPileCopy = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
         drawPileCopy.group.addAll(Wiz.p().drawPile.group);
-        Collections.shuffle(drawPileCopy.group);
+        Collections.shuffle(drawPileCopy.group, new Random(AbstractDungeon.cardRandomRng.randomLong()));
 
         int ghostIndex = 0;
         for (AbstractCard c : drawPileCopy.group) {
@@ -79,7 +75,7 @@ public class GoldenBallRelic extends AbstractSCRelic implements CustomSavable<In
                 CardModifierManager.addModifier(c, new GhostModifier(ghostIndex++));
             }
         }
-        
+
         if (ghostsPlayed == -1) {
             flash();
             Wiz.atb(new RelicAboveCreatureAction(Wiz.p(), this));

@@ -14,17 +14,24 @@ import com.megacrit.cardcrawl.screens.CombatRewardScreen;
 
 import javassist.CannotCompileException;
 import javassist.CtBehavior;
+import spireCafe.util.Wiz;
 
 @SpirePatch2(clz = CombatRewardScreen.class, method = "setupItemReward")
 public class RightballPotionPatch {
     public static RightballPotion rbp;
+    public static RewardItem potionReward;
 
     @SpireInsertPatch(locator = Locator.class)
     public static SpireReturn<Void> returnPotionReward(ArrayList<RewardItem> ___rewards) {
-        if (rbp == null) {
+        if (rbp == null && potionReward == null) {
+            return SpireReturn.Continue();
+        } else if (rbp == null && potionReward != null && !Wiz.p().hasPotion(RightballPotion.Potion_ID)) {
+            ___rewards.add(potionReward);
+            return SpireReturn.Continue();
+        } else if (rbp == null) {
             return SpireReturn.Continue();
         }
-        RewardItem potionReward = new RewardItem(rbp.makeCopy());
+        potionReward = new RewardItem(rbp.makeCopy());
         ___rewards.add(potionReward);
         rbp = null;
         return SpireReturn.Continue();

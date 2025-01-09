@@ -11,14 +11,15 @@ import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 
 import basemod.abstracts.CustomPotion;
+import basemod.abstracts.CustomSavable;
 import spireCafe.Anniv7Mod;
 
-public class RightballPotion extends CustomPotion {
+public class RightballPotion extends CustomPotion implements CustomSavable<Integer> {
 
     public static final String Potion_ID = Anniv7Mod.makeID(RightballPotion.class.getSimpleName());
 
     private static final PotionStrings potionStrings;
-    private int returnChance;
+    public int returnChance;
 
     public RightballPotion(int returnChance) {
         this();
@@ -30,7 +31,8 @@ public class RightballPotion extends CustomPotion {
         super(potionStrings.NAME, Potion_ID, PotionRarity.PLACEHOLDER, PotionSize.SPHERE, PotionColor.NONE);
         isThrown = true;
         targetRequired = true;
-        returnChance = 100;
+        if (returnChance == 0)
+            returnChance = 100;
         initializeData();
     }
 
@@ -48,8 +50,13 @@ public class RightballPotion extends CustomPotion {
         this.addToBot(new DamageAction(target, info, AbstractGameAction.AttackEffect.BLUNT_HEAVY));
         if (AbstractDungeon.cardRandomRng.randomBoolean(returnChance / 100.0f)) {
             RightballPotionPatch.rbp = this;
+            returnChance -= 10;
+            initializeData();
+        } else {
+            RightballPotionPatch.rbp = null;
+            RightballPotionPatch.potionReward = null;
         }
-        returnChance -= 10;
+
     }
 
     public int getPotency(int i) {
@@ -63,5 +70,17 @@ public class RightballPotion extends CustomPotion {
 
     static {
         potionStrings = CardCrawlGame.languagePack.getPotionString(Potion_ID);
+    }
+
+    @Override
+    public void onLoad(Integer chance) {
+        returnChance = chance;
+        // RightballPotionPatch.rbp = this;
+        initializeData();
+    }
+
+    @Override
+    public Integer onSave() {
+        return returnChance;
     }
 }

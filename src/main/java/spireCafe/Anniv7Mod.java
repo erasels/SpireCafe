@@ -29,6 +29,7 @@ import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cardvars.SecondDamage;
 import spireCafe.cardvars.SecondMagicNumber;
 import spireCafe.interactables.attractions.makeup.MakeupTableAttraction;
+import spireCafe.interactables.patrons.dandadan.RightBallPotionSavable;
 import spireCafe.interactables.patrons.dandadan.RightballPotion;
 import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.ui.FixedModLabeledToggleButton.FixedModLabeledToggleButton;
@@ -93,6 +94,8 @@ public class Anniv7Mod implements
 
     public Anniv7Mod() {
         BaseMod.subscribe(this);
+
+        BaseMod.addSaveField("anniv7:ballPotion", new RightBallPotionSavable());
     }
 
     public static String makePath(String resourcePath) {

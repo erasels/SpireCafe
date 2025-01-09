@@ -78,14 +78,15 @@ public class DandadanCutscene extends AbstractCutscene {
                                                     - AbstractCard.IMG_WIDTH / 2.0F - 30.0F * Settings.scale,
                                             Settings.HEIGHT / 2.0F));
                         });
-                disableOption = Wiz.p().gold < 20;
+                int goldForPotion = 60;
+                disableOption = Wiz.p().gold < goldForPotion;
                 this.dialog
                         .addDialogOption(OPTIONS[POTION_OPTION], disableOption, new RightballPotion())
                         .setOptionResult((i) -> {
                             if (Wiz.p().hasPotion(PotionSlot.POTION_ID)) {
                                 goToDialogue(RIGHTBALL_POTION_START);
                                 character.alreadyPerformedTransaction = true;
-                                Wiz.p().loseGold(20);
+                                Wiz.p().loseGold(goldForPotion);
                                 Wiz.p().obtainPotion(new RightballPotion());
                             } else {
                                 AbstractDungeon.topPanel.flashRed();
