@@ -25,7 +25,7 @@ public class DrinkInserterRelic extends AbstractSCRelic {
 
 
     public DrinkInserterRelic() {
-        super(ID, RelicTier.SPECIAL, LandingSound.CLINK);
+        super(ID, "Drinkbot", RelicTier.SPECIAL, LandingSound.CLINK);
     }
 
     @Override
@@ -53,19 +53,11 @@ public class DrinkInserterRelic extends AbstractSCRelic {
         }
     }
 
-    @Override
-    public void onEnterRoom(AbstractRoom room) {
-        stats.put(HP_GAINED_COMBAT, 0);
-    }
-
-    
     private static final Map<String, Integer> stats = new HashMap<>();
     private static final String HP_GAINED = "hpgained";
-    private static final String HP_GAINED_COMBAT = "hpgainedcombat";
     
     private void increaseStats(int heal) {
         stats.put(HP_GAINED, stats.getOrDefault(HP_GAINED, 0) + heal);
-        stats.put(HP_GAINED_COMBAT, stats.getOrDefault(HP_GAINED_COMBAT, 0) + heal);
     }
 
     public String getStatsDescription() {
@@ -76,15 +68,11 @@ public class DrinkInserterRelic extends AbstractSCRelic {
     }
 
     public String getExtendedStatsDescription(int totalCombats, int totalTurns) {
-        if (stats.get(HP_GAINED) == null) {
-            return "";
-        }
-        return getStatsDescription() + String.format(DESCRIPTIONS[2], stats.get(HP_GAINED_COMBAT));
+        return getStatsDescription();
     }
 
     public void resetStats() {
         stats.put(HP_GAINED,0);
-        stats.put(HP_GAINED_COMBAT,0);
     }
 
     public JsonElement onSaveStats() {

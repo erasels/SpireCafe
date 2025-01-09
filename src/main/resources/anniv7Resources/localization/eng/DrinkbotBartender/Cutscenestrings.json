@@ -8,14 +8,23 @@
     ],
     "DESCRIPTIONS": [
       "\"Welcome to MechaMixers. I will be your Gizmo bartender this evening. Can I interest you in one of our singular beers on tap today?\"",
-      "\"Perhaps you would like to be fitted for our new subcontaneous delivery mechanism?\"",
+      "\"Perhaps you would like to be fitted for our new subcontaneous ethanol injector?\"",
+      "\"Corporate also had a rudimentary humor module installed if you would like to hear some of my jokes. I allegedly write them myself.\"",
       "\"Please don't take too long to decide. Our creator monitors our throughput metrics.\"",
-      "\"Okay, and the tablet is going to ask you a question really quick.\""
+      "\"How else can we help you today?\"",
+      "\"Welcome back.\"",
+      "Joke 1",
+      "Joke 2",
+      "Joke 3",
+      "Joke 4",
+      "\"Thank you for visiting MechaMixers today, please enjoy your stay.\"",
+      "\"If you don't mind, the tablet is going to ask you a question really quick.\""
     ],
     "OPTIONS": [
       "[Leave] Nothing for now.",
       "[Draft Beer] Heal #b%s HP and lose #b%s Gold.",
-      "[Implant] Obtain Drink Inserter and lose #b%s Gold."
+      "[Implant] Obtain Drink Inserter and lose #b%s Gold.",
+      "[Joke] Tell me a joke."
     ]
   }
 }

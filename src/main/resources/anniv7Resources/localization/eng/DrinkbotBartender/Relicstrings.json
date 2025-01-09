@@ -1,11 +1,10 @@
 {
     "${ModID}:DrinkInserterRelic": {
-        "NAME": "Drink Inserter",
-        "FLAVOR": "Boozy",
+        "NAME": "Subcutaneous Intoxicator",
+        "FLAVOR": "Get boozy without the effort!",
         "DESCRIPTIONS": [
           "Every #b7 turns, heal for #b20% of your missing HP.",
-          "HP gained: %s",
-          " NL Gained this combat: %s"
+          "HP gained: %s"
         ]
       }
 }

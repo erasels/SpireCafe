@@ -30,6 +30,8 @@ public class DrinkbotBartender extends AbstractBartender {
     public int nemesisNum = 0;
     public int amountSpent = 0;
     private int secondCost = 0;
+    public boolean hasPurchased = false;
+    public boolean hasVisited = false;
     
     public DrinkbotBartender(float animationX, float animationY) {
         super(animationX, animationY, HB_W, HB_H);
@@ -42,6 +44,9 @@ public class DrinkbotBartender extends AbstractBartender {
         
         loadAnimation(BARTENDER_STR + "skeleton.atlas", BARTENDER_STR + "skeleton.json", 1.0F);
         this.state.setAnimation(0, "idle", true);
+        this.stateData.setMix("idle", "wild", 0.1F);
+        this.stateData.setMix("wild", "idle", 0.1F);
+
         this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeBartenderPath("drinkbot/portrait.png")));
         
     }
@@ -54,6 +59,19 @@ public class DrinkbotBartender extends AbstractBartender {
     @Override
     public int getHealAmount() {
         return (int) NumberUtils.max(AbstractDungeon.player.maxHealth * 0.5, 10);
+    }
+
+    @Override
+    public void applyHealAction() {
+        CardCrawlGame.sound.play("SLEEP_1-2");
+        AbstractDungeon.player.heal(getHealAmount());
+        AbstractDungeon.player.loseGold(BASE_COST);
+        inHealAction = false;
+    }
+
+    @Override
+    public boolean getHealOptionCondition() {
+        return AbstractDungeon.player.gold >= BASE_COST;
     }
 
     @Override
@@ -70,16 +88,14 @@ public class DrinkbotBartender extends AbstractBartender {
     }
 
     @Override
-    public void applyHealAction() {
-        CardCrawlGame.sound.play("SLEEP_1-2");
-        AbstractDungeon.player.heal(getHealAmount());
-        AbstractDungeon.player.loseGold(BASE_COST);
-        inHealAction = false;
+    public boolean getSecondOptionCondition() {
+        return AbstractDungeon.player.gold >= this.secondCost;
     }
+
 
     @Override
     public String getNoThanksDescription() {
-        return cutsceneStrings.OPTIONS[1];
+        return cutsceneStrings.OPTIONS[0];
     }
 
     @Override
@@ -90,6 +106,7 @@ public class DrinkbotBartender extends AbstractBartender {
     @Override
     public void onInteract() {
         AbstractDungeon.topLevelEffectsQueue.add(new DrinkbotCutscene(this, cutsceneStrings));
+        this.hasVisited = true;
     }
 
 }
