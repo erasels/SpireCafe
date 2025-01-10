@@ -8,12 +8,14 @@ import spireCafe.util.cutsceneStrings.CutsceneStrings;
 public class DrinkbotCutscene extends BartenderCutscene {
 
     private DrinkbotBartender drinkbot; // I'm not casting all that.
+    private int jokesTold;
 
     public DrinkbotCutscene(DrinkbotBartender character, CutsceneStrings cutsceneStrings) {
         super(character, cutsceneStrings);
         this.drinkbot = character;
         this.drinkbot.hasPurchased = false;
         this.dialogueIndex = this.drinkbot.hasVisited ? 5 : 0;
+        this.jokesTold = 0;
     }
 
     @Override
@@ -57,7 +59,11 @@ public class DrinkbotCutscene extends BartenderCutscene {
     protected void addFlavorOptions() {
         String flavor = OPTIONS[3];
         this.dialog.addDialogOption(flavor).setOptionResult((i)->{
-            goToDialogue(MathUtils.random(6, 9));
+            goToDialogue(this.jokesTold + 6);
+            this.jokesTold++;
+            if (this.jokesTold > 3 ) {
+                this.jokesTold = 0;
+            }
         });
 
     }
