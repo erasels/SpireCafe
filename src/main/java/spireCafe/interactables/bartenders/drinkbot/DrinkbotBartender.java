@@ -44,8 +44,6 @@ public class DrinkbotBartender extends AbstractBartender {
         
         loadAnimation(BARTENDER_STR + "skeleton.atlas", BARTENDER_STR + "skeleton.json", 1.0F);
         this.state.setAnimation(0, "idle", true);
-        this.stateData.setMix("idle", "wild", 0.1F);
-        this.stateData.setMix("wild", "idle", 0.1F);
 
         this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeBartenderPath("drinkbot/portrait.png")));
         

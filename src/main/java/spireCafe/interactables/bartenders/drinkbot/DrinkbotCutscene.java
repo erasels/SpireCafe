@@ -58,11 +58,6 @@ public class DrinkbotCutscene extends BartenderCutscene {
         String flavor = OPTIONS[3];
         this.dialog.addDialogOption(flavor).setOptionResult((i)->{
             goToDialogue(MathUtils.random(6, 9));
-            drinkbot.state.setAnimation(0, "wild", false);
-            drinkbot.state.addAnimation(0, "wild", false, 0.0F);
-            drinkbot.state.addAnimation(0, "wild", false, 0.0F);
-            drinkbot.state.addAnimation(0, "wild", false, 0.0F);
-            drinkbot.state.addAnimation(0, "idle", true, 0.0F);
         });
 
     }
