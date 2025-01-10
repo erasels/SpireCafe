@@ -36,6 +36,8 @@ import spireCafe.interactables.attractions.makeup.MakeupTableAttraction;
 import spireCafe.interactables.merchants.fleamerchant.FleaMerchant;
 import spireCafe.patches.PotencySaverPatch;
 import spireCafe.interactables.patrons.missingno.MissingnoUtil;
+import spireCafe.interactables.patrons.dandadan.RightBallPotionSavable;
+import spireCafe.interactables.patrons.dandadan.RightballPotion;
 import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.ui.FixedModLabeledToggleButton.FixedModLabeledToggleButton;
 import spireCafe.util.TexLoader;
@@ -260,6 +262,8 @@ public class Anniv7Mod implements
             Consumer<String> whitelist = getWidePotionsWhitelistMethod();
 
         }
+        BaseMod.addPotion(RightballPotion.class, 
+                new Color(254 / 255f, 193 / 255f, 27 / 255f, 1f), null, null, RightballPotion.Potion_ID);
     }
 
     public static final ImFloat shake_power = new ImFloat(0.007f);
@@ -513,6 +517,7 @@ public class Anniv7Mod implements
                 }
             }
         });
+        BaseMod.addSaveField(makeID("ballPotion"), new RightBallPotionSavable());
     }
 
     public static class SavableCurrentRunSeenInteractables implements CustomSavable<HashSet<String>> {
