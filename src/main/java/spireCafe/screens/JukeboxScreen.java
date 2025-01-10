@@ -30,10 +30,12 @@ public class JukeboxScreen extends CustomScreen {
     private static final String BUTTONLONG_PATH = "anniv7Resources/images/attractions/jukebox/ButtonLong.png";
     private static final String BUTTONON_PATH = "anniv7Resources/images/attractions/jukebox/ButtonOn.png";
     private static final String BUTTONOFF_PATH = "anniv7Resources/images/attractions/jukebox/ButtonOff.png";
+    private static final String BUTTONDISABLED_PATH = "anniv7Resources/images/attractions/jukebox/ButtonflipN.png";
     private static final String WINDOW_PATH = "anniv7Resources/images/attractions/jukebox/Window.png";
     private static final String CUSTOM_MUSIC_FOLDER = "audio/music/custom";
     private static final int BUTTONS_PER_PAGE = 5;
 
+    private final Texture buttonDisabledTexture;
 
     private final Texture backgroundTexture;
     private final Texture buttonTexture;
@@ -74,6 +76,7 @@ public class JukeboxScreen extends CustomScreen {
         buttononTexture = new Texture(BUTTONON_PATH);
         buttonoffTexture = new Texture(BUTTONOFF_PATH);
         windowTexture = new Texture(WINDOW_PATH);
+        buttonDisabledTexture = new Texture(BUTTONDISABLED_PATH);
 
 
         initializePredefinedTracks();
@@ -184,8 +187,8 @@ public class JukeboxScreen extends CustomScreen {
         float horizontalRadius = 165f * Settings.scale; // Wider horizontal radius
         float verticalRadius = 43f * Settings.scale; // Smaller vertical radius
         // Check toggle buttons
-        float baseX = 450f; // Starting X position
-        float baseY = 650f; // Y position for buttons
+        float baseX = 530f; // Starting X position
+        float baseY = 250f; // Y position for buttons
         float horizontalSpacing = 160f; // Spacing between buttons
         float buttonWidth = 64f * Settings.scale; // Button width
         float buttonHeight = 42f * Settings.scale; // Button height
@@ -218,7 +221,7 @@ public class JukeboxScreen extends CustomScreen {
             LargeDialogOptionButton button = buttons.get(i);
 
             float x = 408f * Settings.scale; // Button X position
-            float y = (513f - (i * 85f)) * Settings.scale; // Button Y position
+            float y = (613f - (i * 85f)) * Settings.scale; // Button Y position
             float centerX = x + (200f * Settings.scale); // Center X of button
             float centerY = y + (100f * Settings.scale); // Center Y of button
 
@@ -251,9 +254,9 @@ public class JukeboxScreen extends CustomScreen {
             LargeDialogOptionButton button = buttons.get(i);
 
             float x = 408f * Settings.scale;
-            float y = (513f - (i * 80f)) * Settings.scale;
-            float centerX = x + (200f * Settings.scale); // Center X of button
-            float centerY = y + (100f * Settings.scale); // Center Y of button
+            float y = (613f - (i * 80f)) * Settings.scale;
+            float centerX = x + 200f; // Center X of button
+            float centerY = y + 113f; // Center Y of button
 
             // Draw the base button texture
             sb.draw(buttonTexture, x, y, 400f * Settings.scale, 200f * Settings.scale);
@@ -297,60 +300,73 @@ public class JukeboxScreen extends CustomScreen {
                 (x + 100f) * Settings.scale, (y + 40f) * Settings.scale, Color.WHITE);
     }
     private void addOverrideSettingsToJukebox(SpriteBatch sb) {
-        // Title for override settings
-        FontHelper.renderFontLeft(sb, FontHelper.charDescFont, "Music Override Options", 450.0f, 700.0f, Settings.CREAM_COLOR);
 
         // Initial position for the buttons and text
-        float baseX = 450.0f; // Starting X position for the first button
-        float baseY = 650.0f; // Y position for both buttons and text
+        float baseX = 530.0f; // Starting X position for the first button
+        float baseY = 250.0f; // Y position for both buttons and text
         float horizontalSpacing = 160.0f; // Spacing between buttons
 // Render each button with its corresponding text
-        renderOverrideOption(sb, "Override", baseX - 10f * Settings.scale, baseY - 30f * Settings.scale, overrideEnabled, (value) -> {
-            overrideEnabled = value;
+        renderOverrideOption(sb, "Override Music", baseX - 10f * Settings.scale, baseY - 30f * Settings.scale, overrideEnabled, false, (value) -> {
+            overrideEnabled = value; // Update overrideEnabled
+            if (!overrideEnabled) {
+                // Automatically disable all dependent buttons
+                shopOverride = false;
+                shrineOverride = false;
+                bossOverride = false;
+                eliteOverride = false;
+                eventOverride = false;
+            }
             saveOverrides();
         });
 
-        renderOverrideOption(sb, "Shop Music", baseX + horizontalSpacing - 10f * Settings.scale, baseY - 30f * Settings.scale, shopOverride, (value) -> {
-            shopOverride = value;
-            saveOverrides();
+        renderOverrideOption(sb, "Shop", baseX + horizontalSpacing - 10f * Settings.scale, baseY - 30f * Settings.scale, shopOverride, overrideEnabled, (value) -> {
+            if (overrideEnabled) {
+                shopOverride = value;
+                saveOverrides();
+            }
         });
 
-        renderOverrideOption(sb, "Shrine Music", baseX + (2 * horizontalSpacing) - 10f * Settings.scale, baseY - 30f * Settings.scale, shrineOverride, (value) -> {
-            shrineOverride = value;
-            saveOverrides();
+        renderOverrideOption(sb, "Shrine", baseX + (2 * horizontalSpacing) - 10f * Settings.scale, baseY - 30f * Settings.scale, shrineOverride, overrideEnabled, (value) -> {
+            if (overrideEnabled) {
+                shrineOverride = value;
+                saveOverrides();
+            }
         });
 
-        renderOverrideOption(sb, "Boss Music", baseX + (3 * horizontalSpacing) - 10f * Settings.scale, baseY - 30f * Settings.scale, bossOverride, (value) -> {
-            bossOverride = value;
-            saveOverrides();
+        renderOverrideOption(sb, "Boss", baseX + (3 * horizontalSpacing) - 10f * Settings.scale, baseY - 30f * Settings.scale, bossOverride, overrideEnabled, (value) -> {
+            if (overrideEnabled) {
+                bossOverride = value;
+                saveOverrides();
+            }
         });
 
-        renderOverrideOption(sb, "Elite Music", baseX + (4 * horizontalSpacing) - 10f * Settings.scale, baseY - 30f * Settings.scale, eliteOverride, (value) -> {
-            eliteOverride = value;
-            saveOverrides();
+        renderOverrideOption(sb, "Elite", baseX + (4 * horizontalSpacing) - 10f * Settings.scale, baseY - 30f * Settings.scale, eliteOverride, overrideEnabled, (value) -> {
+            if (overrideEnabled) {
+                eliteOverride = value;
+                saveOverrides();
+            }
         });
 
-        renderOverrideOption(sb, "Event Music", baseX + (5 * horizontalSpacing) - 10f * Settings.scale, baseY - 30f * Settings.scale, eventOverride, (value) -> {
-            eventOverride = value;
-            saveOverrides();
+        renderOverrideOption(sb, "Event", baseX + (5 * horizontalSpacing) - 10f * Settings.scale, baseY - 30f * Settings.scale, eventOverride, overrideEnabled, (value) -> {
+            if (overrideEnabled) {
+                eventOverride = value;
+                saveOverrides();
+            }
         });
-
     }
-    private void renderOverrideOption(SpriteBatch sb, String label, float buttonX, float buttonY, boolean isActive, Consumer<Boolean> onClick) {
+
+    private void renderOverrideOption(SpriteBatch sb, String label, float buttonX, float buttonY, boolean isActive, boolean isParentEnabled, Consumer<Boolean> onClick) {
         float buttonWidth = 64f * Settings.scale;
         float buttonHeight = 42f * Settings.scale;
+        boolean isDisabled = !isParentEnabled && !label.equals("Override Music");
 
-        // Render the button
-        Texture currentTexture = isActive ? buttononTexture : buttonoffTexture;
+        Texture currentTexture = isDisabled ? buttonDisabledTexture : (isActive ? buttononTexture : buttonoffTexture);
         sb.draw(currentTexture, buttonX, buttonY, buttonWidth, buttonHeight);
 
-        // Handle click detection
-        if (InputHelper.justClickedLeft && isMouseWithinBounds(InputHelper.mX, InputHelper.mY, buttonX, buttonY, buttonWidth, buttonHeight)) {
-            System.out.println("Button clicked: " + label);
-            onClick.accept(!isActive); // Toggle the active state
+        if (!isDisabled && InputHelper.justClickedLeft && isMouseWithinBounds(InputHelper.mX, InputHelper.mY, buttonX, buttonY, buttonWidth, buttonHeight)) {
+            onClick.accept(!isActive);
         }
 
-        // Render the label above the button
         FontHelper.renderFontCentered(sb, FontHelper.charDescFont, label, buttonX + (buttonWidth / 2f), buttonY + (buttonHeight + 20f), Settings.CREAM_COLOR);
     }
 
