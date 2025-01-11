@@ -2,17 +2,23 @@
   "${ModID}:LooterCutscene": {
     "NAME": "Looter Cutscene",
     "BLOCKING_TEXTS": [
-      "Now there are two meat balls."
+      "\"Now pretend you've never met me.\"",
+      "\"hehehe...\""
     ],
     "DESCRIPTIONS": [
-      "A tiny red louse is eating a plate of spaghetti and meatball.",
-      "The louse is intensely focused on nibbling on the dish's singular meatball, NL which is almost twice its size. NL NL #rScare #rit?",
-      "\" @EEEEPP!@ \" NL NL The louse lets out a tiny chirp, then curls up into a ball.",
-      "The louse continues to #y~happily~ #y~nibble~ away at the meatball."
+      "\"Hey buddy,\" the looter beckons you quietly. \"Come 'ere.\" NL NL \"Ya seem like a personable fella, help me out with a lil somthin'.\"",
+      "\"Ya see that sucker over there? The one that people call '%s'? NL They ordered a drink and paid right out of that sack sittin' over there. NL If ya go right on up and #bstart #ba #blil #bchat with 'em, I bet I could #ynab #ysomma #ythat #ygold.\"",
+      "You have a feeling that if you interact with '%s' until there are #bno #bmore #bavailable #btransactions, the looter will steal and share with you a random amount of #ygold between #b0 #band #b50.",
+      "\"Waitin' on ya, buddy.\"",
+      "You walk next to the looter.",
+      "He discreetly hands you #b%s #ygold NL NL \"Good work pal, have your cut.\"",
+      "He discreetly hands you... #rNo #rgold?! NL NL \"Sorry pal, the bag was completely empty.\"",
+      "\"Hmm? I wasn't doin' nothing!\" The looter exclaims, then lowers his voice, NL NL \"take this gold and keep your mouth shut.\"",
+      "The looter hands you #b%s #ygold. NL NL You have a feeling things would have made a little more sense if you spoke to the looter first.",
+      "\"hehehe...\""
     ],
     "OPTIONS": [
-      "Scare the louse.",
-      "Leave the louse alone."
+      ""
     ]
   }
 }

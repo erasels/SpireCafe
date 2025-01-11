@@ -12,6 +12,8 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import spireCafe.Anniv7Mod;
+import spireCafe.abstracts.AbstractCafeInteractable;
+import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractPatron;
 import spireCafe.interactables.patrons.redlouse.RedLouseCutscene;
 import spireCafe.util.TexLoader;
@@ -20,16 +22,19 @@ public class LooterPatron extends AbstractPatron {
     public static final String ID = LooterPatron.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
+    public AbstractPatron stealTarget;
+    public int rewardGold;
+
     public LooterPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
         this.authors = "iry";
 
         //directly copied loadAnimation from AbstractCreature class
-        this.atlas = new TextureAtlas(Gdx.files.internal("images/monsters/theBottom/louseRed/skeleton.atlas"));
+        this.atlas = new TextureAtlas(Gdx.files.internal("images/monsters/theBottom/looter/skeleton.atlas"));
         SkeletonJson json = new SkeletonJson(this.atlas);
         json.setScale(Settings.renderScale);
-        SkeletonData skeletonData = json.readSkeletonData(Gdx.files.internal("images/monsters/theBottom/louseRed/skeleton.json"));
+        SkeletonData skeletonData = json.readSkeletonData(Gdx.files.internal("images/monsters/theBottom/looter/skeleton.json"));
         this.skeleton = new Skeleton(skeletonData);
         this.skeleton.setColor(Color.WHITE);
         this.stateData = new AnimationStateData(skeletonData);
@@ -38,7 +43,8 @@ public class LooterPatron extends AbstractPatron {
         e.setTime(e.getEndTime() * MathUtils.random());
         //////
 
-        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("RedLouse/Portrait.png")));
+        this.rewardGold = AbstractDungeon.eventRng.random(0,50);
+        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Looter/Portrait.png")));
     }
 
     public void setCutscenePortrait(String texture) {
@@ -46,16 +52,11 @@ public class LooterPatron extends AbstractPatron {
         this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath(resourcePath)));
     }
 
-    public void curlUp(){
-        this.state.setAnimation(0, "transitiontoclosed", false);
-        this.state.addAnimation(0, "idle closed", true, 0.0F);
-    }
-
     public void renderCutscenePortrait(SpriteBatch sb) {
-        simpleRenderCutscenePortrait(sb, 1600.0F,175.0F, 0.0F, 0.0F, 0.0F);
+        simpleRenderCutscenePortrait(sb, 1500.0F,-350.0F, 0.0F, 0.0F, 0.0F);
     }
 
     public void onInteract() {
-        AbstractDungeon.topLevelEffectsQueue.add(new RedLouseCutscene(this));
+        AbstractDungeon.topLevelEffectsQueue.add(new LooterCutscene(this));
     }
 }
