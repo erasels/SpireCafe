@@ -66,6 +66,7 @@ public class CafeRoom extends AbstractEvent {
                 .filter(entry -> clz.isAssignableFrom(entry.getValue()))
                 .filter(entry -> !Anniv7Mod.currentRunSeenInteractables.contains(entry.getKey()))
                 .map(Map.Entry::getValue)
+                .filter(ic -> createInteractable(ic, -9999.0f, -9999.0f).canSpawn())
                 .collect(Collectors.toList());
     }
 
@@ -73,7 +74,7 @@ public class CafeRoom extends AbstractEvent {
         try {
             return clz.getConstructor(float.class, float.class).newInstance(x, y);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error creating interactable " + clz.getName(), e);
         }
     }
 
