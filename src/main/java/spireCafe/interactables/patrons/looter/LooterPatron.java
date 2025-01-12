@@ -12,16 +12,15 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import spireCafe.Anniv7Mod;
-import spireCafe.abstracts.AbstractCafeInteractable;
-import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractPatron;
-import spireCafe.interactables.patrons.redlouse.RedLouseCutscene;
 import spireCafe.util.TexLoader;
 
 public class LooterPatron extends AbstractPatron {
     public static final String ID = LooterPatron.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
+    public static final int MIN_GOLD = 0;
+    public static final int MAX_GOLD = 50;
     public AbstractPatron stealTarget;
     public int rewardGold;
 
@@ -43,8 +42,8 @@ public class LooterPatron extends AbstractPatron {
         e.setTime(e.getEndTime() * MathUtils.random());
         //////
 
-        this.rewardGold = AbstractDungeon.eventRng.random(0,50);
-        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Looter/Portrait.png")));
+        this.rewardGold = AbstractDungeon.eventRng.random(MIN_GOLD,MAX_GOLD);
+        setCutscenePortrait("Portrait");
     }
 
     public void setCutscenePortrait(String texture) {
