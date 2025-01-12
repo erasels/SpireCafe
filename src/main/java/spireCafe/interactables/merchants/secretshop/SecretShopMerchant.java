@@ -98,6 +98,12 @@ public class SecretShopMerchant extends AbstractMerchant {
     }
 
     @Override
+    public void onCloseShop() {
+        super.onCloseShop();
+        this.idArticle.isIdentifyMode = false;
+    }
+
+    @Override
     public void onInteract() {
         super.onInteract();
         createSpeechBubble(TEXT[MathUtils.random(0,6)]);
@@ -188,11 +194,11 @@ public class SecretShopMerchant extends AbstractMerchant {
     public void cantBuy() {
         int roll = MathUtils.random(2);
         if (roll == 0) {
-            CardCrawlGame.sound.play("VO_MERCHANT_2A", PITCH_VAR);
+            CardCrawlGame.sound.playA("VO_MERCHANT_2A", PITCH_VAR);
         } else if (roll == 1) {
-            CardCrawlGame.sound.play("VO_MERCHANT_2B", PITCH_VAR);
+            CardCrawlGame.sound.playA("VO_MERCHANT_2B", PITCH_VAR);
         } else {
-            CardCrawlGame.sound.play("VO_MERCHANT_2C", PITCH_VAR);
+            CardCrawlGame.sound.playA("VO_MERCHANT_2C", PITCH_VAR);
         }
         int i = MathUtils.random(14, 21);
         createSpeechBubble(TEXT[i]);
@@ -201,11 +207,11 @@ public class SecretShopMerchant extends AbstractMerchant {
     public void cantIdentify() {
         int roll = MathUtils.random(2);
         if (roll == 0) {
-            CardCrawlGame.sound.play("VO_MERCHANT_2A", PITCH_VAR);
+            CardCrawlGame.sound.playA("VO_MERCHANT_2A", PITCH_VAR);
         } else if (roll == 1) {
-            CardCrawlGame.sound.play("VO_MERCHANT_2B", PITCH_VAR);
+            CardCrawlGame.sound.playA("VO_MERCHANT_2B", PITCH_VAR);
         } else {
-            CardCrawlGame.sound.play("VO_MERCHANT_2C", PITCH_VAR);
+            CardCrawlGame.sound.playA("VO_MERCHANT_2C", PITCH_VAR);
         }
         int i = MathUtils.random(7, 13);
         createSpeechBubble(TEXT[i]);
