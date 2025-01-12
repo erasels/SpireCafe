@@ -1,3 +1,9 @@
 [
-  
-]
+    {
+      "PROPER_NAME": "Miracle",
+      "NAMES": [
+        "miracle"
+      ],
+      "DESCRIPTION": "This card costs 0 if it's the first card you drew this turn."
+    }
+  ]

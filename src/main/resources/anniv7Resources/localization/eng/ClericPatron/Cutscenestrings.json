@@ -1,0 +1,23 @@
+{
+  "${ModID}:ClericPatronCutscene": {
+    "NAME": "Example patron Cutscene",
+    "BLOCKING_TEXTS": [
+      "\"Cleric talented. Have a good day!\"",
+      "\"Cleric best cleric. Have a good day!\"",
+      "\"You are a kind soul.\"",
+      "\"Cleric see you again next time.\""
+    ],
+    "DESCRIPTIONS": [
+      "\"Hello, I am Cleric. Good to see you again.\"",
+      "\"\"",
+      "\"\"",
+      "\"\"",
+      "\"\""
+    ],
+    "OPTIONS": [
+      "[Tithe] #gGive #g%s #grandom #gcards #gin #gyour #gdeck #yMiracle. #rLose #r%s #rgold.",
+      "[Repent] ",
+      "I don't want anything."
+    ]
+  }
+}
