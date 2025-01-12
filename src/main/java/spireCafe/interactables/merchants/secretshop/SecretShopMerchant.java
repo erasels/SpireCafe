@@ -42,7 +42,7 @@ public class SecretShopMerchant extends AbstractMerchant {
     public IdentifyArticle idArticle;
 
     public SecretShopMerchant(float animX, float animY) {
-        super(animX, animY, 150.0f, 175.0f);
+        super(animX, animY + 30.0F * Settings.scale, 150.0f, 175.0f);
         this.name = characterStrings.NAMES[0];
         this.authors = "Coda";
         background = new TextureRegion(RUG_TEXTURE);
