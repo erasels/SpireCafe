@@ -37,8 +37,7 @@ public class PurpleTearPatron extends AbstractPatron {
         AbstractDungeon.topLevelEffectsQueue.add(new PurpleTearCutscene(this));
     }
 
-    @Override
-    public boolean canSpawn() {
+    public static boolean canSpawn() {
         return PurpleTearCutscene.canSpawn();
     }
 }

@@ -90,8 +90,7 @@ public class PackmasterMerchant extends AbstractMerchant {
         }
     }
 
-    @Override
-    public boolean canSpawn() {
+    public static boolean canSpawn() {
         return Loader.isModLoaded("anniv5");
     }
 

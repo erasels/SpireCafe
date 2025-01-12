@@ -55,9 +55,7 @@ public abstract class AbstractCafeInteractable {
 
     public abstract void onInteract();
 
-    public boolean canSpawn(){
-        return true;
-    }
+    // For canSpawn, define a public static boolean canSpawn() method in your interactable class (it will be called by reflection)
 
     public void update() {
         this.hitbox.update();

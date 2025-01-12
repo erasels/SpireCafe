@@ -18,10 +18,9 @@ import spireCafe.util.TexLoader;
 import spireCafe.util.decorationSystem.DecorationSystem;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CafeRoom extends AbstractEvent {
@@ -32,11 +31,13 @@ public class CafeRoom extends AbstractEvent {
     public static boolean isInteracting = false;
     public static float originalPlayerDrawX;
     public static float originalPlayerDrawY;
-    // Used for initilizing the cafe with devcommands
+    // Used for initializing the cafe with devcommands
     public static String[] devCommandPatrons = new String[CafeRoom.NUM_PATRONS];
     public static String devCommandAttraction = null;
     public static String devCommandMerchant = null;
     public static String devCommandBartender = null;
+
+    private static final HashMap<Class<? extends AbstractCafeInteractable>, Method> canSpawnMethods = new HashMap<>();
 
     private final ArrayList<AbstractNPC> npcs = new ArrayList<>();
     private AbstractMerchant merchant;
@@ -65,9 +66,32 @@ public class CafeRoom extends AbstractEvent {
         return Anniv7Mod.interactableClasses.entrySet().stream()
                 .filter(entry -> clz.isAssignableFrom(entry.getValue()))
                 .filter(entry -> !Anniv7Mod.currentRunSeenInteractables.contains(entry.getKey()))
+                .filter(entry -> canSpawn(entry.getValue()))
                 .map(Map.Entry::getValue)
-                .filter(ic -> createInteractable(ic, -9999.0f, -9999.0f).canSpawn())
                 .collect(Collectors.toList());
+    }
+
+    private static boolean canSpawn(Class<? extends AbstractCafeInteractable> clz) {
+        Method canSpawnMethod = null;
+        if (canSpawnMethods.containsKey(clz)) {
+            canSpawnMethod = canSpawnMethods.get(clz);
+        }
+        else {
+            Method[] methods = clz.getDeclaredMethods();
+            for (Method m : methods) {
+                if (Modifier.isStatic(m.getModifiers()) && m.getName().equals("canSpawn") && m.getReturnType().equals(boolean.class) && m.getParameterCount() == 0) {
+                    m.setAccessible(true);
+                    canSpawnMethod = m;
+                    break;
+                }
+            }
+            canSpawnMethods.put(clz, canSpawnMethod);
+        }
+        try {
+            return canSpawnMethod == null || (boolean)canSpawnMethod.invoke(null);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static AbstractCafeInteractable createInteractable(Class<? extends AbstractCafeInteractable> clz, float x, float y) {
