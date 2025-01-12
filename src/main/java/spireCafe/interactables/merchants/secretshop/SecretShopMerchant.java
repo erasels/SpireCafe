@@ -42,7 +42,7 @@ public class SecretShopMerchant extends AbstractMerchant {
     public IdentifyArticle idArticle;
 
     public SecretShopMerchant(float animX, float animY) {
-        super(animX, animY, 150.0f, 175.0f);
+        super(animX, animY + 30.0F * Settings.scale, 150.0f, 175.0f);
         this.name = characterStrings.NAMES[0];
         this.authors = "Coda";
         background = new TextureRegion(RUG_TEXTURE);
@@ -95,6 +95,12 @@ public class SecretShopMerchant extends AbstractMerchant {
             articles.add(tmpArticle);
         }
 
+    }
+
+    @Override
+    public void onCloseShop() {
+        super.onCloseShop();
+        this.idArticle.isIdentifyMode = false;
     }
 
     @Override
@@ -188,11 +194,11 @@ public class SecretShopMerchant extends AbstractMerchant {
     public void cantBuy() {
         int roll = MathUtils.random(2);
         if (roll == 0) {
-            CardCrawlGame.sound.play("VO_MERCHANT_2A", PITCH_VAR);
+            CardCrawlGame.sound.playA("VO_MERCHANT_2A", PITCH_VAR);
         } else if (roll == 1) {
-            CardCrawlGame.sound.play("VO_MERCHANT_2B", PITCH_VAR);
+            CardCrawlGame.sound.playA("VO_MERCHANT_2B", PITCH_VAR);
         } else {
-            CardCrawlGame.sound.play("VO_MERCHANT_2C", PITCH_VAR);
+            CardCrawlGame.sound.playA("VO_MERCHANT_2C", PITCH_VAR);
         }
         int i = MathUtils.random(14, 21);
         createSpeechBubble(TEXT[i]);
@@ -201,11 +207,11 @@ public class SecretShopMerchant extends AbstractMerchant {
     public void cantIdentify() {
         int roll = MathUtils.random(2);
         if (roll == 0) {
-            CardCrawlGame.sound.play("VO_MERCHANT_2A", PITCH_VAR);
+            CardCrawlGame.sound.playA("VO_MERCHANT_2A", PITCH_VAR);
         } else if (roll == 1) {
-            CardCrawlGame.sound.play("VO_MERCHANT_2B", PITCH_VAR);
+            CardCrawlGame.sound.playA("VO_MERCHANT_2B", PITCH_VAR);
         } else {
-            CardCrawlGame.sound.play("VO_MERCHANT_2C", PITCH_VAR);
+            CardCrawlGame.sound.playA("VO_MERCHANT_2C", PITCH_VAR);
         }
         int i = MathUtils.random(7, 13);
         createSpeechBubble(TEXT[i]);
