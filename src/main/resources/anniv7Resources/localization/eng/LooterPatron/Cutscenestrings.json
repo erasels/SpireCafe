@@ -12,10 +12,9 @@
       "\"Waitin' on ya, buddy.\"",
       "You walk next to the looter.",
       "He discreetly hands you #b%s #ygold NL NL \"Good work pal, have your cut.\"",
-      "He discreetly hands you... #rNo #rgold?! NL NL \"Sorry pal, the bag was completely empty.\"",
+      "He discreetly hands you... #b%s #ygold... NL NL \"Sorry pal, there was barely anything in that bag.\"",
       "\"Hmm? I wasn't doin' nothing!\" The looter exclaims, then lowers his voice, NL NL \"take this gold and keep your mouth shut.\"",
       "The looter hands you #b%s #ygold. NL NL You have a feeling things would have made a little more sense if you spoke to the looter first.",
-      "\"hehehe...\""
     ],
     "OPTIONS": [
       ""

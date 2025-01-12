@@ -19,7 +19,7 @@ public class LooterPatron extends AbstractPatron {
     public static final String ID = LooterPatron.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
-    public static final int MIN_GOLD = 0;
+    public static final int MIN_GOLD = 5;
     public static final int MAX_GOLD = 50;
     public AbstractPatron stealTarget;
     public int rewardGold;

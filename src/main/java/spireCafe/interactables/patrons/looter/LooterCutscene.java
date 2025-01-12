@@ -40,13 +40,9 @@ public class LooterCutscene extends AbstractCutscene {
             looter.stealTarget = possibleTargets.get(AbstractDungeon.eventRng.random(0, possibleTargets.size()-1));
 
             if(looter.stealTarget.alreadyPerformedTransaction){ //(not briefed path)
-                if(rewardGold == 0){
-                    dialogueIndex = 9;
-                }else{
-                    dialogueIndex = 7;
-                }
+                dialogueIndex = 7;
             }
-        }else if(looter.stealTarget.alreadyPerformedTransaction){ //target interacted
+        }else if(looter.stealTarget.alreadyPerformedTransaction){ //briefed, target interacted
             dialogueIndex = 4;
         }else{ //target not interacted
             dialogueIndex = 3;
@@ -69,15 +65,16 @@ public class LooterCutscene extends AbstractCutscene {
                 endCutscene();
                 break;
             case 4: //walk to looter to receive reward
-                if(rewardGold == 0){
-                    goToDialogue(6);
+                if(rewardGold <= 10){ //different low gold output
+                    this.dialogueIndex = 6;
+                    this.dialog.updateBodyText(appendSpeakerToDialogue(String.format(DESCRIPTIONS[6], rewardGold)));
                 }else{
                     this.dialogueIndex = 5;
                     this.dialog.updateBodyText(appendSpeakerToDialogue(String.format(DESCRIPTIONS[5], rewardGold)));
                 }
                 break;
             case 5: //regular reward: briefed
-            case 8: //regular reward: not briefed
+            case 8: //not briefed
                 AbstractDungeon.player.gainGold(rewardGold);
                 for(int i = 0; i < rewardGold; ++i) {
                     AbstractDungeon.effectList.add(new GainPennyEffect(AbstractDungeon.player,character.animationX, character.animationY, Settings.WIDTH*0.1f, Settings.HEIGHT*0.1f, false));
@@ -87,7 +84,6 @@ public class LooterCutscene extends AbstractCutscene {
                 endCutscene();
                 break;
             case 6: //low gold output: briefed
-            case 9: //0 gold output: not briefed
                 character.alreadyPerformedTransaction = true;
                 character.blockingDialogueIndex = 1;
                 endCutscene();
