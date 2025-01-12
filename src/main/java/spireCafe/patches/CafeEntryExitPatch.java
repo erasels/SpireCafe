@@ -163,7 +163,6 @@ public class CafeEntryExitPatch {
         AbstractDungeon.rs = AbstractDungeon.RenderScene.NORMAL;
 
         AbstractDungeon.overlayMenu.proceedButton.hideInstantly();
-        modifyProceedButton(120f * Settings.scale, false);
 
         AbstractDungeon.combatRewardScreen.clear();
         AbstractDungeon.previousScreen = null;
@@ -229,6 +228,7 @@ public class CafeEntryExitPatch {
                     AbstractDungeon.fadeIn();
                     setFadeTimer();
                     AbstractDungeon.overlayMenu.proceedButton.show();
+                    modifyProceedButton(120f * Settings.scale, false);
                     startedFadeIn = true;
                 }
                 this.originalRoom.update();
