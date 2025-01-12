@@ -59,7 +59,7 @@ public class LooterCutscene extends AbstractCutscene {
             case 1: //flavor explanation (briefed)
             case 3: //looter waits
                 this.dialogueIndex = 2;
-                this.dialog.updateBodyText(appendSpeakerToDialogue(String.format(DESCRIPTIONS[2], ((LooterPatron)character).stealTarget.name)));
+                this.dialog.updateBodyText(appendSpeakerToDialogue(String.format(DESCRIPTIONS[2], ((LooterPatron)character).stealTarget.name, LooterPatron.MIN_GOLD, LooterPatron.MAX_GOLD)));
                 break;
             case 2: //clearer explanation
                 endCutscene();
@@ -84,6 +84,10 @@ public class LooterCutscene extends AbstractCutscene {
                 endCutscene();
                 break;
             case 6: //low gold output: briefed
+                AbstractDungeon.player.gainGold(rewardGold);
+                for(int i = 0; i < rewardGold; ++i) {
+                    AbstractDungeon.effectList.add(new GainPennyEffect(AbstractDungeon.player,character.animationX, character.animationY, Settings.WIDTH*0.1f, Settings.HEIGHT*0.1f, false));
+                }
                 character.alreadyPerformedTransaction = true;
                 character.blockingDialogueIndex = 1;
                 endCutscene();
