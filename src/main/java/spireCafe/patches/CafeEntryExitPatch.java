@@ -22,7 +22,9 @@ import javassist.expr.Instanceof;
 import javassist.expr.MethodCall;
 import spireCafe.Anniv7Mod;
 import spireCafe.CafeRoom;
+import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.scene.CafeScene;
+import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.util.ActUtil;
 
 import java.io.IOException;
@@ -235,6 +237,14 @@ public class CafeEntryExitPatch {
             }
             else {
                 super.update();
+                boolean proceedButtonHidden = ReflectionHacks.getPrivate(AbstractDungeon.overlayMenu.proceedButton, ProceedButton.class, "isHidden");
+                boolean isInteracting = AbstractCutscene.isInCutscene || AbstractDungeon.screen == CafeMerchantScreen.ScreenEnum.CAFE_MERCHANT_SCREEN;
+                if (isInteracting && !proceedButtonHidden) {
+                    AbstractDungeon.overlayMenu.proceedButton.hideInstantly();
+                }
+                else if (!isInteracting && proceedButtonHidden) {
+                    AbstractDungeon.overlayMenu.proceedButton.show();
+                }
             }
         }
 
