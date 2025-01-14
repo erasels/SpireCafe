@@ -1,7 +1,9 @@
 package spireCafe.interactables.patrons.cleric;
 
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
+import com.megacrit.cardcrawl.powers.NextTurnBlockPower;
 
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractSCRelic;
@@ -20,6 +22,7 @@ public class MartyrdomMarkRelic extends AbstractSCRelic {
         if (info.owner != null && info.type != DamageInfo.DamageType.HP_LOSS && info.type != DamageInfo.DamageType.THORNS && damageAmount > 1) {
             flash();
             addToBot(new GainBlockAction(Wiz.p(), Wiz.p(), damageAmount));
+            addToBot(new ApplyPowerAction(Wiz.p(), Wiz.p(), new NextTurnBlockPower(Wiz.p(), damageAmount), damageAmount));
         }
         return damageAmount;
     }

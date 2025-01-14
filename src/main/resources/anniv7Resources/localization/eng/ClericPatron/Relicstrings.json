@@ -15,7 +15,7 @@
     "NAME": "Mark of Martyrdom",
     "FLAVOR": "A testament to your resolve and your pain.",
     "DESCRIPTIONS": [
-      "Whenever you take unblocked attack damage, gain that much block."
+      "Whenever you take unblocked attack damage, gain that much block at the start of the next turn."
     ]
   }
 }
