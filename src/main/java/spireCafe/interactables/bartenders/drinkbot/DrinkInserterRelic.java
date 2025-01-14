@@ -11,15 +11,17 @@ import com.google.gson.JsonElement;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractSCRelic;
 
 public class DrinkInserterRelic extends AbstractSCRelic {
 
-    private static final int TURN_COUNTER = 7;
+    private static final int TURN_COUNTER = 5;
     private static final float PERCENT_HEAL = 0.2F;
     private static final String ID = Anniv7Mod.makeID(DrinkInserterRelic.class.getSimpleName());
+    private boolean usedThisCombat = false;
 
 
     public DrinkInserterRelic() {
@@ -33,7 +35,15 @@ public class DrinkInserterRelic extends AbstractSCRelic {
     }
 
     @Override
+    public void atPreBattle() {
+        this.usedThisCombat = true;
+    }
+
+    @Override
     public void atTurnStart() {
+        if (this.usedThisCombat) {
+            return;
+        }
         if (this.counter < 0) {
             this.counter = TURN_COUNTER;
         } else {
@@ -41,14 +51,31 @@ public class DrinkInserterRelic extends AbstractSCRelic {
         }
 
         if (this.counter == TURN_COUNTER) {
-            this.counter = 0;
             flash();
+            this.counter = 0;
+            this.usedThisCombat = true;
+            this.grayscale = true;
+            this.pulse = false;
+
             AbstractPlayer p = AbstractDungeon.player;
             int heal = (int) ((p.maxHealth - p.currentHealth) * PERCENT_HEAL);
             AbstractDungeon.player.heal(heal);
             addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
             increaseStats(heal);
+        } else if (this.counter == TURN_COUNTER - 1) {
+            beginPulse();
+            this.pulse = true;
         }
+    }
+
+    @Override
+    public void justEnteredRoom(AbstractRoom room) {
+        this.grayscale = false;
+    }
+
+    @Override
+    public void onVictory() {
+        this.pulse = false;
     }
 
     private static final Map<String, Integer> stats = new HashMap<>();
