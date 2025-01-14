@@ -1,7 +1,7 @@
 {
-    "${ModID}:MiracleMod": {
+    "${ModID}:BlessedMod": {
       "TEXT": [
-        "anniv7:Miracle NL "
+        "anniv7:Blessed NL "
       ]
     }
   }
