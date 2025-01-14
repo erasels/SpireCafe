@@ -94,7 +94,7 @@ public class BartenderCutscene extends AbstractCutscene {
         });
     }
 
-    private void addSecondOption() {
+    protected void addSecondOption() {
         String secondOptionDesc = bartender.getSecondOptionDescription();
         this.dialog.addDialogOption(secondOptionDesc, !bartender.getSecondOptionCondition()).setOptionResult((i) -> {
             bartender.inSecondAction = true;

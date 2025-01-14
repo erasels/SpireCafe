@@ -45,6 +45,17 @@ public class DrinkbotCutscene extends BartenderCutscene {
     }
 
     @Override
+    protected void addSecondOption() {
+        String secondOptionDesc = bartender.getSecondOptionDescription();
+        this.dialog.addDialogOption(secondOptionDesc, !bartender.getSecondOptionCondition(), new DrinkInserterRelic()).setOptionResult((i) -> {
+            this.bartender.inSecondAction = true;
+            this.bartender.applySecondOptionAction();
+            this.bartender.secondUsed = true;
+            handleAfterGameplayOptionChosen();
+        });
+    }
+
+    @Override
     protected void addNoThanksOption() {
         String noThanks = bartender.getNoThanksDescription();
         this.dialog.addDialogOption(noThanks).setOptionResult((i)->{
