@@ -8,13 +8,14 @@
       "\"Hello, it is me Cleric. Good to see you again traveler.\"",
       "\"We relax here, but you see the Spire demands it's tithe from us.\"",
       "\"I bare my all, but tell me. What will you offer to the Spire?\"",
-      "\"Your prized possesions. Yes this will do wonderfully.\"",
+      "\"Your prized possesions. Yes this will do.\"",
       "\"Your wealth to the Spire. This will weigh the scales in our favor.\"",
       "\"A piece of yourself mixed with a piece of me.\"",
       "\"Cleric is in no rush to make our offering. Come back when you have your decision.\"",
       "\"The Spire will be pleased. Cleric is pleased. Your hand please.\"",
       "As the Cleric takes your hand you see a mystical mark appear on your palm and glow.",
-      "\"Good luck in your travels dear friend.\""
+      "\"Good luck in your travels dear friend.\"",
+      "\" ~It's~ ~Cleric!~ This will do wonderfully!\""
     ],
     "OPTIONS": [
       "[Posessions] #rLose %s. #gObtain #gMark #gof #gCompassion.",

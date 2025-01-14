@@ -7,6 +7,7 @@ import java.util.Random;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.relics.FaceOfCleric;
 
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractCutscene;
@@ -40,6 +41,7 @@ public class ClericPatronCutscene extends AbstractCutscene{
             case 3:
             case 4:
             case 5:
+            case 10:
                 goToDialogue(7);
                 break;
             case 6:
@@ -72,7 +74,11 @@ public class ClericPatronCutscene extends AbstractCutscene{
                 character.alreadyPerformedTransaction = true;
                 Wiz.p().loseRelic(this.lostRelic.relicId);
                 AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2, new CompassionMarkRelic());
-                goToDialogue(3);
+                if (this.lostRelic.relicId.equals(FaceOfCleric.ID)) {
+                    goToDialogue(10);
+                } else {
+                    goToDialogue(3);
+                }
             });
         }
 
