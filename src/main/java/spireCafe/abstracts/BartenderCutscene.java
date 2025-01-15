@@ -69,7 +69,7 @@ public class BartenderCutscene extends AbstractCutscene {
      * Adds all available options that haven't been used yet.
      * Flavor and No Thanks are always added (if flavor is implemented).
      */
-    private void addAvailableOptions() {
+    protected void addAvailableOptions() {
         // Clear old options, just in case
         this.dialog.clear();
 
@@ -94,7 +94,7 @@ public class BartenderCutscene extends AbstractCutscene {
         });
     }
 
-    private void addSecondOption() {
+    protected void addSecondOption() {
         String secondOptionDesc = bartender.getSecondOptionDescription();
         this.dialog.addDialogOption(secondOptionDesc, !bartender.getSecondOptionCondition()).setOptionResult((i) -> {
             bartender.inSecondAction = true;
@@ -104,7 +104,7 @@ public class BartenderCutscene extends AbstractCutscene {
         });
     }
 
-    private void addNoThanksOption() {
+    protected void addNoThanksOption() {
         String noThanks = bartender.getNoThanksDescription();
         this.dialog.addDialogOption(noThanks).setOptionResult((i)->{
             // If all gameplay-affecting options are done, we consider the transaction complete.
@@ -125,7 +125,7 @@ public class BartenderCutscene extends AbstractCutscene {
     /**
      * Checks if all gameplay-affecting options have been used.
      */
-    private boolean allGameplayOptionsDone() {
+    protected boolean allGameplayOptionsDone() {
         boolean secondOptionExists = bartender.getSecondOptionDescription() != null && !bartender.getSecondOptionDescription().isEmpty();
         // If second option didn't exist, it's considered "done" by default.
         if (!secondOptionExists) {
@@ -139,7 +139,7 @@ public class BartenderCutscene extends AbstractCutscene {
      * After choosing a gameplay option, we display the next dialogue line and update the option list.
      * If all gameplay options are done, we won't show them again.
      */
-    private void handleAfterGameplayOptionChosen() {
+    protected void handleAfterGameplayOptionChosen() {
         nextDialogue();
         // If there are still unselected gameplay options, we show them again along with flavor and no thanks.
         if (!allGameplayOptionsDone()) {
