@@ -19,7 +19,7 @@ import spireCafe.abstracts.AbstractSCRelic;
 public class DrinkInserterRelic extends AbstractSCRelic {
 
     private static final int TURN_COUNTER = 5;
-    private static final float PERCENT_HEAL = 0.2F;
+    private static final float PERCENT_HEAL = 0.25F;
     private static final String ID = Anniv7Mod.makeID(DrinkInserterRelic.class.getSimpleName());
     private boolean usedThisCombat = false;
 
@@ -30,17 +30,22 @@ public class DrinkInserterRelic extends AbstractSCRelic {
 
     @Override
     public void onEquip() {
-        this.counter = 0;
+        this.counter = -1;
         resetStats();
     }
 
     @Override
     public void atPreBattle() {
-        this.usedThisCombat = true;
+        this.usedThisCombat = false;
     }
 
     @Override
-    public void atTurnStart() {
+    public void atBattleStart() {
+        this.counter = 0;
+    }
+
+    @Override
+    public void onPlayerEndTurn() {
         if (this.usedThisCombat) {
             return;
         }
@@ -52,7 +57,7 @@ public class DrinkInserterRelic extends AbstractSCRelic {
 
         if (this.counter == TURN_COUNTER) {
             flash();
-            this.counter = 0;
+            this.counter = -1;
             this.usedThisCombat = true;
             this.grayscale = true;
             this.pulse = false;
@@ -76,6 +81,7 @@ public class DrinkInserterRelic extends AbstractSCRelic {
     @Override
     public void onVictory() {
         this.pulse = false;
+        this.counter = -1;
     }
 
     private static final Map<String, Integer> stats = new HashMap<>();
