@@ -116,6 +116,7 @@ public class CafeEntryExitPatch {
 
                 AbstractDungeon.currMapNode.room.event.dispose();
 
+                AbstractDungeon.overlayMenu.proceedButton.hideInstantly();
                 modifyProceedButton(ReflectionHacks.getPrivateStatic(ProceedButton.class, "DRAW_Y"), true);
 
                 if(allTimeSeenInteractables != null) {
