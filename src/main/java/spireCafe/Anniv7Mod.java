@@ -34,6 +34,7 @@ import spireCafe.cardvars.SecondDamage;
 import spireCafe.cardvars.SecondMagicNumber;
 import spireCafe.interactables.attractions.makeup.MakeupTableAttraction;
 import spireCafe.interactables.merchants.fleamerchant.FleaMerchant;
+import spireCafe.interactables.patrons.powerelic.debug.*;
 import spireCafe.patches.PotencySaverPatch;
 import spireCafe.interactables.patrons.missingno.MissingnoUtil;
 import spireCafe.interactables.patrons.dandadan.RightBallPotionSavable;
@@ -255,6 +256,7 @@ public class Anniv7Mod implements
         BaseMod.addEvent(CafeRoom.ID, CafeRoom.class, "CafeDungeon");
         BaseMod.addCustomScreen(new CafeMerchantScreen());
         ConsoleCommand.addCommand("cafe", Cafe.class);
+        ConsoleCommand.addCommand("powerelic", DevcommandPowerelic.class);
     }
 
     public static void addPotions() {
