@@ -16,7 +16,7 @@ public class IndulgenceMarkRelic extends AbstractSCRelic {
 
     public IndulgenceMarkRelic() {
         super(ID, "ClericPatron", RelicTier.SPECIAL, LandingSound.MAGICAL);
-        this.counter = 0;
+        this.counter = -1;
     }
     
     @Override
@@ -28,12 +28,39 @@ public class IndulgenceMarkRelic extends AbstractSCRelic {
             addToBot(new ApplyPowerAction(Wiz.p(), Wiz.p(), new DexterityPower(Wiz.p(), 1)));
             this.counter++;
         }
+        if (this.counter >= 3) {
+            this.grayscale = true;
+        }
     }
 
     @Override
     public void onEnterRoom(AbstractRoom room) {
         super.onEnterRoom(room);
         this.counter = 0;
+    }
+
+    @Override
+    public void justEnteredRoom(AbstractRoom room) {
+        this.grayscale = false;
+    }
+
+    @Override
+    public void onVictory() {
+        this.counter = -1;
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        if (this.counter < 3) {
+            if (EnergyPanel.totalCount > 0) {
+                beginPulse();
+            } else {
+                this.pulse = false;
+            }
+        } else {
+            this.pulse = false;
+        }
     }
     
 }
