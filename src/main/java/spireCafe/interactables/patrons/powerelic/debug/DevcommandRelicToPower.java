@@ -70,7 +70,7 @@ public class DevcommandRelicToPower extends ConsoleCommand {
         ArrayList<String> result = new ArrayList<>();
         Iterator var4 = AbstractDungeon.player.relics.iterator();
 
-        Anniv7Mod.logger.info("Current token is "+tokens[depth]);
+        //Anniv7Mod.logger.info("Current token is "+tokens[depth]);
 
         result.add("random");
         while(var4.hasNext()) {
