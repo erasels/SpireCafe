@@ -136,7 +136,7 @@ public class CafeEntryExitPatch {
             return new ExprEditor() {
                 public void edit(MethodCall m) throws CannotCompileException {
                     if (m.getClassName().equals(AbstractDungeon.class.getName()) && m.getMethodName().equals("nextRoomTransition")) {
-                        m.replace(String.format("{ if(!%1$s.inCafe()) { $proceed($$); } }", CafeEntryExitPatch.class.getName()));
+                        m.replace(String.format("{ if(%1$s.cafeComplete()) { $proceed($$); } }", CafeEntryExitPatch.class.getName()));
                     }
                 }
             };
@@ -145,6 +145,10 @@ public class CafeEntryExitPatch {
 
     public static boolean inCafe() {
         return AbstractDungeon.currMapNode != null && AbstractDungeon.currMapNode.room instanceof CafeEventRoom;
+    }
+
+    public static boolean cafeComplete() {
+        return !inCafe() || AbstractDungeon.currMapNode.room.phase == AbstractRoom.RoomPhase.COMPLETE;
     }
 
     public static AbstractRoom getOriginalRoom() {
