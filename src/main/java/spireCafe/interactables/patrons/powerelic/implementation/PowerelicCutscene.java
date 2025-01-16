@@ -20,6 +20,7 @@ import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
@@ -90,7 +91,9 @@ public class PowerelicCutscene extends AbstractCutscene {
     protected void updateDialogueText() {
         String text0 = DESCRIPTIONS[this.dialogueIndex];
         if(dialogueIndex==8 && !selectedCards.isEmpty()){
-            text0=String.format(text0,selectedCards.get(0).name);
+            ArrayList<String> words = new ArrayList<>(Arrays.asList(selectedCards.get(0).name.split(" ")));
+            words.replaceAll(s -> "#y"+s);
+            text0=String.format(text0,String.join(" ",words));
         }
         String text = appendSpeakerToDialogue(text0);
         if (this.show) {
