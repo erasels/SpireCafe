@@ -1,6 +1,7 @@
 package spireCafe.interactables.patrons.powerelic;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -21,6 +22,7 @@ import java.util.Collections;
 import java.util.Random;
 
 import static spireCafe.Anniv7Mod.makeID;
+import static spireCafe.interactables.patrons.powerelic.PowerelicPatron.getAllConvertiblePowers;
 
 public class PowerelicCutscene extends AbstractCutscene {
     public static final String ID = makeID(PowerelicCutscene.class.getSimpleName());
@@ -29,6 +31,7 @@ public class PowerelicCutscene extends AbstractCutscene {
     protected boolean alreadyTalkedOnce=false;
     protected int goldCost=PowerelicPatron.DEFAULT_GOLD_COST;
     protected static final int EXTRA_COST_AFTER_ENERGY_TOTAL=1;
+
 
     public PowerelicCutscene(AbstractNPC character) {
         super(character, cutsceneStrings);
@@ -46,17 +49,16 @@ public class PowerelicCutscene extends AbstractCutscene {
         }else{
             dialogueIndex=3;
         }
-//        if(alreadyTalkedOnce) {
-//            dialogueIndex = 5;
-//            if(!character.alreadyPerformedTransaction) {
-//                setupChoices();
-//            }
-//        }
+        if(alreadyTalkedOnce) {
+            dialogueIndex = 6;
+            if(!character.alreadyPerformedTransaction) {
+                setupChoices();
+            }
+        }
     }
 
     public void doTheThing(){
         openCardSelectScreen();
-        CardCrawlGame.sound.play("ATTACK_MAGIC_BEAM_SHORT");
     }
 
     public static void doTheVerySillyThing(){
@@ -69,53 +71,74 @@ public class PowerelicCutscene extends AbstractCutscene {
     protected void onClick() {
         if (dialogueIndex <= 3) {
             goToDialogue(4);
+        }else if(dialogueIndex==4){
+            nextDialogue();
             setupChoices();
-        }else if (dialogueIndex == 4) {
+        }else if (dialogueIndex == 5 || dialogueIndex==6) {
+            //do nothing; waiting for player to click a button
+        }else if(dialogueIndex==7) {
+            character.alreadyPerformedTransaction = true;
+            convertSelectedCardsToRelics(selectedCards);
+            playEffectsAfterConverting();
             nextDialogue();
-        }else if (dialogueIndex == 5){
-            doTheVerySillyThing();
+        } else if(dialogueIndex==8){
             nextDialogue();
-        } else if (dialogueIndex >= 6) {
+        } else if (dialogueIndex >= 9) {
             endCutscene();
         }
     }
 
+    @Override
+    protected void updateDialogueText() {
+        String text0 = DESCRIPTIONS[this.dialogueIndex];
+        if(dialogueIndex==8 && !selectedCards.isEmpty()){
+            text0=String.format(text0,selectedCards.get(0).name);
+        }
+        String text = appendSpeakerToDialogue(text0);
+        if (this.show) {
+            this.show = false;
+            this.dialog.show(text);
+        } else {
+            this.dialog.updateBodyText(text);
+        }
+    }
+
     public boolean enableCheck(){
-        if(Wiz.p().gold < goldCost)return false;
-        if(Wiz.deck().getCardsOfType(AbstractCard.CardType.POWER).isEmpty())return false;
-        return true;
+        //if the player has somehow lost their last power card after the event spawned, disable
+        //if the player has somehow lost their last relic after the event spawned... proceed anyway
+        return !getAllConvertiblePowers().isEmpty();
     }
 
     private void setupChoices(){
         this.dialog.addDialogOption(OPTIONS[0],!enableCheck()).setOptionResult((i) -> {
-            character.alreadyPerformedTransaction = true;
             doTheThing();
-            //Wiz.p().loseGold(goldCost);
-            goToDialogue(6);
-            //CardCrawlGame.sound.play("ATTACK_MAGIC_BEAM_SHORT");
-        });
-        this.dialog.addDialogOption(OPTIONS[1],!enableCheck()).setOptionResult((i) -> {
-            character.alreadyPerformedTransaction = true;
-            CardCrawlGame.sound.play("ATTACK_MAGIC_BEAM_SHORT");
-            //Wiz.p().loseGold(goldCost);
-            goToDialogue(5);
-        });
-        this.dialog.addDialogOption(OPTIONS[2]).setOptionResult((i) -> {
+            nextDialogue();
             goToDialogue(7);
+        });
+//        this.dialog.addDialogOption(OPTIONS[1],!enableCheck()).setOptionResult((i) -> {
+//            character.alreadyPerformedTransaction = true;
+//            doTheVerySillyThing();
+//            CardCrawlGame.sound.play("ATTACK_MAGIC_BEAM_SHORT");
+//            goToDialogue(7);
+//        });
+        this.dialog.addDialogOption(OPTIONS[1]).setOptionResult((i) -> {
+            goToDialogue(10);
         });
     }
 
 
 
-    public boolean cardsSelected=true;
-    public final int DEFAULT_CARDS_TO_CONVERT =1;
+    public boolean cardsAreSelected=true;
+    public ArrayList<AbstractCard>selectedCards=new ArrayList<>();
+    public final int DEFAULT_CARDS_TO_CONVERT = 1;
     public void openCardSelectScreen() {
-        this.cardsSelected = false;
+        this.cardsAreSelected = false;
         CardGroup tmp = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
-        tmp.group = new ArrayList<>(PowerelicPatron.getAllConvertiblePowers());
+        tmp.group = new ArrayList<>(getAllConvertiblePowers());
 
         if (tmp.group.isEmpty()) {
-            this.cardsSelected = true;
+            //this should only happen via debug commands
+            this.cardsAreSelected = true;
             convertSelectedCardsToRelics(tmp.group);
         } else {
             if (!AbstractDungeon.isScreenUp) {
@@ -130,9 +153,10 @@ public class PowerelicCutscene extends AbstractCutscene {
 
     public void update() {
         super.update();
-        if (!this.cardsSelected && AbstractDungeon.gridSelectScreen.selectedCards.size() == DEFAULT_CARDS_TO_CONVERT) {
-            convertSelectedCardsToRelics(AbstractDungeon.gridSelectScreen.selectedCards);
-            playEffectsAfterConverting();
+        if (!this.cardsAreSelected && AbstractDungeon.gridSelectScreen.selectedCards.size() == DEFAULT_CARDS_TO_CONVERT) {
+            this.selectedCards=new ArrayList<>(AbstractDungeon.gridSelectScreen.selectedCards);
+            AbstractDungeon.gridSelectScreen.selectedCards.clear();
+            CardCrawlGame.sound.play("ATTACK_MAGIC_BEAM_SHORT");
         }
     }
 
@@ -181,14 +205,14 @@ public class PowerelicCutscene extends AbstractCutscene {
             newCards.add(card);
             card.cardIsFreshlyConvertedFromRelic=true;
             //later: perhaps a custom effect to show all the new cards fly into the deck slightly more gracefully
-            AbstractDungeon.effectsQueue.add(new ShowCardAndObtainEffect(card, Settings.WIDTH * .5F, Settings.HEIGHT * .5f));
+            AbstractDungeon.effectsQueue.add(new ShowCardAndObtainEffect(card, MathUtils.random(0.1F, 0.9F) * (float)Settings.WIDTH, MathUtils.random(0.2F, 0.8F) * (float)Settings.HEIGHT));
         }
         Wiz.adp().relics.removeIf(relic -> (relicsToConvert.contains(relic)));
         Wiz.adp().reorganizeRelics();
     }
 
     public static void convertAllPowersToRelics(){
-        convertSelectedCardsToRelics(new ArrayList<AbstractCard>(PowerelicPatron.getAllConvertiblePowers()));
+        convertSelectedCardsToRelics(new ArrayList<AbstractCard>(getAllConvertiblePowers()));
     }
     public static void convertAllRelicsToPowers(){
         convertRandomRelicsToPowers(Wiz.adp().relics.size());

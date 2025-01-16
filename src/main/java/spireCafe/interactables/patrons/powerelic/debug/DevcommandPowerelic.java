@@ -10,10 +10,11 @@ import com.megacrit.cardcrawl.helpers.RelicLibrary;
 public class DevcommandPowerelic extends ConsoleCommand{
 
     public DevcommandPowerelic() {
-        requiresPlayer = true;
+        this.minExtraTokens = 1;
 
-        this.followup.put("standard", DevcommandPowerelicStandard.class);
-        this.followup.put("customcost", DevcommandPowerelicCustom.class);
+        requiresPlayer = true;
+//        this.followup.put("standard", DevcommandPowerelicStandard.class);
+//        this.followup.put("customcost", DevcommandPowerelicCustom.class);
         this.followup.put("all", DevcommandPowerelicAll.class);
         this.followup.put("reliconly", DevcommandRelicToPower.class);
     }
@@ -24,11 +25,11 @@ public class DevcommandPowerelic extends ConsoleCommand{
             errorMsg();
             return;
         }
-        try {
-            AbstractDungeon.getCurrRoom().spawnRelicAndObtain((float)(Settings.WIDTH / 2), (float)(Settings.HEIGHT / 2), RelicLibrary.getRelic(PowerelicDebugRelic.ID).makeCopy());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            AbstractDungeon.getCurrRoom().spawnRelicAndObtain((float)(Settings.WIDTH / 2), (float)(Settings.HEIGHT / 2), RelicLibrary.getRelic(PowerelicDebugRelic.ID).makeCopy());
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     @Override
@@ -39,8 +40,8 @@ public class DevcommandPowerelic extends ConsoleCommand{
     public static void cmdHelp(){
         DevConsole.couldNotParse();
         DevConsole.log("options are:");
-        DevConsole.log("* {standard}");
-        DevConsole.log("* customcost {cost}");
+//        DevConsole.log("* {standard}");
+//        DevConsole.log("* customcost {cost}");
         DevConsole.log("* all");
         DevConsole.log("* reliconly {[id] | random {[amt]}}");
     }

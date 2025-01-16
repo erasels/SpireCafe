@@ -29,7 +29,10 @@ import static spireCafe.util.CardArtRoller.computeCard;
 @NoCompendium
 public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
 
-    //Tasks for later: prohibit storing in A Note For Yourself
+    //Tasks for later:
+    // patch relic.render and reorganizeRelics so they appear in the buffs list instead of the relics list
+    // prohibit storing in A Note For Yourself
+    // should Mummified Hand proc at start of combat from powers-turned-relics?
     // Ancient Tea Set requires playing the card twice, which is unfortunate.  make it feel better to play
     // Bottle cards don't work at the moment, but they might be doable with a patch to initializeDeck
     // should usedUp relics be blocked from becoming cards?

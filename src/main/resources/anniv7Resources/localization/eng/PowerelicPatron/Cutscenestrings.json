@@ -2,27 +2,6 @@
   "${ModID}:PowerelicCutscene": {
     "NAME": "Powerelic Cutscene",
     "BLOCKING_TEXTS": [
-      "\"Never mind the placeholders.  We'll fix 'em before it ships.\""
-    ],
-    "DESCRIPTIONS": [
-      "Choose 1 Power to become a Relic.",
-      "~\"Greetings,~ ~fellow~ ~human!~ NL I am definitely not three foxes in a trenchcoat!\"",
-      "~\"Greetings,~ ~fellow~ ~humanoid!~ NL I am definitely not three foxes in a trenchcoat!\"",
-      "~\"Greetings,~ ~fellow~ ~mortal!~ NL I am definitely not three foxes in a trenchcoat!\"",
-      "~\"You must be here to test the #ypowerelics.  What'll it be today?\"",
-      "\"Oho! I see we're going for the #yEPIC #yTWITCH #yCONTENT today. NL @vicksyShake.@ NL You know that'll cost you ALL your convertible relics, right?\"",
-      "\"Done.  Remember you can use the #ypowerelic console command to make specific adjustments during playtesting.\"",
-      "Apparently, this was not the playtest you were looking for."
-    ],
-    "OPTIONS": [
-      "[Playtest] #gTurn #g1 #gPower #ginto #ga #gRelic, #rbut #ralso...",
-      "[Playtest??] #gTurn #gALL #gPowers #ginto #gRelics, #rbut #ralso...",
-      "[Decline]"
-    ]
-  },
-  "${ModID}:PowerelicCutscene_old": {
-    "NAME": "Powerelic Cutscene",
-    "BLOCKING_TEXTS": [
       "\"This thing is out of battery now. But I'm sure you'll be fine.\""
     ],
     "DESCRIPTIONS": [
@@ -31,16 +10,36 @@
       "~\"Greetings,~ ~fellow~ ~humanoid!~ NL Would you be interested in my research into #yPower #yCards?\"",
       "~\"Greetings,~ ~fellow~ ~mortal!~ NL Would you be interested in my research into #yPower #yCards?\"",
       "\"You see, after months of tailbreaking research, I have determined th-- #p@HOLD@ #p@STILL@ #p@DOWN@ #p@THERE!@ -- determined that #yPower #yCards and #yRelics are fundamentally one and the same!\"",
-      "\"Now, with my patented ~Powerelic~ ~Polarity~ ~Percolator,~ I can convert all of your #yPowers into #yRelics! They will forever be a -- #p@STOP@ #p@WIGGLING@ -- be a part of you without ever needing to draw and play them! What say you?\"",
-      "\"Changed your mind? I can convert all your -- #pclaws. #p@CLAWS!@ -- convert all your #yPowers into #yRelics, just say the word!",
+      "\"Now, with my patented ~Powerelic~ ~Polarity~ ~Percolator,~ I can convert one of your #yPowers into a #yRelic! It will forever be a -- #p@STOP@ #p@WIGGLING@ -- be a part of you without ever needing to draw and play it! What say you?\"",
+      "\"Changed your mind? I can convert one of your -- #pclaws. #p@CLAWS!@ -- convert one of your #yPowers into a #yRelic, just say the word!",
       "The professor rummages around in his trenchcoat and hands herself a dubious-looking ray gun, pointing it at you. There is a flash of light and a puff of smoke. NL ... NL ... You smell kind of ~skunky~ ...",
-      "@\"TA-DAAA!!@ All of your #yPowers are now #yRelics!\"",
+      "@\"TA-DAAA!!@ Your #y%s is now a #yRelic!\"",
       "\"Oh! You may notice that some of your old #yRelics are now #yPowers. Perfectly ordinary side effect, nothing to worry about...\"",
       "You back away slowly."
     ],
     "OPTIONS": [
-      "[Accept] Lose #b",
-      " Gold. #gTurn #gALL #gPowers #ginto #gRelics, #rbut #ralso...",
+      "[Accept] #gTurn #g1 #gPower #ginto #ga #gRelic, #rbut #ralso...",
+      "[Decline]"
+    ]
+  },
+  "${ModID}:PowerelicCutscene_playtest": {
+    "NAME": "Powerelic Cutscene",
+    "BLOCKING_TEXTS": [
+      "\"Never mind the placeholders.  We'll fix 'em before it ships.\""
+    ],
+    "DESCRIPTIONS": [
+      "Choose 1 Power to become a Relic.",
+      "~\"Greetings,~ ~fellow~ ~human!~ NL I am definitely not three foxes in a trenchcoat!\"",
+      "~\"Greetings,~ ~fellow~ ~humanoid!~ NL I am definitely not three foxes in a trenchcoat!\"",
+      "~\"Greetings,~ ~fellow~ ~mortal!~ NL I am definitely not three foxes in a trenchcoat!\"",
+      "\"You must be here to test the #ypowerelics.  What'll it be today?\"",
+      "\"Oho! I see we're going for the #yEPIC #yTWITCH #yCONTENT today. NL @vicksyShake.@ NL You know that'll cost you ALL your convertible relics, right?\"",
+      "\"Done.  Remember you can use the #ypowerelic console command to make specific adjustments during playtesting.\"",
+      "Apparently, this was not the playtest you were looking for."
+    ],
+    "OPTIONS": [
+      "[Playtest] #gTurn #g1 #gPower #ginto #ga #gRelic, #rbut #ralso...",
+      "[Playtest??] #gTurn #gALL #gPowers #ginto #gRelics, #rbut #ralso...",
       "[Decline]"
     ]
   }
