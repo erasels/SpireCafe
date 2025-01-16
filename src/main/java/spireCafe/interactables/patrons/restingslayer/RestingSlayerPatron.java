@@ -66,7 +66,22 @@ public class RestingSlayerPatron extends AbstractPatron {
 
         //directly copied loadAnimation from AbstractCreature class
         if(slayer instanceof CustomPlayer){
-            animation = ReflectionHacks.getPrivate(slayer, CustomPlayer.class, "animation");
+            AbstractAnimation anim = ReflectionHacks.getPrivate(slayer, CustomPlayer.class, "animation");
+            if(anim.type() == AbstractAnimation.Type.SPRITE){
+                animation = anim;
+            } else {
+                this.atlas = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "atlas");
+                SkeletonJson json = new SkeletonJson(this.atlas);
+                json.setScale(Settings.renderScale);
+                this.skeleton = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "skeleton");
+                if(skeleton != null) {
+                    this.skeleton.setColor(Color.WHITE);
+                    this.stateData = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "stateData");
+                    this.state = new AnimationState(this.stateData);
+                } else {
+                    img = TexLoader.getTexture(Anniv7Mod.makeCharacterPath("ExampleNPC/image.png"));
+                }
+            }
         } else {
             this.atlas = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "atlas");
             SkeletonJson json = new SkeletonJson(this.atlas);
