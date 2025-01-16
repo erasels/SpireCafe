@@ -1,6 +1,8 @@
 package spireCafe.interactables.patrons.powerelic;
 
 import com.megacrit.cardcrawl.relics.*;
+import spireCafe.interactables.patrons.powerelic.implementation.PowerelicCard;
+import spireCafe.interactables.patrons.powerelic.implementation.PowerelicRelic;
 import spireCafe.util.Wiz;
 
 import java.util.ArrayList;
@@ -20,45 +22,6 @@ import java.util.HashSet;
 
 
 public class PowerelicAllowlist {
-
-    public static HashSet<String> essentialEquipRelics;
-    public static HashSet<String> nonessentialEquipRelics;
-    public static HashSet<String> immediateOnequipRelics;
-    public static HashSet<String> skipEquipIfTempRelics;
-    public static HashSet<String> blocklistedRelics;
-
-
-    public static ArrayList<AbstractRelic>getAllConvertibleRelics(){
-        ArrayList<AbstractRelic>convertibleRelics=new ArrayList<>();
-        for(AbstractRelic relic : Wiz.adp().relics){
-            if(PowerelicAllowlist.isRelicConvertibleToCard(relic)){
-                convertibleRelics.add(relic);
-            }
-        }
-        return convertibleRelics;
-    }
-
-    public static boolean isRelicConvertibleToCard(AbstractRelic relic){
-        if(PowerelicCard.PowerelicRelicContainmentFields.isContained.get(relic))
-            return false;
-        if(isBlocklistedRelic(relic))
-            return false;
-        if(!doesRelicOverrideOnEquip(relic))
-            return true;
-        if(isEssentialEquipRelic(relic))
-            return true;
-        if(isNonessentialEquipRelic(relic))
-            return true;
-        return false;
-    }
-    public static boolean doesRelicOverrideOnEquip(AbstractRelic relic){
-        Class<?> relicClass = relic.getClass();
-        try {
-            return(relicClass.getMethod("onEquip").getDeclaringClass()!=AbstractRelic.class);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public static void populateEssentialEquipRelics(){
         //Relics whose functionality is tied to OnEquip/OnUnequip are listed here.
@@ -145,6 +108,46 @@ public class PowerelicAllowlist {
                 Circlet.ID
         ));
     }
+
+    public static HashSet<String> essentialEquipRelics;
+    public static HashSet<String> nonessentialEquipRelics;
+    public static HashSet<String> immediateOnequipRelics;
+    public static HashSet<String> skipEquipIfTempRelics;
+    public static HashSet<String> blocklistedRelics;
+
+
+    public static ArrayList<AbstractRelic>getAllConvertibleRelics(){
+        ArrayList<AbstractRelic>convertibleRelics=new ArrayList<>();
+        for(AbstractRelic relic : Wiz.adp().relics){
+            if(PowerelicAllowlist.isRelicConvertibleToCard(relic)){
+                convertibleRelics.add(relic);
+            }
+        }
+        return convertibleRelics;
+    }
+
+    public static boolean isRelicConvertibleToCard(AbstractRelic relic){
+        if(PowerelicCard.PowerelicRelicContainmentFields.isContained.get(relic))
+            return false;
+        if(isBlocklistedRelic(relic))
+            return false;
+        if(!doesRelicOverrideOnEquip(relic))
+            return true;
+        if(isEssentialEquipRelic(relic))
+            return true;
+        if(isNonessentialEquipRelic(relic))
+            return true;
+        return false;
+    }
+    public static boolean doesRelicOverrideOnEquip(AbstractRelic relic){
+        Class<?> relicClass = relic.getClass();
+        try {
+            return(relicClass.getMethod("onEquip").getDeclaringClass()!=AbstractRelic.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public static boolean isEssentialEquipRelic(AbstractRelic relic){
         if(relic==null)return false;

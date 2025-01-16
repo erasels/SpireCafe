@@ -7,7 +7,7 @@
 //import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 //import com.megacrit.cardcrawl.relics.AbstractRelic;
 //import spireCafe.abstracts.AbstractSCRelic;
-//import spireCafe.interactables.patrons.powerelic.PowerelicPatron;
+//import spireCafe.interactables.patrons.powerelic.implementation.PowerelicPatron;
 //
 //import java.util.ArrayList;
 //

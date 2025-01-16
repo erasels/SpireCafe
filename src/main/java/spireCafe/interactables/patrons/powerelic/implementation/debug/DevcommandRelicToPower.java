@@ -1,4 +1,4 @@
-package spireCafe.interactables.patrons.powerelic.debug;
+package spireCafe.interactables.patrons.powerelic.implementation.debug;
 
 import basemod.DevConsole;
 import basemod.devcommands.ConsoleCommand;
@@ -6,17 +6,11 @@ import basemod.devcommands.relic.Relic;
 import basemod.helpers.ConvertHelper;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import spireCafe.Anniv7Mod;
-import spireCafe.abstracts.AbstractCafeInteractable;
 import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
-import spireCafe.interactables.patrons.powerelic.PowerelicCutscene;
+import spireCafe.interactables.patrons.powerelic.implementation.PowerelicCutscene;
 import spireCafe.util.Wiz;
-import spireCafe.util.devcommands.Cafe;
 
-import java.sql.Array;
 import java.util.*;
-
-import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.miscRng;
 
 public class DevcommandRelicToPower extends ConsoleCommand {
     public DevcommandRelicToPower() {

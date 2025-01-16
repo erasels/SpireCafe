@@ -1,4 +1,4 @@
-package spireCafe.interactables.patrons.powerelic;
+package spireCafe.interactables.patrons.powerelic.implementation;
 
 import com.evacipated.cardcrawl.modthespire.lib.SpireInstrumentPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch2;

@@ -1,6 +1,7 @@
-package spireCafe.interactables.patrons.powerelic;
+package spireCafe.interactables.patrons.powerelic.implementation;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
 import spireCafe.util.Wiz;
 
 public class ActivatePowerelicAction extends AbstractGameAction {

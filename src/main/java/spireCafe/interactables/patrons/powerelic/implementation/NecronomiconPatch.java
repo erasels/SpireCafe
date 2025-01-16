@@ -1,4 +1,4 @@
-package spireCafe.interactables.patrons.powerelic;
+package spireCafe.interactables.patrons.powerelic.implementation;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInstrumentPatch;

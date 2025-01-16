@@ -1,4 +1,4 @@
-package spireCafe.interactables.patrons.powerelic;
+package spireCafe.interactables.patrons.powerelic.implementation;
 
 import basemod.ReflectionHacks;
 import com.badlogic.gdx.graphics.Color;

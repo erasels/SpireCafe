@@ -10,7 +10,7 @@
 //import spireCafe.CafeRoom;
 //import spireCafe.abstracts.AbstractCafeInteractable;
 //import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
-//import spireCafe.interactables.patrons.powerelic.PowerelicCutscene;
+//import spireCafe.interactables.patrons.powerelic.implementation.PowerelicCutscene;
 //import spireCafe.util.Wiz;
 //
 //import java.util.ArrayList;

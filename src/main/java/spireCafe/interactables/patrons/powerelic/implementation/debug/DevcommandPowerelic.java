@@ -1,11 +1,7 @@
-package spireCafe.interactables.patrons.powerelic.debug;
+package spireCafe.interactables.patrons.powerelic.implementation.debug;
 
 import basemod.DevConsole;
 import basemod.devcommands.ConsoleCommand;
-import basemod.devcommands.relic.*;
-import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.RelicLibrary;
 
 public class DevcommandPowerelic extends ConsoleCommand{
 

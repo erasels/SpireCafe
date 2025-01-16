@@ -1,14 +1,12 @@
-package spireCafe.interactables.patrons.powerelic;
+package spireCafe.interactables.patrons.powerelic.implementation;
 
 import basemod.patches.com.megacrit.cardcrawl.screens.compendium.CardLibraryScreen.NoCompendium;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
-import com.megacrit.cardcrawl.localization.RelicStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 
 import static spireCafe.Anniv7Mod.makeID;
-import static spireCafe.interactables.patrons.powerelic.PowerelicPatron.assetID;
 
 @NoCompendium
 public class PowerelicTemporaryDuplicateCard extends PowerelicCard {

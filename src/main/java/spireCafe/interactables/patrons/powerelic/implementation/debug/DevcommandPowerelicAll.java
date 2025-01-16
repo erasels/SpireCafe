@@ -1,10 +1,7 @@
-package spireCafe.interactables.patrons.powerelic.debug;
+package spireCafe.interactables.patrons.powerelic.implementation.debug;
 
 import basemod.DevConsole;
-import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.RelicLibrary;
-import spireCafe.interactables.patrons.powerelic.PowerelicCutscene;
+import spireCafe.interactables.patrons.powerelic.implementation.PowerelicCutscene;
 
 import java.util.ArrayList;
 

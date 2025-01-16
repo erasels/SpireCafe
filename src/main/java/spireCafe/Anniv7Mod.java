@@ -34,7 +34,7 @@ import spireCafe.cardvars.SecondDamage;
 import spireCafe.cardvars.SecondMagicNumber;
 import spireCafe.interactables.attractions.makeup.MakeupTableAttraction;
 import spireCafe.interactables.merchants.fleamerchant.FleaMerchant;
-import spireCafe.interactables.patrons.powerelic.debug.*;
+import spireCafe.interactables.patrons.powerelic.implementation.debug.DevcommandPowerelic;
 import spireCafe.patches.PotencySaverPatch;
 import spireCafe.interactables.patrons.missingno.MissingnoUtil;
 import spireCafe.interactables.patrons.dandadan.RightBallPotionSavable;

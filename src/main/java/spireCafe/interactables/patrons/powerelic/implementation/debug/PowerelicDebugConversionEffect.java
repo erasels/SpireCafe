@@ -1,14 +1,11 @@
-package spireCafe.interactables.patrons.powerelic.debug;
+package spireCafe.interactables.patrons.powerelic.implementation.debug;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
-import spireCafe.interactables.patrons.powerelic.PowerelicCutscene;
-import spireCafe.util.Wiz;
+import spireCafe.interactables.patrons.powerelic.implementation.PowerelicCutscene;
 
-import java.sql.Array;
 import java.util.ArrayList;
 
 public class PowerelicDebugConversionEffect extends AbstractGameEffect {

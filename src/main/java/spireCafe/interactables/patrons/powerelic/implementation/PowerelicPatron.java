@@ -1,30 +1,19 @@
-package spireCafe.interactables.patrons.powerelic;
+package spireCafe.interactables.patrons.powerelic.implementation;
 
-import basemod.animations.SpriterAnimation;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.esotericsoftware.spine.*;
-import com.evacipated.cardcrawl.modthespire.Loader;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
-import com.megacrit.cardcrawl.relics.AbstractRelic;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractPatron;
+import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
 import spireCafe.util.TexLoader;
-import spireCafe.util.Wiz;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class PowerelicPatron extends AbstractPatron {
     public static final String ID = PowerelicPatron.class.getSimpleName();

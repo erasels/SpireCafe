@@ -1,4 +1,4 @@
-package spireCafe.interactables.patrons.powerelic;
+package spireCafe.interactables.patrons.powerelic.implementation;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
@@ -13,6 +13,8 @@ import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
+import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
+import spireCafe.interactables.patrons.powerelic.PowerelicConfig;
 import spireCafe.util.Wiz;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
@@ -22,7 +24,7 @@ import java.util.Collections;
 import java.util.Random;
 
 import static spireCafe.Anniv7Mod.makeID;
-import static spireCafe.interactables.patrons.powerelic.PowerelicPatron.getAllConvertiblePowers;
+import static spireCafe.interactables.patrons.powerelic.implementation.PowerelicPatron.getAllConvertiblePowers;
 
 public class PowerelicCutscene extends AbstractCutscene {
     public static final String ID = makeID(PowerelicCutscene.class.getSimpleName());
@@ -30,7 +32,6 @@ public class PowerelicCutscene extends AbstractCutscene {
 
     protected boolean alreadyTalkedOnce=false;
     protected int goldCost=PowerelicPatron.DEFAULT_GOLD_COST;
-    protected static final int EXTRA_COST_AFTER_ENERGY_TOTAL=1;
 
 
     public PowerelicCutscene(AbstractNPC character) {
@@ -162,12 +163,10 @@ public class PowerelicCutscene extends AbstractCutscene {
 
     public static void convertSelectedCardsToRelics(ArrayList<AbstractCard> selectedCards,boolean skipRelicConversion){
         int relicsToConvert=0;
+        relicsToConvert = PowerelicConfig.calculateNumberOfRelicsToConvert(selectedCards);
         for(AbstractCard card : selectedCards){
             card.untip();
             card.unhover();
-            int effectivePowerCost=card.cost;
-            if(effectivePowerCost<0)effectivePowerCost=Wiz.adp().energy.energyMaster;
-            relicsToConvert+=(effectivePowerCost+EXTRA_COST_AFTER_ENERGY_TOTAL);
 
             //As a side effect, the card is automatically captured within the new relic (must remove from deck manually, below)
             AbstractRelic relic = new PowerelicRelic(card);
@@ -188,7 +187,7 @@ public class PowerelicCutscene extends AbstractCutscene {
 
     public static void convertRandomRelicsToPowers(int amount){
 
-        ArrayList<AbstractRelic>convertibleRelics=PowerelicAllowlist.getAllConvertibleRelics();
+        ArrayList<AbstractRelic>convertibleRelics= PowerelicAllowlist.getAllConvertibleRelics();
 
         Collections.shuffle(convertibleRelics, new Random(AbstractDungeon.miscRng.randomLong()));
         if(amount>convertibleRelics.size())

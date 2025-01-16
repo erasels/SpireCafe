@@ -1,10 +1,6 @@
-package spireCafe.interactables.patrons.powerelic.debug;
+package spireCafe.interactables.patrons.powerelic.implementation.debug;
 
 import basemod.DevConsole;
-import basemod.devcommands.ConsoleCommand;
-import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.RelicLibrary;
 
 import java.util.ArrayList;
 
@@ -30,7 +26,7 @@ public class DevcommandPowerelicStandard extends DevcommandPowerelic{
 
     @Override
     public void errorMsg() {
-        DevcommandPowerelic.cmdHelp();
+        cmdHelp();
     }
 
 }

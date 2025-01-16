@@ -1,4 +1,4 @@
-package spireCafe.interactables.patrons.powerelic;
+package spireCafe.interactables.patrons.powerelic.implementation;
 
 import basemod.ReflectionHacks;
 import basemod.patches.com.megacrit.cardcrawl.screens.compendium.CardLibraryScreen.NoCompendium;
@@ -19,11 +19,12 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.SmokePuffEffect;
 import spireCafe.abstracts.AbstractSCCard;
+import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
 import spireCafe.util.Wiz;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 import static spireCafe.Anniv7Mod.*;
-import static spireCafe.interactables.patrons.powerelic.PowerelicPatron.assetID;
+import static spireCafe.interactables.patrons.powerelic.implementation.PowerelicPatron.assetID;
 import static spireCafe.util.CardArtRoller.computeCard;
 
 @NoCompendium
