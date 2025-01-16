@@ -1,4 +1,4 @@
-package spireCafe.interactables.patrons.powerelic.implementation;
+package spireCafe.interactables.patrons.powerelic.implementation.patches;
 
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch2;
@@ -8,6 +8,9 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.saveAndContinue.SaveFile;
+import spireCafe.interactables.patrons.powerelic.implementation.PowerelicCard;
+import spireCafe.interactables.patrons.powerelic.implementation.PowerelicRelic;
+import spireCafe.interactables.patrons.powerelic.implementation.PowerelicTemporaryDuplicateCard;
 import spireCafe.util.Wiz;
 
 import java.util.ArrayList;

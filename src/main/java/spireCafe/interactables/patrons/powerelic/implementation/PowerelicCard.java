@@ -40,7 +40,7 @@ public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
 
     public static final String ID = makeID(PowerelicCard.class.getSimpleName());
     private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(ID);
-    private static final RelicStrings relicStrings = CardCrawlGame.languagePack.getRelicStrings(makeID("PowerelicFormerRelic"));
+
 
     public AbstractRelic capturedRelic = null;
 
@@ -150,31 +150,6 @@ public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
     }
 
 
-    public void activateRelicFromHand(AbstractRelic relic){
-        if(!Wiz.adp().relics.contains(relic)){
-            //can't use spawnRelicAndObtain as that will automatically onEquip even if we don't want to
-            relic.instantObtain(Wiz.adp(),Wiz.adp().relics.size(),false);
-            AbstractDungeon.effectsQueue.add(new SmokePuffEffect(relic.targetX,relic.targetY));
-            if(Wiz.curRoom()!=null)relic.justEnteredRoom(Wiz.curRoom());
-            relic.atPreBattle();
-            relic.atBattleStart();
-            relic.atBattleStartPreDraw();
-            relic.atTurnStart();
-            relic.atTurnStartPostDraw();
-            //this description edit currently only works when the relic is played from hand, not when loaded from savefile.
-            relic.description=relic.description+relicStrings.DESCRIPTIONS[0];
-            relic.tips.clear();
-            relic.tips.add(new PowerTip(relic.name, relic.description));
-            ReflectionHacks.privateMethod(AbstractRelic.class, "initializeTips").invoke(relic);
-        }else{
-            AbstractRelic newRelic = replaceThisCardsRelicWithNewCopy();
-            if(!Wiz.adp().relics.contains(newRelic)) {
-                activateRelicFromHand(newRelic);
-            }else{
-                //if we got here, then replaceThisCardsRelicWithNewCopy failed somehow
-            }
-        }
-    }
 
     //start-of-next-combat removal patch
     @SpirePatch2(clz = AbstractPlayer.class, method = "preBattlePrep")
@@ -262,7 +237,7 @@ public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
     }
 
 
-    private AbstractRelic replaceThisCardsRelicWithNewCopy(){
+    public AbstractRelic replaceThisCardsRelicWithNewCopy(){
         if(this.capturedRelic==null)return null;
         AbstractRelic newRelic=this.capturedRelic.makeCopy();
         this.capturedRelic=newRelic;

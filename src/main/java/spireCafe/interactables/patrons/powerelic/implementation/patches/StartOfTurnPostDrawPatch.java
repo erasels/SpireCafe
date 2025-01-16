@@ -1,4 +1,4 @@
-package spireCafe.interactables.patrons.powerelic.implementation;
+package spireCafe.interactables.patrons.powerelic.implementation.patches;
 
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;

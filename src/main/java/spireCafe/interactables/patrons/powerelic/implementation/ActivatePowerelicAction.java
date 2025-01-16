@@ -1,8 +1,16 @@
 package spireCafe.interactables.patrons.powerelic.implementation;
 
+import basemod.ReflectionHacks;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.localization.RelicStrings;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
 import spireCafe.util.Wiz;
+
+import static spireCafe.Anniv7Mod.makeID;
 
 public class ActivatePowerelicAction extends AbstractGameAction {
 
@@ -19,7 +27,7 @@ public class ActivatePowerelicAction extends AbstractGameAction {
             return;
         }
 
-        card.activateRelicFromHand(card.capturedRelic);
+        activateRelicFromCard(card,card.capturedRelic);
         //note that if the card was duplicated, capturedRelic might point to a different relic now!
         if(PowerelicAllowlist.isEssentialEquipRelic(card.capturedRelic)) {
             int previousMaxEnergy=Wiz.adp().energy.energyMaster;
@@ -31,5 +39,32 @@ public class ActivatePowerelicAction extends AbstractGameAction {
         }
 
         isDone=true;
+    }
+
+    private static final RelicStrings relicStrings = CardCrawlGame.languagePack.getRelicStrings(makeID("PowerelicFormerRelic"));
+    public void activateRelicFromCard(PowerelicCard card, AbstractRelic relic){
+        if(!Wiz.adp().relics.contains(relic)){
+            //can't use spawnRelicAndObtain as that will automatically onEquip even if we don't want to
+            Wiz.att(new ApplyPowerAction(Wiz.adp(),Wiz.adp(),new PowerelicPower(relic)));
+            relic.instantObtain(Wiz.adp(),Wiz.adp().relics.size(),false);
+            //AbstractDungeon.effectsQueue.add(new SmokePuffEffect(relic.targetX,relic.targetY));
+            if(Wiz.curRoom()!=null)relic.justEnteredRoom(Wiz.curRoom());
+            relic.atPreBattle();
+            relic.atBattleStart();
+            relic.atBattleStartPreDraw();
+            relic.atTurnStart();
+            relic.atTurnStartPostDraw();
+            relic.tips.clear();
+            relic.tips.add(new PowerTip(relic.name, relic.description));
+            ReflectionHacks.privateMethod(AbstractRelic.class, "initializeTips").invoke(relic);
+        }else{
+            AbstractRelic newRelic = card.replaceThisCardsRelicWithNewCopy();
+            if(!Wiz.adp().relics.contains(newRelic)) {
+                activateRelicFromCard(card, newRelic);
+            }else{
+                //if we got here, then replaceThisCardsRelicWithNewCopy failed somehow
+            }
+        }
+
     }
 }
