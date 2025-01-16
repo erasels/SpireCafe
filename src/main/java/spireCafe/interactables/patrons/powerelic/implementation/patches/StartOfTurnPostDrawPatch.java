@@ -17,7 +17,7 @@ import java.util.ArrayList;
 @SpirePatch2(clz = AbstractRoom.class, method = "update")
 public class StartOfTurnPostDrawPatch {
     @SpireInsertPatch(locator = Locator.class)
-    public static void returnPotionReward() {
+    public static void Patch() {
         Wiz.adp().applyStartOfTurnPostDrawPowers();
     }
     static class Locator extends SpireInsertLocator {

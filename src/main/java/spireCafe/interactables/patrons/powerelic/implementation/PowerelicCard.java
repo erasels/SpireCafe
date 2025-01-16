@@ -11,21 +11,15 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.localization.CardStrings;
-import com.megacrit.cardcrawl.localization.RelicStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import com.megacrit.cardcrawl.vfx.SmokePuffEffect;
 import spireCafe.abstracts.AbstractSCCard;
 import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
 import spireCafe.util.Wiz;
 
-import static com.badlogic.gdx.math.MathUtils.random;
 import static spireCafe.Anniv7Mod.*;
 import static spireCafe.interactables.patrons.powerelic.implementation.PowerelicPatron.assetID;
-import static spireCafe.util.CardArtRoller.computeCard;
 
 @NoCompendium
 public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
@@ -44,9 +38,7 @@ public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
 
     public AbstractRelic capturedRelic = null;
 
-    //this flag is used by PowerelicCutscene to identify relics that were still relics up until this point
-    // (as opposed to savefile cards or duplicated cards).
-    public boolean cardIsFreshlyConvertedFromRelic=false;
+
 
     //DO NOT USE THESE CONSTRUCTORS except to add a PowerelicCard to the compendium.
     //Other cards should use one of the static factory methods with the appropriate side effects.
@@ -62,11 +54,6 @@ public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
     public static PowerelicCard fromActiveRelic(AbstractRelic relic) {
         PowerelicCard card = new PowerelicCard();
         card.setRelicInfoForNewlyConvertedCard(relic);
-        return card;
-    }
-    public static PowerelicCard fromSaveFile(int relicIndex) {
-        PowerelicCard card = new PowerelicCard();
-        card.setRelicInfoFromSavedIndexData(relicIndex);
         return card;
     }
     public static PowerelicCard fromCopy(AbstractRelic relic) {

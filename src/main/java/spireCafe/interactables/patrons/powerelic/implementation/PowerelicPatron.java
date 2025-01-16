@@ -22,7 +22,6 @@ public class PowerelicPatron extends AbstractPatron {
 
     protected boolean alreadyTalkedOnce=false;
     protected static final int DEFAULT_GOLD_COST=300;
-    protected int goldCost;
 
     public PowerelicPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
@@ -31,11 +30,6 @@ public class PowerelicPatron extends AbstractPatron {
 
         img = TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Powerelic/patron.png"));
         cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Powerelic/portrait.png")));
-        goldCost=DEFAULT_GOLD_COST;
-        if (!Settings.isDailyRun)
-            goldCost = MathUtils.round(goldCost * AbstractDungeon.merchantRng
-                    .random(0.95F, 1.05F));
-        goldCost=0; //we're not yet sure whether we actually need a gold cost.
     }
 
     public static boolean canSpawn() {

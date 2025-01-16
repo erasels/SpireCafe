@@ -1,29 +1,17 @@
 package spireCafe.interactables.patrons.powerelic.implementation.patches;
 
-import com.badlogic.gdx.graphics.Cursor;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.*;
-import com.megacrit.cardcrawl.blights.AbstractBlight;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.GameCursor;
-import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.BlightHelper;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import javassist.CannotCompileException;
 import javassist.expr.ExprEditor;
-import javassist.expr.FieldAccess;
 import javassist.expr.MethodCall;
 import spireCafe.Anniv7Mod;
-import spireCafe.abstracts.AbstractSCBlight;
 import spireCafe.interactables.patrons.powerelic.implementation.PowerelicCard;
-import spireCafe.patches.CafeEntryExitPatch;
-import spireCafe.util.Wiz;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-import java.util.Iterator;
 
 public class RelicRenderPatches {
     @SpirePatch(clz = AbstractRelic.class, method = "renderInTopPanel")

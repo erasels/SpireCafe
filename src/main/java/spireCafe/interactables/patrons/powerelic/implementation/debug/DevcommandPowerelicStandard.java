@@ -24,9 +24,4 @@ public class DevcommandPowerelicStandard extends DevcommandPowerelic{
         return result;
     }
 
-    @Override
-    public void errorMsg() {
-        cmdHelp();
-    }
-
 }

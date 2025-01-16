@@ -3,18 +3,14 @@ package spireCafe.interactables.patrons.powerelic.implementation;
 import basemod.ReflectionHacks;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.PowerTip;
-import com.megacrit.cardcrawl.localization.RelicStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
 import spireCafe.util.Wiz;
 
-import static spireCafe.Anniv7Mod.makeID;
-
 public class ActivatePowerelicAction extends AbstractGameAction {
 
-    private PowerelicCard card;
+    private final PowerelicCard card;
     public ActivatePowerelicAction(PowerelicCard card){
         this.card=card;
     }
@@ -41,7 +37,6 @@ public class ActivatePowerelicAction extends AbstractGameAction {
         isDone=true;
     }
 
-    private static final RelicStrings relicStrings = CardCrawlGame.languagePack.getRelicStrings(makeID("PowerelicFormerRelic"));
     public void activateRelicFromCard(PowerelicCard card, AbstractRelic relic){
         if(!Wiz.adp().relics.contains(relic)){
             //can't use spawnRelicAndObtain as that will automatically onEquip even if we don't want to

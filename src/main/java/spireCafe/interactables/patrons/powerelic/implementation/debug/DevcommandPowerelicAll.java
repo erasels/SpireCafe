@@ -29,8 +29,4 @@ public class DevcommandPowerelicAll extends DevcommandPowerelic{
         return result;
     }
 
-    @Override
-    public void errorMsg() {
-        cmdHelp();
-    }
 }

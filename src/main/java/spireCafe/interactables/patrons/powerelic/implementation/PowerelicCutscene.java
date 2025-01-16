@@ -31,14 +31,11 @@ public class PowerelicCutscene extends AbstractCutscene {
     private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
 
     protected boolean alreadyTalkedOnce=false;
-    protected int goldCost=PowerelicPatron.DEFAULT_GOLD_COST;
-
 
     public PowerelicCutscene(AbstractNPC character) {
         super(character, cutsceneStrings);
         if(character instanceof PowerelicPatron) {
             alreadyTalkedOnce = ((PowerelicPatron)character).alreadyTalkedOnce;
-            goldCost = ((PowerelicPatron)character).goldCost;
         }
 
         dialogueIndex = 0;
@@ -162,8 +159,7 @@ public class PowerelicCutscene extends AbstractCutscene {
     }
 
     public static void convertSelectedCardsToRelics(ArrayList<AbstractCard> selectedCards,boolean skipRelicConversion){
-        int relicsToConvert=0;
-        relicsToConvert = PowerelicConfig.calculateNumberOfRelicsToConvert(selectedCards);
+        int relicsToConvert = PowerelicConfig.calculateNumberOfRelicsToConvert(selectedCards);
         for(AbstractCard card : selectedCards){
             card.untip();
             card.unhover();
@@ -202,7 +198,6 @@ public class PowerelicCutscene extends AbstractCutscene {
             //As a side effect, the relic is automatically captured within the new card (must remove from list manually)
             PowerelicCard card = PowerelicCard.fromActiveRelic(relic);
             newCards.add(card);
-            card.cardIsFreshlyConvertedFromRelic=true;
             //later: perhaps a custom effect to show all the new cards fly into the deck slightly more gracefully
             AbstractDungeon.effectsQueue.add(new ShowCardAndObtainEffect(card, MathUtils.random(0.1F, 0.9F) * (float)Settings.WIDTH, MathUtils.random(0.2F, 0.8F) * (float)Settings.HEIGHT));
         }
