@@ -5,4 +5,4 @@ The Powerelic Professor will allow you to turn one(?) Power card into a Relic. Y
 ### Checklist
 - [X] I have added myself to the authors list in the ModTheSpire.json
 - [X] I have updated my entry and its state in the [Contribution List](https://docs.google.com/spreadsheets/d/1PgRwGs0OWx8RKYv1QEsrOm7HJdfaqULHRM5qSSHo_yU/edit?usp=sharing)
-- [ ] I have removed all the placeholder and TODO strings in my contribution
+- [X] I have removed all the placeholder and TODO strings in my contribution
