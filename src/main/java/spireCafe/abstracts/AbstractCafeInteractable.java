@@ -81,7 +81,7 @@ public abstract class AbstractCafeInteractable {
             if (animation != null) {
                 animation.renderSprite(sb, animationX, animationY);
             } else if (this.img != null) {
-                sb.draw(this.img, this.animationX - (float)this.img.getWidth() * Settings.scale / 2.0F, this.animationY * Settings.scale, (float)this.img.getWidth() * Settings.scale, (float)this.img.getHeight() * Settings.scale, 0, 0, this.img.getWidth(), this.img.getHeight(), this.flipHorizontal, this.flipVertical);
+                sb.draw(this.img, this.animationX - (float)this.img.getWidth() * Settings.scale / 2.0F, this.animationY, (float)this.img.getWidth() * Settings.scale, (float)this.img.getHeight() * Settings.scale, 0, 0, this.img.getWidth(), this.img.getHeight(), this.flipHorizontal, this.flipVertical);
             } else {
                 this.state.update(Gdx.graphics.getDeltaTime());
                 this.state.apply(this.skeleton);
