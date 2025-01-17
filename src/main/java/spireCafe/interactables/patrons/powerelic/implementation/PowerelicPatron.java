@@ -24,7 +24,7 @@ public class PowerelicPatron extends AbstractPatron {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
         this.authors = "Lua Viper";
-        this.animationY=300f;
+        this.animationY=this.animationY-20f;
 
         img = TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Powerelic/patron.png"));
         cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Powerelic/portrait.png")));
