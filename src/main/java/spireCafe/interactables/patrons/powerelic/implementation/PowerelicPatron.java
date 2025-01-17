@@ -2,10 +2,8 @@ package spireCafe.interactables.patrons.powerelic.implementation;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import spireCafe.Anniv7Mod;
@@ -21,12 +19,12 @@ public class PowerelicPatron extends AbstractPatron {
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
     protected boolean alreadyTalkedOnce=false;
-    protected static final int DEFAULT_GOLD_COST=300;
 
     public PowerelicPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
         this.authors = "Lua Viper";
+        this.animationY=300f;
 
         img = TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Powerelic/patron.png"));
         cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("Powerelic/portrait.png")));
@@ -38,7 +36,7 @@ public class PowerelicPatron extends AbstractPatron {
 
     @Override
     public void renderCutscenePortrait(SpriteBatch sb) {
-        simpleRenderCutscenePortrait(sb, 1560.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+        simpleRenderCutscenePortrait(sb, 1560.0F, -200.0F, 0.0F, 0.0F, 0.0F);
     }
 
     @Override
