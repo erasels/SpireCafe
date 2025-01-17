@@ -36,7 +36,6 @@ public class RestingSlayerCutscene extends AbstractCutscene {
         super(slayer, cutsceneStrings);
     }
 
-    //Instead of only having one line of dialogue after the transaction this Patron says a different line each time.
     @Override
     public String getBlockingDialogue() {
         return cutsceneStrings.BLOCKING_TEXTS[0];

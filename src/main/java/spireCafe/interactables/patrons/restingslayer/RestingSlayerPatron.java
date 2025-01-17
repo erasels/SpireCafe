@@ -4,12 +4,8 @@ import basemod.BaseMod;
 import basemod.ReflectionHacks;
 import basemod.abstracts.CustomPlayer;
 import basemod.animations.AbstractAnimation;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.*;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
@@ -20,39 +16,41 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
+import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractPatron;
 import spireCafe.util.TexLoader;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.eventRng;
-import static org.apache.commons.lang3.math.NumberUtils.max;
-import static org.apache.commons.lang3.math.NumberUtils.min;
 
 public class RestingSlayerPatron extends AbstractPatron {
     public static final String ID = RestingSlayerPatron.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
     public final AbstractPlayer slayer;
-    private ArrayList<AbstractCard> cards = new ArrayList<>();
-    private ArrayList<AbstractRelic> relics = new ArrayList<>();
-    private ArrayList<AbstractRelic> playerRelics = new ArrayList<>();
-    public ArrayList<AbstractCard> offeredCards = new ArrayList<>();
-    public ArrayList<AbstractRelic> offeredRelics = new ArrayList<>();
-    public ArrayList<AbstractRelic> requestedRelics = new ArrayList<>();
+    private ArrayList<AbstractCard> cards = new ArrayList<>(); // Potential cards the slayer may offer, should have one card of each available rarity.
+    private ArrayList<AbstractRelic> relics = new ArrayList<>(); // Potential relics the slayer may offer, should have one relic of each available tier.
+    private ArrayList<AbstractRelic> playerRelics = new ArrayList<>(); // Potential relics the player has the slayer may request, should have one relic of each available tier.
+    public ArrayList<AbstractCard> offeredCards = new ArrayList<>(); // Cards the slayer is currently offering and showing a trade for.
+    public ArrayList<AbstractRelic> offeredRelics = new ArrayList<>(); // Relics the slayer is currently offering and showing a trade for.
+    public ArrayList<AbstractRelic> requestedRelics = new ArrayList<>(); // Relics the player has and the slayer is currently showing a trade for.
     public boolean hasBasic;
     public boolean hasCommon;
     public boolean hasUncommon;
     public boolean hasRare;
+    public Random restingSlayerRng;
 
 
 
     public RestingSlayerPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
+
+        restingSlayerRng = new Random(eventRng.randomLong());
+
         ArrayList<AbstractPlayer> options = CardCrawlGame.characterManager.getAllCharacters().stream()
                 .filter(p -> p.chosenClass != AbstractDungeon.player.chosenClass
                         && !p.chosenClass.name().equals("THE_PACKMASTER")
@@ -60,7 +58,7 @@ public class RestingSlayerPatron extends AbstractPatron {
                         && !p.chosenClass.name().equals("Librarian")
                         && !p.chosenClass.name().equals("THE_RAINBOW "))
                 .collect(Collectors.toCollection(ArrayList::new));
-        slayer = !options.isEmpty() ? options.get(AbstractDungeon.eventRng.random(options.size() - 1)) : AbstractDungeon.player;
+        slayer = !options.isEmpty() ? options.get(restingSlayerRng.random(options.size() - 1)) : AbstractDungeon.player;
         name = characterStrings.NAMES[0].replace("{0}", slayer.getLocalizedCharacterName().replace(characterStrings.NAMES[1], ""));
         authors = "Jack Renoson";
 
@@ -112,6 +110,11 @@ public class RestingSlayerPatron extends AbstractPatron {
         AbstractDungeon.topLevelEffectsQueue.add(new RestingSlayerCutscene(this));
     }
 
+    /**
+     Capitalizes string. Specifically changes the letter after each non-letter character to be a Capital, and the other letters to be non-capital.
+     @param s: String to be capitalized
+     @return : Capitalized String
+     */
     public static String capitalize(String s){
         char[] chars = s.toLowerCase().toCharArray();
         boolean previousCharIsLetter = false;
@@ -128,7 +131,11 @@ public class RestingSlayerPatron extends AbstractPatron {
         return String.valueOf(chars);
     }
 
+    /**
+     Sets the list this.cards to be equal to a random card of each rarity of the slayers color.
+     */
     private void generateCards() {
+        boolean onlyStrikesAndDefends = true;
         CardGroup basics = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
         CardGroup commons = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
         CardGroup uncommons = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
@@ -138,8 +145,22 @@ public class RestingSlayerPatron extends AbstractPatron {
         for(AbstractCard c : slayer.masterDeck.group){
             if(!basics.contains(c) && c.rarity == AbstractCard.CardRarity.BASIC){
                 basics.addToTop(c);
+                if(!(c.hasTag(AbstractCard.CardTags.STARTER_STRIKE) || c.hasTag(AbstractCard.CardTags.STARTER_DEFEND))){
+                    onlyStrikesAndDefends = false;
+                    break;
+                }
             }
         }
+        if(!onlyStrikesAndDefends){ // If there is a non-Strike, non-Defend basic card, always offer that instead of a Strike or Defend
+            basics.clear();
+            for(AbstractCard c : slayer.masterDeck.group){
+                if(!basics.contains(c) && c.rarity == AbstractCard.CardRarity.BASIC && !(c.hasTag(AbstractCard.CardTags.STARTER_STRIKE) || c.hasTag(AbstractCard.CardTags.STARTER_DEFEND))){
+                    basics.addToTop(c);
+                }
+            }
+        }
+
+
         ArrayList<AbstractCard> tmpCardList = new ArrayList<>();
         slayer.getCardPool(tmpCardList);
         for (AbstractCard c : tmpCardList) {
@@ -152,12 +173,16 @@ public class RestingSlayerPatron extends AbstractPatron {
         }
 
         cards = new ArrayList<>();
-        if(!basics.isEmpty()) cards.add(basics.getRandomCard(eventRng));
-        if(!commons.isEmpty()) cards.add(commons.getRandomCard(eventRng));
-        if(!uncommons.isEmpty()) cards.add(uncommons.getRandomCard(eventRng));
-        if(!rares.isEmpty()) cards.add(rares.getRandomCard(eventRng));
+        if(!basics.isEmpty()) cards.add(basics.getRandomCard(restingSlayerRng));
+        if(!commons.isEmpty()) cards.add(commons.getRandomCard(restingSlayerRng));
+        if(!uncommons.isEmpty()) cards.add(uncommons.getRandomCard(restingSlayerRng));
+        if(!rares.isEmpty()) cards.add(rares.getRandomCard(restingSlayerRng));
     }
 
+    /**
+     Sets the list this.relics to be equal to a random relic, specific to the slayer, of each tier.
+     Also sets the list this.playerRelics to be equal to a list of nulls, with the same size as this.relics.
+     */
     private void generateRelics() {
         relics = new ArrayList<>();
         ArrayList<AbstractRelic> tempRelics = new ArrayList<>();
@@ -188,23 +213,28 @@ public class RestingSlayerPatron extends AbstractPatron {
             playerRelics.add(null);
         }
         if(!commons.isEmpty()) {
-            relics.add(commons.get(eventRng.random(0, commons.size() - 1)));
+            relics.add(commons.get(restingSlayerRng.random(0, commons.size() - 1)));
             playerRelics.add(null);
         }
         if(!uncommons.isEmpty()) {
-            relics.add(uncommons.get(eventRng.random(0, uncommons.size() - 1)));
+            relics.add(uncommons.get(restingSlayerRng.random(0, uncommons.size() - 1)));
             playerRelics.add(null);
         }
         if(!rares.isEmpty()) {
-            relics.add(rares.get(eventRng.random(0, rares.size() - 1)));
+            relics.add(rares.get(restingSlayerRng.random(0, rares.size() - 1)));
             playerRelics.add(null);
         }
         if(!shops.isEmpty()) {
-            relics.add(shops.get(eventRng.random(0, shops.size() - 1)));
+            relics.add(shops.get(restingSlayerRng.random(0, shops.size() - 1)));
             playerRelics.add(null);
         }
     }
 
+    /**
+     Update the list playerRelics, which starts as a list of nulls, such that it contains a random relic the player has of each tier.
+     If the player does not have any relics of a tier, it stays null.
+     @return nr: amount of relics trades that can be offered = (additions to playerRelics) + (amount of relics already offered)
+     */
     public int updatePlayerRelics(){
         int nr = 0;
         ArrayList<AbstractRelic> candidates;
@@ -217,7 +247,7 @@ public class RestingSlayerPatron extends AbstractPatron {
                     }
                 }
                 if (!candidates.isEmpty()){
-                    playerRelics.set(i, candidates.get(eventRng.random(0, candidates.size() - 1)));
+                    playerRelics.set(i, candidates.get(restingSlayerRng.random(0, candidates.size() - 1)));
                     nr++;
                 }
             }
@@ -225,6 +255,10 @@ public class RestingSlayerPatron extends AbstractPatron {
         return nr + offeredRelics.size();
     }
 
+    /**
+     Update the booleans hasRarity, to be true if the player has atleast one card of the rarity
+     @return nr: amount of card trades that can be offered = number of true booleans
+     */
     public int updateHasRarities(){
         hasBasic = false;
         hasCommon = false;
@@ -255,6 +289,11 @@ public class RestingSlayerPatron extends AbstractPatron {
         return nr;
     }
 
+    /**
+     Update the offers, by checking if any current offers are invalid, and then adding new offers.
+     Offers are added when possible in order, first adding up to 2 card offers, then 1 relic offer, then randomly filled up to 5.
+     Lastly, the offers are sorted.
+     */
     public void updateOffer(){
         int nrCards = updateHasRarities();
         checkOffer();
@@ -263,7 +302,7 @@ public class RestingSlayerPatron extends AbstractPatron {
         while(offeredCards.size()<2 && !cards.isEmpty() && nrCards>offeredCards.size() && offeredCards.size()+offeredRelics.size()<5) {
             int c;
             do {
-                c = eventRng.random(cards.size() - 1);
+                c = restingSlayerRng.random(cards.size() - 1);
             } while (!hasRarity(cards.get(c)));
             offeredCards.add(cards.remove(c));
         }
@@ -271,7 +310,7 @@ public class RestingSlayerPatron extends AbstractPatron {
         if(offeredRelics.isEmpty() && !relics.isEmpty() && nrRelics>0 && offeredCards.size()<5){
             int r;
             do {
-                r = eventRng.random(relics.size()-1);
+                r = restingSlayerRng.random(relics.size()-1);
             } while (playerRelics.get(r)==null);
             offeredRelics.add(relics.remove(r));
             requestedRelics.add(playerRelics.remove(r));
@@ -280,16 +319,16 @@ public class RestingSlayerPatron extends AbstractPatron {
         while(offeredCards.size() + offeredRelics.size() < 5){
             if(nrCards>offeredCards.size()){
                 if(nrRelics>offeredRelics.size()){
-                    if(0==eventRng.random(0, 1)){
+                    if(restingSlayerRng.randomBoolean()){
                         int c;
                         do {
-                            c = eventRng.random(cards.size() - 1);
+                            c = restingSlayerRng.random(cards.size() - 1);
                         } while (!hasRarity(cards.get(c)));
                         offeredCards.add(cards.remove(c));
                     } else {
                         int r;
                         do {
-                            r = eventRng.random(relics.size()-1);
+                            r = restingSlayerRng.random(relics.size()-1);
                         } while (playerRelics.get(r)==null);
                         offeredRelics.add(relics.remove(r));
                         requestedRelics.add(playerRelics.remove(r));
@@ -297,14 +336,14 @@ public class RestingSlayerPatron extends AbstractPatron {
                 } else {
                     int c;
                     do {
-                        c = eventRng.random(cards.size() - 1);
+                        c = restingSlayerRng.random(cards.size() - 1);
                     } while (!hasRarity(cards.get(c)));
                     offeredCards.add(cards.remove(c));
                 }
             } else if (nrRelics>offeredRelics.size()){
                 int r;
                 do {
-                    r = eventRng.random(relics.size()-1);
+                    r = restingSlayerRng.random(relics.size()-1);
                 } while (playerRelics.get(r)==null);
                 offeredRelics.add(relics.remove(r));
                 requestedRelics.add(playerRelics.remove(r));
@@ -314,6 +353,10 @@ public class RestingSlayerPatron extends AbstractPatron {
         sortOffer();
     }
 
+    /**
+     The order of the offers is sorted to be first relic trades, then card trades, with lower rarities first.
+     This is done by sorting offeredRelics, requestedRelics and offeredCards.
+     */
     private void sortOffer(){
         Collections.sort(offeredRelics, (r1, r2) -> {
             if(r1.tier == AbstractRelic.RelicTier.SHOP || (r1.tier == AbstractRelic.RelicTier.RARE && r2.tier != AbstractRelic.RelicTier.SHOP) || (r1.tier == AbstractRelic.RelicTier.UNCOMMON && r2.tier == AbstractRelic.RelicTier.COMMON) || r2.tier == AbstractRelic.RelicTier.STARTER){
@@ -332,6 +375,11 @@ public class RestingSlayerPatron extends AbstractPatron {
         });
     }
 
+    /**
+     Checks if the player has a card with the same rarity as c.
+     @param c: Card to check rarity of
+     @return hasRarity: boolean that is equal to true if the player has a card of rarity
+     */
     private boolean hasRarity(AbstractCard c) {
         switch(c.rarity){
             case BASIC: return hasBasic;
@@ -342,6 +390,10 @@ public class RestingSlayerPatron extends AbstractPatron {
         }
     }
 
+    /**
+     Checks if any current offers are invalid, and if so, removes any invalid offers, returning them to the list of potential offers for future use.
+     This may be because the player might have removed all cards of a rarity or a relic since last interacting with this patron.
+     */
     private void checkOffer(){
         ArrayList<Integer> relicsToRemove = new ArrayList<>();
         for(int i = offeredRelics.size()-1; i>=0; i--){
