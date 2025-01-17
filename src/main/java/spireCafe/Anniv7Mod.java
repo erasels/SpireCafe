@@ -49,6 +49,7 @@ import java.util.function.Consumer;
 import static spireCafe.interactables.attractions.bookshelf.BookshelfAttraction.PAGE_CONFIG_KEY;
 import static spireCafe.interactables.patrons.missingno.MissingnoPatches.*;
 import static spireCafe.patches.CafeEntryExitPatch.CAFE_ENTRY_SOUND_KEY;
+import static spireCafe.screens.JukeboxScreen.isPlaying;
 
 @SuppressWarnings({"unused"})
 @SpireInitializer
@@ -60,6 +61,7 @@ public class Anniv7Mod implements
         PostInitializeSubscriber,
         AddAudioSubscriber,
         PostUpdateSubscriber,
+        PostDungeonInitializeSubscriber,
         ImGuiSubscriber {
 
     public static final Logger logger = LogManager.getLogger("SpireCafe");
@@ -412,6 +414,15 @@ public class Anniv7Mod implements
     public void receivePostUpdate() {
         time += Gdx.graphics.getRawDeltaTime();
         MissingnoUtil.doMissingnoStuff();
+        if (!CardCrawlGame.isInARun() && !isPlaying) {
+            JukeboxScreen.resetToDefaultMusic();
+        }
+    }
+    @Override
+    public void receivePostDungeonInitialize() {
+        if (!CardCrawlGame.isInARun()) {
+            JukeboxScreen.resetToDefaultMusic();;
+        }
     }
 
     private ModPanel settingsPanel;

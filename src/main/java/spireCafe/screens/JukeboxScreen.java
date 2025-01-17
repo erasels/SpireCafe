@@ -22,6 +22,7 @@ import com.megacrit.cardcrawl.ui.buttons.LargeDialogOptionButton;
 import spireCafe.Anniv7Mod;
 import spireCafe.interactables.attractions.jukebox.JukeboxRelic;
 import spireCafe.interactables.patrons.missingno.MissingnoRelic;
+import spireCafe.util.TexLoader;
 
 import java.awt.*;
 import java.io.IOException;
@@ -32,8 +33,13 @@ import java.util.function.Consumer;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class JukeboxScreen extends CustomScreen {
     private static final String CUSTOM_MUSIC_FOLDER = ConfigUtils.CONFIG_DIR + File.separator + "anniv7/cafe_jukebox";
+
     private static final int BUTTONS_PER_PAGE = 5;
     private final List<LargeDialogOptionButton> buttons = new ArrayList<>();
     private final List<String> predefinedTracks = new ArrayList<>();
@@ -79,33 +85,35 @@ public class JukeboxScreen extends CustomScreen {
     private static final String ID = Anniv7Mod.makeID(JukeboxScreen.class.getSimpleName());
     private static final UIStrings UIStrings = CardCrawlGame.languagePack.getUIString(ID);
     private static final String[] TEXT = UIStrings.TEXT;
+    private static final Logger LOGGER = Logger.getLogger(JukeboxScreen.class.getName());
 
     public JukeboxScreen() {
-        textField = TEXT[22];
+
+        textField = TEXT[0];
         glowingButtonIndex = -1;
 
-        backgroundTexture = new Texture(TEXT[0]);
-        buttonTexture = new Texture(TEXT[1]);
-        buttonglowTexture = new Texture(TEXT[2]);
-        buttonhoverTexture = new Texture(TEXT[3]);
-        buttonlongTexture = new Texture(TEXT[4]);
-        buttononTexture = new Texture(TEXT[5]);
-        buttonoffTexture = new Texture(TEXT[6]);
-        buttonDisabledTexture = new Texture(TEXT[7]);
-        coinSlotTexture = new Texture(TEXT[8]);
-        coinSlotLitTexture = new Texture(TEXT[9]);
-        coinSlotThankyouTexture = new Texture(TEXT[10]);
-        highlightButtonTexture = new Texture(TEXT[11]);
-        windowTexture = new Texture(TEXT[12]);
-        insertButtonTexture = new Texture(TEXT[13]);
-        refreshButtonTexture = new Texture(TEXT[14]);
-        loopButtonTexture = new Texture(TEXT[15]);
-        loopButtonGlowTexture = new Texture(TEXT[16]);
-        skipButtonTexture = new Texture(TEXT[17]);
-        clearButtonTexture = new Texture(TEXT[18]);
-        clearButtonOffTexture = new Texture(TEXT[19]);
-        insertSlotTexture = new Texture(TEXT[20]);
-        insertSlotGlowTexture = new Texture(TEXT[21]);
+        backgroundTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/Background.png"));
+        buttonlongTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/ButtonLong.png"));
+        buttononTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/ButtonOn.png"));
+        buttonoffTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/ButtonOff.png"));
+        buttonDisabledTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/ButtonflipN.png"));
+        coinSlotTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/Coinslot.png"));
+        coinSlotLitTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/CoinslotLit.png"));
+        coinSlotThankyouTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/Thankyou.png"));
+        insertButtonTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/InsertButton.png"));
+        refreshButtonTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/RefreshButton.png"));
+        loopButtonTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/LoopButton.png"));
+        loopButtonGlowTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/LoopButtonGlow.png"));
+        skipButtonTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/SkipButton.png"));
+        clearButtonOffTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/ClearButtonOff.png"));
+        insertSlotTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/InsertSlot.png"));
+        insertSlotGlowTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/InsertSlotGlow.png"));
+        buttonTexture = TexLoader.getTexture("images/ui/topPanel/endTurnButton.png");
+        buttonglowTexture = TexLoader.getTexture("images/ui/topPanel/endTurnButtonGlow.png");
+        buttonhoverTexture = TexLoader.getTexture("images/ui/topPanel/endTurnHover.png");
+        windowTexture = TexLoader.getTexture("images/ui/reward/takeAll.png");
+        clearButtonTexture = TexLoader.getTexture("images/ui/profile/delete_button.png");
+        highlightButtonTexture = TexLoader.getTexture("images/ui/charSelect/highlightButton2.png");
 
         initializePredefinedTracks();
         loadCustomTracks();
@@ -113,9 +121,20 @@ public class JukeboxScreen extends CustomScreen {
         createButtons();
 
     }
+    public static void resetToDefaultMusic() {
+        if (nowPlayingSong != null) {
+            nowPlayingSong.stop();
+            nowPlayingSong = null;
+        } else if (isPlaying) {
+            CardCrawlGame.music.silenceTempBgmInstantly();
+            isPlaying = false;
+        }
+        CardCrawlGame.music.unsilenceBGM(); // Resume default music
+    }
 
     private void initializePredefinedTracks() {
         predefinedTracks.add("SHOP");
+        predefinedTracks.add("SHOP_ALT");
         predefinedTracks.add("SHRINE");
         predefinedTracks.add("MINDBLOOM");
         predefinedTracks.add("BOSS_BOTTOM");
@@ -124,6 +143,24 @@ public class JukeboxScreen extends CustomScreen {
         predefinedTracks.add("BOSS_ENDING");
         predefinedTracks.add("ELITE");
         predefinedTracks.add("CREDITS");
+        predefinedTracks.add("ACT_4_BGM");
+        predefinedTracks.add("ALT_LEVEL");
+        predefinedTracks.add("LEVEL_1");
+        predefinedTracks.add("LEVEL_1_ALT");
+        predefinedTracks.add("LEVEL_2");
+        predefinedTracks.add("LEVEL_2_ALT");
+        predefinedTracks.add("LEVEL_3");
+        predefinedTracks.add("LEVEL_3_ALT");
+        predefinedTracks.add("ENDING_STINGER");
+        predefinedTracks.add("MENU_THEME");
+        predefinedTracks.add("DEATH_STINGER_1");
+        predefinedTracks.add("DEATH_STINGER_2");
+        predefinedTracks.add("DEATH_STINGER_3");
+        predefinedTracks.add("DEATH_STINGER_4");
+        predefinedTracks.add("BOSS_VICTORY_STINGER_1");
+        predefinedTracks.add("BOSS_VICTORY_STINGER_2");
+        predefinedTracks.add("BOSS_VICTORY_STINGER_3");
+        predefinedTracks.add("BOSS_VICTORY_STINGER_4");
     }
 
     private void loadCustomTracks() {
@@ -131,12 +168,12 @@ public class JukeboxScreen extends CustomScreen {
 
         File customFolder = new File(CUSTOM_MUSIC_FOLDER);
         if (!customFolder.exists()) {
-            System.out.println("Custom music folder not found: " + CUSTOM_MUSIC_FOLDER);
+             LOGGER.info("Custom music folder not found: " + CUSTOM_MUSIC_FOLDER);
             boolean created = customFolder.mkdirs(); // Attempt to create the folder
             if (created) {
-                System.out.println("Custom music folder created: " + CUSTOM_MUSIC_FOLDER);
+                 LOGGER.info("Custom music folder created: " + CUSTOM_MUSIC_FOLDER);
             } else {
-                System.err.println("Failed to create custom music folder.");
+                LOGGER.severe("Failed to create custom music folder.");
                 return;
             }
         }
@@ -144,25 +181,25 @@ public class JukeboxScreen extends CustomScreen {
         // Ensure Cafe_Theme.mp3 is present
         File cafeThemeFile = new File(customFolder, "Cafe_Theme.mp3");
         if (!cafeThemeFile.exists()) {
-            System.out.println("Cafe_Theme.mp3 not found in custom folder. Adding default file...");
+             LOGGER.info("Cafe_Theme.mp3 not found in custom folder. Adding default file...");
             copyDefaultCafeTheme(cafeThemeFile);
         } else {
-            System.out.println("Cafe_Theme.mp3 already exists in custom folder.");
+             LOGGER.info("Cafe_Theme.mp3 already exists in custom folder.");
         }
 
         // Load files from the custom folder
         File[] files = customFolder.listFiles();
         if (files != null) {
-            System.out.println("Scanning custom music folder for audio files...");
+             LOGGER.info("Scanning custom music folder for audio files...");
             for (File file : files) {
                 if (file.isFile() && isValidAudioFile(file.getName())) {
                     String trimmedName = file.getName()
                             .replaceAll("\\.(ogg|mp3|wav)$", "") // Remove extensions
                             .replace("_", " ");                 // Replace underscores with spaces
                     customTracks.add(trimmedName);
-                    System.out.println("Custom track added: " + trimmedName);
+                     LOGGER.info("Custom track added: " + trimmedName);
                 } else {
-                    System.out.println("Invalid or unsupported file skipped: " + file.getName());
+                     LOGGER.warning("Invalid or unsupported file skipped: " + file.getName());
                 }
             }
         }
@@ -175,12 +212,12 @@ public class JukeboxScreen extends CustomScreen {
             if (sourceFile.exists()) {
                 FileHandle destFile = Gdx.files.absolute(destination.getAbsolutePath());
                 sourceFile.copyTo(destFile);
-                System.out.println("Successfully copied Cafe_Theme.mp3 to: " + destination.getAbsolutePath());
+                 LOGGER.info("Successfully copied Cafe_Theme.mp3 to: " + destination.getAbsolutePath());
             } else {
-                System.err.println("Default Cafe_Theme.mp3 not found in resources.");
+                 LOGGER.info("Default Cafe_Theme.mp3 not found in resources.");
             }
         } catch (Exception e) {
-            System.err.println("Failed to copy Cafe_Theme.mp3 to custom folder.");
+             LOGGER.severe("Failed to copy Cafe_Theme.mp3 to custom folder.");
             e.printStackTrace();
         }
     }
@@ -196,12 +233,12 @@ public class JukeboxScreen extends CustomScreen {
 
     private void combineTracks() {
         allTracks.clear();
-        allTracks.addAll(predefinedTracks); // Add predefined tracks
         allTracks.addAll(customTracks);     // Add custom tracks
+        allTracks.addAll(predefinedTracks); // Add predefined tracks
 
-        System.out.println("Predefined tracks: " + predefinedTracks);
-        System.out.println("Custom tracks: " + customTracks);
-        System.out.println("All tracks combined: " + allTracks);
+         LOGGER.info("Custom tracks: " + customTracks);
+         LOGGER.info("Predefined tracks: " + predefinedTracks);
+         LOGGER.info("All tracks combined: " + allTracks);
     }
 
     private String formatTrackName(String trackName) {
@@ -228,7 +265,7 @@ public class JukeboxScreen extends CustomScreen {
         int startIndex = currentPage * (BUTTONS_PER_PAGE * 2); // Two columns per page
         int endIndex = Math.min(startIndex + (BUTTONS_PER_PAGE * 2), allTracks.size());
 
-        System.out.println("Creating buttons for page: " + currentPage + " (Tracks " + startIndex + " to " + (endIndex - 1) + ")");
+         LOGGER.info("Creating buttons for page: " + currentPage + " (Tracks " + startIndex + " to " + (endIndex - 1) + ")");
 
 
         for (int i = startIndex; i < endIndex; i++) {
@@ -242,15 +279,15 @@ public class JukeboxScreen extends CustomScreen {
     public void open() {
         AbstractDungeon.screen = curScreen();
         AbstractDungeon.isScreenUp = true;
-        AbstractDungeon.overlayMenu.cancelButton.show(TEXT[24]); // "Close Jukebox"
+        AbstractDungeon.overlayMenu.cancelButton.show(TEXT[2]); // "Close Jukebox"
         AbstractDungeon.overlayMenu.hideBlackScreen();
 
         if (nowPlayingSong != null) {
             String formattedTrackName = formatTrackName(nowPlayingSong.toString()); // Format the track name
-            textField = TEXT[23] + formattedTrackName; // "Now Playing: [formattedTrackName]"
+            textField = TEXT[1] + formattedTrackName; // "Now Playing: [formattedTrackName]"
             glowingButtonIndex = allTracks.indexOf(formattedTrackName);
         } else {
-            textField = TEXT[22];
+            textField = TEXT[0];
             glowingButtonIndex = -1;
         }
     }
@@ -311,7 +348,7 @@ public class JukeboxScreen extends CustomScreen {
         float windowY = (Settings.HEIGHT / 2f);
         sb.draw(windowTexture, windowX - 450f, windowY + 170f, 900f * Settings.scale, 250f * Settings.scale);
         FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont,
-                TEXT[23]  + (currentTrackName != null ? currentTrackName : TEXT[22]),
+                TEXT[1]  + (currentTrackName != null ? currentTrackName : TEXT[0]),
                 Settings.WIDTH / 2f, Settings.HEIGHT - (242f * Settings.scale),
                 Color.GOLD);
     }
@@ -350,10 +387,10 @@ public class JukeboxScreen extends CustomScreen {
                     String selectedTrack = allTracks.get(button.slot);
                     if (queuedTracks.contains(selectedTrack)) {
                         queuedTracks.remove(selectedTrack);
-                        System.out.println("Track removed from queue: " + selectedTrack);
+                         LOGGER.info("Track removed from queue: " + selectedTrack);
                     } else {
                         queuedTracks.add(selectedTrack);
-                        System.out.println("Track added to queue: " + selectedTrack);
+                         LOGGER.info("Track added to queue: " + selectedTrack);
                     }
                 } else {
                     handleButtonClick(button);
@@ -434,7 +471,7 @@ public class JukeboxScreen extends CustomScreen {
         refreshHitbox.move(refreshButtonX + sideButtonWidth / 2f, refreshButtonY + sideButtonHeight / 2f);
         refreshHitbox.update();
         if (refreshHitbox.hovered && InputHelper.justClickedLeft) {
-            System.out.println("Refresh button clicked!");
+             LOGGER.info("Refresh button clicked!");
             CardCrawlGame.sound.play("UI_CLICK_1");
             refreshTrackList();
         }
@@ -445,11 +482,11 @@ public class JukeboxScreen extends CustomScreen {
         loopHitbox.move(loopButtonX + sideButtonWidth / 2f, loopButtonY + sideButtonHeight / 2f);
         loopHitbox.update();
         if (loopHitbox.hovered && InputHelper.justClickedLeft) {
-            System.out.println("Loop button clicked!");
+             LOGGER.info("Loop button clicked!");
             CardCrawlGame.sound.play("UI_CLICK_1");
             loopEnabled = !loopEnabled;
             updateLoopingState();
-            System.out.println("Looping is now: " + (loopEnabled ? "Enabled" : "Disabled"));
+             LOGGER.info("Looping is now: " + (loopEnabled ? "Enabled" : "Disabled"));
         }
         //Skip Button
         float buttonX = 1250f * Settings.scale;
@@ -459,7 +496,7 @@ public class JukeboxScreen extends CustomScreen {
         skipButtonHitbox.update();
 
         if (skipButtonHitbox.hovered && InputHelper.justClickedLeft) {
-            System.out.println("Skip button clicked!");
+             LOGGER.info("Skip button clicked!");
             stopCurrentMusic();
             if (!queuedTracks.isEmpty()) {
                 playQueuedTracks(); // Play the next queued track
@@ -500,7 +537,7 @@ public class JukeboxScreen extends CustomScreen {
             sb.draw(highlightButtonTexture, 1247f * Settings.scale, 502f * Settings.scale, 85f * Settings.scale, 85f * Settings.scale);
         }
         sb.draw(skipButtonTexture, skipbuttonX, skipbuttonY, sideButtonWidth, sideButtonHeight);
-        FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[34],
+        FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[12],
                 skipbuttonX + skipButtonHitbox.width / 2f, skipbuttonY - (skipButtonHitbox.height / 5f), Color.WHITE);
 
         // Render hitbox for debugging
@@ -510,11 +547,11 @@ public class JukeboxScreen extends CustomScreen {
         loopHitbox.render(sb);
     }
     private void refreshTrackList() {
-        System.out.println("Refreshing track list...");
+         LOGGER.info("Refreshing track list...");
         loadCustomTracks(); // Reload tracks from the custom folder
         combineTracks();    // Combine predefined and custom tracks
         createButtons();    // Refresh the button list
-        System.out.println("Track list refreshed!");
+         LOGGER.info("Track list refreshed!");
     }
 
     //U&R Insert Button and slot
@@ -539,7 +576,7 @@ public class JukeboxScreen extends CustomScreen {
 
         // Shared hover and click logic
         if ((insertHitbox.hovered || insertSlotHitbox.hovered) && InputHelper.justClickedLeft) {
-            System.out.println("Insert buttons clicked!");
+             LOGGER.info("Insert buttons clicked!");
             CardCrawlGame.sound.play("UI_CLICK_1");
             openFileExplorer(CUSTOM_MUSIC_FOLDER);
         }
@@ -578,14 +615,14 @@ public class JukeboxScreen extends CustomScreen {
                 if (file.exists()) {
                     Desktop.getDesktop().open(file);
                 } else {
-                    System.err.println("Folder does not exist: " + folderPath);
+                     LOGGER.info("Folder does not exist: " + folderPath);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                System.err.println("Failed to open folder: " + folderPath);
+                 LOGGER.severe("Failed to open folder: " + folderPath);
             }
         } else {
-            System.err.println("Desktop is not supported on this platform.");
+             LOGGER.severe("Desktop is not supported on this platform.");
         }
     }
 
@@ -601,7 +638,7 @@ public class JukeboxScreen extends CustomScreen {
         coinSlotHitbox.update();
 
         if (coinSlotHitbox.hovered && InputHelper.justClickedLeft && !isCoinSlotClicked) {
-            System.out.println("CoinSlot clicked!");
+             LOGGER.info("CoinSlot clicked!");
             if (AbstractDungeon.player.gold >= 5) {
                 AbstractDungeon.player.loseGold(5);
                 CardCrawlGame.sound.play("SHOP_PURCHASE", 0.1F); // Play the purchase sound
@@ -652,8 +689,8 @@ public class JukeboxScreen extends CustomScreen {
     private void updatePaginationButtons() {
         int totalPages = (int) Math.ceil((double) allTracks.size() / (BUTTONS_PER_PAGE * 2));
 
-        float nextX = 1208f * Settings.scale;
-        float nextY = 100f * Settings.scale;
+        float nextX = 1008f * Settings.scale;
+        float nextY = 200f * Settings.scale;
         nextButtonHitbox.move(nextX, nextY + (85f * Settings.scale / 2f));
         nextButtonHitbox.update();
 
@@ -661,11 +698,11 @@ public class JukeboxScreen extends CustomScreen {
             currentPage++;
             createButtons(); // Refresh buttons for the new page
             updateButtonHighlights(); // Ensure the highlight is updated for the new page
-            System.out.println("Navigating to Next Page: " + currentPage);
+             LOGGER.info("Navigating to Next Page: " + currentPage);
         }
 
-        float prevX = 508f * Settings.scale;
-        float prevY = 100f * Settings.scale;
+        float prevX = 608f * Settings.scale;
+        float prevY = 200f * Settings.scale;
         prevButtonHitbox.move(prevX, prevY + (85f * Settings.scale / 2f));
         prevButtonHitbox.update();
 
@@ -673,34 +710,34 @@ public class JukeboxScreen extends CustomScreen {
             currentPage--;
             createButtons(); // Refresh buttons for the previous page
             updateButtonHighlights(); // Ensure the highlight is updated for the new page
-            System.out.println("Navigating to Previous Page: " + currentPage);
+             LOGGER.info("Navigating to Previous Page: " + currentPage);
         }
     }
 
     private void renderPaginationButtons(SpriteBatch sb) {
         int totalPages = (int) Math.ceil((double) allTracks.size() / (BUTTONS_PER_PAGE * 2));
 
-        float nextX = 1208f * Settings.scale;
-        float nextY = 100f * Settings.scale;
+        float nextX = 1008f * Settings.scale;
+        float nextY = 200f * Settings.scale;
         float buttonWidth = 300f * Settings.scale;
         float buttonHeight = 85f * Settings.scale;
 
         if (currentPage < totalPages - 1) {
             sb.draw(buttonlongTexture, nextX - (buttonWidth / 2f), nextY, buttonWidth, buttonHeight);
             Color textColor = nextButtonHitbox.hovered ? Settings.GOLD_COLOR : Color.WHITE;
-            FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[26], nextX, nextY + (buttonHeight / 2), textColor); // "Next"
+            FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[4], nextX, nextY + (buttonHeight / 2), textColor); // "Next"
             nextButtonHitbox.render(sb); // Render the hitbox for debugging
 
         }
 
-        float prevX = 508f * Settings.scale;
-        float prevY = 100f * Settings.scale;
+        float prevX = 608f * Settings.scale;
+        float prevY = 200f * Settings.scale;
 
         // Render Previous button
         if (currentPage > 0) {
             sb.draw(buttonlongTexture, prevX - (buttonWidth / 2f), prevY, buttonWidth, buttonHeight);
             Color textColor = prevButtonHitbox.hovered ? Settings.GOLD_COLOR : Color.WHITE;
-            FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[27], prevX, prevY + (buttonHeight / 2), textColor);
+            FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[5], prevX, prevY + (buttonHeight / 2), textColor);
             prevButtonHitbox.render(sb); // Render the hitbox for debugging
         }
 
@@ -721,10 +758,10 @@ public class JukeboxScreen extends CustomScreen {
                 // Change button to Confirm mode
                 isQueueConfirmState = true;
                 queuedTracks.clear();
-                System.out.println("Queue selection mode activated.");
+                 LOGGER.info("Queue selection mode activated.");
             } else {
                 // Finalize the queue
-                System.out.println("Queue confirmed: " + queuedTracks);
+                 LOGGER.info("Queue confirmed: " + queuedTracks);
                 isQueueConfirmState = false;
                 playQueuedTracks();
             }
@@ -737,7 +774,7 @@ public class JukeboxScreen extends CustomScreen {
         // Render button background
         sb.draw(isQueueConfirmState ? buttononTexture : buttonoffTexture, buttonX, buttonY, addToQueueHitbox.width, addToQueueHitbox.height);
 
-        String buttonText = isQueueConfirmState ?  TEXT[30] : TEXT[28];
+        String buttonText = isQueueConfirmState ?  TEXT[8] : TEXT[6];
         FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, buttonText,
                 buttonX + addToQueueHitbox.width / 2f, buttonY + addToQueueHitbox.height / 2f, Color.WHITE);
 
@@ -754,7 +791,7 @@ public class JukeboxScreen extends CustomScreen {
 
         if (clearQueueHitbox.hovered && InputHelper.justClickedLeft) {
             queuedTracks.clear(); // Clear all tracks from the queue
-            System.out.println( TEXT[30]);
+             LOGGER.info( TEXT[8]);
         }
     }
     private void renderClearQueueButton(SpriteBatch sb) {
@@ -768,7 +805,7 @@ public class JukeboxScreen extends CustomScreen {
         sb.draw(buttonTexture, buttonX, buttonY, clearQueueHitbox.width, clearQueueHitbox.height);
 
         // Render button text
-        FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont,  TEXT[29],
+        FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont,  TEXT[7],
                 buttonX + clearQueueHitbox.width / 2f, buttonY + clearQueueHitbox.height / 2f, Color.WHITE);
 
         // Render hitbox for debugging
@@ -803,19 +840,19 @@ public class JukeboxScreen extends CustomScreen {
             // Add/remove track from the queue
             if (queuedTracks.contains(selectedTrack)) {
                 queuedTracks.remove(selectedTrack); // Unselect if already in queue
-                System.out.println(TEXT[31] + " " + selectedTrack);
+                 LOGGER.info(TEXT[9] + " " + selectedTrack);
             } else {
                 queuedTracks.add(selectedTrack); // Add to queue
-                System.out.println(TEXT[32] + " "  + selectedTrack);
+                 LOGGER.info(TEXT[10] + " "  + selectedTrack);
             }
         } else {
-            textField = TEXT[23]   + selectedTrack;
+            textField = TEXT[1]   + selectedTrack;
             currentTrackName = formatTrackName(selectedTrack); // Update the current track name
 
             if (predefinedTracks.contains(selectedTrack)) {
                 // Play predefined track
                 String trackFileName = getTrackFileName(selectedTrack);
-                System.out.println("Playing predefined track: " + trackFileName);
+                 LOGGER.info("Playing predefined track: " + trackFileName);
                 stopCurrentMusic();
                 CardCrawlGame.music.playTempBgmInstantly(trackFileName, loopEnabled); // Pass the loopEnabled flag
                 isPlaying = true;
@@ -823,7 +860,7 @@ public class JukeboxScreen extends CustomScreen {
                 // Play custom track
                 String originalTrackFileName = getOriginalFileName(selectedTrack);
                 if (originalTrackFileName == null) {
-                    System.err.println("File not found for track: " + selectedTrack);
+                     LOGGER.warning("File not found for track: " + selectedTrack);
                     return;
                 }
                 String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalTrackFileName;
@@ -853,6 +890,44 @@ public class JukeboxScreen extends CustomScreen {
                 return "STS_EliteBoss_NewMix_v1.ogg";
             case "CREDITS":
                 return "STS_Credits_v5.ogg";
+            case "ACT_4_BGM":
+                return "STS_Act4_BGM_v2.ogg";
+            case "ALT_LEVEL":
+                return "STS_ALTLevel_v1.ogg";
+            case "LEVEL_1":
+                return "STS_Level1_NewMix_v1.ogg";
+            case "LEVEL_1_ALT":
+                return "STS_Level1-2_v2.ogg";
+            case "LEVEL_2":
+                return "STS_Level2_NewMix_v1.ogg";
+            case "LEVEL_2_ALT":
+                return "STS_Level2-2_v2.ogg";
+            case "LEVEL_3":
+                return "STS_Level3_v2.ogg";
+            case "LEVEL_3_ALT":
+                return "STS_Level3-2_v2.ogg";
+            case "ENDING_STINGER":
+                return "STS_EndingStinger_v1.ogg";
+            case "MENU_THEME":
+                return "STS_MenuTheme_NewMix_v1.ogg";
+            case "DEATH_STINGER_1":
+                return "STS_DeathStinger_1_v3_MUSIC.ogg";
+            case "DEATH_STINGER_2":
+                return "STS_DeathStinger_2_v3_MUSIC.ogg";
+            case "DEATH_STINGER_3":
+                return "STS_DeathStinger_3_v3_MUSIC.ogg";
+            case "DEATH_STINGER_4":
+                return "STS_DeathStinger_4_v3_MUSIC.ogg";
+            case "SHOP_ALT":
+                return "STS_Merchant_v2.ogg";
+            case "BOSS_VICTORY_STINGER_1":
+                return "STS_BossVictoryStinger_1_v3_MUSIC.ogg";
+            case "BOSS_VICTORY_STINGER_2":
+                return "STS_BossVictoryStinger_2_v3_MUSIC.ogg";
+            case "BOSS_VICTORY_STINGER_3":
+                return "STS_BossVictoryStinger_3_v3_MUSIC.ogg";
+            case "BOSS_VICTORY_STINGER_4":
+                return "STS_BossVictoryStinger_4_v3_MUSIC.ogg";
             default:
                 throw new IllegalArgumentException("Unknown track key: " + key);
         }
@@ -881,7 +956,7 @@ public class JukeboxScreen extends CustomScreen {
             // Construct the correct file path
             File file = new File(trackName);
             if (!file.exists()) {
-                System.out.println("File not found: " + file.getAbsolutePath());
+                 LOGGER.warning("File not found: " + file.getAbsolutePath());
                 return;
             }
 
@@ -899,16 +974,16 @@ public class JukeboxScreen extends CustomScreen {
             });
 
             nowPlayingSong.play(); // Start playing the track
-            System.out.println("Playing custom track: " + file.getAbsolutePath());
+             LOGGER.info("Playing custom track: " + file.getAbsolutePath());
         } catch (Exception e) {
-            System.err.println("Failed to play music: " + trackName);
+             LOGGER.severe("Failed to play music: " + trackName);
             e.printStackTrace();
         }
     }
     private void updateLoopingState() {
         if (nowPlayingSong != null) {
             nowPlayingSong.setLooping(loopEnabled); // Update looping based on the toggle
-            System.out.println("Looping set to: " + loopEnabled);
+             LOGGER.info("Looping set to: " + loopEnabled);
         }
     }
     public static void stopCurrentMusic() {
@@ -924,7 +999,7 @@ public class JukeboxScreen extends CustomScreen {
     }
     private void playRandomTrack() {
         if (allTracks.isEmpty()) {
-            System.out.println("No tracks available to play.");
+             LOGGER.info("No tracks available to play.");
             return;
         }
 
@@ -938,12 +1013,12 @@ public class JukeboxScreen extends CustomScreen {
         } while (nextTrack.equals(currentTrackName)); // Use currentTrackName for comparison
 
         // Play the selected track
-        textField = TEXT[23]   + nextTrack;
+        textField = TEXT[1]   + nextTrack;
         currentTrackName = formatTrackName(nextTrack); // Update the current track name
 
         if (predefinedTracks.contains(nextTrack)) {
             String trackFileName = getTrackFileName(nextTrack);
-            System.out.println("Playing predefined track: " + trackFileName);
+             LOGGER.info("Playing predefined track: " + trackFileName);
             stopCurrentMusic();
             CardCrawlGame.music.playTempBgmInstantly(trackFileName, loopEnabled);
             isPlaying = true;
@@ -953,7 +1028,7 @@ public class JukeboxScreen extends CustomScreen {
                 String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalFileName;
                 playTempBgm(trackPath);
             } else {
-                System.err.println("Failed to find file for track: " + nextTrack);
+                 LOGGER.severe("Failed to find file for track: " + nextTrack);
             }
         }
 
@@ -962,7 +1037,7 @@ public class JukeboxScreen extends CustomScreen {
     }
 
     private void clearHighlightsOnEmptyTrack() {
-        if (textField == null || textField.equals(TEXT[22])) {
+        if (textField == null || textField.equals(TEXT[0])) {
             for (int i = 0; i < buttonClickedStates.size(); i++) {
                 buttonClickedStates.set(i, false);
             }
@@ -971,18 +1046,18 @@ public class JukeboxScreen extends CustomScreen {
 
     private void playQueuedTracks() {
         if (queuedTracks.isEmpty()) {
-            System.out.println(TEXT[25]); // "Queue is empty. Nothing to play."
+             LOGGER.info(TEXT[3]); // "Queue is empty. Nothing to play."
             return;
         }
 
         // Play the first track in the queue
         String nextTrack = queuedTracks.remove(0);
-        textField = TEXT[23] + nextTrack;
+        textField = TEXT[1] + nextTrack;
         currentTrackName = formatTrackName(nextTrack);
 
         if (predefinedTracks.contains(nextTrack)) {
             String trackFileName = getTrackFileName(nextTrack);
-            System.out.println("Playing queued predefined track: " + trackFileName);
+             LOGGER.info("Playing queued predefined track: " + trackFileName);
             stopCurrentMusic();
             CardCrawlGame.music.playTempBgmInstantly(trackFileName, loopEnabled); // Looping depends on toggle
             isPlaying = true;
@@ -992,7 +1067,7 @@ public class JukeboxScreen extends CustomScreen {
                 String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalFileName;
                 playTempBgm(trackPath);
             } else {
-                System.err.println("Failed to find file for track: " + nextTrack);
+                 LOGGER.severe("Failed to find file for track: " + nextTrack);
             }
         }
 
