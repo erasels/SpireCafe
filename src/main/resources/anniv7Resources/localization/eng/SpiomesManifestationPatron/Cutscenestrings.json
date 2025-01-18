@@ -1,0 +1,27 @@
+{
+  "${ModID}:SpiomesManifestationCutscene": {
+    "NAME": "SpiomesManifestation Cutscene",
+    "BLOCKING_TEXTS": [
+      "The herald seems inert and unresponsive."
+    ],
+    "DESCRIPTIONS": [
+      "You look at the headless figure. If you didn't know better you would say that the body is flat.",
+      "As you approach a voice manifests in your head.",
+      "\"Welcome traveler. The biomes greet you. The resourceful ones will strive. Adapt and evolve.\"",
+      "As you look at the unstable ?Person? in front of you you get visions of strange and unique environments.",
+      "Three regions in particular stand out to you.",
+      "You decide to take a detour during your next day of travel.",
+      "You shake off the visions. You can not allow yourself to get distracted.",
+      "The voice manifests in your head again. Stronger this time. Forceful.",
+      "\"Embrace the evolution. Struggle, overcome, adapt, evolve.\"",
+      "\"Strive in the face of adversity.\"",
+      "\"The resourceless will wither.\""
+    ],
+    "OPTIONS": [
+      "[Embrace the vision] The next map will contain the {0} biome.",
+      "[Shake it off]",
+      "[Embrace the evolution] #rLose #r{0} #rMax #rHP. #gObtain #gBiomes #gExploration #gMap.",
+      "[Retreat]"
+    ]
+  }
+}
