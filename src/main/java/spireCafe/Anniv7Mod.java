@@ -427,7 +427,7 @@ public class Anniv7Mod implements
     public void receivePostUpdate() {
         time += Gdx.graphics.getRawDeltaTime();
         MissingnoUtil.doMissingnoStuff();
-        if (!CardCrawlGame.isInARun() && !isPlaying) {
+        if (!CardCrawlGame.isInARun() && isPlaying) {
             JukeboxScreen.resetToDefaultMusic();
         }
     }

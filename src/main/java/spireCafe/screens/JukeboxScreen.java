@@ -54,7 +54,7 @@ public class JukeboxScreen extends CustomScreen {
     public static boolean isCoinSlotClicked = false;
 
     private int currentPage = 0;
-    private static Music nowPlayingSong = null;
+    public static Music nowPlayingSong = null;
     private boolean loopEnabled = false;
     private String currentTrackName;
     private int glowingButtonIndex = -1;
@@ -133,6 +133,7 @@ public class JukeboxScreen extends CustomScreen {
     }
 
     private void initializePredefinedTracks() {
+        predefinedTracks.add("Cafe_Theme");
         predefinedTracks.add("SHOP");
         predefinedTracks.add("SHOP_ALT");
         predefinedTracks.add("SHRINE");
@@ -178,15 +179,6 @@ public class JukeboxScreen extends CustomScreen {
             }
         }
 
-        // Ensure Cafe_Theme.mp3 is present
-        File cafeThemeFile = new File(customFolder, "Cafe_Theme.mp3");
-        if (!cafeThemeFile.exists()) {
-             LOGGER.info("Cafe_Theme.mp3 not found in custom folder. Adding default file...");
-            copyDefaultCafeTheme(cafeThemeFile);
-        } else {
-             LOGGER.info("Cafe_Theme.mp3 already exists in custom folder.");
-        }
-
         // Load files from the custom folder
         File[] files = customFolder.listFiles();
         if (files != null) {
@@ -202,23 +194,6 @@ public class JukeboxScreen extends CustomScreen {
                      LOGGER.warning("Invalid or unsupported file skipped: " + file.getName());
                 }
             }
-        }
-    }
-
-    // Helper method to copy Cafe_Theme.mp3 to the custom folder
-    private void copyDefaultCafeTheme(File destination) {
-        try {
-            FileHandle sourceFile = Gdx.files.internal("anniv7Resources/audio/Cafe_Theme.mp3");
-            if (sourceFile.exists()) {
-                FileHandle destFile = Gdx.files.absolute(destination.getAbsolutePath());
-                sourceFile.copyTo(destFile);
-                 LOGGER.info("Successfully copied Cafe_Theme.mp3 to: " + destination.getAbsolutePath());
-            } else {
-                 LOGGER.info("Default Cafe_Theme.mp3 not found in resources.");
-            }
-        } catch (Exception e) {
-             LOGGER.severe("Failed to copy Cafe_Theme.mp3 to custom folder.");
-            e.printStackTrace();
         }
     }
 
@@ -837,97 +812,152 @@ public class JukeboxScreen extends CustomScreen {
         String selectedTrack = allTracks.get(button.slot);
 
         if (isQueueConfirmState) {
-            // Add/remove track from the queue
+            // Add/remove the track from the queue
             if (queuedTracks.contains(selectedTrack)) {
-                queuedTracks.remove(selectedTrack); // Unselect if already in queue
-                 LOGGER.info(TEXT[9] + " " + selectedTrack);
+                queuedTracks.remove(selectedTrack);
+                LOGGER.info(TEXT[9] + " " + selectedTrack);
             } else {
-                queuedTracks.add(selectedTrack); // Add to queue
-                 LOGGER.info(TEXT[10] + " "  + selectedTrack);
+                queuedTracks.add(selectedTrack);
+                LOGGER.info(TEXT[10] + " " + selectedTrack);
             }
         } else {
-            textField = TEXT[1]   + selectedTrack;
-            currentTrackName = formatTrackName(selectedTrack); // Update the current track name
+            // Update the text field and current track name
+            textField = TEXT[1] + selectedTrack;
+            currentTrackName = formatTrackName(selectedTrack);
 
-            if (predefinedTracks.contains(selectedTrack)) {
-                // Play predefined track
-                String trackFileName = getTrackFileName(selectedTrack);
-                 LOGGER.info("Playing predefined track: " + trackFileName);
-                stopCurrentMusic();
-                CardCrawlGame.music.playTempBgmInstantly(trackFileName, loopEnabled); // Pass the loopEnabled flag
-                isPlaying = true;
+            // Delegate playback logic to playTrack
+            playTrack(selectedTrack);
+        }
+    }
+    private void playTrack(String trackName) {
+        stopCurrentMusic(); // Stop any currently playing music
+        CardCrawlGame.music.silenceTempBgmInstantly();
+        CardCrawlGame.music.silenceBGMInstantly();
+        try {
+            String trackPath;
+
+            if (predefinedTracks.contains(trackName)) {
+                // Handle vanilla and mod-local tracks
+                trackPath = getTrackFileName(trackName); // Get the full path from predefined logic
+
+                if (!trackPath.startsWith("audio/") && !trackPath.startsWith("anniv7Resources/")) {
+                    throw new IllegalArgumentException("Invalid predefined track path: " + trackPath);
+                }
+
+                LOGGER.info("Playing predefined track: " + trackPath);
+                FileHandle fileHandle = Gdx.files.internal(trackPath);
+                nowPlayingSong = Gdx.audio.newMusic(fileHandle);
+
             } else {
-                // Play custom track
-                String originalTrackFileName = getOriginalFileName(selectedTrack);
-                if (originalTrackFileName == null) {
-                     LOGGER.warning("File not found for track: " + selectedTrack);
+                // Handle custom tracks
+                String originalFileName = getOriginalFileName(trackName);
+                if (originalFileName == null) {
+                    LOGGER.warning("File not found for track: " + trackName);
                     return;
                 }
-                String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalTrackFileName;
-                playTempBgm(trackPath);
+
+                trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalFileName;
+                File file = new File(trackPath);
+                if (!file.exists()) {
+                    LOGGER.warning("File not found: " + file.getAbsolutePath());
+                    return;
+                }
+
+                LOGGER.info("Playing custom track: " + trackPath);
+                FileHandle fileHandle = Gdx.files.absolute(file.getAbsolutePath());
+                nowPlayingSong = Gdx.audio.newMusic(fileHandle);
             }
+
+            // Configure playback
+            currentTrackName = formatTrackName(trackName);
+            nowPlayingSong.setLooping(loopEnabled);
+            nowPlayingSong.setVolume(Settings.MUSIC_VOLUME);
+            nowPlayingSong.setOnCompletionListener(music -> {
+                if (!loopEnabled) {
+                    playRandomTrack();
+                }
+            });
+
+            nowPlayingSong.play();
+            isPlaying = true;
+
+        } catch (Exception e) {
+            LOGGER.severe("Failed to play music: " + trackName);
+            e.printStackTrace();
         }
     }
 
-
+    public static void stopCurrentMusic() {
+        CardCrawlGame.music.silenceTempBgmInstantly();
+        CardCrawlGame.music.silenceBGMInstantly();
+        CardCrawlGame.music.silenceBGM();
+        isPlaying = false;
+        if (nowPlayingSong != null) {
+            nowPlayingSong.stop();
+            nowPlayingSong.dispose();
+            nowPlayingSong = null;
+        }
+    }
     private String getTrackFileName(String key) {
         switch (key) {
+            case "Cafe_Theme":
+                return "anniv7Resources/audio/Cafe_Theme.mp3";
             case "SHOP":
-                return "STS_Merchant_NewMix_v1.ogg";
+                return "audio/music/STS_Merchant_NewMix_v1.ogg";
             case "SHRINE":
-                return "STS_Shrine_NewMix_v1.ogg";
+                return "audio/music/STS_Shrine_NewMix_v1.ogg";
             case "MINDBLOOM":
-                return "STS_Boss1MindBloom_v1.ogg";
+                return "audio/music/STS_Boss1MindBloom_v1.ogg";
             case "BOSS_BOTTOM":
-                return "STS_Boss1_NewMix_v1.ogg";
+                return "audio/music/STS_Boss1_NewMix_v1.ogg";
             case "BOSS_CITY":
-                return "STS_Boss2_NewMix_v1.ogg";
+                return "audio/music/STS_Boss2_NewMix_v1.ogg";
             case "BOSS_BEYOND":
-                return "STS_Boss3_NewMix_v1.ogg";
+                return "audio/music/STS_Boss3_NewMix_v1.ogg";
             case "BOSS_ENDING":
-                return "STS_Boss4_v6.ogg";
+                return "audio/music/STS_Boss4_v6.ogg";
             case "ELITE":
-                return "STS_EliteBoss_NewMix_v1.ogg";
+                return "audio/music/STS_EliteBoss_NewMix_v1.ogg";
             case "CREDITS":
-                return "STS_Credits_v5.ogg";
+                return "audio/music/STS_Credits_v5.ogg";
             case "ACT_4_BGM":
-                return "STS_Act4_BGM_v2.ogg";
+                return "audio/music/STS_Act4_BGM_v2.ogg";
             case "ALT_LEVEL":
-                return "STS_ALTLevel_v1.ogg";
+                return "audio/music/STS_ALTLevel_v1.ogg";
             case "LEVEL_1":
-                return "STS_Level1_NewMix_v1.ogg";
+                return "audio/music/STS_Level1_NewMix_v1.ogg";
             case "LEVEL_1_ALT":
-                return "STS_Level1-2_v2.ogg";
+                return "audio/music/STS_Level1-2_v2.ogg";
             case "LEVEL_2":
-                return "STS_Level2_NewMix_v1.ogg";
+                return "audio/music/STS_Level2_NewMix_v1.ogg";
             case "LEVEL_2_ALT":
-                return "STS_Level2-2_v2.ogg";
+                return "audio/music/STS_Level2-2_v2.ogg";
             case "LEVEL_3":
-                return "STS_Level3_v2.ogg";
+                return "audio/music/STS_Level3_v2.ogg";
             case "LEVEL_3_ALT":
-                return "STS_Level3-2_v2.ogg";
+                return "audio/music/STS_Level3-2_v2.ogg";
             case "ENDING_STINGER":
-                return "STS_EndingStinger_v1.ogg";
+                return "audio/music/STS_EndingStinger_v1.ogg";
             case "MENU_THEME":
-                return "STS_MenuTheme_NewMix_v1.ogg";
+                return "audio/music/STS_MenuTheme_NewMix_v1.ogg";
             case "DEATH_STINGER_1":
-                return "STS_DeathStinger_1_v3_MUSIC.ogg";
+                return "audio/music/STS_DeathStinger_1_v3_MUSIC.ogg";
             case "DEATH_STINGER_2":
-                return "STS_DeathStinger_2_v3_MUSIC.ogg";
+                return "audio/music/STS_DeathStinger_2_v3_MUSIC.ogg";
             case "DEATH_STINGER_3":
-                return "STS_DeathStinger_3_v3_MUSIC.ogg";
+                return "audio/music/STS_DeathStinger_3_v3_MUSIC.ogg";
             case "DEATH_STINGER_4":
-                return "STS_DeathStinger_4_v3_MUSIC.ogg";
+                return "audio/music/STS_DeathStinger_4_v3_MUSIC.ogg";
             case "SHOP_ALT":
-                return "STS_Merchant_v2.ogg";
+                return "audio/music/STS_Merchant_v2.ogg";
             case "BOSS_VICTORY_STINGER_1":
-                return "STS_BossVictoryStinger_1_v3_MUSIC.ogg";
+                return "audio/music/STS_BossVictoryStinger_1_v3_MUSIC.ogg";
             case "BOSS_VICTORY_STINGER_2":
-                return "STS_BossVictoryStinger_2_v3_MUSIC.ogg";
+                return "audio/music/STS_BossVictoryStinger_2_v3_MUSIC.ogg";
             case "BOSS_VICTORY_STINGER_3":
-                return "STS_BossVictoryStinger_3_v3_MUSIC.ogg";
+                return "audio/music/STS_BossVictoryStinger_3_v3_MUSIC.ogg";
             case "BOSS_VICTORY_STINGER_4":
-                return "STS_BossVictoryStinger_4_v3_MUSIC.ogg";
+                return "audio/music/STS_BossVictoryStinger_4_v3_MUSIC.ogg";
             default:
                 throw new IllegalArgumentException("Unknown track key: " + key);
         }
@@ -949,54 +979,13 @@ public class JukeboxScreen extends CustomScreen {
         }
         return null; // File not found
     }
-
-    private void playTempBgm(String trackName) {
-        stopCurrentMusic(); // Stop any current music
-        try {
-            // Construct the correct file path
-            File file = new File(trackName);
-            if (!file.exists()) {
-                 LOGGER.warning("File not found: " + file.getAbsolutePath());
-                return;
-            }
-
-
-            FileHandle fileHandle = Gdx.files.absolute(file.getAbsolutePath());
-            nowPlayingSong = Gdx.audio.newMusic(fileHandle);
-            currentTrackName = formatTrackName(file.getName());
-            // Set looping based on the current loopEnabled state
-            nowPlayingSong.setLooping(loopEnabled);
-            nowPlayingSong.setVolume(Settings.MUSIC_VOLUME);
-            nowPlayingSong.setOnCompletionListener(music -> {
-                if (!loopEnabled) {
-                    playRandomTrack(); // Use the improved playRandomTrack logic
-                }
-            });
-
-            nowPlayingSong.play(); // Start playing the track
-             LOGGER.info("Playing custom track: " + file.getAbsolutePath());
-        } catch (Exception e) {
-             LOGGER.severe("Failed to play music: " + trackName);
-            e.printStackTrace();
-        }
-    }
     private void updateLoopingState() {
         if (nowPlayingSong != null) {
             nowPlayingSong.setLooping(loopEnabled); // Update looping based on the toggle
              LOGGER.info("Looping set to: " + loopEnabled);
         }
     }
-    public static void stopCurrentMusic() {
-        if (nowPlayingSong != null) {
-            nowPlayingSong.stop();
-            nowPlayingSong.dispose();
-            nowPlayingSong = null;
-        } else if (isPlaying) {
-            CardCrawlGame.music.silenceTempBgmInstantly();
-            CardCrawlGame.music.silenceBGM();
-            isPlaying = false;
-        }
-    }
+
     private void playRandomTrack() {
         if (allTracks.isEmpty()) {
              LOGGER.info("No tracks available to play.");
@@ -1026,7 +1015,7 @@ public class JukeboxScreen extends CustomScreen {
             String originalFileName = getOriginalFileName(nextTrack);
             if (originalFileName != null) {
                 String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalFileName;
-                playTempBgm(trackPath);
+                playTrack(trackPath);
             } else {
                  LOGGER.severe("Failed to find file for track: " + nextTrack);
             }
@@ -1065,7 +1054,7 @@ public class JukeboxScreen extends CustomScreen {
             String originalFileName = getOriginalFileName(nextTrack);
             if (originalFileName != null) {
                 String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalFileName;
-                playTempBgm(trackPath);
+                playTrack(trackPath);
             } else {
                  LOGGER.severe("Failed to find file for track: " + nextTrack);
             }
