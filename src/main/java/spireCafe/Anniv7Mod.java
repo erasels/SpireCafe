@@ -68,7 +68,8 @@ public class Anniv7Mod implements
         PostInitializeSubscriber,
         AddAudioSubscriber,
         PostUpdateSubscriber,
-        ImGuiSubscriber {
+        ImGuiSubscriber,
+        StartGameSubscriber {
 
     public static final Logger logger = LogManager.getLogger("SpireCafe");
 
@@ -520,6 +521,11 @@ public class Anniv7Mod implements
             }
         });
         BaseMod.addSaveField(makeID("ballPotion"), new RightBallPotionSavable());
+    }
+
+    @Override
+    public void receiveStartGame() {
+        CafeRoom.isInteracting = false;
     }
 
     public static class SavableCurrentRunSeenInteractables implements CustomSavable<HashSet<String>> {

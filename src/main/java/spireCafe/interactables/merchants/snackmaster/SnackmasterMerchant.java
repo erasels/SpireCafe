@@ -47,6 +47,7 @@ public class SnackmasterMerchant extends AbstractMerchant {
 
     @Override
     public void onCloseShop() {
+        super.onCloseShop();
         speechEffect.duration = -1;
         speechEffect = null;
     }
