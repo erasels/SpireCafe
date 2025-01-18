@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -23,6 +24,9 @@ public class GridDraftMerchant extends AbstractMerchant{
     private static final String ID = GridDraftMerchant.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
     private static final Texture BG_TEXTURE = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("griddraft/rug.png"));
+    private static final String MERCHANT_STR = Anniv7Mod.makeMerchantPath("griddraft/green_merchant/");
+    private static final float PITCH_VAR = 0.85F;
+
     private static float HB_W = 160.0F;
     private static float HB_H = 200.0F;
     private AbstractArticle[][] shopGrid;
@@ -32,8 +36,10 @@ public class GridDraftMerchant extends AbstractMerchant{
         this.shopGrid = new AbstractArticle[3][3];
         this.name = characterStrings.NAMES[0];
         this.authors = "Coda";
-        this.img = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("example/merchant.png"));
         background = new TextureRegion(BG_TEXTURE);
+
+        loadAnimation(MERCHANT_STR + "skeleton.atlas", MERCHANT_STR + "skeleton.json", 1.0F);
+        this.state.setAnimation(0, "idle", true);
     }
 
     @Override
@@ -110,6 +116,18 @@ public class GridDraftMerchant extends AbstractMerchant{
         Collections.shuffle(ret, new java.util.Random(AbstractDungeon.merchantRng.randomLong()));
 
         return ret;
+    }
+    @Override
+    public void onInteract() {
+        super.onInteract();
+        int roll = MathUtils.random(2);
+        if (roll == 0) {
+            CardCrawlGame.sound.playA("VO_MERCHANT_MA", PITCH_VAR);
+        } else if (roll == 1) {
+            CardCrawlGame.sound.playA("VO_MERCHANT_MB", PITCH_VAR);
+        } else {
+            CardCrawlGame.sound.playA("VO_MERCHANT_MC", PITCH_VAR);
+        }
     }
 
     @Override
@@ -208,5 +226,16 @@ public class GridDraftMerchant extends AbstractMerchant{
         }
         return ret;
 
+    }
+
+    public void cantBuy() {
+        int roll = MathUtils.random(2);
+        if (roll == 0) {
+            CardCrawlGame.sound.playA("VO_MERCHANT_2A", PITCH_VAR);
+        } else if (roll == 1) {
+            CardCrawlGame.sound.playA("VO_MERCHANT_2B", PITCH_VAR);
+        } else {
+            CardCrawlGame.sound.playA("VO_MERCHANT_2C", PITCH_VAR);
+        }
     }
 }

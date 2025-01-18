@@ -85,6 +85,14 @@ public class GridPurchaseArticle extends AbstractArticle {
         }
     }
 
+    @Override
+    public void onClick() {
+        if (!canBuy()) {
+            ((GridDraftMerchant)this.merchant).cantBuy();
+        }
+        super.onClick();
+    }
+
     private void scaleCards() {
         // ArrayList<AbstractCard> tmp;
         // tmp = ((GridDraftMerchant)this.merchant).getCards(this.slot, this.isRow);
