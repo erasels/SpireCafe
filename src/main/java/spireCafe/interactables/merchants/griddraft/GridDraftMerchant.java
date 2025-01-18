@@ -39,16 +39,8 @@ public class GridDraftMerchant extends AbstractMerchant{
     @Override
     protected void rollShop() {
         
-        articles.add(new GridPurchaseArticle(this, 0, true));
-        articles.add(new GridPurchaseArticle(this, 1, true));
-        articles.add(new GridPurchaseArticle(this, 2, true));
-        
-        articles.add(new GridPurchaseArticle(this, 0, false));
-        articles.add(new GridPurchaseArticle(this, 1, false));
-        articles.add(new GridPurchaseArticle(this, 2, false));
-        
         ArrayList<AbstractCard> cards = initCards();
-
+        
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++){
                 AbstractArticle gridCardArticle = new GridCardArticle(this, i, j, cards.remove(0), 100);
@@ -56,6 +48,14 @@ public class GridDraftMerchant extends AbstractMerchant{
                 articles.add(gridCardArticle);
             }
         }
+
+        articles.add(new GridPurchaseArticle(this, 0, true));
+        articles.add(new GridPurchaseArticle(this, 1, true));
+        articles.add(new GridPurchaseArticle(this, 2, true));
+        
+        articles.add(new GridPurchaseArticle(this, 0, false));
+        articles.add(new GridPurchaseArticle(this, 1, false));
+        articles.add(new GridPurchaseArticle(this, 2, false));
     }
 
     private ArrayList<AbstractCard> initCards() {

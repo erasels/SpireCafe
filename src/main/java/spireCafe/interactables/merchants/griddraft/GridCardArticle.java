@@ -3,6 +3,7 @@ package spireCafe.interactables.merchants.griddraft;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 import spireCafe.abstracts.AbstractMerchant;
 import spireCafe.interactables.merchants.CardArticle;
@@ -19,6 +20,7 @@ public class GridCardArticle extends CardArticle {
     public int column;
     public int row;
     private AbstractCard card;
+    private int priceVar;
 
     public GridCardArticle(AbstractMerchant merchant, int row, int column, AbstractCard card, int basePrice) {
         super("id" + row + column, merchant, 0, 0, card, basePrice);
@@ -27,6 +29,7 @@ public class GridCardArticle extends CardArticle {
         this.row = row;
         this.column = column;
         updateGrid(row, column);
+        this.priceVar = AbstractDungeon.merchantRng.random(-5,5);
     }
 
     @Override
@@ -50,6 +53,11 @@ public class GridCardArticle extends CardArticle {
 
     public AbstractCard getCard() {
         return this.card;
+    }
+
+    @Override
+    public int getBasePrice() {
+        return AbstractCard.getPrice(this.card.rarity) + this.priceVar;
     }
 
     @Override

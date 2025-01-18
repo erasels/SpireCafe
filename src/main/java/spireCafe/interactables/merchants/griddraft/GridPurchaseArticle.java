@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
@@ -29,10 +30,10 @@ public class GridPurchaseArticle extends AbstractArticle {
     private static final Texture COLUMN_HOVER = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("griddraft/button_hover.png"));
 
     private static float COLUMN_X_OFFSET = 581.0F * Settings.scale;
-    private static float COLUMN_Y_OFFSET = 916.0F * Settings.scale;
+    private static float COLUMN_Y_OFFSET = 926.0F * Settings.scale;
     private static float X_PAD = 275.0F * Settings.scale;
     
-    private static float ROW_X_OFFSET = 521.0F * Settings.scale;
+    private static float ROW_X_OFFSET = 511.0F * Settings.scale;
     private static float ROW_Y_OFFSET = 649.0F * Settings.scale;
     private static float Y_PAD = 300.0F * Settings.scale;
 
@@ -85,14 +86,16 @@ public class GridPurchaseArticle extends AbstractArticle {
     }
 
     private void scaleCards() {
-        ArrayList<AbstractCard> tmp;
-        tmp = ((GridDraftMerchant)this.merchant).getCards(this.slot, this.isRow);
-        if (tmp.isEmpty()) {
-            return;
-        }
-        for (AbstractCard c : tmp) {
-            c.drawScale = this.hb.hovered ? GridCardArticle.CARD_SCALE_HOVER : GridCardArticle.CARD_SCALE;
-        }
+        // ArrayList<AbstractCard> tmp;
+        // tmp = ((GridDraftMerchant)this.merchant).getCards(this.slot, this.isRow);
+        // if (tmp.isEmpty()) {
+        //     return;
+        // }
+        // for (AbstractCard c : tmp) {
+        //     c.drawScale = this.hb.hovered ? GridCardArticle.CARD_SCALE_HOVER : GridCardArticle.CARD_SCALE;
+        // }
+
+        // I don't know why this isn't working the way I want it too :/
     }
 
     @Override
@@ -103,7 +106,13 @@ public class GridPurchaseArticle extends AbstractArticle {
 
     @Override
     public int getBasePrice() {
-        return 100;
+        ArrayList<AbstractArticle> tmp = ((GridDraftMerchant)this.merchant).getArticles(slot, isRow);
+        int baseCost = 0;
+        for (AbstractArticle article : tmp) {
+            baseCost += article.getBasePrice();
+        }
+        baseCost *= 0.5F;
+        return baseCost;
     }
 
     @Override
@@ -117,24 +126,29 @@ public class GridPurchaseArticle extends AbstractArticle {
 
     @Override
     public void renderPrice(SpriteBatch sb) {
+        if (!((GridDraftMerchant)this.merchant).hasCards(slot, isRow)) {
+            return;
+        }
         int price = getModifiedPrice();
-        float priceX;
-        float priceY;
+        float priceX = xPos;
+        float priceY = yPos;
         if (isRow) {
-            priceX = xPos;
-            priceY = yPos - 1 * scale;
+            priceX += 50 * scale;
+            priceY += 60 * scale;
         } else {
-            priceX = xPos + 118 * scale;
-            priceY = yPos;
+            priceX += 118 * scale;
+            priceY += 0;
         }
         float textLength = FontHelper.getWidth(FontHelper.tipHeaderFont, String.valueOf(price), scale);
         float lineStart = priceX - (textLength + getPriceIcon().getWidth() * scale)/2f;
         if (isRow) {
+            float offset = 10.0F;
             sb.draw(getPriceIcon(), lineStart, priceY, getPriceIcon().getWidth() * scale, getPriceIcon().getHeight() * scale);
-            FontHelper.renderRotatedText(sb, FontHelper.tipHeaderFont, String.valueOf(price), lineStart + getPriceIcon().getWidth() * scale, priceY + getPriceIcon().getHeight()/2f, 0.0F, 0.0F, 90.0F, true, canBuy()? Color.WHITE : Color.SALMON);
+            FontHelper.renderRotatedText(sb, FontHelper.tipHeaderFont, String.valueOf(price), lineStart + getPriceIcon().getWidth()/2f * scale, priceY + offset + getPriceIcon().getHeight(), 0.0F, 0.0F, 90.0F, true, canBuy()? Color.WHITE : Color.SALMON);
         } else {
+            float offset = 7.0F;
             sb.draw(getPriceIcon(), lineStart, priceY, getPriceIcon().getWidth() * scale, getPriceIcon().getHeight() * scale);
-            FontHelper.renderFont(sb, FontHelper.tipHeaderFont, String.valueOf(price), lineStart + getPriceIcon().getWidth() * scale, priceY + getPriceIcon().getHeight()/2f, canBuy()? Color.WHITE : Color.SALMON);
+            FontHelper.renderFont(sb, FontHelper.tipHeaderFont, String.valueOf(price), lineStart + getPriceIcon().getWidth() * scale, priceY + offset + getPriceIcon().getHeight()/2f, canBuy()? Color.WHITE : Color.SALMON);
         }
         hb.render(sb);
     }
