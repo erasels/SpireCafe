@@ -1,9 +1,0 @@
-{
-  "${ModID}:ExamplePatron": {
-    "NAMES": [
-      "Example Patron"
-    ],
-    "TEXT": [
-    ]
-  }
-}
