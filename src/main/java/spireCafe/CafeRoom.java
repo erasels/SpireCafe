@@ -1,5 +1,6 @@
 package spireCafe;
 
+import basemod.BaseMod;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,6 +15,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import spireCafe.abstracts.*;
 import spireCafe.interactables.AuthorsNotSetException;
 import spireCafe.interactables.NameNotSetException;
+import spireCafe.screens.JukeboxScreen;
 import spireCafe.util.TexLoader;
 import spireCafe.util.decorationSystem.DecorationSystem;
 
@@ -178,6 +180,9 @@ public class CafeRoom extends AbstractEvent {
         merchant.initialize();
         Anniv7Mod.currentRunSeenInteractables.add(merchant.id);
         decoSystem = new DecorationSystem();
+
+        JukeboxScreen jukeboxScreen = (JukeboxScreen) BaseMod.getCustomScreen(JukeboxScreen.ScreenEnum.JUKEBOX_SCREEN);
+        jukeboxScreen.playCafeTheme();
     }
 
     @Override
