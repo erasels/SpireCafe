@@ -1,3 +1,10 @@
 [
-  
-]
+    {
+      "PROPER_NAME": "Blessed",
+      "NAMES": [
+        "blessed",
+        "Blessed"
+      ],
+      "DESCRIPTION": "Cards with Blessed cost 0 if they are the first card you draw each turn."
+    }
+  ]
