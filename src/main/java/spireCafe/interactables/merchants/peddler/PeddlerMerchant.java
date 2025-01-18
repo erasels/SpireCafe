@@ -101,7 +101,7 @@ public class PeddlerMerchant extends AbstractMerchant {
     }
 
     public float veryFairPriceIncrease(int price){
-        return (price * veryFairPriceMult) + AbstractDungeon.relicRng.random((-price/10), (price/10));
+        return (price * veryFairPriceMult) + AbstractDungeon.merchantRng.random((-price/10), (price/10));
     }
 
     @Override
