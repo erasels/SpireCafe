@@ -1,6 +1,7 @@
 package spireCafe;
 
 import basemod.BaseMod;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
@@ -48,7 +49,7 @@ public class CafeRoom extends AbstractEvent {
     private Texture barBackgroundImage, barImg;
     private DecorationSystem decoSystem;
 
-    private int musicDelay;
+    private float musicDelay;
     private boolean startedMusic;
 
     public boolean darkBg;
@@ -56,7 +57,7 @@ public class CafeRoom extends AbstractEvent {
     public CafeRoom() {
         CardCrawlGame.music.silenceTempBgmInstantly();
         CardCrawlGame.music.silenceBGM();
-        musicDelay = 1000;
+        musicDelay = 6f;
         startedMusic=false;
 
         this.body = "";
@@ -200,7 +201,7 @@ public class CafeRoom extends AbstractEvent {
                 jukeboxScreen.playCafeTheme();
                 startedMusic=true;
             } else {
-                musicDelay--;
+                this.musicDelay -= Gdx.graphics.getDeltaTime();
             }
         }
 
