@@ -1,9 +1,5 @@
 package spireCafe.interactables.patrons.cleric;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
-
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
@@ -20,13 +16,12 @@ public class ClericPatronCutscene extends AbstractCutscene{
     public static final String ID = Anniv7Mod.makeID(ClericPatronCutscene.class.getSimpleName());
     private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
     private AbstractRelic lostRelic;
-    private int goldCost = 0;
+    private static final int GOLD_COST = 175;
     private int maxHPCost = 0;
 
     public ClericPatronCutscene(ClericPatron character) {
         super(character, cutsceneStrings);
-        this.lostRelic = getLostItem();
-        this.goldCost = (int) (Wiz.p().gold * 0.5F);
+        this.lostRelic = character.lostRelic;
         this.maxHPCost = (int) (Wiz.p().maxHealth * 0.15F);
     }
 
@@ -53,16 +48,6 @@ public class ClericPatronCutscene extends AbstractCutscene{
         }
     }
     
-    private AbstractRelic getLostItem() {
-        if (Wiz.p().relics.isEmpty()) {
-            return null;
-        }
-        ArrayList<AbstractRelic> relics = new ArrayList<>();
-        relics.addAll(Wiz.p().relics);
-        Collections.shuffle(relics, new Random(AbstractDungeon.miscRng.randomLong()));
-        return relics.get(0);
-    }
-    
     public void createOptionDialogue() {
         this.dialog.clear();
         if (this.lostRelic == null) {
@@ -82,11 +67,11 @@ public class ClericPatronCutscene extends AbstractCutscene{
             });
         }
 
-        String opt1 = String.format(OPTIONS[1], this.goldCost);
-        boolean hasGold = Wiz.p().gold >= this.goldCost;
+        String opt1 = String.format(OPTIONS[1], GOLD_COST);
+        boolean hasGold = Wiz.p().gold >= GOLD_COST;
         this.dialog.addDialogOption(opt1, !hasGold, new IndulgenceMarkRelic()).setOptionResult((i)->{
             character.alreadyPerformedTransaction = true;
-            Wiz.p().loseGold(this.goldCost);
+            Wiz.p().loseGold(GOLD_COST);
             AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2, new IndulgenceMarkRelic());
             goToDialogue(4);
         });
