@@ -26,15 +26,15 @@ public class TheTransientPatron extends AbstractPatron {
         this.authors = "iry";
 
         //directly copied loadAnimation from AbstractCreature class
-        this.atlas = new TextureAtlas(Gdx.files.internal("images/monsters/theBottom/louseRed/skeleton.atlas"));
+        this.atlas = new TextureAtlas(Gdx.files.internal("images/monsters/theForest/transient/skeleton.atlas"));
         SkeletonJson json = new SkeletonJson(this.atlas);
-        json.setScale(Settings.renderScale);
-        SkeletonData skeletonData = json.readSkeletonData(Gdx.files.internal("images/monsters/theBottom/louseRed/skeleton.json"));
+        json.setScale(Settings.renderScale * 0.60f);
+        SkeletonData skeletonData = json.readSkeletonData(Gdx.files.internal("images/monsters/theForest/transient/skeleton.json"));
         this.skeleton = new Skeleton(skeletonData);
         this.skeleton.setColor(Color.WHITE);
         this.stateData = new AnimationStateData(skeletonData);
         this.state = new AnimationState(this.stateData);
-        AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
+        AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle", true);
         e.setTime(e.getEndTime() * MathUtils.random());
         //////
 
