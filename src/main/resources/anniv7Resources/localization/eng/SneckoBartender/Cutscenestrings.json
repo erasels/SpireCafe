@@ -1,0 +1,24 @@
+{
+  "${ModID}:SneckoBartenderCutscene": {
+    "NAME": "Snecko Bartender Cutscene",
+    "BLOCKING_TEXTS": [
+      "\"You must be Confused, I have nothing left to offer you.\"",
+      "\"You are Confused, leave.\"",
+      "*Glares Perplexingly*"
+    ],
+    "DESCRIPTIONS": [
+      "\"Greetings! Would you like to try some snacks?\"",
+      "\"All food served here are made by my sister Gake, with love, using our family recipes!\"",
+      "\"This Salad is made using my mums recipe, the secret ingredient is small mies.\"",
+      "\"My dads Gummy Candy, great choice! He used to mix in some flice for extra protein you know.\"",
+      "\"Have a nice day!\""
+    ],
+    "OPTIONS": [
+      "I prefer my sanity.",
+      "[Snake Salad] Heal #b%s-%s HP and Snecko increases the cost of a card.",
+      "[Snake Salad] Requires: Card with cost less than 3.",
+      "[Gecko Gummy] Lose #b%s-%s Gold and Snecko decreases the cost of a card.",
+      "[Gecko Gummy] Requires: #b%s Gold and card with cost more than 1."
+    ]
+  }
+}
