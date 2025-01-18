@@ -1,0 +1,10 @@
+{
+  "${ModID}:SneckoBartender": {
+    "NAMES": [
+      "Snecko"
+    ],
+    "TEXT": [
+      "Sneckos Snack-O's"
+    ]
+  }
+}

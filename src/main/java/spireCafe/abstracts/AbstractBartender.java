@@ -10,8 +10,7 @@ public abstract class AbstractBartender extends AbstractNPC {
     // Flags to track if options have been used
     public boolean healUsed = false;
     public boolean secondUsed = false;
-    public boolean inSecondAction = false;
-    public boolean inHealAction = false;
+    protected boolean inSecondAction = false, inHealAction = false;
 
     public AbstractBartender(float animationX, float animationY, float hb_w, float hb_h) {
         super(animationX, animationY, hb_w, hb_h);
