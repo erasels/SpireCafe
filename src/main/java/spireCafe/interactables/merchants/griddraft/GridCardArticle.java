@@ -1,13 +1,9 @@
 package spireCafe.interactables.merchants.griddraft;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
-import basemod.ReflectionHacks;
 import spireCafe.abstracts.AbstractMerchant;
 import spireCafe.interactables.merchants.CardArticle;
 
@@ -50,6 +46,20 @@ public class GridCardArticle extends CardArticle {
 
     @Override
     public void renderPrice(SpriteBatch sb) {
+    }
+
+    public AbstractCard getCard() {
+        return this.card;
+    }
+
+    @Override
+    public int getModifiedPrice() {
+        return 0; // Cost is handled by buttons
+    }
+
+    @Override
+    public void onClick() {
+        // Purchase handled by buttons
     }
     
 }
