@@ -88,7 +88,7 @@ public class BartenderCutscene extends AbstractCutscene {
         addNoThanksOption();
     }
 
-    private void addHealOption() {
+    protected void addHealOption() {
         String healText = bartender.getHealOptionDescription();
         this.dialog.addDialogOption(healText, !bartender.getHealOptionCondition()).setOptionResult((i) -> {
             bartender.inHealAction = true;
@@ -108,7 +108,7 @@ public class BartenderCutscene extends AbstractCutscene {
         });
     }
 
-    protected void addNoThanksOption() {
+    private void addNoThanksOption() {
         String noThanks = bartender.getNoThanksDescription();
         this.dialog.addDialogOption(noThanks).setOptionResult((i) -> {
             // If all gameplay-affecting options are done, we consider the transaction complete.
