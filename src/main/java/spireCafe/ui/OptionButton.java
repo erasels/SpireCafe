@@ -212,7 +212,7 @@ public class OptionButton {
         float textWidth = FontHelper.getSmartWidth(FontHelper.largeDialogOptionFont, this.msg, (float)Settings.WIDTH, 0.0F);
         float textX = Interpolation.linear.apply(this.x + 445 * Settings.xScale, this.x, textWidth / maxTextLength);
         if (textWidth > maxTextLength) {
-            FontHelper.renderSmartText(sb, FontHelper.smallDialogOptionFont, this.msg, textX + TEXT_ADJUST_X, this.y + TEXT_ADJUST_Y, (float)Settings.WIDTH, 0.0F, this.textColor);
+            FontHelper.renderSmartText(sb, FontHelper.smallDialogOptionFont, this.msg, textX + TEXT_ADJUST_X*0.8f, this.y + TEXT_ADJUST_Y, (float)Settings.WIDTH, 0.0F, this.textColor);
         } else {
             FontHelper.renderSmartText(sb, FontHelper.largeDialogOptionFont, this.msg, textX + TEXT_ADJUST_X, this.y + TEXT_ADJUST_Y, (float)Settings.WIDTH, 0.0F, this.textColor);
         }

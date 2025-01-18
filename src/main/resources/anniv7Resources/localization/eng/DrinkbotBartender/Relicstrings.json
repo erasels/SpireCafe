@@ -1,0 +1,10 @@
+{
+    "${ModID}:DrinkInserterRelic": {
+        "NAME": "Subcutaneous Intoxicator",
+        "FLAVOR": "Get boozy without the effort!",
+        "DESCRIPTIONS": [
+          "After #b5 turns, heal for #b25% of your missing HP.",
+          "HP gained: %s"
+        ]
+      }
+}

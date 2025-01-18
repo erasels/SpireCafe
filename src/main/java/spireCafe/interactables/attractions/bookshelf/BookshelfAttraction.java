@@ -74,7 +74,8 @@ public class BookshelfAttraction extends AbstractAttraction {
                 }
             }
 
-            for (int i = 0; i < Math.min(NUM_PAGES, pages.size()); i++) {
+            int intialPagesSize = pages.size();
+            for (int i = 0; i < Math.min(NUM_PAGES, intialPagesSize); i++) {
                 AbstractPage p = pages.getRandom(AbstractDungeon.miscRng, true);
                 selectedPages.add(p);
             }

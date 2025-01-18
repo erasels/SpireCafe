@@ -220,14 +220,16 @@ public class MissingnoUtil {
 
         if(time > 60f && !hasNameChanged) {
             hasNameChanged = true;
-            if(isGlitched() && Wiz.isInCombat() && miscRng.randomBoolean(.33f)) {
+            if(isGlitched() && miscRng.randomBoolean(.33f)) {
                 AbstractDungeon.topPanel.setPlayerName();
             }
         }
 
         if(time > 80f && !hasShuffledRelics) {
-            MissingnoUtil.shuffleRelics();
             hasShuffledRelics = true;
+            if(isGlitched()) {
+                MissingnoUtil.shuffleRelics();
+            }
         }
 
         if(time > 20f && !hasPlayedSfx) {

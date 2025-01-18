@@ -1,0 +1,10 @@
+{
+  "${ModID}:RestingSlayerPatron": {
+    "NAMES": [
+      "Resting {0}",
+      "The "
+    ],
+    "TEXT": [
+    ]
+  }
+}
