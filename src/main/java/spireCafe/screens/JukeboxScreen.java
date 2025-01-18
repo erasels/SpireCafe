@@ -8,8 +8,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.evacipated.cardcrawl.modthespire.lib.ConfigUtils;
-import com.evacipated.cardcrawl.modthespire.lib.SpireEnum;
+import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
@@ -18,6 +17,8 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
+import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
+import com.megacrit.cardcrawl.rooms.RestRoom;
 import com.megacrit.cardcrawl.ui.buttons.LargeDialogOptionButton;
 import spireCafe.Anniv7Mod;
 import spireCafe.interactables.attractions.jukebox.JukeboxRelic;
@@ -169,22 +170,29 @@ public class JukeboxScreen extends CustomScreen {
 
         File customFolder = new File(CUSTOM_MUSIC_FOLDER);
         if (!customFolder.exists()) {
-            createCustomMusicFolder();
+            LOGGER.info("Custom music folder not found: " + CUSTOM_MUSIC_FOLDER);
+            boolean created = customFolder.mkdirs(); // Attempt to create the folder
+            if (created) {
+                LOGGER.info("Custom music folder created: " + CUSTOM_MUSIC_FOLDER);
+            } else {
+                LOGGER.severe("Failed to create custom music folder.");
+                return;
+            }
         }
 
         // Load files from the custom folder
         File[] files = customFolder.listFiles();
         if (files != null) {
-             LOGGER.info("Scanning custom music folder for audio files...");
+            LOGGER.info("Scanning custom music folder for audio files...");
             for (File file : files) {
                 if (file.isFile() && isValidAudioFile(file.getName())) {
                     String trimmedName = file.getName()
                             .replaceAll("\\.(ogg|mp3|wav)$", "") // Remove extensions
                             .replace("_", " ");                 // Replace underscores with spaces
                     customTracks.add(trimmedName);
-                     LOGGER.info("Custom track added: " + trimmedName);
+                    LOGGER.info("Custom track added: " + trimmedName);
                 } else {
-                     LOGGER.warning("Invalid or unsupported file skipped: " + file.getName());
+                    LOGGER.warning("Invalid or unsupported file skipped: " + file.getName());
                 }
             }
         }
@@ -204,9 +212,9 @@ public class JukeboxScreen extends CustomScreen {
         allTracks.addAll(customTracks);     // Add custom tracks
         allTracks.addAll(predefinedTracks); // Add predefined tracks
 
-         LOGGER.info("Custom tracks: " + customTracks);
-         LOGGER.info("Predefined tracks: " + predefinedTracks);
-         LOGGER.info("All tracks combined: " + allTracks);
+        LOGGER.info("Custom tracks: " + customTracks);
+        LOGGER.info("Predefined tracks: " + predefinedTracks);
+        LOGGER.info("All tracks combined: " + allTracks);
     }
 
     private String formatTrackName(String trackName) {
@@ -233,7 +241,7 @@ public class JukeboxScreen extends CustomScreen {
         int startIndex = currentPage * (BUTTONS_PER_PAGE * 2); // Two columns per page
         int endIndex = Math.min(startIndex + (BUTTONS_PER_PAGE * 2), allTracks.size());
 
-         LOGGER.info("Creating buttons for page: " + currentPage + " (Tracks " + startIndex + " to " + (endIndex - 1) + ")");
+        LOGGER.info("Creating buttons for page: " + currentPage + " (Tracks " + startIndex + " to " + (endIndex - 1) + ")");
 
 
         for (int i = startIndex; i < endIndex; i++) {
@@ -355,10 +363,10 @@ public class JukeboxScreen extends CustomScreen {
                     String selectedTrack = allTracks.get(button.slot);
                     if (queuedTracks.contains(selectedTrack)) {
                         queuedTracks.remove(selectedTrack);
-                         LOGGER.info("Track removed from queue: " + selectedTrack);
+                        LOGGER.info("Track removed from queue: " + selectedTrack);
                     } else {
                         queuedTracks.add(selectedTrack);
-                         LOGGER.info("Track added to queue: " + selectedTrack);
+                        LOGGER.info("Track added to queue: " + selectedTrack);
                     }
                 } else {
                     handleButtonClick(button);
@@ -439,7 +447,7 @@ public class JukeboxScreen extends CustomScreen {
         refreshHitbox.move(refreshButtonX + sideButtonWidth / 2f, refreshButtonY + sideButtonHeight / 2f);
         refreshHitbox.update();
         if (refreshHitbox.hovered && InputHelper.justClickedLeft) {
-             LOGGER.info("Refresh button clicked!");
+            LOGGER.info("Refresh button clicked!");
             CardCrawlGame.sound.play("UI_CLICK_1");
             refreshTrackList();
         }
@@ -450,11 +458,11 @@ public class JukeboxScreen extends CustomScreen {
         loopHitbox.move(loopButtonX + sideButtonWidth / 2f, loopButtonY + sideButtonHeight / 2f);
         loopHitbox.update();
         if (loopHitbox.hovered && InputHelper.justClickedLeft) {
-             LOGGER.info("Loop button clicked!");
+            LOGGER.info("Loop button clicked!");
             CardCrawlGame.sound.play("UI_CLICK_1");
             loopEnabled = !loopEnabled;
             updateLoopingState();
-             LOGGER.info("Looping is now: " + (loopEnabled ? "Enabled" : "Disabled"));
+            LOGGER.info("Looping is now: " + (loopEnabled ? "Enabled" : "Disabled"));
         }
         //Skip Button
         float buttonX = 1250f * Settings.scale;
@@ -464,7 +472,7 @@ public class JukeboxScreen extends CustomScreen {
         skipButtonHitbox.update();
 
         if (skipButtonHitbox.hovered && InputHelper.justClickedLeft) {
-             LOGGER.info("Skip button clicked!");
+            LOGGER.info("Skip button clicked!");
             stopCurrentMusic();
             if (!queuedTracks.isEmpty()) {
                 playQueuedTracks(); // Play the next queued track
@@ -515,11 +523,11 @@ public class JukeboxScreen extends CustomScreen {
         loopHitbox.render(sb);
     }
     private void refreshTrackList() {
-         LOGGER.info("Refreshing track list...");
+        LOGGER.info("Refreshing track list...");
         loadCustomTracks(); // Reload tracks from the custom folder
         combineTracks();    // Combine predefined and custom tracks
         createButtons();    // Refresh the button list
-         LOGGER.info("Track list refreshed!");
+        LOGGER.info("Track list refreshed!");
     }
 
     //U&R Insert Button and slot
@@ -544,7 +552,7 @@ public class JukeboxScreen extends CustomScreen {
 
         // Shared hover and click logic
         if ((insertHitbox.hovered || insertSlotHitbox.hovered) && InputHelper.justClickedLeft) {
-             LOGGER.info("Insert buttons clicked!");
+            LOGGER.info("Insert buttons clicked!");
             CardCrawlGame.sound.play("UI_CLICK_1");
             openFileExplorer(CUSTOM_MUSIC_FOLDER);
         }
@@ -583,14 +591,14 @@ public class JukeboxScreen extends CustomScreen {
                 if (file.exists()) {
                     Desktop.getDesktop().open(file);
                 } else {
-                     LOGGER.info("Folder does not exist: " + folderPath);
+                    LOGGER.info("Folder does not exist: " + folderPath);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                 LOGGER.severe("Failed to open folder: " + folderPath);
+                LOGGER.severe("Failed to open folder: " + folderPath);
             }
         } else {
-             LOGGER.severe("Desktop is not supported on this platform.");
+            LOGGER.severe("Desktop is not supported on this platform.");
         }
     }
 
@@ -606,7 +614,7 @@ public class JukeboxScreen extends CustomScreen {
         coinSlotHitbox.update();
 
         if (coinSlotHitbox.hovered && InputHelper.justClickedLeft && !isCoinSlotClicked) {
-             LOGGER.info("CoinSlot clicked!");
+            LOGGER.info("CoinSlot clicked!");
             if (AbstractDungeon.player.gold >= 5) {
                 AbstractDungeon.player.loseGold(5);
                 CardCrawlGame.sound.play("SHOP_PURCHASE", 0.1F); // Play the purchase sound
@@ -666,7 +674,7 @@ public class JukeboxScreen extends CustomScreen {
             currentPage++;
             createButtons(); // Refresh buttons for the new page
             updateButtonHighlights(); // Ensure the highlight is updated for the new page
-             LOGGER.info("Navigating to Next Page: " + currentPage);
+            LOGGER.info("Navigating to Next Page: " + currentPage);
         }
 
         float prevX = 608f * Settings.scale;
@@ -678,7 +686,7 @@ public class JukeboxScreen extends CustomScreen {
             currentPage--;
             createButtons(); // Refresh buttons for the previous page
             updateButtonHighlights(); // Ensure the highlight is updated for the new page
-             LOGGER.info("Navigating to Previous Page: " + currentPage);
+            LOGGER.info("Navigating to Previous Page: " + currentPage);
         }
     }
 
@@ -726,10 +734,10 @@ public class JukeboxScreen extends CustomScreen {
                 // Change button to Confirm mode
                 isQueueConfirmState = true;
                 queuedTracks.clear();
-                 LOGGER.info("Queue selection mode activated.");
+                LOGGER.info("Queue selection mode activated.");
             } else {
                 // Finalize the queue
-                 LOGGER.info("Queue confirmed: " + queuedTracks);
+                LOGGER.info("Queue confirmed: " + queuedTracks);
                 isQueueConfirmState = false;
                 playQueuedTracks();
             }
@@ -759,7 +767,7 @@ public class JukeboxScreen extends CustomScreen {
 
         if (clearQueueHitbox.hovered && InputHelper.justClickedLeft) {
             queuedTracks.clear(); // Clear all tracks from the queue
-             LOGGER.info( TEXT[8]);
+            LOGGER.info( TEXT[8]);
         }
     }
     private void renderClearQueueButton(SpriteBatch sb) {
@@ -879,39 +887,6 @@ public class JukeboxScreen extends CustomScreen {
             e.printStackTrace();
         }
     }
-    private static void createCustomMusicFolder(){
-        File customFolder = new File(CUSTOM_MUSIC_FOLDER);
-        if (!customFolder.exists()) {
-            LOGGER.info("Custom music folder not found: " + CUSTOM_MUSIC_FOLDER);
-            boolean created = customFolder.mkdirs(); // Attempt to create the folder
-            if (created) {
-                LOGGER.info("Custom music folder created: " + CUSTOM_MUSIC_FOLDER);
-            } else {
-                LOGGER.severe("Failed to create custom music folder.");
-            }
-        }
-    }
-
-    public void playCafeTheme() {
-        File customFolder = new File(CUSTOM_MUSIC_FOLDER);
-        if (!customFolder.exists()) {
-            createCustomMusicFolder();
-        }
-        File cafeThemeFile = new File(customFolder, "Cafe_Theme.mp3");
-        if (!cafeThemeFile.exists()) {
-            LOGGER.info("Cafe_Theme.mp3 not found in custom folder. Adding default file...");
-            copyDefaultCafeTheme(cafeThemeFile);
-        } else {
-            LOGGER.info("Cafe_Theme.mp3 already exists in custom folder.");
-        }
-        String originalFileName = getOriginalFileName("Cafe Theme");
-        if (originalFileName != null) {
-            String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalFileName;
-            playTempBgm(trackPath);
-        } else {
-            LOGGER.severe("Failed to find Cafe Theme");
-        }
-    }
 
     public static void stopCurrentMusic() {
         CardCrawlGame.music.silenceTempBgmInstantly();
@@ -1008,13 +983,13 @@ public class JukeboxScreen extends CustomScreen {
     private void updateLoopingState() {
         if (nowPlayingSong != null) {
             nowPlayingSong.setLooping(loopEnabled); // Update looping based on the toggle
-             LOGGER.info("Looping set to: " + loopEnabled);
+            LOGGER.info("Looping set to: " + loopEnabled);
         }
     }
 
     private void playRandomTrack() {
         if (allTracks.isEmpty()) {
-             LOGGER.info("No tracks available to play.");
+            LOGGER.info("No tracks available to play.");
             return;
         }
 
@@ -1033,7 +1008,7 @@ public class JukeboxScreen extends CustomScreen {
 
         if (predefinedTracks.contains(nextTrack)) {
             String trackFileName = getTrackFileName(nextTrack);
-             LOGGER.info("Playing predefined track: " + trackFileName);
+            LOGGER.info("Playing predefined track: " + trackFileName);
             stopCurrentMusic();
             CardCrawlGame.music.playTempBgmInstantly(trackFileName, loopEnabled);
             isPlaying = true;
@@ -1043,7 +1018,7 @@ public class JukeboxScreen extends CustomScreen {
                 String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalFileName;
                 playTrack(trackPath);
             } else {
-                 LOGGER.severe("Failed to find file for track: " + nextTrack);
+                LOGGER.severe("Failed to find file for track: " + nextTrack);
             }
         }
 
@@ -1061,7 +1036,7 @@ public class JukeboxScreen extends CustomScreen {
 
     private void playQueuedTracks() {
         if (queuedTracks.isEmpty()) {
-             LOGGER.info(TEXT[3]); // "Queue is empty. Nothing to play."
+            LOGGER.info(TEXT[3]); // "Queue is empty. Nothing to play."
             return;
         }
 
@@ -1072,7 +1047,7 @@ public class JukeboxScreen extends CustomScreen {
 
         if (predefinedTracks.contains(nextTrack)) {
             String trackFileName = getTrackFileName(nextTrack);
-             LOGGER.info("Playing queued predefined track: " + trackFileName);
+            LOGGER.info("Playing queued predefined track: " + trackFileName);
             stopCurrentMusic();
             CardCrawlGame.music.playTempBgmInstantly(trackFileName, loopEnabled); // Looping depends on toggle
             isPlaying = true;
@@ -1082,7 +1057,7 @@ public class JukeboxScreen extends CustomScreen {
                 String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalFileName;
                 playTrack(trackPath);
             } else {
-                 LOGGER.severe("Failed to find file for track: " + nextTrack);
+                LOGGER.severe("Failed to find file for track: " + nextTrack);
             }
         }
 
