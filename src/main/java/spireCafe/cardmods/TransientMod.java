@@ -26,6 +26,7 @@ public class TransientMod extends AbstractCardModifier {
 
     public static final int BASE_TRANSIENCE = 5;
     public int transience;
+    public boolean costReduced = false;
 
     public TransientMod(){
         this(BASE_TRANSIENCE);
@@ -74,23 +75,16 @@ public class TransientMod extends AbstractCardModifier {
     }
 
     @Override
-    public void onDrawn(AbstractCard card) {
-        if (card.costForTurn > 1) {
-            card.costForTurn -= 1;
-            card.isCostModifiedForTurn = true;
-        }
-    }
-
-    @Override
     public String identifier(AbstractCard card) {
         return ID;
     }
 
     @Override
     public void onInitialApplication(AbstractCard card) {
-        if(card.cost >= 2){
+        if(card.rarity != AbstractCard.CardRarity.BASIC && card.cost >= 1){
             card.cost -= 1;
             card.costForTurn = card.cost;
+            costReduced = true;
         }
     }
 
@@ -102,7 +96,17 @@ public class TransientMod extends AbstractCardModifier {
     @Override
     public List<TooltipInfo> additionalTooltips(AbstractCard card) {
         List<TooltipInfo> tooltips = new ArrayList<>();
-        tooltips.add(new TooltipInfo(TEXT[1], TEXT[2]));
+        String desc = TEXT[2];
+        if(costReduced) desc += TEXT[3];
+        tooltips.add(new TooltipInfo(TEXT[1], desc));
         return tooltips;
+    }
+
+    @Override
+    public void onUpdate(AbstractCard card) {
+        if(!card.fadingOut){
+            float ratio = (float)transience/BASE_TRANSIENCE;
+            card.transparency = 0.3f + 0.5f*ratio;
+        }
     }
 }

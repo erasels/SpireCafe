@@ -2,17 +2,26 @@
   "${ModID}:TheTransientCutscene": {
     "NAME": "The Transient Cutscene",
     "BLOCKING_TEXTS": [
-      "Now there are two meat balls."
+      "\"That was hella fun, bro.\"",
+      "..."
     ],
     "DESCRIPTIONS": [
-      "A tiny red louse is eating a plate of spaghetti and meatball.",
-      "The louse is intensely focused on nibbling on the dish's singular meatball, NL which is almost twice its size. NL NL #rScare #rit?",
-      "\" @EEEEPP!@ \" NL NL The louse lets out a tiny chirp, then curls up into a ball.",
-      "The louse continues to #y~happily~ #y~nibble~ away at the meatball."
+      "\"Yea dude, I had to shrink myself down to get into the cafe\" NL NL \"So what? I don't care. I love not caring, bro.\"",
+      "\"You seem like the type of person that cares too much, bro.\" NL NL \"Sit down with me, I'll show you how to chillax.\"",
+      "\"Okay bro, click to start chilling.\" NL NL \"When you are done with chilling, you can click again.\"",
+      "",
+      "You feel your body become lighter, as if a piece of your burdened self has #bfaded #baway. NL NL You look down at your equipment. It seems... #btransparent?",
+      "\"Sick bro, that was some great work.\" NL NL \"With some more practice, you'll be one of us in no time.\"",
+      "Wait, where did the Transient go?",
+      "\"Sure dude, you can come back any time to chill.\" NL NL \"...or don't, I don't care.\""
     ],
     "OPTIONS": [
-      "Scare the louse.",
-      "Leave the louse alone."
+      "[Chill] #gGive #gA #gCard #gTransient. #rLose #r%d #rMax #rHP.",
+      "[Leave] Nah, bro.",
+      "Transient",
+      "Transient cards #yExhaust and are permanently removed after being played #b5 times. NL If a Transient card is not a starter card, its base cost is reduced by #b1.",
+      "Give a card Transient (Exhaust, removed after 5 plays, costs 1 less if non-starter).",
+      "[Fade]"
     ]
   }
 }

@@ -3,7 +3,8 @@
     "TEXT": [
       "%s NL *Transient %d.",
       "Transient",
-      "Costs #b1 less, minimum #b1. NL When played, decrease Transient by #b1 permanently and Exhaust. If Transient becomes #b0, remove this card permanently."
+      "When played, Exhaust and permanently decrease Transient by #b1. When Transient becomes #b0, remove this card permanently.",
+      " NL Base cost reduced by #b1."
     ]
   }
 }
