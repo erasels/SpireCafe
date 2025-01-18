@@ -108,7 +108,7 @@ public class BartenderCutscene extends AbstractCutscene {
         });
     }
 
-    private void addNoThanksOption() {
+    protected void addNoThanksOption() {
         String noThanks = bartender.getNoThanksDescription();
         this.dialog.addDialogOption(noThanks).setOptionResult((i) -> {
             // If all gameplay-affecting options are done, we consider the transaction complete.
