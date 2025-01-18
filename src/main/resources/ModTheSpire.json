@@ -17,7 +17,8 @@
     "Dayvig",
     "Enbeon",
     "Lua Viper",
-    "Ninja Puppy"
+    "Ninja Puppy",
+    "DJM"
   ],
   "description": "${project.description}",
   "version": "${project.version}",
