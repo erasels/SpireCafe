@@ -48,9 +48,17 @@ public class CafeRoom extends AbstractEvent {
     private Texture barBackgroundImage, barImg;
     private DecorationSystem decoSystem;
 
+    private int musicDelay;
+    private boolean startedMusic;
+
     public boolean darkBg;
 
     public CafeRoom() {
+        CardCrawlGame.music.silenceTempBgmInstantly();
+        CardCrawlGame.music.silenceBGM();
+        musicDelay = 1000;
+        startedMusic=false;
+
         this.body = "";
         AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.EVENT;
         this.hasDialog = true;
@@ -181,13 +189,21 @@ public class CafeRoom extends AbstractEvent {
         Anniv7Mod.currentRunSeenInteractables.add(merchant.id);
         decoSystem = new DecorationSystem();
 
-        JukeboxScreen jukeboxScreen = (JukeboxScreen) BaseMod.getCustomScreen(JukeboxScreen.ScreenEnum.JUKEBOX_SCREEN);
-        jukeboxScreen.playCafeTheme();
     }
 
     @Override
     public void update() {
         super.update();
+        if(!startedMusic){
+            if(musicDelay<=0){
+                JukeboxScreen jukeboxScreen = (JukeboxScreen) BaseMod.getCustomScreen(JukeboxScreen.ScreenEnum.JUKEBOX_SCREEN);
+                jukeboxScreen.playCafeTheme();
+                startedMusic=true;
+            } else {
+                musicDelay--;
+            }
+        }
+
         if (!RoomEventDialog.waitForInput) {
             this.buttonEffect(this.roomEventText.getSelectedOption());
         }
