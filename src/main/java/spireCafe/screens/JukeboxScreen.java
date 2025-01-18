@@ -162,14 +162,7 @@ public class JukeboxScreen extends CustomScreen {
 
         File customFolder = new File(CUSTOM_MUSIC_FOLDER);
         if (!customFolder.exists()) {
-             LOGGER.info("Custom music folder not found: " + CUSTOM_MUSIC_FOLDER);
-            boolean created = customFolder.mkdirs(); // Attempt to create the folder
-            if (created) {
-                 LOGGER.info("Custom music folder created: " + CUSTOM_MUSIC_FOLDER);
-            } else {
-                LOGGER.error("Failed to create custom music folder.");
-                return;
-            }
+            createCustomMusicFolder();
         }
 
         // Ensure Cafe_Theme.mp3 is present
@@ -863,6 +856,39 @@ public class JukeboxScreen extends CustomScreen {
         }
     }
 
+    private static void createCustomMusicFolder(){
+        File customFolder = new File(CUSTOM_MUSIC_FOLDER);
+        if (!customFolder.exists()) {
+            LOGGER.info("Custom music folder not found: " + CUSTOM_MUSIC_FOLDER);
+            boolean created = customFolder.mkdirs(); // Attempt to create the folder
+            if (created) {
+                LOGGER.info("Custom music folder created: " + CUSTOM_MUSIC_FOLDER);
+            } else {
+                LOGGER.error("Failed to create custom music folder.");
+            }
+        }
+    }
+
+    public void playCafeTheme() {
+        File customFolder = new File(CUSTOM_MUSIC_FOLDER);
+        if (!customFolder.exists()) {
+            createCustomMusicFolder();
+        }
+        File cafeThemeFile = new File(customFolder, "Cafe_Theme.mp3");
+        if (!cafeThemeFile.exists()) {
+            LOGGER.info("Cafe_Theme.mp3 not found in custom folder. Adding default file...");
+            copyDefaultCafeTheme(cafeThemeFile);
+        } else {
+            LOGGER.info("Cafe_Theme.mp3 already exists in custom folder.");
+        }
+        String originalFileName = getOriginalFileName("Cafe Theme");
+        if (originalFileName != null) {
+            String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalFileName;
+            playTempBgm(trackPath);
+        } else {
+            LOGGER.error("Failed to find Cafe Theme");
+        }
+    }
 
     private String getTrackFileName(String key) {
         switch (key) {

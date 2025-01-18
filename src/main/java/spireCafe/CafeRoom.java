@@ -1,5 +1,7 @@
 package spireCafe;
 
+import basemod.BaseMod;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,6 +16,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import spireCafe.abstracts.*;
 import spireCafe.interactables.AuthorsNotSetException;
 import spireCafe.interactables.NameNotSetException;
+import spireCafe.screens.JukeboxScreen;
 import spireCafe.util.TexLoader;
 import spireCafe.util.decorationSystem.DecorationSystem;
 
@@ -46,9 +49,17 @@ public class CafeRoom extends AbstractEvent {
     private Texture barBackgroundImage, barImg;
     private DecorationSystem decoSystem;
 
+    private float musicDelay;
+    private boolean startedMusic;
+
     public boolean darkBg;
 
     public CafeRoom() {
+        CardCrawlGame.music.silenceTempBgmInstantly();
+        CardCrawlGame.music.silenceBGM();
+        musicDelay = 6f;
+        startedMusic=false;
+
         this.body = "";
         AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.EVENT;
         this.hasDialog = true;
@@ -178,11 +189,22 @@ public class CafeRoom extends AbstractEvent {
         merchant.initialize();
         Anniv7Mod.currentRunSeenInteractables.add(merchant.id);
         decoSystem = new DecorationSystem();
+
     }
 
     @Override
     public void update() {
         super.update();
+        if(!startedMusic){
+            if(musicDelay<=0){
+                JukeboxScreen jukeboxScreen = (JukeboxScreen) BaseMod.getCustomScreen(JukeboxScreen.ScreenEnum.JUKEBOX_SCREEN);
+                jukeboxScreen.playCafeTheme();
+                startedMusic=true;
+            } else {
+                this.musicDelay -= Gdx.graphics.getDeltaTime();
+            }
+        }
+
         if (!RoomEventDialog.waitForInput) {
             this.buttonEffect(this.roomEventText.getSelectedOption());
         }

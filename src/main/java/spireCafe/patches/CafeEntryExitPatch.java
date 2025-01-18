@@ -178,7 +178,6 @@ public class CafeEntryExitPatch {
         AbstractDungeon.fadeOut();
         setFadeTimer();
         AbstractDungeon.waitingOnFadeOut = true;
-
     }
 
     private static void healBeforeCafe() {
