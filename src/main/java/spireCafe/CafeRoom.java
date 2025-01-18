@@ -110,15 +110,22 @@ public class CafeRoom extends AbstractEvent {
         AbstractDungeon.player.drawX = -9000.0f;
         AbstractDungeon.player.drawY = -9000.0f;
 
-        // 1 Bartender, 1 Merchant, ~3 total patrons and attractions (at least one of each)
-        // To prevent running out of interactables on endless, if any of the possible lists are empty or the amount of
-        // patrons/attractions isn't enough, we should clear  Anniv7Mod.currentRunSeenInteractables and try again
-        // (But doing that needs to wait until we have enough of everything for a single run to not see duplicates)
+        // 1 Bartender, 1 Merchant, 1 attraction, 3 patrons
         com.megacrit.cardcrawl.random.Random rng = AbstractDungeon.miscRng;
         List<Class<? extends AbstractCafeInteractable>> possibleBartenders = getPossibilities(AbstractBartender.class);
         List<Class<? extends AbstractCafeInteractable>> possibleMerchants = getPossibilities(AbstractMerchant.class);
         List<Class<? extends AbstractCafeInteractable>> possiblePatrons = getPossibilities(AbstractPatron.class);
         List<Class<? extends AbstractCafeInteractable>> possibleAttractions = getPossibilities(AbstractAttraction.class);
+
+        // To prevent running out of interactables on endless, if any of the possible lists are empty or the amount of
+        // patrons/attractions isn't enough, clear the list of seen interactable and try again
+        if (possibleBartenders.isEmpty() || possibleMerchants.isEmpty() || possiblePatrons.size() < NUM_PATRONS || possibleAttractions.isEmpty()) {
+            Anniv7Mod.currentRunSeenInteractables.clear();
+            possibleBartenders = getPossibilities(AbstractBartender.class);
+            possibleMerchants = getPossibilities(AbstractMerchant.class);
+            possiblePatrons = getPossibilities(AbstractPatron.class);
+            possibleAttractions = getPossibilities(AbstractAttraction.class);
+        }
 
         Class<? extends AbstractCafeInteractable> bartenderClz;
         if (devCommandBartender != null) {
