@@ -2,7 +2,6 @@ package spireCafe.screens;
 
 import basemod.abstracts.CustomScreen;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
@@ -12,30 +11,25 @@ import com.evacipated.cardcrawl.modthespire.lib.ConfigUtils;
 import com.evacipated.cardcrawl.modthespire.lib.SpireEnum;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.Hitbox;
-import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.ui.buttons.LargeDialogOptionButton;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import spireCafe.Anniv7Mod;
 import spireCafe.interactables.attractions.jukebox.JukeboxRelic;
-import spireCafe.interactables.patrons.missingno.MissingnoRelic;
 import spireCafe.util.TexLoader;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Random;
-import java.util.function.Consumer;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class JukeboxScreen extends CustomScreen {
     private static final String CUSTOM_MUSIC_FOLDER = ConfigUtils.CONFIG_DIR + File.separator + "anniv7/cafe_jukebox";
@@ -85,7 +79,7 @@ public class JukeboxScreen extends CustomScreen {
     private static final String ID = Anniv7Mod.makeID(JukeboxScreen.class.getSimpleName());
     private static final UIStrings UIStrings = CardCrawlGame.languagePack.getUIString(ID);
     private static final String[] TEXT = UIStrings.TEXT;
-    private static final Logger LOGGER = Logger.getLogger(JukeboxScreen.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(JukeboxScreen.class.getName());
 
     public JukeboxScreen() {
 
@@ -192,7 +186,7 @@ public class JukeboxScreen extends CustomScreen {
                     customTracks.add(trimmedName);
                      LOGGER.info("Custom track added: " + trimmedName);
                 } else {
-                     LOGGER.warning("Invalid or unsupported file skipped: " + file.getName());
+                     LOGGER.warn("Invalid or unsupported file skipped: " + file.getName());
                 }
             }
         }
@@ -210,7 +204,7 @@ public class JukeboxScreen extends CustomScreen {
                  LOGGER.info("Default Cafe_Theme.mp3 not found in resources.");
             }
         } catch (Exception e) {
-             LOGGER.severe("Failed to copy Cafe_Theme.mp3 to custom folder.");
+             LOGGER.error("Failed to copy Cafe_Theme.mp3 to custom folder.");
             e.printStackTrace();
         }
     }
@@ -612,10 +606,10 @@ public class JukeboxScreen extends CustomScreen {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                 LOGGER.severe("Failed to open folder: " + folderPath);
+                 LOGGER.error("Failed to open folder: " + folderPath);
             }
         } else {
-             LOGGER.severe("Desktop is not supported on this platform.");
+             LOGGER.error("Desktop is not supported on this platform.");
         }
     }
 
@@ -853,45 +847,12 @@ public class JukeboxScreen extends CustomScreen {
                 // Play custom track
                 String originalTrackFileName = getOriginalFileName(selectedTrack);
                 if (originalTrackFileName == null) {
-                     LOGGER.warning("File not found for track: " + selectedTrack);
+                     LOGGER.warn("File not found for track: " + selectedTrack);
                     return;
                 }
                 String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalTrackFileName;
                 playTempBgm(trackPath);
             }
-        }
-    }
-    private static void createCustomMusicFolder(){
-        File customFolder = new File(CUSTOM_MUSIC_FOLDER);
-        if (!customFolder.exists()) {
-            LOGGER.info("Custom music folder not found: " + CUSTOM_MUSIC_FOLDER);
-            boolean created = customFolder.mkdirs(); // Attempt to create the folder
-            if (created) {
-                LOGGER.info("Custom music folder created: " + CUSTOM_MUSIC_FOLDER);
-            } else {
-                LOGGER.severe("Failed to create custom music folder.");
-            }
-        }
-    }
-
-    public void playCafeTheme() {
-        File customFolder = new File(CUSTOM_MUSIC_FOLDER);
-        if (!customFolder.exists()) {
-            createCustomMusicFolder();
-        }
-        File cafeThemeFile = new File(customFolder, "Cafe_Theme.mp3");
-        if (!cafeThemeFile.exists()) {
-            LOGGER.info("Cafe_Theme.mp3 not found in custom folder. Adding default file...");
-            copyDefaultCafeTheme(cafeThemeFile);
-        } else {
-            LOGGER.info("Cafe_Theme.mp3 already exists in custom folder.");
-        }
-        String originalFileName = getOriginalFileName("Cafe Theme");
-        if (originalFileName != null) {
-            String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalFileName;
-            playTempBgm(trackPath);
-        } else {
-            LOGGER.severe("Failed to find Cafe Theme");
         }
     }
 
@@ -982,7 +943,7 @@ public class JukeboxScreen extends CustomScreen {
             // Construct the correct file path
             File file = new File(trackName);
             if (!file.exists()) {
-                 LOGGER.warning("File not found: " + file.getAbsolutePath());
+                 LOGGER.warn("File not found: " + file.getAbsolutePath());
                 return;
             }
 
@@ -1002,7 +963,7 @@ public class JukeboxScreen extends CustomScreen {
             nowPlayingSong.play(); // Start playing the track
              LOGGER.info("Playing custom track: " + file.getAbsolutePath());
         } catch (Exception e) {
-             LOGGER.severe("Failed to play music: " + trackName);
+             LOGGER.error("Failed to play music: " + trackName);
             e.printStackTrace();
         }
     }
@@ -1054,7 +1015,7 @@ public class JukeboxScreen extends CustomScreen {
                 String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalFileName;
                 playTempBgm(trackPath);
             } else {
-                 LOGGER.severe("Failed to find file for track: " + nextTrack);
+                 LOGGER.error("Failed to find file for track: " + nextTrack);
             }
         }
 
@@ -1093,7 +1054,7 @@ public class JukeboxScreen extends CustomScreen {
                 String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalFileName;
                 playTempBgm(trackPath);
             } else {
-                 LOGGER.severe("Failed to find file for track: " + nextTrack);
+                 LOGGER.error("Failed to find file for track: " + nextTrack);
             }
         }
 

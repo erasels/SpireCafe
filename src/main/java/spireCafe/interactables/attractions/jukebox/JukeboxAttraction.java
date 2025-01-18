@@ -5,20 +5,21 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 
-import basemod.animations.SpriterAnimation;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractAttraction;
 
 public class JukeboxAttraction extends AbstractAttraction {
     public static final String ID = JukeboxAttraction.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
+    private static final String RESOURCE_PATH = Anniv7Mod.makeAttractionPath("jukebox/skeleton/");
 
     public JukeboxAttraction(float animationX, float animationY) {
-        super(animationX, animationY, 302, 285);
-        this.animation = new SpriterAnimation(
-                Anniv7Mod.makeAttractionPath("jukebox/JukeboxIdle.scml"));
+        super(animationX, animationY, 230, 245);
         authors = "Ninja Puppy";
         name = characterStrings.NAMES[0];
+
+        loadAnimation(RESOURCE_PATH + "skeleton.atlas", RESOURCE_PATH + "skeleton.json", 1.0F);
+        this.state.setAnimation(0, "idle", true);
     }
 
     @Override
