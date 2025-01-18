@@ -12,6 +12,7 @@ import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
+import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 
 import java.util.function.BiConsumer;
@@ -38,10 +39,11 @@ public class OptionButton {
     public int slot;
     private final AbstractCard cardToPreview;
     private final AbstractRelic relicToPreview;
+    private final AbstractPotion potionToPreview;
     public Dialog dialog;
     public BiConsumer<Dialog, Integer> optionResult;
 
-    public OptionButton(Dialog dialog, int slot, String msg, boolean isDisabled, AbstractCard previewCard, AbstractRelic previewRelic) {
+    public OptionButton(Dialog dialog, int slot, String msg, boolean isDisabled, AbstractCard previewCard, AbstractRelic previewRelic, AbstractPotion previewPotion) {
         this.dialog = dialog;
         this.textColor = new Color(0.0F, 0.0F, 0.0F, 0.0F);
         this.boxColor = new Color(0.0F, 0.0F, 0.0F, 0.0F);
@@ -56,6 +58,7 @@ public class OptionButton {
         this.isDisabled = isDisabled;
         this.cardToPreview = previewCard;
         this.relicToPreview = previewRelic;
+        this.potionToPreview = previewPotion;
         if (isDisabled) {
             this.msg = this.stripColor(msg);
         } else {
@@ -66,23 +69,27 @@ public class OptionButton {
     }
 
     public OptionButton(Dialog dialog, int slot, String msg, AbstractCard previewCard, AbstractRelic previewRelic) {
-        this(dialog, slot, msg, false, previewCard, previewRelic);
+        this(dialog, slot, msg, false, previewCard, previewRelic, null);
     }
 
     public OptionButton(Dialog dialog, int slot, String msg, boolean isDisabled, AbstractCard previewCard) {
-        this(dialog, slot, msg, isDisabled, previewCard, null);
+        this(dialog, slot, msg, isDisabled, previewCard, null, null);
     }
 
     public OptionButton(Dialog dialog, int slot, String msg, boolean isDisabled, AbstractRelic previewRelic) {
-        this(dialog, slot, msg, isDisabled, null, previewRelic);
+        this(dialog, slot, msg, isDisabled, null, previewRelic, null);
+    }
+
+    public OptionButton(Dialog dialog, int slot, String msg, boolean isDisabled, AbstractPotion previewPotion) {
+        this(dialog, slot, msg, isDisabled, null, null, previewPotion);
     }
 
     public OptionButton(Dialog dialog, int slot, String msg) {
-        this(dialog, slot, msg, false, null, null);
+        this(dialog, slot, msg, false, null, null, null);
     }
 
     public OptionButton(Dialog dialog, int slot, String msg, boolean isDisabled) {
-        this(dialog, slot, msg, isDisabled, null, null);
+        this(dialog, slot, msg, isDisabled, null, null, null);
     }
 
     public OptionButton(Dialog dialog, int slot, String msg, AbstractCard previewCard) {
@@ -91,6 +98,10 @@ public class OptionButton {
 
     public OptionButton(Dialog dialog, int slot, String msg, AbstractRelic previewRelic) {
         this(dialog, slot, msg, false, previewRelic);
+    }
+
+    public OptionButton(Dialog dialog, int slot, String msg, AbstractPotion previewPotion) {
+        this(dialog, slot, msg, false, previewPotion);
     }
 
     public void setOptionResult(Consumer<Integer> optionResult) {
@@ -201,7 +212,7 @@ public class OptionButton {
         float textWidth = FontHelper.getSmartWidth(FontHelper.largeDialogOptionFont, this.msg, (float)Settings.WIDTH, 0.0F);
         float textX = Interpolation.linear.apply(this.x + 445 * Settings.xScale, this.x, textWidth / maxTextLength);
         if (textWidth > maxTextLength) {
-            FontHelper.renderSmartText(sb, FontHelper.smallDialogOptionFont, this.msg, textX + TEXT_ADJUST_X, this.y + TEXT_ADJUST_Y, (float)Settings.WIDTH, 0.0F, this.textColor);
+            FontHelper.renderSmartText(sb, FontHelper.smallDialogOptionFont, this.msg, textX + TEXT_ADJUST_X*0.8f, this.y + TEXT_ADJUST_Y, (float)Settings.WIDTH, 0.0F, this.textColor);
         } else {
             FontHelper.renderSmartText(sb, FontHelper.largeDialogOptionFont, this.msg, textX + TEXT_ADJUST_X, this.y + TEXT_ADJUST_Y, (float)Settings.WIDTH, 0.0F, this.textColor);
         }
@@ -224,6 +235,15 @@ public class OptionButton {
     public void renderRelicPreview(SpriteBatch sb) {
         if (!Settings.isControllerMode && this.relicToPreview != null && this.hb.hovered) {
             TipHelper.queuePowerTips(470.0F * Settings.scale, (float)InputHelper.mY + TipHelper.calculateToAvoidOffscreen(this.relicToPreview.tips, (float)InputHelper.mY), this.relicToPreview.tips);
+        }
+    }
+
+    public void renderPotionPreview(SpriteBatch sb) {
+        if (!Settings.isControllerMode && this.potionToPreview != null && this.hb.hovered) {
+            TipHelper.queuePowerTips(470.0F * Settings.scale,
+                    (float) InputHelper.mY
+                            + TipHelper.calculateToAvoidOffscreen(this.potionToPreview.tips, (float) InputHelper.mY),
+                    this.potionToPreview.tips);
         }
     }
 

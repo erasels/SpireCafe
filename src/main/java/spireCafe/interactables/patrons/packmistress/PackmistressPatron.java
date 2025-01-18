@@ -22,9 +22,6 @@ public class PackmistressPatron extends AbstractPatron {
     public static final String ID = PackmistressPatron.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
-    private static Class<?> packmistressSkin;
-    private static Class<?> abstractSkin;
-
     public PackmistressPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
@@ -35,8 +32,8 @@ public class PackmistressPatron extends AbstractPatron {
         String atlasPath = null;
         if (Loader.isModLoaded("anniv5")) {
             try {
-                packmistressSkin = Class.forName("thePackmaster.skins.instances.PackmistressSkin");
-                abstractSkin = Class.forName("thePackmaster.skins.AbstractSkin");
+                Class<?> packmistressSkin = Class.forName("thePackmaster.skins.instances.PackmistressSkin");
+                Class<?> abstractSkin = Class.forName("thePackmaster.skins.AbstractSkin");
                 Constructor<?> constructor = packmistressSkin.getDeclaredConstructor();
                 constructor.setAccessible(true);
                 skin = constructor.newInstance();
@@ -62,8 +59,7 @@ public class PackmistressPatron extends AbstractPatron {
         }
     }
 
-    @Override
-    public boolean canSpawn() {
+    public static boolean canSpawn() {
         return Loader.isModLoaded("anniv5");
     }
 

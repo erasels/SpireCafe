@@ -22,7 +22,9 @@ import javassist.expr.Instanceof;
 import javassist.expr.MethodCall;
 import spireCafe.Anniv7Mod;
 import spireCafe.CafeRoom;
+import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.scene.CafeScene;
+import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.util.ActUtil;
 
 import java.io.IOException;
@@ -114,6 +116,7 @@ public class CafeEntryExitPatch {
 
                 AbstractDungeon.currMapNode.room.event.dispose();
 
+                AbstractDungeon.overlayMenu.proceedButton.hideInstantly();
                 modifyProceedButton(ReflectionHacks.getPrivateStatic(ProceedButton.class, "DRAW_Y"), true);
 
                 if(allTimeSeenInteractables != null) {
@@ -134,7 +137,7 @@ public class CafeEntryExitPatch {
             return new ExprEditor() {
                 public void edit(MethodCall m) throws CannotCompileException {
                     if (m.getClassName().equals(AbstractDungeon.class.getName()) && m.getMethodName().equals("nextRoomTransition")) {
-                        m.replace(String.format("{ if(!%1$s.inCafe()) { $proceed($$); } }", CafeEntryExitPatch.class.getName()));
+                        m.replace(String.format("{ if(%1$s.cafeComplete()) { $proceed($$); } }", CafeEntryExitPatch.class.getName()));
                     }
                 }
             };
@@ -143,6 +146,10 @@ public class CafeEntryExitPatch {
 
     public static boolean inCafe() {
         return AbstractDungeon.currMapNode != null && AbstractDungeon.currMapNode.room instanceof CafeEventRoom;
+    }
+
+    public static boolean cafeComplete() {
+        return !inCafe() || AbstractDungeon.currMapNode.room.phase == AbstractRoom.RoomPhase.COMPLETE;
     }
 
     public static AbstractRoom getOriginalRoom() {
@@ -162,7 +169,7 @@ public class CafeEntryExitPatch {
         CardCrawlGame.sound.play(CAFE_ENTRY_SOUND_KEY);
         AbstractDungeon.rs = AbstractDungeon.RenderScene.NORMAL;
 
-        modifyProceedButton(120f * Settings.scale, false);
+        AbstractDungeon.overlayMenu.proceedButton.hideInstantly();
 
         AbstractDungeon.combatRewardScreen.clear();
         AbstractDungeon.previousScreen = null;
@@ -227,12 +234,22 @@ public class CafeEntryExitPatch {
                 if (!AbstractDungeon.isFadingOut) {
                     AbstractDungeon.fadeIn();
                     setFadeTimer();
+                    AbstractDungeon.overlayMenu.proceedButton.show();
+                    modifyProceedButton(120f * Settings.scale, false);
                     startedFadeIn = true;
                 }
                 this.originalRoom.update();
             }
             else {
                 super.update();
+                boolean proceedButtonHidden = ReflectionHacks.getPrivate(AbstractDungeon.overlayMenu.proceedButton, ProceedButton.class, "isHidden");
+                boolean isInteracting = AbstractCutscene.isInCutscene || AbstractDungeon.screen == CafeMerchantScreen.ScreenEnum.CAFE_MERCHANT_SCREEN;
+                if (isInteracting && !proceedButtonHidden) {
+                    AbstractDungeon.overlayMenu.proceedButton.hideInstantly();
+                }
+                else if (!isInteracting && proceedButtonHidden) {
+                    AbstractDungeon.overlayMenu.proceedButton.show();
+                }
             }
         }
 

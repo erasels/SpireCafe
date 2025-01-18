@@ -1,0 +1,21 @@
+{
+  "${ModID}:RestingSlayerCutscene": {
+    "NAME": "Resting slayer Cutscene",
+    "BLOCKING_TEXTS": [
+      "\"I'm staying here to rest a bit more, maybe I'll see you at the top!\""
+    ],
+    "DESCRIPTIONS": [
+      "\"Hello fellow Slayer, how are you doing?\"",
+      "\"I'm taking a small break from climbing the spire here at the Cafe, perhaps we can make trade?\"",
+      "The two of you make your trade and go your own ways. Surely you will regain what you lost again?",
+      "\"If you change your mind, I'll be resting here a little longer.\""
+    ],
+    "OPTIONS": [
+      "[Trade {0} Relic] #rLose {1}. #gGain {2}.",
+      "[Trade a {0} card] #rRemove #ra {1} #rcard. #gGet #ga {2}.",
+      "Remove a {0} card.",
+
+      "I'm happy with what I have now."
+    ]
+  }
+}

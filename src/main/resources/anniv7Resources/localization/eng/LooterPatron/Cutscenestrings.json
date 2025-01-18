@@ -1,0 +1,23 @@
+{
+  "${ModID}:LooterCutscene": {
+    "NAME": "Looter Cutscene",
+    "BLOCKING_TEXTS": [
+      "\"Now pretend you've never met me.\"",
+      "\"hehehe...\""
+    ],
+    "DESCRIPTIONS": [
+      "\"Hey buddy,\" the looter beckons you quietly. \"Come 'ere.\" NL NL \"Ya seem like a personable fella, help me out with a lil somthin'.\"",
+      "\"Ya see that sucker over there? The one that people call '%s'? NL They ordered a drink and paid right out of that sack sittin' over there. NL If ya go right on up and #bstart #ba #blil #bchat with 'em, I bet I could #ynab #ysomma #ythat #ygold.\"",
+      "You have a feeling that if you interact and perform transactions with '%s' until there are #bno #bmore #bavailable #btransactions, the looter will steal and share with you a random amount of #ygold between #b%s #band #b%s.",
+      "\"Waitin' on ya, buddy.\"",
+      "You walk next to the looter.",
+      "He discreetly hands you #b%s #ygold NL NL \"Good work pal, have your cut.\"",
+      "He discreetly hands you... #b%s #ygold... NL NL \"Sorry pal, there was barely anything in that bag.\"",
+      "\"Hmm? I wasn't doin' nothing!\" The looter exclaims, then lowers his voice, NL NL \"take this gold and keep your mouth shut.\"",
+      "The looter hands you #b%s #ygold. NL NL You have a feeling things would have made a little more sense if you spoke to the looter first.",
+    ],
+    "OPTIONS": [
+      ""
+    ]
+  }
+}

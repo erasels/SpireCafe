@@ -17,12 +17,15 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
+import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import imgui.ImGui;
 import imgui.type.ImFloat;
 import javassist.CtClass;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import spireCafe.abstracts.AbstractCafeInteractable;
@@ -30,7 +33,11 @@ import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cardvars.SecondDamage;
 import spireCafe.cardvars.SecondMagicNumber;
 import spireCafe.interactables.attractions.makeup.MakeupTableAttraction;
+import spireCafe.interactables.merchants.fleamerchant.FleaMerchant;
+import spireCafe.patches.PotencySaverPatch;
 import spireCafe.interactables.patrons.missingno.MissingnoUtil;
+import spireCafe.interactables.patrons.dandadan.RightBallPotionSavable;
+import spireCafe.interactables.patrons.dandadan.RightballPotion;
 import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.screens.JukeboxScreen;
 import spireCafe.ui.FixedModLabeledToggleButton.FixedModLabeledToggleButton;
@@ -45,6 +52,7 @@ import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static spireCafe.interactables.attractions.bookshelf.BookshelfAttraction.PAGE_CONFIG_KEY;
 import static spireCafe.interactables.patrons.missingno.MissingnoPatches.*;
@@ -258,6 +266,8 @@ public class Anniv7Mod implements
             Consumer<String> whitelist = getWidePotionsWhitelistMethod();
 
         }
+        BaseMod.addPotion(RightballPotion.class, 
+                new Color(254 / 255f, 193 / 255f, 27 / 255f, 1f), null, null, RightballPotion.Potion_ID);
     }
 
     public static final ImFloat shake_power = new ImFloat(0.007f);
@@ -499,6 +509,28 @@ public class Anniv7Mod implements
                 MakeupTableAttraction.isAPrettySparklingPrincess = state;
             }
         });
+	BaseMod.addSaveField("Anniv7DepletedPotion", new CustomSavable<List<Integer>>() {
+            @Override
+            public List<Integer> onSave() {
+                return AbstractDungeon.player.potions.stream().map(p -> PotencySaverPatch.PotionUseField.isDepleted.get(p)).collect(Collectors.toCollection(ArrayList::new));
+            }
+
+            @Override
+            public void onLoad(List<Integer> l) {
+                int c = 0;
+                if (l != null && !l.isEmpty()) {
+                    for (AbstractPotion p : AbstractDungeon.player.potions) {
+                        int i = l.get(NumberUtils.min(c++, AbstractDungeon.player.potions.size() - 1));
+                        if(i!=-1) {
+                            PotencySaverPatch.PotionUseField.isDepleted.set(p, i);
+                            p.name = CardCrawlGame.languagePack.getCharacterString(FleaMerchant.ID).TEXT[0].replace("{0}", p.name);
+                        }
+                        p.initializeData();
+                    }
+                }
+            }
+        });
+        BaseMod.addSaveField(makeID("ballPotion"), new RightBallPotionSavable());
     }
 
     public static class SavableCurrentRunSeenInteractables implements CustomSavable<HashSet<String>> {
