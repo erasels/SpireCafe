@@ -40,6 +40,7 @@ import spireCafe.interactables.patrons.missingno.MissingnoUtil;
 import spireCafe.interactables.patrons.dandadan.RightBallPotionSavable;
 import spireCafe.interactables.patrons.dandadan.RightballPotion;
 import spireCafe.screens.CafeMerchantScreen;
+import spireCafe.screens.JukeboxScreen;
 import spireCafe.ui.FixedModLabeledToggleButton.FixedModLabeledToggleButton;
 import spireCafe.util.TexLoader;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
@@ -57,6 +58,7 @@ import java.util.stream.Collectors;
 import static spireCafe.interactables.attractions.bookshelf.BookshelfAttraction.PAGE_CONFIG_KEY;
 import static spireCafe.interactables.patrons.missingno.MissingnoPatches.*;
 import static spireCafe.patches.CafeEntryExitPatch.CAFE_ENTRY_SOUND_KEY;
+import static spireCafe.screens.JukeboxScreen.isPlaying;
 
 @SuppressWarnings({"unused"})
 @SpireInitializer
@@ -68,6 +70,7 @@ public class Anniv7Mod implements
         PostInitializeSubscriber,
         AddAudioSubscriber,
         PostUpdateSubscriber,
+        PostDungeonInitializeSubscriber,
         ImGuiSubscriber,
         StartGameSubscriber {
 
@@ -256,6 +259,7 @@ public class Anniv7Mod implements
         initializeSavedData();
         BaseMod.addEvent(CafeRoom.ID, CafeRoom.class, "CafeDungeon");
         BaseMod.addCustomScreen(new CafeMerchantScreen());
+        BaseMod.addCustomScreen(new JukeboxScreen());
         ConsoleCommand.addCommand("cafe", Cafe.class);
         ConsoleCommand.addCommand("powerelic", DevcommandPowerelic.class);
     }
@@ -423,6 +427,15 @@ public class Anniv7Mod implements
     public void receivePostUpdate() {
         time += Gdx.graphics.getRawDeltaTime();
         MissingnoUtil.doMissingnoStuff();
+        if (!CardCrawlGame.isInARun() && !isPlaying) {
+            JukeboxScreen.resetToDefaultMusic();
+        }
+    }
+    @Override
+    public void receivePostDungeonInitialize() {
+        if (!CardCrawlGame.isInARun()) {
+            JukeboxScreen.resetToDefaultMusic();;
+        }
     }
 
     private ModPanel settingsPanel;

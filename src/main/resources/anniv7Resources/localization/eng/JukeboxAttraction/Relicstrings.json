@@ -1,0 +1,9 @@
+{
+  "${ModID}:JukeboxRelic": {
+    "NAME": "Jukebox",
+    "FLAVOR": "This little guy has joined your climb!",
+    "DESCRIPTIONS": [
+      "Right click this relic to use the jukebox."
+    ]
+  }
+}
