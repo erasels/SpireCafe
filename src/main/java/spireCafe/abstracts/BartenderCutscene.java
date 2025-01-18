@@ -1,6 +1,8 @@
 package spireCafe.abstracts;
 
+import basemod.ReflectionHacks;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.screens.select.GridCardSelectScreen;
 import spireCafe.Anniv7Mod;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
@@ -52,16 +54,18 @@ public class BartenderCutscene extends AbstractCutscene {
     public void update() {
         super.update();
 
-        if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty() && bartender.inHealAction) {
-            bartender.doForSelectedCardsFromHeal(AbstractDungeon.gridSelectScreen.selectedCards);
-            AbstractDungeon.gridSelectScreen.selectedCards.clear();
-            backToCutscene();
-        }
+        if (!AbstractDungeon.isScreenUp) {
+            if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty() && bartender.inHealAction) {
+                bartender.doForSelectedCardsFromHeal(AbstractDungeon.gridSelectScreen.selectedCards);
+                AbstractDungeon.gridSelectScreen.selectedCards.clear();
+                backToCutscene();
+            }
 
-        if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty() && bartender.inSecondAction) {
-            bartender.doForSelectedCardsFromSecondAction(AbstractDungeon.gridSelectScreen.selectedCards);
-            AbstractDungeon.gridSelectScreen.selectedCards.clear();
-            backToCutscene();
+            if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty() && bartender.inSecondAction) {
+                bartender.doForSelectedCardsFromSecondAction(AbstractDungeon.gridSelectScreen.selectedCards);
+                AbstractDungeon.gridSelectScreen.selectedCards.clear();
+                backToCutscene();
+            }
         }
     }
 
@@ -106,7 +110,7 @@ public class BartenderCutscene extends AbstractCutscene {
 
     protected void addNoThanksOption() {
         String noThanks = bartender.getNoThanksDescription();
-        this.dialog.addDialogOption(noThanks).setOptionResult((i)->{
+        this.dialog.addDialogOption(noThanks).setOptionResult((i) -> {
             // If all gameplay-affecting options are done, we consider the transaction complete.
             // Move to a "goodbye" line or end directly.
             if (allGameplayOptionsDone()) {
@@ -153,7 +157,7 @@ public class BartenderCutscene extends AbstractCutscene {
     @Override
     protected void endCutscene() {
         //Prevent cutscene from being ended before logic has been concluded
-        if(!(bartender.inSecondAction || bartender.inHealAction)) {
+        if (!(bartender.inSecondAction || bartender.inHealAction)) {
             super.endCutscene(); // Takes care of setting isDone
         }
     }
