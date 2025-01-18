@@ -1,0 +1,23 @@
+{
+  "${ModID}:PowerelicRelic": {
+    "NAME": "Powerelic",
+    "FLAVOR": "Once a Power Card, this is now forever part of you. Unless N'loth eats it.",
+    "DESCRIPTIONS": [
+      "Permanently obtain the effect of the Power Card this used to be."
+    ]
+  },
+  "${ModID}:PowerelicFormerRelic": {
+    "NAME": "[DNT]Powerelic",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      " NL NL (Wears off at start of next combat.)"
+    ]
+  },
+  "${ModID}:PowerelicDebugRelic": {
+    "NAME": "Playtesting Relic",
+    "FLAVOR": "[DNT]",
+    "DESCRIPTIONS": [
+      "This will not appear in the finished version."
+    ]
+  }
+}
