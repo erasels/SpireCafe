@@ -1,0 +1,11 @@
+{
+  "${ModID}:GridDraftMerchant": {
+    "NAMES": [
+      "Example Merchant"
+    ],
+    "TEXT": [
+      "Random Rare Card",
+      "Obtain a random rare card from your character."
+    ]
+  }
+}
