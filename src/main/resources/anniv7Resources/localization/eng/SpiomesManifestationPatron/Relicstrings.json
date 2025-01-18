@@ -1,0 +1,9 @@
+{
+  "${ModID}:BiomesExplorationMap": {
+    "NAME": "Biomes Exploration Map",
+    "FLAVOR": "A well prepared adventurer is bound to get stronger.",
+    "DESCRIPTIONS": [
+      "Upon entering a room in a Spire Biome gain #g1 #gMax #gHP."
+    ]
+  }
+}
