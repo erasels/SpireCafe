@@ -1,0 +1,39 @@
+{
+  "${ModID}:PeddlerMerchant": {
+    "NAMES": [
+      "The Peddler"
+    ],
+    "TEXT": [
+      "Check out my wares!",
+      "Have I got the thing for you!",
+      "Take your time... look around.",
+      "I've got all sorts of bargains!",
+      "See something you like?",
+      "I got these imported.",
+      "Red, purple, blue and more... just for you.",
+      "You won't find better deals anywhere else.",
+      "It's hard for one to make a living in the spire you know.",
+      "My prices are Very Fair, if I do say so myself.",
+      "Pleasure doing business!",
+      "Another deal done!",
+      "I hate to part with it... just for you.",
+      "I'm the one getting ripped off here.",
+      "Make good use of it!",
+      "What a steal! NL ... NL For you that is.",
+      "So sorry. I can't do credit. Come back when you're a little #yricher.",
+      "Truly a tragedy.",
+      "I'm afraid I can't go any lower.",
+      "No freebies.",
+      "Hands off!",
+      "You gotta pay to touch that!",
+      "I'm sorry... that you're poor.",
+      "No sale.",
+      "Read the sign.",
+      "No Refunds.",
+      "Quit touchin' that.",
+      "Yes, I made it myself.",
+      "Wares so good you'll never want to return them. NL And you @can't.@",
+      "Don't even try it."
+    ]
+  }
+}

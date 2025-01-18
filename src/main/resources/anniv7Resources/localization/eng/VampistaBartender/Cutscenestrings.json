@@ -1,0 +1,19 @@
+{
+  "${ModID}:VampistaBartenderCutscene": {
+    "NAME": "Vampista Cutscene",
+    "BLOCKING_TEXTS": [
+      "\"I have no need for your thin blood anymore.\""
+    ],
+    "DESCRIPTIONS": [
+      "\"Dark roast or darker intentions—what’s your poison?\"",
+      "\"You must be a ~foo—lly~ dedicated to caffeine, to trust me with your mornings. Brave choice.\" *Their smile looks more like a grimace*",
+      "\"Come a little closer...\"",
+      "\"Until next time and stay out of the sun, it’s brutal out there.\""
+    ],
+    "OPTIONS": [
+      "This is clearly a vampire...",
+      "[Drink] Heal to full HP and lose #b%s Max HP.",
+      "[Nibble] #yTransform #b3 cards into #yBites, lose #b%s Max HP."
+    ]
+  }
+}
