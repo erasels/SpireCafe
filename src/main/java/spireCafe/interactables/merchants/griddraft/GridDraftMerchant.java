@@ -68,41 +68,20 @@ public class GridDraftMerchant extends AbstractMerchant{
         ArrayList<AbstractCard> ret = new ArrayList<>();
         AbstractCard c;
 
-        c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.ATTACK, true).makeCopy();
-        while (c.color == AbstractCard.CardColor.COLORLESS) {
+
+        for (int i = 0; i < 3; i++) {
             c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.ATTACK, true).makeCopy();
-        }
-        ret.add(c);
+            while (c.color == AbstractCard.CardColor.COLORLESS) {
+                c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.ATTACK, true).makeCopy();
+            }
+            ret.add(c);
 
-        c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.ATTACK, true).makeCopy();
-        while (c.color == AbstractCard.CardColor.COLORLESS) {
-            c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.ATTACK, true).makeCopy();
-        }
-        ret.add(c);
-
-        c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.ATTACK, true).makeCopy();
-        while (c.color == AbstractCard.CardColor.COLORLESS) {
-            c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.ATTACK, true).makeCopy();
-        }
-        ret.add(c);
-
-        c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.SKILL, true).makeCopy();
-        while (c.color == AbstractCard.CardColor.COLORLESS) {
             c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.SKILL, true).makeCopy();
+            while (c.color == AbstractCard.CardColor.COLORLESS) {
+                c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.SKILL, true).makeCopy();
+            }
+            ret.add(c);
         }
-        ret.add(c);
-
-        c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.SKILL, true).makeCopy();
-        while (c.color == AbstractCard.CardColor.COLORLESS) {
-            c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.SKILL, true).makeCopy();
-        }
-        ret.add(c);
-
-        c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.SKILL, true).makeCopy();
-        while (c.color == AbstractCard.CardColor.COLORLESS) {
-            c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.SKILL, true).makeCopy();
-        }
-        ret.add(c);
 
         c = AbstractDungeon.getCardFromPool(AbstractDungeon.rollRarity(), AbstractCard.CardType.POWER, true).makeCopy();
         while (c.color == AbstractCard.CardColor.COLORLESS) {

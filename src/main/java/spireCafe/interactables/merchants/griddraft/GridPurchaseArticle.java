@@ -6,9 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
@@ -77,7 +75,6 @@ public class GridPurchaseArticle extends AbstractArticle {
     public void update() {
         super.update();
         scale = Settings.scale;
-        scaleCards();
         if (this.hb.hovered) {
             this.itemTexture = this.isRow ? new TextureRegion(ROW_HOVER) : new TextureRegion(COLUMN_HOVER);
         } else {
@@ -91,19 +88,6 @@ public class GridPurchaseArticle extends AbstractArticle {
             ((GridDraftMerchant)this.merchant).cantBuy();
         }
         super.onClick();
-    }
-
-    private void scaleCards() {
-        // ArrayList<AbstractCard> tmp;
-        // tmp = ((GridDraftMerchant)this.merchant).getCards(this.slot, this.isRow);
-        // if (tmp.isEmpty()) {
-        //     return;
-        // }
-        // for (AbstractCard c : tmp) {
-        //     c.drawScale = this.hb.hovered ? GridCardArticle.CARD_SCALE_HOVER : GridCardArticle.CARD_SCALE;
-        // }
-
-        // I don't know why this isn't working the way I want it too :/
     }
 
     @Override
