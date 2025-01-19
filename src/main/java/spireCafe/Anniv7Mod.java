@@ -76,7 +76,6 @@ public class Anniv7Mod implements
         StartGameSubscriber {
 
     public static final Logger logger = LogManager.getLogger("SpireCafe");
-    public static final org.apache.logging.log4j.Logger logger = LogManager.getLogger("SpireCafe");
 
     public static Settings.GameLanguage[] SupportedLanguages = {
             Settings.GameLanguage.ENG
