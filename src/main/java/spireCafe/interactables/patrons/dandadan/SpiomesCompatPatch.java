@@ -13,6 +13,8 @@ import spireMapOverhaul.patches.interfacePatches.RewardModifierPatches.ModifyRew
 @SpirePatch2(clz = ModifyRewardsPatch.class, method = "ModifyRewards", requiredModId = "anniv6", optional = true)
 public class SpiomesCompatPatch {
 
+    public static RewardItem savedReward;
+
     public static boolean rewardContainsPotion() {
         for (RewardItem r : AbstractDungeon.combatRewardScreen.rewards) {
             if (r.type == RewardItem.RewardType.POTION && r.potion != null && r.potion instanceof RightballPotion) {
@@ -20,6 +22,22 @@ public class SpiomesCompatPatch {
             }
         }
         return false;
+    }
+
+    public static void preModifyRewards() {
+        for (RewardItem r : AbstractDungeon.combatRewardScreen.rewards) {
+            if (r.type == RewardItem.RewardType.POTION && r.potion != null && r.potion instanceof RightballPotion) {
+                savedReward = r;
+            }
+        }
+        if (savedReward != null) {
+            AbstractDungeon.combatRewardScreen.rewards.remove(savedReward);
+        }
+    }
+
+    public static void postModifyRewards() {
+        AbstractDungeon.combatRewardScreen.rewards.add(savedReward);
+        savedReward = null;
     }
 
     public static boolean rewardIsPotion(RewardItem r) {
@@ -39,9 +57,9 @@ public class SpiomesCompatPatch {
                         "$_ = $proceed($$);" +
                         "}");
             } else if (m.getMethodName().equals("modifyRewards")) {
-                m.replace("if (!" + SpiomesCompatPatch.class.getName() + ".rewardContainsPotion() ) {" +
+                m.replace(SpiomesCompatPatch.class.getName() + ".preModifyRewards();" +
                         "$_ = $proceed($$);" +
-                        "}");
+                        SpiomesCompatPatch.class.getName() + ".postModifyRewards();");
 
             }
         }
