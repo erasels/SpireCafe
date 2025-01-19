@@ -1,25 +1,46 @@
 package spireCafe.screens;
 
+import basemod.AutoAdd;
+import basemod.BaseMod;
+import basemod.ModPanel;
+import basemod.abstracts.CustomSavable;
 import basemod.abstracts.CustomScreen;
+import basemod.devcommands.ConsoleCommand;
+import basemod.helpers.RelicType;
+import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.evacipated.cardcrawl.mod.stslib.Keyword;
+import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.*;
+import com.google.gson.Gson;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.events.AbstractEvent;
+import com.megacrit.cardcrawl.events.RoomEventDialog;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
-import com.megacrit.cardcrawl.localization.UIStrings;
+import com.megacrit.cardcrawl.localization.*;
+import com.megacrit.cardcrawl.potions.AbstractPotion;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.rooms.RestRoom;
 import com.megacrit.cardcrawl.ui.buttons.LargeDialogOptionButton;
+import com.megacrit.cardcrawl.unlock.UnlockTracker;
+import imgui.ImGui;
+import imgui.type.ImFloat;
+import javassist.CtClass;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.logging.log4j.LogManager;
 import spireCafe.Anniv7Mod;
 import spireCafe.interactables.attractions.jukebox.JukeboxRelic;
 import spireCafe.interactables.patrons.missingno.MissingnoRelic;
@@ -27,16 +48,21 @@ import spireCafe.util.TexLoader;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Random;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.List;
 import java.util.function.Consumer;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
+import static spireCafe.screens.JukeboxScreen.isPlaying;
+import static spireCafe.screens.JukeboxScreen.nowPlayingSong;
 
 public class JukeboxScreen extends CustomScreen {
     private static final String CUSTOM_MUSIC_FOLDER = ConfigUtils.CONFIG_DIR + File.separator + "anniv7/cafe_jukebox";
@@ -289,6 +315,9 @@ public class JukeboxScreen extends CustomScreen {
 
     @Override
     public void update() {
+        if (nowPlayingSong != null) {
+            nowPlayingSong.setVolume(Settings.MUSIC_VOLUME); // Continuously update volume
+        }
         clearHighlightsOnEmptyTrack();
         updateSongButtons();
         updatePaginationButtons();
@@ -873,26 +902,14 @@ public class JukeboxScreen extends CustomScreen {
             currentTrackName = formatTrackName(trackName);
             nowPlayingSong.setVolume(Settings.MUSIC_VOLUME);
 
-            // Special handling for Cafe_Intro -> Cafe_Loop
-            if (trackName.equals("Cafe_Intro")) {
-                FileHandle fileHandle = Gdx.files.internal(trackPath);
-                nowPlayingSong = Gdx.audio.newMusic(fileHandle);
-                nowPlayingSong.setLooping(false); // Intro does not loop
-                nowPlayingSong.setOnCompletionListener(music -> {
-                });
-            } else if (trackName.equals("Cafe_Loop")) {
-                FileHandle fileHandle = Gdx.files.internal(trackPath);
-                nowPlayingSong = Gdx.audio.newMusic(fileHandle);
-                nowPlayingSong.setLooping(true); // Loop Cafe_Loop regardless of loopEnabled
-            } else {
-                // For all other tracks, follow the loopEnabled flag
-                nowPlayingSong.setLooping(loopEnabled);
-                nowPlayingSong.setOnCompletionListener(music -> {
-                    if (!loopEnabled) {
-                        playRandomTrack(); // Play a random track if loop is disabled
-                    }
-                });
-            }
+            // For all other tracks, follow the loopEnabled flag
+            nowPlayingSong.setLooping(loopEnabled);
+            nowPlayingSong.setOnCompletionListener(music -> {
+                if (!loopEnabled) {
+                    playRandomTrack(); // Play a random track if loop is disabled
+                }
+            });
+
 
             nowPlayingSong.play();
             isPlaying = true;
@@ -1068,34 +1085,14 @@ public class JukeboxScreen extends CustomScreen {
         Random random = new Random();
         String nextTrack;
 
-        // Loop until we find a track that's not the currently playing one
+        // Loop until a different track is selected
         do {
             int randomIndex = random.nextInt(allTracks.size());
             nextTrack = allTracks.get(randomIndex);
-        } while (nextTrack.equals(currentTrackName)); // Use currentTrackName for comparison
+        } while (nextTrack.equals(currentTrackName));
 
-        // Play the selected track
-        textField = TEXT[1]   + nextTrack;
-        currentTrackName = formatTrackName(nextTrack); // Update the current track name
-
-        if (predefinedTracks.contains(nextTrack)) {
-            String trackFileName = getTrackFileName(nextTrack);
-            LOGGER.info("Playing predefined track: " + trackFileName);
-            stopCurrentMusic();
-            CardCrawlGame.music.playTempBgmInstantly(trackFileName, loopEnabled);
-            isPlaying = true;
-        } else {
-            String originalFileName = getOriginalFileName(nextTrack);
-            if (originalFileName != null) {
-                String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalFileName;
-                playTrack(trackPath);
-            } else {
-                LOGGER.severe("Failed to find file for track: " + nextTrack);
-            }
-        }
-
-        // Update button highlights
-        updateButtonHighlights();
+        LOGGER.info("Randomly selected track: " + nextTrack);
+        playTrack(nextTrack); // Use playTrack for playback
     }
 
     private void clearHighlightsOnEmptyTrack() {
@@ -1112,35 +1109,16 @@ public class JukeboxScreen extends CustomScreen {
             return;
         }
 
-        // Play the first track in the queue
-        String nextTrack = queuedTracks.remove(0);
-        textField = TEXT[1] + nextTrack;
-        currentTrackName = formatTrackName(nextTrack);
+        String nextTrack = queuedTracks.remove(0); // Dequeue the next track
+        LOGGER.info("Playing queued track: " + nextTrack);
+        playTrack(nextTrack); // Use playTrack for playback
 
-        if (predefinedTracks.contains(nextTrack)) {
-            String trackFileName = getTrackFileName(nextTrack);
-            LOGGER.info("Playing queued predefined track: " + trackFileName);
-            stopCurrentMusic();
-            CardCrawlGame.music.playTempBgmInstantly(trackFileName, loopEnabled); // Looping depends on toggle
-            isPlaying = true;
-        } else {
-            String originalFileName = getOriginalFileName(nextTrack);
-            if (originalFileName != null) {
-                String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalFileName;
-                playTrack(trackPath);
-            } else {
-                LOGGER.severe("Failed to find file for track: " + nextTrack);
-            }
-        }
-
-        // Update the highlight for the currently playing track
-        updateButtonHighlights();
-
-        // Schedule the next track to play when the current one ends
+        // Schedule the next track in the queue when the current one ends
         if (nowPlayingSong != null) {
             nowPlayingSong.setOnCompletionListener(music -> playQueuedTracks());
         }
     }
+
     private void updateButtonHighlights() {
         if (currentTrackName == null || currentTrackName.isEmpty()) {
             // Clear all highlights if there's no track playing

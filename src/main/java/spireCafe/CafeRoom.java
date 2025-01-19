@@ -193,10 +193,10 @@ public class CafeRoom extends AbstractEvent {
     public void update() {
         super.update();
         if(!startedMusic){
-                JukeboxScreen jukeboxScreen = (JukeboxScreen) BaseMod.getCustomScreen(JukeboxScreen.ScreenEnum.JUKEBOX_SCREEN);
-                jukeboxScreen.playCafeTheme();
-                startedMusic=true;
-            }
+            JukeboxScreen jukeboxScreen = (JukeboxScreen) BaseMod.getCustomScreen(JukeboxScreen.ScreenEnum.JUKEBOX_SCREEN);
+            jukeboxScreen.playCafeTheme();
+            startedMusic=true;
+        }
 
         if (!RoomEventDialog.waitForInput) {
             this.buttonEffect(this.roomEventText.getSelectedOption());
@@ -276,4 +276,5 @@ public class CafeRoom extends AbstractEvent {
     @Override
     public void renderRoomEventPanel(SpriteBatch sb) {
     }
+}
 }
