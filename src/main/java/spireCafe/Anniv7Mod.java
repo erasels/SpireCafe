@@ -59,6 +59,7 @@ import static spireCafe.interactables.attractions.bookshelf.BookshelfAttraction.
 import static spireCafe.interactables.patrons.missingno.MissingnoPatches.*;
 import static spireCafe.patches.CafeEntryExitPatch.CAFE_ENTRY_SOUND_KEY;
 import static spireCafe.screens.JukeboxScreen.isPlaying;
+import static spireCafe.screens.JukeboxScreen.nowPlayingSong;
 
 @SuppressWarnings({"unused"})
 @SpireInitializer
@@ -429,6 +430,17 @@ public class Anniv7Mod implements
         MissingnoUtil.doMissingnoStuff();
         if (!CardCrawlGame.isInARun() && isPlaying) {
             JukeboxScreen.resetToDefaultMusic();
+        }
+        if (CardCrawlGame.MUTE_IF_BG && Settings.isBackgrounded) {
+            if (nowPlayingSong != null) {
+                nowPlayingSong.setVolume(0.0f); // Mute music when backgrounded
+            }
+            return; // Exit early, no need for further updates
+        }
+        // Adjust volume dynamically while the game is in the foreground
+        if (nowPlayingSong != null && !Settings.isBackgrounded) {
+            float adjustedVolume = Settings.MUSIC_VOLUME; // Use the global volume slider
+            nowPlayingSong.setVolume(adjustedVolume); // Update the music volume on the fly
         }
     }
     @Override
