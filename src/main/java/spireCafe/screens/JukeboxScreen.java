@@ -83,7 +83,7 @@ public class JukeboxScreen extends CustomScreen {
     private static final String ID = Anniv7Mod.makeID(JukeboxScreen.class.getSimpleName());
     private static final UIStrings UIStrings = CardCrawlGame.languagePack.getUIString(ID);
     private static final String[] TEXT = UIStrings.TEXT;
-    public static final Logger LOGGER = LogManager.getLogger("SpireCafe");
+    public static final Logger LOGGER = LogManager.getLogger(JukeboxScreen.class.getName());
 
     public JukeboxScreen() {
 
