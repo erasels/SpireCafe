@@ -277,4 +277,3 @@ public class CafeRoom extends AbstractEvent {
     public void renderRoomEventPanel(SpriteBatch sb) {
     }
 }
-}
