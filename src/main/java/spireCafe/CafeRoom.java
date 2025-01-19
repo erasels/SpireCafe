@@ -55,9 +55,6 @@ public class CafeRoom extends AbstractEvent {
     public boolean darkBg;
 
     public CafeRoom() {
-        CardCrawlGame.music.silenceTempBgmInstantly();
-        CardCrawlGame.music.silenceBGM();
-        musicDelay = 6f;
         startedMusic=false;
 
         this.body = "";
@@ -200,7 +197,6 @@ public class CafeRoom extends AbstractEvent {
                 jukeboxScreen.playCafeTheme();
                 startedMusic=true;
             }
-
 
         if (!RoomEventDialog.waitForInput) {
             this.buttonEffect(this.roomEventText.getSelectedOption());
