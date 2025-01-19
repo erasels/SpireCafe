@@ -1,10 +1,9 @@
 package spireCafe.interactables.attractions.discord_statue;
 
+import basemod.animations.SpriterAnimation;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
-
-import basemod.animations.SpriterAnimation;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractNPC;
 

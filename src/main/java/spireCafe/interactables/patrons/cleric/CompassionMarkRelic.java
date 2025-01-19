@@ -1,22 +1,21 @@
 package spireCafe.interactables.patrons.cleric;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
-
+import basemod.helpers.CardModifierManager;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardBrieflyEffect;
-
-import basemod.helpers.CardModifierManager;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cardmods.BlessedMod;
 import spireCafe.util.Wiz;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 public class CompassionMarkRelic extends AbstractSCRelic {
 

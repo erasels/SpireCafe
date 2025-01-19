@@ -1,10 +1,9 @@
 package spireCafe.util.devcommands;
 
-import java.util.ArrayList;
-
-import basemod.DevConsole;
 import basemod.devcommands.ConsoleCommand;
 import spireCafe.CafeRoom;
+
+import java.util.ArrayList;
 
 public class CafeClear extends ConsoleCommand{
 

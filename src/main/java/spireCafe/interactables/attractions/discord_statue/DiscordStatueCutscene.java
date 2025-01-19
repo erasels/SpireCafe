@@ -1,9 +1,7 @@
 package spireCafe.interactables.attractions.discord_statue;
 
-import static spireCafe.Anniv7Mod.makeID;
-
-import java.util.Random;
-
+import basemod.animations.SpriterAnimation;
+import basemod.helpers.CardModifierManager;
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -12,9 +10,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardBrieflyEffect;
 import com.megacrit.cardcrawl.vfx.combat.LightningEffect;
-
-import basemod.animations.SpriterAnimation;
-import basemod.helpers.CardModifierManager;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
@@ -24,6 +19,10 @@ import spireCafe.interactables.attractions.discord_statue.modifiers.RandomSizeMo
 import spireCafe.util.Wiz;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
+
+import java.util.Random;
+
+import static spireCafe.Anniv7Mod.makeID;
 
 public class DiscordStatueCutscene extends AbstractCutscene {
     public static final String ID = makeID(DiscordStatueCutscene.class.getSimpleName());

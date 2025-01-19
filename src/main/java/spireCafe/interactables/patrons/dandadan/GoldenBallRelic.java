@@ -1,10 +1,7 @@
 package spireCafe.interactables.patrons.dandadan;
 
-import static spireCafe.Anniv7Mod.makeRelicPath;
-
-import java.util.Collections;
-import java.util.Random;
-
+import basemod.abstracts.CustomSavable;
+import basemod.helpers.CardModifierManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
@@ -25,13 +22,15 @@ import com.megacrit.cardcrawl.relics.PeacePipe;
 import com.megacrit.cardcrawl.relics.Shovel;
 import com.megacrit.cardcrawl.rooms.MonsterRoom;
 import com.megacrit.cardcrawl.rooms.TreasureRoomBoss;
-
-import basemod.abstracts.CustomSavable;
-import basemod.helpers.CardModifierManager;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.util.TexLoader;
 import spireCafe.util.Wiz;
+
+import java.util.Collections;
+import java.util.Random;
+
+import static spireCafe.Anniv7Mod.makeRelicPath;
 
 public class GoldenBallRelic extends AbstractSCRelic implements CustomSavable<Integer> {
 
