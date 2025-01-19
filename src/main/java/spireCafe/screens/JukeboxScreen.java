@@ -2,6 +2,7 @@ package spireCafe.screens;
 
 import basemod.abstracts.CustomScreen;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
@@ -10,6 +11,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.ConfigUtils;
 import com.evacipated.cardcrawl.modthespire.lib.SpireEnum;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.helpers.Hitbox;
+import com.megacrit.cardcrawl.helpers.ImageMaster;
+import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
@@ -22,13 +26,14 @@ import org.apache.logging.log4j.Logger;
 import spireCafe.Anniv7Mod;
 import spireCafe.interactables.attractions.jukebox.JukeboxRelic;
 import spireCafe.util.TexLoader;
-
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
+import java.util.Random;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
+
 
 public class JukeboxScreen extends CustomScreen {
     private static final String CUSTOM_MUSIC_FOLDER = ConfigUtils.CONFIG_DIR + File.separator + "anniv7/cafe_jukebox";
@@ -78,7 +83,7 @@ public class JukeboxScreen extends CustomScreen {
     private static final String ID = Anniv7Mod.makeID(JukeboxScreen.class.getSimpleName());
     private static final UIStrings UIStrings = CardCrawlGame.languagePack.getUIString(ID);
     private static final String[] TEXT = UIStrings.TEXT;
-    private static final Logger LOGGER = LogManager.getLogger(JukeboxScreen.class.getName());
+    public static final Logger LOGGER = LogManager.getLogger("SpireCafe");
 
     public JukeboxScreen() {
 
@@ -167,7 +172,7 @@ public class JukeboxScreen extends CustomScreen {
             if (created) {
                 LOGGER.info("Custom music folder created: " + CUSTOM_MUSIC_FOLDER);
             } else {
-                LOGGER.error("Failed to create custom music folder.");
+                LOGGER.warn("Failed to create custom music folder.");
                 return;
             }
         }
@@ -185,6 +190,7 @@ public class JukeboxScreen extends CustomScreen {
                     LOGGER.info("Custom track added: " + trimmedName);
                 } else {
                     LOGGER.warn("Invalid or unsupported file skipped: " + file.getName());
+
                 }
             }
         }
@@ -282,7 +288,8 @@ public class JukeboxScreen extends CustomScreen {
     @Override
     public void update() {
         if (nowPlayingSong != null) {
-            nowPlayingSong.setVolume(Settings.MUSIC_VOLUME); // Continuously update volume
+            nowPlayingSong.setVolume(Settings.MUSIC_VOLUME * Settings.MASTER_VOLUME); // Continuously update volume
+
         }
         clearHighlightsOnEmptyTrack();
         updateSongButtons();
@@ -590,10 +597,11 @@ public class JukeboxScreen extends CustomScreen {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                LOGGER.error("Failed to open folder: " + folderPath);
+                LOGGER.warn("Failed to open folder: " + folderPath);
             }
         } else {
-            LOGGER.error("Desktop is not supported on this platform.");
+            LOGGER.warn("Desktop is not supported on this platform.");
+
         }
     }
 
@@ -848,7 +856,9 @@ public class JukeboxScreen extends CustomScreen {
                 // Handle custom tracks
                 String originalFileName = getOriginalFileName(trackName);
                 if (originalFileName == null) {
+
                     LOGGER.warn("File not found for track: " + trackName);
+
                     return;
                 }
 
@@ -930,6 +940,7 @@ public class JukeboxScreen extends CustomScreen {
                 }
             });
 
+
             nowPlayingSong.play();
             isPlaying = true;
 
@@ -938,8 +949,7 @@ public class JukeboxScreen extends CustomScreen {
             e.printStackTrace();
         }
     }
-
-    public static void stopCurrentMusic() {
+      public static void stopCurrentMusic() {
         CardCrawlGame.music.silenceTempBgmInstantly();
         CardCrawlGame.music.silenceBGMInstantly();
         CardCrawlGame.music.silenceBGM();
