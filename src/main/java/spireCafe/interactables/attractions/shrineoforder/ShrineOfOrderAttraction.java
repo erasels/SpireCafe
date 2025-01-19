@@ -15,7 +15,7 @@ public class ShrineOfOrderAttraction extends AbstractAttraction {
             .getCharacterString(Anniv7Mod.makeID(ID));
 
     public ShrineOfOrderAttraction(float animationX, float animationY) {
-        super(animationX, animationY - (20 * Settings.yScale), 390, 450);
+        super(animationX, animationY, 200, 380);
         img = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("shrineoforder/ShrineOfOrder.png"));
         authors = "DJM";
         name = characterStrings.NAMES[0];
