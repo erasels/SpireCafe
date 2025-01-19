@@ -19,6 +19,9 @@ import spireCafe.util.TexLoader;
 public class TheTransientPatron extends AbstractPatron {
     public static final String ID = TheTransientPatron.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
+    public float cutsceneAlpha = 1.0f;
+    public float animationAlpha = 1.0f;
+    public float targetAnimationAlpha = 1.0f;
 
     public TheTransientPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
@@ -46,13 +49,27 @@ public class TheTransientPatron extends AbstractPatron {
         this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath(resourcePath)));
     }
 
-    public void curlUp(){
-        this.state.setAnimation(0, "transitiontoclosed", false);
-        this.state.addAnimation(0, "idle closed", true, 0.0F);
+    @Override
+    public void renderAnimation(SpriteBatch sb) {
+        super.renderAnimation(sb);
+    }
+
+    public void postCutsceneFade(){
+        targetAnimationAlpha = cutsceneAlpha;
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        animationAlpha = MathUtils.lerp(animationAlpha, targetAnimationAlpha, Gdx.graphics.getDeltaTime());
+        this.skeleton.setColor(new Color(1,1,1,animationAlpha));
     }
 
     public void renderCutscenePortrait(SpriteBatch sb) {
+        Color c = sb.getColor();
+        sb.setColor(new Color(1, 1, 1, cutsceneAlpha));
         simpleRenderCutscenePortrait(sb, 1600.0F,175.0F, 0.0F, 0.0F, 0.0F);
+        sb.setColor(c);
     }
 
     public void onInteract() {

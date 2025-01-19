@@ -3,6 +3,7 @@ package spireCafe.interactables.patrons.thetransient;
 import basemod.ReflectionHacks;
 import basemod.cardmods.InnateMod;
 import basemod.helpers.CardModifierManager;
+import com.badlogic.gdx.Gdx;
 import com.evacipated.cardcrawl.mod.stslib.fields.cards.AbstractCard.AutoplayField;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
@@ -64,13 +65,19 @@ public class TheTransientCutscene extends AbstractCutscene {
                     AbstractDungeon.gridSelectScreen.open(group, 1, OPTIONS[4], false);
 
                     character.alreadyPerformedTransaction = true;
-                    goToDialogue(5);
-                    character.blockingDialogueIndex = 0;
+                    if(fullyFaded){
+                        goToDialogue(6);
+                        character.blockingDialogueIndex = 1;
+                    }else{
+                        goToDialogue(5);
+                        character.blockingDialogueIndex = 0;
+                    }
                 });
                 break;
             case 5:
             case 6:
             case 7:
+                ((TheTransientPatron)character).postCutsceneFade();
                 endCutscene();
                 break;
             default:
@@ -80,9 +87,21 @@ public class TheTransientCutscene extends AbstractCutscene {
         }
     }
 
+    float chillTime = 0;
+    boolean fullyFaded = false;
+    public static final float CHILL_FADE_TIME = 30;
     //grid selection for applying transient mod
     public void update() {
         super.update();
+        if(dialogueIndex == 3){
+            chillTime += Gdx.graphics.getDeltaTime();
+            if(character instanceof TheTransientPatron){
+                ((TheTransientPatron) character).cutsceneAlpha = Math.max(0, (CHILL_FADE_TIME-chillTime)/CHILL_FADE_TIME);
+            }
+            if(chillTime > CHILL_FADE_TIME){
+                fullyFaded = true;
+            }
+        }
         if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
             for (int i = 0; i < AbstractDungeon.gridSelectScreen.selectedCards.size(); i++) {
                 AbstractCard c = AbstractDungeon.gridSelectScreen.selectedCards.get(i);
