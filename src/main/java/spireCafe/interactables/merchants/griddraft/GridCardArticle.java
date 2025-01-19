@@ -11,11 +11,11 @@ import spireCafe.interactables.merchants.CardArticle;
 public class GridCardArticle extends CardArticle {
 
     private static float X_OFFSET = 700.0F * Settings.scale;
-    private static float Y_OFFSET = 768.0F * Settings.scale;
+    private static float Y_OFFSET = 706.0F * Settings.scale;
     private static float X_PAD = 275.0F * Settings.scale;
-    private static float Y_PAD = 300.0F * Settings.scale;
-    public static float CARD_SCALE = 0.65F;
-    public static float CARD_SCALE_HOVER = 0.75F;
+    private static float Y_PAD = 282.0F * Settings.scale;
+    public static float CARD_SCALE = 0.60F;
+    public static float CARD_SCALE_HOVER = 0.70F;
 
     public int column;
     public int row;
