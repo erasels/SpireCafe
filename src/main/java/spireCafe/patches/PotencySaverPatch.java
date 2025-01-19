@@ -1,29 +1,9 @@
 package spireCafe.patches;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.evacipated.cardcrawl.modthespire.lib.*;
-import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.FontHelper;
-import com.megacrit.cardcrawl.helpers.PowerTip;
-import com.megacrit.cardcrawl.potions.*;
-import com.megacrit.cardcrawl.relics.SacredBark;
-import com.megacrit.cardcrawl.shop.ShopScreen;
-import com.megacrit.cardcrawl.shop.StorePotion;
-import com.megacrit.cardcrawl.ui.panels.PotionPopUp;
-import com.megacrit.cardcrawl.ui.panels.TopPanel;
+import com.megacrit.cardcrawl.potions.AbstractPotion;
 import javassist.CtBehavior;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.merchantRng;
 
 public class PotencySaverPatch {
 

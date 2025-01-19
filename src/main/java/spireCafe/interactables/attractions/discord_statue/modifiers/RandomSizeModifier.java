@@ -1,8 +1,7 @@
 package spireCafe.interactables.attractions.discord_statue.modifiers;
 
-import com.megacrit.cardcrawl.cards.AbstractCard;
-
 import basemod.abstracts.AbstractCardModifier;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 
 //logic for changing rendered size is in a patch (RandomSizeModifierPatch)
 public class RandomSizeModifier extends AbstractCardModifier {

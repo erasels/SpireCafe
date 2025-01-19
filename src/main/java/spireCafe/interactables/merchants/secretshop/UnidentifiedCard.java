@@ -1,10 +1,6 @@
 package spireCafe.interactables.merchants.secretshop;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumSet;
 import basemod.AutoAdd;
-
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.red.IronWave;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -12,9 +8,12 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractSCCard;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
 
 @AutoAdd.Ignore
 public class UnidentifiedCard extends AbstractSCCard{

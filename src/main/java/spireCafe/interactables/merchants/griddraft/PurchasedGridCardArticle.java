@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Affine2;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.Hitbox;
-
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractArticle;
 import spireCafe.abstracts.AbstractMerchant;
@@ -17,9 +16,9 @@ public class PurchasedGridCardArticle extends AbstractArticle {
 
         private static final Texture TEXTURE = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("griddraft/blank.png"));
         private static float X_OFFSET = 604.0F * Settings.scale;
-        private static float Y_OFFSET = 633.0F * Settings.scale;
-        private static float X_PAD = 275.0F * Settings.scale;
-        private static float Y_PAD = 300.0F * Settings.scale;
+        private static float Y_OFFSET = 571.0F * Settings.scale;
+        private static float X_PAD = 276.0F * Settings.scale;
+        private static float Y_PAD = 282.0F * Settings.scale;
         private float rotate;
 
 
@@ -28,11 +27,11 @@ public class PurchasedGridCardArticle extends AbstractArticle {
         updateGrid(row, column);
         this.itemTexture = new TextureRegion(TEXTURE);
         if (row % 2 == 0) {
-            this.rotate = MathUtils.random(-5, 0);
+            this.rotate = MathUtils.random(-2, 0);
         } else {
-            this.rotate = MathUtils.random(0, 5);
+            this.rotate = MathUtils.random(0, 2);
         }
-        this.hb = new Hitbox(192, 269);
+        this.hb = new Hitbox(175, 245);
     }
 
     private void updateGrid(int row, int column) {

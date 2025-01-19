@@ -14,7 +14,9 @@ import spireCafe.util.TexLoader;
 import spireCafe.util.WeightedList;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static spireCafe.Anniv7Mod.makeID;
 import static spireCafe.Anniv7Mod.modID;

@@ -14,8 +14,6 @@ import spireCafe.abstracts.AbstractCafeInteractable;
 
 import java.util.List;
 
-import static spireCafe.Anniv7Mod.modID;
-
 public abstract class AbstractPage {
     public final String id;
     protected final UIStrings uiStrings;

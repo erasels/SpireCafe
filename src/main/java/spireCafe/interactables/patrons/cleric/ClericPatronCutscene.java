@@ -4,7 +4,6 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.FaceOfCleric;
-
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.util.Wiz;

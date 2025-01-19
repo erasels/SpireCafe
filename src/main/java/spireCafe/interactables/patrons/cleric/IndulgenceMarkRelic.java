@@ -5,7 +5,6 @@ import com.megacrit.cardcrawl.powers.DexterityPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
-
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.util.Wiz;

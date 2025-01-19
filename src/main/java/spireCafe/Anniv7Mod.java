@@ -34,11 +34,11 @@ import spireCafe.cardvars.SecondDamage;
 import spireCafe.cardvars.SecondMagicNumber;
 import spireCafe.interactables.attractions.makeup.MakeupTableAttraction;
 import spireCafe.interactables.merchants.fleamerchant.FleaMerchant;
-import spireCafe.interactables.patrons.powerelic.implementation.debug.DevcommandPowerelic;
-import spireCafe.patches.PotencySaverPatch;
-import spireCafe.interactables.patrons.missingno.MissingnoUtil;
 import spireCafe.interactables.patrons.dandadan.RightBallPotionSavable;
 import spireCafe.interactables.patrons.dandadan.RightballPotion;
+import spireCafe.interactables.patrons.missingno.MissingnoUtil;
+import spireCafe.interactables.patrons.powerelic.implementation.debug.DevcommandPowerelic;
+import spireCafe.patches.PotencySaverPatch;
 import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.screens.JukeboxScreen;
 import spireCafe.ui.FixedModLabeledToggleButton.FixedModLabeledToggleButton;
@@ -440,6 +440,7 @@ public class Anniv7Mod implements
         // Adjust volume dynamically while the game is in the foreground
         if (nowPlayingSong != null && !Settings.isBackgrounded) {
             float adjustedVolume = Settings.MUSIC_VOLUME * Settings.MASTER_VOLUME; // Use the global volume slider
+
             nowPlayingSong.setVolume(adjustedVolume); // Update the music volume on the fly
         }
     }

@@ -1,7 +1,5 @@
 package spireCafe.interactables.attractions.punchingbag;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -17,21 +15,13 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
-import com.megacrit.cardcrawl.relics.Akabeko;
-import com.megacrit.cardcrawl.relics.Circlet;
-import com.megacrit.cardcrawl.relics.DuVuDoll;
-import com.megacrit.cardcrawl.relics.Girya;
-import com.megacrit.cardcrawl.relics.LetterOpener;
-import com.megacrit.cardcrawl.relics.PenNib;
-import com.megacrit.cardcrawl.relics.PhilosopherStone;
-import com.megacrit.cardcrawl.relics.Shuriken;
-import com.megacrit.cardcrawl.relics.StrikeDummy;
-import com.megacrit.cardcrawl.relics.Vajra;
+import com.megacrit.cardcrawl.relics.*;
 import com.megacrit.cardcrawl.vfx.combat.DamageNumberEffect;
 import com.megacrit.cardcrawl.vfx.combat.FlashAtkImgEffect;
-
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractAttraction;
+
+import java.util.ArrayList;
 
 public class PunchingBagAttraction extends AbstractAttraction{
 

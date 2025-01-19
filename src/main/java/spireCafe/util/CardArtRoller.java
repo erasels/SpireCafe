@@ -24,7 +24,6 @@ import com.megacrit.cardcrawl.random.Random;
 import spireCafe.abstracts.AbstractSCCard;
 import spireCafe.interactables.patrons.missingno.MissingnoCard;
 
-import javax.smartcardio.Card;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

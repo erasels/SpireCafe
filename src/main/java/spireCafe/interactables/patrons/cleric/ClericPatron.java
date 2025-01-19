@@ -1,20 +1,19 @@
 package spireCafe.interactables.patrons.cleric;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractPatron;
 import spireCafe.util.TexLoader;
 import spireCafe.util.Wiz;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 public class ClericPatron extends AbstractPatron {
 

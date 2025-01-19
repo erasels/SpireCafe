@@ -1,7 +1,6 @@
 package spireCafe.interactables.bartenders.drinkbot;
 
 import com.badlogic.gdx.math.MathUtils;
-
 import spireCafe.abstracts.BartenderCutscene;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 

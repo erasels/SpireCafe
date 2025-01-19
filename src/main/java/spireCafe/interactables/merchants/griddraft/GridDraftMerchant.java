@@ -1,8 +1,5 @@
 package spireCafe.interactables.merchants.griddraft;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -12,12 +9,14 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.relics.Courier;
-
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractArticle;
 import spireCafe.abstracts.AbstractMerchant;
 import spireCafe.util.TexLoader;
 import spireCafe.util.Wiz;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class GridDraftMerchant extends AbstractMerchant{
 
@@ -45,16 +44,6 @@ public class GridDraftMerchant extends AbstractMerchant{
     @Override
     protected void rollShop() {
         
-        ArrayList<AbstractCard> cards = initCards();
-        
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++){
-                AbstractArticle gridCardArticle = new GridCardArticle(this, i, j, cards.remove(0), 100);
-                this.shopGrid[i][j] = gridCardArticle;
-                articles.add(gridCardArticle);
-            }
-        }
-
         articles.add(new GridPurchaseArticle(this, 0, true));
         articles.add(new GridPurchaseArticle(this, 1, true));
         articles.add(new GridPurchaseArticle(this, 2, true));
@@ -62,6 +51,16 @@ public class GridDraftMerchant extends AbstractMerchant{
         articles.add(new GridPurchaseArticle(this, 0, false));
         articles.add(new GridPurchaseArticle(this, 1, false));
         articles.add(new GridPurchaseArticle(this, 2, false));
+        
+        ArrayList<AbstractCard> cards = initCards();
+        
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++){
+                AbstractArticle gridCardArticle = new GridCardArticle(this, i, j, cards.remove(0), 0);
+                this.shopGrid[i][j] = gridCardArticle;
+                articles.add(gridCardArticle);
+            }
+        }
     }
 
     private ArrayList<AbstractCard> initCards() {

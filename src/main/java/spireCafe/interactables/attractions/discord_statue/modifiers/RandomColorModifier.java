@@ -1,11 +1,10 @@
 package spireCafe.interactables.attractions.discord_statue.modifiers;
 
-import java.util.Random;
-
+import basemod.abstracts.AbstractCardModifier;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.AbstractCard.CardColor;
 
-import basemod.abstracts.AbstractCardModifier;
+import java.util.Random;
 
 public class RandomColorModifier extends AbstractCardModifier {
     private CardColor color;
