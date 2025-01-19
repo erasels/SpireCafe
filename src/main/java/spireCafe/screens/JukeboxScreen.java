@@ -289,9 +289,10 @@ public class JukeboxScreen extends CustomScreen {
 
     @Override
     public void update() {
-            if (nowPlayingSong != null) {
-                nowPlayingSong.setVolume(Settings.MUSIC_VOLUME); // Continuously update volume
-            }
+
+        if (nowPlayingSong != null) {
+            nowPlayingSong.setVolume(Settings.MUSIC_VOLUME * Settings.MASTER_VOLUME); // Continuously update volume
+        }
         clearHighlightsOnEmptyTrack();
         updateSongButtons();
         updatePaginationButtons();

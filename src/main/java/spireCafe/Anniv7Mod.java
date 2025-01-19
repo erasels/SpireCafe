@@ -439,10 +439,11 @@ public class Anniv7Mod implements
         }
         // Adjust volume dynamically while the game is in the foreground
         if (nowPlayingSong != null && !Settings.isBackgrounded) {
-            float adjustedVolume = Settings.MUSIC_VOLUME; // Use the global volume slider
+            float adjustedVolume = Settings.MUSIC_VOLUME * Settings.MASTER_VOLUME; // Use the global volume slider
             nowPlayingSong.setVolume(adjustedVolume); // Update the music volume on the fly
         }
     }
+
     @Override
     public void receivePostDungeonInitialize() {
         if (!CardCrawlGame.isInARun()) {
