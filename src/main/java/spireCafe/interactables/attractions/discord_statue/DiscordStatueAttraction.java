@@ -1,11 +1,10 @@
 package spireCafe.interactables.attractions.discord_statue;
 
+import basemod.animations.SpriterAnimation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
-
-import basemod.animations.SpriterAnimation;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractAttraction;
 

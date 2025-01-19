@@ -1,8 +1,5 @@
 package spireCafe.interactables.merchants.griddraft;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -12,12 +9,14 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.relics.Courier;
-
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractArticle;
 import spireCafe.abstracts.AbstractMerchant;
 import spireCafe.util.TexLoader;
 import spireCafe.util.Wiz;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class GridDraftMerchant extends AbstractMerchant{
 

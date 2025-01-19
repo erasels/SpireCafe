@@ -1,10 +1,9 @@
 package spireCafe.interactables.patrons.dandadan;
 
+import basemod.helpers.CardModifierManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch2;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-
-import basemod.helpers.CardModifierManager;
 import spireCafe.util.Wiz;
 
 @SpirePatch2(clz = AbstractCard.class, method = "renderImage")

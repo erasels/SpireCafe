@@ -1,16 +1,16 @@
 package spireCafe.util.devcommands;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import basemod.DevConsole;
 import basemod.devcommands.ConsoleCommand;
 import spireCafe.Anniv7Mod;
 import spireCafe.CafeRoom;
 import spireCafe.abstracts.AbstractCafeInteractable;
 import spireCafe.abstracts.AbstractPatron;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CafePatron extends ConsoleCommand{
 

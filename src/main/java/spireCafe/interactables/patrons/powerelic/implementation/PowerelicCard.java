@@ -18,7 +18,7 @@ import spireCafe.abstracts.AbstractSCCard;
 import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
 import spireCafe.util.Wiz;
 
-import static spireCafe.Anniv7Mod.*;
+import static spireCafe.Anniv7Mod.makeID;
 import static spireCafe.interactables.patrons.powerelic.implementation.PowerelicPatron.assetID;
 
 @NoCompendium

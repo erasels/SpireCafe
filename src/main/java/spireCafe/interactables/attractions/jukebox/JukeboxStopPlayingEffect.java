@@ -1,9 +1,9 @@
 package spireCafe.interactables.attractions.jukebox;
 
 import basemod.animations.SpriterAnimation;
+import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractNPC;
-import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 
 public class JukeboxStopPlayingEffect extends AbstractGameEffect {
     private final AbstractNPC character;

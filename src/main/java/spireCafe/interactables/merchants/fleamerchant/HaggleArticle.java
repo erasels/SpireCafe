@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
-import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
@@ -14,9 +12,7 @@ import com.megacrit.cardcrawl.localization.UIStrings;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractArticle;
 import spireCafe.abstracts.AbstractMerchant;
-import spireCafe.interactables.merchants.secretshop.SecretShopMerchant;
 import spireCafe.util.TexLoader;
-import spireCafe.util.Wiz;
 
 public class HaggleArticle extends AbstractArticle{
     private static final String ID = Anniv7Mod.makeID(HaggleArticle.class.getSimpleName());
