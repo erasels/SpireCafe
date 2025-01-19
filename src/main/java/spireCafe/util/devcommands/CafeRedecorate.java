@@ -5,8 +5,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import spireCafe.CafeRoom;
 import spireCafe.patches.CafeEntryExitPatch;
 
-import java.util.ArrayList;
-
 public class CafeRedecorate extends ConsoleCommand {
 
     public CafeRedecorate() {

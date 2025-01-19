@@ -1,27 +1,12 @@
 package spireCafe.interactables.patrons.missingno;
 
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.MathUtils;
-import com.megacrit.cardcrawl.actions.common.DrawCardAction;
-import com.megacrit.cardcrawl.actions.common.PutOnDeckAction;
 import com.megacrit.cardcrawl.actions.utility.SFXAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.orbs.AbstractOrb;
-import com.megacrit.cardcrawl.relics.AbstractRelic;
-import com.megacrit.cardcrawl.relics.FrozenEye;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
-import com.megacrit.cardcrawl.ui.campfire.AbstractCampfireOption;
 import spireCafe.abstracts.AbstractSCRelic;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.miscRng;
 import static spireCafe.Anniv7Mod.makeID;

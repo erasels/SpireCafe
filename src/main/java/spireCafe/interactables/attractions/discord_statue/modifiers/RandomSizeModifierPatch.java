@@ -1,12 +1,11 @@
 package spireCafe.interactables.attractions.discord_statue.modifiers;
 
+import basemod.helpers.CardModifierManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch2;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-
-import basemod.helpers.CardModifierManager;
 
 @SpirePatch2(clz = AbstractCard.class, paramtypez = { SpriteBatch.class }, method = "render")
 public class RandomSizeModifierPatch {

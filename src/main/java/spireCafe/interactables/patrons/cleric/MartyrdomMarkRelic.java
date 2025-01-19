@@ -3,7 +3,6 @@ package spireCafe.interactables.patrons.cleric;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.powers.NextTurnBlockPower;
-
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.util.Wiz;

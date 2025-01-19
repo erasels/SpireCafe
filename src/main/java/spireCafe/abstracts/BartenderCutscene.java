@@ -1,8 +1,6 @@
 package spireCafe.abstracts;
 
-import basemod.ReflectionHacks;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.screens.select.GridCardSelectScreen;
 import spireCafe.Anniv7Mod;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;

@@ -1,6 +1,5 @@
 package spireCafe.interactables.bartenders.vampista;
 
-import basemod.helpers.CardModifierManager;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
@@ -9,13 +8,10 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
-import com.megacrit.cardcrawl.vfx.UpgradeShineEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
-import org.apache.commons.lang3.math.NumberUtils;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractBartender;
 import spireCafe.abstracts.BartenderCutscene;
-import spireCafe.cardmods.MoreBlockMod;
 import spireCafe.util.TexLoader;
 import spireCafe.util.Wiz;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;

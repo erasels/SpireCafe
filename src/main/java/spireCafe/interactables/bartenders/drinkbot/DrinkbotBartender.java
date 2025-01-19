@@ -1,14 +1,12 @@
 package spireCafe.interactables.bartenders.drinkbot;
 
-import org.apache.commons.lang3.math.NumberUtils;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
-
+import org.apache.commons.lang3.math.NumberUtils;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractBartender;
 import spireCafe.util.TexLoader;

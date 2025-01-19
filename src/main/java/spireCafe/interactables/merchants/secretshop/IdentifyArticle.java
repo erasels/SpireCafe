@@ -9,7 +9,6 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.UIStrings;
-
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractArticle;
 import spireCafe.abstracts.AbstractMerchant;

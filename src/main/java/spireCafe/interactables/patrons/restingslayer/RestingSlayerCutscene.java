@@ -1,27 +1,18 @@
 package spireCafe.interactables.patrons.restingslayer;
 
-import basemod.BaseMod;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
-import com.megacrit.cardcrawl.cards.red.Bash;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
-import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import spireCafe.abstracts.AbstractCutscene;
-import spireCafe.util.Wiz;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import static com.megacrit.cardcrawl.cards.AbstractCard.CardRarity.*;
-import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.eventRng;
 import static spireCafe.Anniv7Mod.makeID;
 import static spireCafe.interactables.patrons.restingslayer.RestingSlayerPatron.capitalize;
 

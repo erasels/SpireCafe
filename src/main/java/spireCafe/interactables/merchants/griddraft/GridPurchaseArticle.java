@@ -1,7 +1,5 @@
 package spireCafe.interactables.merchants.griddraft;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,12 +8,13 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
-
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractArticle;
 import spireCafe.abstracts.AbstractMerchant;
 import spireCafe.util.TexLoader;
 import spireCafe.util.Wiz;
+
+import java.util.ArrayList;
 
 public class GridPurchaseArticle extends AbstractArticle {
 
@@ -28,12 +27,12 @@ public class GridPurchaseArticle extends AbstractArticle {
     private static final Texture COLUMN_HOVER = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("griddraft/button_hover.png"));
 
     private static float COLUMN_X_OFFSET = 581.0F * Settings.scale;
-    private static float COLUMN_Y_OFFSET = 926.0F * Settings.scale;
+    private static float COLUMN_Y_OFFSET = 866.0F * Settings.scale;
     private static float X_PAD = 275.0F * Settings.scale;
     
     private static float ROW_X_OFFSET = 511.0F * Settings.scale;
-    private static float ROW_Y_OFFSET = 649.0F * Settings.scale;
-    private static float Y_PAD = 300.0F * Settings.scale;
+    private static float ROW_Y_OFFSET = 584.0F * Settings.scale;
+    private static float Y_PAD = 282.0F * Settings.scale;
 
     public GridPurchaseArticle(AbstractMerchant merchant, int slot, boolean isRow) {
         super(slot + ":" + (isRow ? "R" : "C"), merchant);

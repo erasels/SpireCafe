@@ -1,7 +1,6 @@
 package spireCafe;
 
 import basemod.BaseMod;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
@@ -55,9 +54,6 @@ public class CafeRoom extends AbstractEvent {
     public boolean darkBg;
 
     public CafeRoom() {
-        CardCrawlGame.music.silenceTempBgmInstantly();
-        CardCrawlGame.music.silenceBGM();
-        musicDelay = 6f;
         startedMusic=false;
 
         this.body = "";
@@ -196,13 +192,9 @@ public class CafeRoom extends AbstractEvent {
     public void update() {
         super.update();
         if(!startedMusic){
-            if(musicDelay<=0){
-                JukeboxScreen jukeboxScreen = (JukeboxScreen) BaseMod.getCustomScreen(JukeboxScreen.ScreenEnum.JUKEBOX_SCREEN);
-                jukeboxScreen.playCafeTheme();
-                startedMusic=true;
-            } else {
-                this.musicDelay -= Gdx.graphics.getDeltaTime();
-            }
+            JukeboxScreen jukeboxScreen = (JukeboxScreen) BaseMod.getCustomScreen(JukeboxScreen.ScreenEnum.JUKEBOX_SCREEN);
+            jukeboxScreen.playCafeTheme();
+            startedMusic=true;
         }
 
         if (!RoomEventDialog.waitForInput) {

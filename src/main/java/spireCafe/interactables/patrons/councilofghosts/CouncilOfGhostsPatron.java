@@ -8,7 +8,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractPatron;
-import spireCafe.interactables.patrons.koishi.KoishiCutscene;
 import spireCafe.util.TexLoader;
 
 public class CouncilOfGhostsPatron extends AbstractPatron {
