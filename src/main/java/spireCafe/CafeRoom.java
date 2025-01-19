@@ -193,14 +193,10 @@ public class CafeRoom extends AbstractEvent {
     public void update() {
         super.update();
         if(!startedMusic){
-            if(musicDelay<=0){
                 JukeboxScreen jukeboxScreen = (JukeboxScreen) BaseMod.getCustomScreen(JukeboxScreen.ScreenEnum.JUKEBOX_SCREEN);
                 jukeboxScreen.playCafeTheme();
                 startedMusic=true;
-            } else {
-                this.musicDelay -= Gdx.graphics.getDeltaTime();
             }
-        }
 
         if (!RoomEventDialog.waitForInput) {
             this.buttonEffect(this.roomEventText.getSelectedOption());
