@@ -68,7 +68,7 @@ public class TheTransientPatron extends AbstractPatron {
     public void renderCutscenePortrait(SpriteBatch sb) {
         Color c = sb.getColor();
         sb.setColor(new Color(1, 1, 1, cutsceneAlpha));
-        simpleRenderCutscenePortrait(sb, 1600.0F,175.0F, 0.0F, 0.0F, 0.0F);
+        simpleRenderCutscenePortrait(sb, 1500.0F,-150.0F, 0.0F, 0.0F, 0.0F);
         sb.setColor(c);
     }
 
