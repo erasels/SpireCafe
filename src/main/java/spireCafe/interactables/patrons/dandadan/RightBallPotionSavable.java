@@ -19,8 +19,10 @@ public class RightBallPotionSavable implements CustomSavable<Integer> {
     public Integer onSave() {
         if (RightballPotionPatch.rbp != null) {
             return RightballPotionPatch.rbp.returnChance;
-        } else if (RightballPotionPatch.potionReward != null) {
-            return ((RightballPotion) RightballPotionPatch.potionReward.potion).returnChance;
+        } else if (RightballPotionPatch.potionReward != null ) {
+            if (RightballPotionPatch.potionReward.potion instanceof RightballPotion) {
+                return ((RightballPotion) RightballPotionPatch.potionReward.potion).returnChance;
+            }
         }
         return 0;
     }

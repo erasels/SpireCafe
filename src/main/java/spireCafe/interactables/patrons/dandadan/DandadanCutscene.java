@@ -81,7 +81,7 @@ public class DandadanCutscene extends AbstractCutscene {
                 int goldForPotion = 60;
                 disableOption = Wiz.p().gold < goldForPotion;
                 this.dialog
-                        .addDialogOption(OPTIONS[POTION_OPTION], disableOption, new RightballPotion())
+                        .addDialogOption(String.format(OPTIONS[POTION_OPTION], goldForPotion), disableOption, new RightballPotion())
                         .setOptionResult((i) -> {
                             if (Wiz.p().hasPotion(PotionSlot.POTION_ID)) {
                                 goToDialogue(RIGHTBALL_POTION_START);

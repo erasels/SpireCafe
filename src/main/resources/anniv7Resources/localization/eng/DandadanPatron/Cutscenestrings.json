@@ -23,7 +23,7 @@
     "OPTIONS": [
       "Steal the ball. #rLose #r%d #rMax #rHP. ",
       "Receive a memento. #rPay #r%d #rGold. ",
-      "Receive a special tonic. #rPay #r20 #rGold. ",
+      "Receive a special tonic. #rPay #r%d #rGold. ",
       "I don't want anything to do with you! "
     ]
   }
