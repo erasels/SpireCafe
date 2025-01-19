@@ -1,12 +1,11 @@
 package spireCafe.interactables.attractions.discord_statue.modifiers;
 
+import basemod.abstracts.AbstractCardModifier;
+import com.megacrit.cardcrawl.cards.AbstractCard;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import com.megacrit.cardcrawl.cards.AbstractCard;
-
-import basemod.abstracts.AbstractCardModifier;
 
 public class AnagramNameModifier extends AbstractCardModifier {
     private String name;

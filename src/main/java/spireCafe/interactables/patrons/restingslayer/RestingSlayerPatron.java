@@ -6,7 +6,8 @@ import basemod.abstracts.CustomPlayer;
 import basemod.animations.AbstractAnimation;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.esotericsoftware.spine.*;
+import com.esotericsoftware.spine.AnimationState;
+import com.esotericsoftware.spine.SkeletonJson;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -44,8 +45,6 @@ public class RestingSlayerPatron extends AbstractPatron {
     public boolean hasRare;
     public Random restingSlayerRng;
 
-
-
     public RestingSlayerPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
 
@@ -62,42 +61,43 @@ public class RestingSlayerPatron extends AbstractPatron {
         name = characterStrings.NAMES[0].replace("{0}", slayer.getLocalizedCharacterName().replace(characterStrings.NAMES[1], ""));
         authors = "Jack Renoson";
 
-        //directly copied loadAnimation from AbstractCreature class
-        if(slayer instanceof CustomPlayer){
-            AbstractAnimation anim = ReflectionHacks.getPrivate(slayer, CustomPlayer.class, "animation");
-            if(anim.type() == AbstractAnimation.Type.SPRITE){
-                animation = anim;
+        try {
+            //directly copied loadAnimation from AbstractCreature class
+            if(slayer instanceof CustomPlayer){
+                AbstractAnimation anim = ReflectionHacks.getPrivate(slayer, CustomPlayer.class, "animation");
+                if(anim.type() == AbstractAnimation.Type.SPRITE){
+                    animation = anim;
+                } else {
+                    this.atlas = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "atlas");
+                    SkeletonJson json = new SkeletonJson(this.atlas);
+                    json.setScale(Settings.renderScale);
+                    this.skeleton = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "skeleton");
+                    if(skeleton != null) {
+                        this.skeleton.setColor(Color.WHITE);
+                        this.stateData = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "stateData");
+                        this.state = new AnimationState(this.stateData);
+                    } else {
+                        img = TexLoader.getTexture(Anniv7Mod.makeCharacterPath("ExampleNPC/image.png"));
+                    }
+                }
             } else {
                 this.atlas = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "atlas");
                 SkeletonJson json = new SkeletonJson(this.atlas);
                 json.setScale(Settings.renderScale);
                 this.skeleton = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "skeleton");
-                if(skeleton != null) {
-                    this.skeleton.setColor(Color.WHITE);
-                    this.stateData = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "stateData");
-                    this.state = new AnimationState(this.stateData);
-                } else {
-                    img = TexLoader.getTexture(Anniv7Mod.makeCharacterPath("ExampleNPC/image.png"));
-                }
+                this.skeleton.setColor(Color.WHITE);
+                this.stateData = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "stateData");
+                this.state = new AnimationState(this.stateData);
             }
-        } else {
-            this.atlas = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "atlas");
-            SkeletonJson json = new SkeletonJson(this.atlas);
-            json.setScale(Settings.renderScale);
-            this.skeleton = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "skeleton");
-            this.skeleton.setColor(Color.WHITE);
-            this.stateData = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "stateData");
-            this.state = new AnimationState(this.stateData);
+            //////
         }
-        //////
+        catch (Exception e) {
+            throw new RuntimeException("Error loading animation for character: " + slayer.id, e);
+        }
 
         generateCards();
         generateRelics();
         updateOffer();
-
-
-
-
     }
 
     public void setCutscenePortrait(String texture) {

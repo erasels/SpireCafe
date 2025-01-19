@@ -1,8 +1,7 @@
 package spireCafe.interactables.patrons.dandadan;
 
-import com.megacrit.cardcrawl.rewards.RewardItem;
-
 import basemod.abstracts.CustomSavable;
+import com.megacrit.cardcrawl.rewards.RewardItem;
 
 public class RightBallPotionSavable implements CustomSavable<Integer> {
 

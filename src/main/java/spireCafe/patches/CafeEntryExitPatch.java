@@ -25,6 +25,7 @@ import spireCafe.CafeRoom;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.scene.CafeScene;
 import spireCafe.screens.CafeMerchantScreen;
+import spireCafe.screens.JukeboxScreen;
 import spireCafe.util.ActUtil;
 
 import java.io.IOException;
@@ -118,6 +119,7 @@ public class CafeEntryExitPatch {
 
                 AbstractDungeon.overlayMenu.proceedButton.hideInstantly();
                 modifyProceedButton(ReflectionHacks.getPrivateStatic(ProceedButton.class, "DRAW_Y"), true);
+                JukeboxScreen.stopCurrentMusic();
 
                 if(allTimeSeenInteractables != null) {
                     try {

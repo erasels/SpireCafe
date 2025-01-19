@@ -1,5 +1,8 @@
 package spireCafe.interactables.patrons.dandadan;
 
+import basemod.abstracts.AbstractCardModifier;
+import basemod.cardmods.EtherealMod;
+import basemod.helpers.CardModifierManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,10 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
-
-import basemod.abstracts.AbstractCardModifier;
-import basemod.cardmods.EtherealMod;
-import basemod.helpers.CardModifierManager;
 import spireCafe.Anniv7Mod;
 import spireCafe.util.TexLoader;
 

@@ -1,7 +1,5 @@
 package spireCafe.interactables.patrons.dandadan;
 
-import static spireCafe.Anniv7Mod.makeID;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -12,7 +10,6 @@ import com.megacrit.cardcrawl.potions.PotionSlot;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
-
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
@@ -20,6 +17,8 @@ import spireCafe.util.TexLoader;
 import spireCafe.util.Wiz;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
+
+import static spireCafe.Anniv7Mod.makeID;
 
 public class DandadanCutscene extends AbstractCutscene {
     public static final String ID = makeID(DandadanCutscene.class.getSimpleName());
