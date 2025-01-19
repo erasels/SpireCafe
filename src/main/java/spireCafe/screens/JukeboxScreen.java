@@ -289,6 +289,9 @@ public class JukeboxScreen extends CustomScreen {
 
     @Override
     public void update() {
+            if (nowPlayingSong != null) {
+                nowPlayingSong.setVolume(Settings.MUSIC_VOLUME); // Continuously update volume
+            }
         clearHighlightsOnEmptyTrack();
         updateSongButtons();
         updatePaginationButtons();
@@ -830,7 +833,7 @@ public class JukeboxScreen extends CustomScreen {
             playTrack(selectedTrack);
         }
     }
-    private void playTrack(String trackName) {
+    public void playTrack(String trackName) {
         stopCurrentMusic(); // Stop any currently playing music
         CardCrawlGame.music.silenceTempBgmInstantly();
         CardCrawlGame.music.silenceBGMInstantly();
@@ -871,11 +874,67 @@ public class JukeboxScreen extends CustomScreen {
 
             // Configure playback
             currentTrackName = formatTrackName(trackName);
-            nowPlayingSong.setLooping(loopEnabled);
             nowPlayingSong.setVolume(Settings.MUSIC_VOLUME);
+
+            // For all other tracks, follow the loopEnabled flag
+            nowPlayingSong.setLooping(loopEnabled);
             nowPlayingSong.setOnCompletionListener(music -> {
                 if (!loopEnabled) {
-                    playRandomTrack();
+                    playRandomTrack(); // Play a random track if loop is disabled
+                }
+            });
+
+
+            nowPlayingSong.play();
+            isPlaying = true;
+
+        } catch (Exception e) {
+            LOGGER.severe("Failed to play music: " + trackName);
+            e.printStackTrace();
+        }
+    }
+    public void playCafeTheme() {
+        stopCurrentMusic(); // Stop any currently playing music
+        CardCrawlGame.music.silenceTempBgmInstantly();
+        CardCrawlGame.music.silenceBGMInstantly();
+
+        try {
+            String introPath = getTrackFileName("Cafe_Intro");
+            LOGGER.info("Playing Cafe_Intro: " + introPath);
+
+            FileHandle fileHandle = Gdx.files.internal(introPath);
+            if (!fileHandle.exists()) {
+                LOGGER.warning("Cafe_Intro file not found: " + introPath);
+                return;
+            }
+
+            // Play the intro
+            nowPlayingSong = Gdx.audio.newMusic(fileHandle);
+            currentTrackName = "Cafe_Intro";
+            nowPlayingSong.setVolume(Settings.MUSIC_VOLUME);
+            nowPlayingSong.setLooping(false); // Intro does not loop
+
+            // Set up transition to Cafe_Loop
+            nowPlayingSong.setOnCompletionListener(music -> {
+                try {
+                    String loopPath = getTrackFileName("Cafe_Loop");
+                    LOGGER.info("Transitioning to Cafe_Loop: " + loopPath);
+
+                    FileHandle loopHandle = Gdx.files.internal(loopPath);
+                    if (!loopHandle.exists()) {
+                        LOGGER.warning("Cafe_Loop file not found: " + loopPath);
+                        return;
+                    }
+
+                    nowPlayingSong = Gdx.audio.newMusic(loopHandle);
+                    currentTrackName = "Cafe_Loop";
+                    nowPlayingSong.setVolume(Settings.MUSIC_VOLUME);
+                    nowPlayingSong.setLooping(true); // Loop Cafe_Loop
+                    nowPlayingSong.play();
+                    LOGGER.info("Cafe_Loop is now playing.");
+                } catch (Exception e) {
+                    LOGGER.severe("Failed to play Cafe_Loop.");
+                    e.printStackTrace();
                 }
             });
 
@@ -883,7 +942,7 @@ public class JukeboxScreen extends CustomScreen {
             isPlaying = true;
 
         } catch (Exception e) {
-            LOGGER.severe("Failed to play music: " + trackName);
+            LOGGER.severe("Failed to play Cafe_Theme.");
             e.printStackTrace();
         }
     }
@@ -901,6 +960,10 @@ public class JukeboxScreen extends CustomScreen {
     }
     private String getTrackFileName(String key) {
         switch (key) {
+            case "Cafe_Intro":
+                return "anniv7Resources/audio/Cafe_Intro.ogg";
+            case "Cafe_Loop":
+                return "anniv7Resources/audio/Cafe_Loop.ogg";
             case "Cafe_Theme":
                 return "anniv7Resources/audio/Cafe_Theme.mp3";
             case "SHOP":
@@ -996,34 +1059,14 @@ public class JukeboxScreen extends CustomScreen {
         Random random = new Random();
         String nextTrack;
 
-        // Loop until we find a track that's not the currently playing one
+        // Loop until a different track is selected
         do {
             int randomIndex = random.nextInt(allTracks.size());
             nextTrack = allTracks.get(randomIndex);
-        } while (nextTrack.equals(currentTrackName)); // Use currentTrackName for comparison
+        } while (nextTrack.equals(currentTrackName));
 
-        // Play the selected track
-        textField = TEXT[1]   + nextTrack;
-        currentTrackName = formatTrackName(nextTrack); // Update the current track name
-
-        if (predefinedTracks.contains(nextTrack)) {
-            String trackFileName = getTrackFileName(nextTrack);
-            LOGGER.info("Playing predefined track: " + trackFileName);
-            stopCurrentMusic();
-            CardCrawlGame.music.playTempBgmInstantly(trackFileName, loopEnabled);
-            isPlaying = true;
-        } else {
-            String originalFileName = getOriginalFileName(nextTrack);
-            if (originalFileName != null) {
-                String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalFileName;
-                playTrack(trackPath);
-            } else {
-                LOGGER.severe("Failed to find file for track: " + nextTrack);
-            }
-        }
-
-        // Update button highlights
-        updateButtonHighlights();
+        LOGGER.info("Randomly selected track: " + nextTrack);
+        playTrack(nextTrack); // Use playTrack for playback
     }
 
     private void clearHighlightsOnEmptyTrack() {
@@ -1040,35 +1083,16 @@ public class JukeboxScreen extends CustomScreen {
             return;
         }
 
-        // Play the first track in the queue
-        String nextTrack = queuedTracks.remove(0);
-        textField = TEXT[1] + nextTrack;
-        currentTrackName = formatTrackName(nextTrack);
+        String nextTrack = queuedTracks.remove(0); // Dequeue the next track
+        LOGGER.info("Playing queued track: " + nextTrack);
+        playTrack(nextTrack); // Use playTrack for playback
 
-        if (predefinedTracks.contains(nextTrack)) {
-            String trackFileName = getTrackFileName(nextTrack);
-            LOGGER.info("Playing queued predefined track: " + trackFileName);
-            stopCurrentMusic();
-            CardCrawlGame.music.playTempBgmInstantly(trackFileName, loopEnabled); // Looping depends on toggle
-            isPlaying = true;
-        } else {
-            String originalFileName = getOriginalFileName(nextTrack);
-            if (originalFileName != null) {
-                String trackPath = CUSTOM_MUSIC_FOLDER + File.separator + originalFileName;
-                playTrack(trackPath);
-            } else {
-                LOGGER.severe("Failed to find file for track: " + nextTrack);
-            }
-        }
-
-        // Update the highlight for the currently playing track
-        updateButtonHighlights();
-
-        // Schedule the next track to play when the current one ends
+        // Schedule the next track in the queue when the current one ends
         if (nowPlayingSong != null) {
             nowPlayingSong.setOnCompletionListener(music -> playQueuedTracks());
         }
     }
+
     private void updateButtonHighlights() {
         if (currentTrackName == null || currentTrackName.isEmpty()) {
             // Clear all highlights if there's no track playing
