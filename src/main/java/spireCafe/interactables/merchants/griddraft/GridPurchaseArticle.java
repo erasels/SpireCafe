@@ -27,12 +27,12 @@ public class GridPurchaseArticle extends AbstractArticle {
     private static final Texture COLUMN_HOVER = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("griddraft/button_hover.png"));
 
     private static float COLUMN_X_OFFSET = 581.0F * Settings.scale;
-    private static float COLUMN_Y_OFFSET = 926.0F * Settings.scale;
+    private static float COLUMN_Y_OFFSET = 866.0F * Settings.scale;
     private static float X_PAD = 275.0F * Settings.scale;
     
     private static float ROW_X_OFFSET = 511.0F * Settings.scale;
-    private static float ROW_Y_OFFSET = 649.0F * Settings.scale;
-    private static float Y_PAD = 300.0F * Settings.scale;
+    private static float ROW_Y_OFFSET = 584.0F * Settings.scale;
+    private static float Y_PAD = 282.0F * Settings.scale;
 
     public GridPurchaseArticle(AbstractMerchant merchant, int slot, boolean isRow) {
         super(slot + ":" + (isRow ? "R" : "C"), merchant);
