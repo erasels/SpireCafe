@@ -36,6 +36,7 @@ import spireCafe.interactables.attractions.makeup.MakeupTableAttraction;
 import spireCafe.interactables.merchants.fleamerchant.FleaMerchant;
 import spireCafe.interactables.patrons.dandadan.RightBallPotionSavable;
 import spireCafe.interactables.patrons.dandadan.RightballPotion;
+import spireCafe.interactables.patrons.dandadan.RightballPotionPatch;
 import spireCafe.interactables.patrons.missingno.MissingnoUtil;
 import spireCafe.interactables.patrons.powerelic.implementation.debug.DevcommandPowerelic;
 import spireCafe.patches.PotencySaverPatch;
@@ -553,6 +554,9 @@ public class Anniv7Mod implements
     @Override
     public void receiveStartGame() {
         CafeRoom.isInteracting = false;
+        if (!CardCrawlGame.loadingSave) {
+            RightballPotionPatch.receiveStartGame();
+        }
     }
 
     public static class SavableCurrentRunSeenInteractables implements CustomSavable<HashSet<String>> {
