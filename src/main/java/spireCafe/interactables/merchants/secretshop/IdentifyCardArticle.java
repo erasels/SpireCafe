@@ -25,6 +25,7 @@ public class IdentifyCardArticle extends CardArticle{
         this.identifyArticle = identifyArticle;
         this.unidentifiedCard.hiddenCard = hiddenCard;
         this.ssMerchant = (SecretShopMerchant) merchant;
+        this.unidentifiedCard.identify();
     }
 
     @Override
