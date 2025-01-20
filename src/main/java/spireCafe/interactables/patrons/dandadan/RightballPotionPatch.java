@@ -19,7 +19,7 @@ public class RightballPotionPatch {
     public static SpireReturn<Void> returnPotionReward(ArrayList<RewardItem> ___rewards) {
         if (rbp == null && potionReward == null) {
             return SpireReturn.Continue();
-        } else if (rbp == null && potionReward != null && !Wiz.p().hasPotion(RightballPotion.Potion_ID)) {
+        } else if (rbp == null && potionReward != null && potionReward.potion instanceof RightballPotion && !Wiz.p().hasPotion(RightballPotion.Potion_ID)) {
             ___rewards.add(potionReward);
             return SpireReturn.Continue();
         } else if (rbp == null) {
