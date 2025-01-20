@@ -8,9 +8,8 @@ import com.megacrit.cardcrawl.rewards.RewardItem;
 import javassist.CannotCompileException;
 import javassist.expr.ExprEditor;
 import javassist.expr.MethodCall;
-import spireMapOverhaul.patches.interfacePatches.RewardModifierPatches.ModifyRewardsPatch;
 
-@SpirePatch2(clz = ModifyRewardsPatch.class, method = "ModifyRewards", requiredModId = "anniv6", optional = true)
+@SpirePatch2(cls = "spireMapOverhaul.patches.interfacePatches.RewardModifierPatches.ModifyRewardsPatch", method = "ModifyRewards", requiredModId = "anniv6", optional = true)
 public class SpiomesCompatPatch {
 
     public static RewardItem savedReward;
