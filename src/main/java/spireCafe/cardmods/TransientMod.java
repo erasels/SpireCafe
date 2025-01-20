@@ -16,6 +16,12 @@ import spireCafe.Anniv7Mod;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    Transient Mod:
+    Card Exhausts and permanently removed after played 5 times.
+    If card is non-starter, base cost reduced by 1.
+    Card is rendered with a white glow and is more transparent the more it is played.
+ */
 public class TransientMod extends AbstractCardModifier {
 
     public static final String ID = Anniv7Mod.makeID("TransientMod");
@@ -44,12 +50,12 @@ public class TransientMod extends AbstractCardModifier {
         card.initializeDescription();
 
         AbstractCard masterCard = StSLib.getMasterDeckEquivalent(card);
-        if(transience <= 0){
+        if(transience <= 0){ //if 0: remove card
             PurgeField.purge.set(card, true);
             if (masterCard != null) {
                 AbstractDungeon.player.masterDeck.removeCard(masterCard);
             }
-        }else{
+        }else{ //if not 0: reduce transient count
             if (masterCard != null) {
                 for(AbstractCardModifier masterMod: CardModifierManager.modifiers(masterCard)){
                     if(masterMod instanceof TransientMod){
@@ -61,6 +67,7 @@ public class TransientMod extends AbstractCardModifier {
         }
     }
 
+    //white glow, dimmed for each play of card
     @Override
     public Color getGlow(AbstractCard card) {
         Color newColor = new Color(Color.GRAY);
@@ -76,6 +83,7 @@ public class TransientMod extends AbstractCardModifier {
         return ID;
     }
 
+    //cost reduction if not starter
     @Override
     public void onInitialApplication(AbstractCard card) {
         if(card.rarity != AbstractCard.CardRarity.BASIC && card.cost >= 1){
@@ -90,6 +98,8 @@ public class TransientMod extends AbstractCardModifier {
         return String.format(TEXT[0], rawDescription, transience);
     }
 
+    // add tooltip to describe transient mod,
+    // if card is not starter, add extra blurb about cost reduction
     @Override
     public List<TooltipInfo> additionalTooltips(AbstractCard card) {
         List<TooltipInfo> tooltips = new ArrayList<>();
@@ -99,6 +109,7 @@ public class TransientMod extends AbstractCardModifier {
         return tooltips;
     }
 
+    // render card with transparency
     @Override
     public void onUpdate(AbstractCard card) {
         if(!card.fadingOut){

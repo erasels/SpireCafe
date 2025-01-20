@@ -48,15 +48,12 @@ public class TheTransientPatron extends AbstractPatron {
         this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath(resourcePath)));
     }
 
-    @Override
-    public void renderAnimation(SpriteBatch sb) {
-        super.renderAnimation(sb);
-    }
-
+    // match cafe animation alpha to cutscene image alpha
     public void postCutsceneFade(){
         targetAnimationAlpha = cutsceneAlpha;
     }
 
+    // update cafe animation alpha towards target alpha
     @Override
     public void update() {
         super.update();
@@ -64,6 +61,7 @@ public class TheTransientPatron extends AbstractPatron {
         this.skeleton.setColor(new Color(1,1,1,animationAlpha));
     }
 
+    // render cutscene image with alpha
     public void renderCutscenePortrait(SpriteBatch sb) {
         Color c = sb.getColor();
         sb.setColor(new Color(1, 1, 1, cutsceneAlpha));

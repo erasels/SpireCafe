@@ -20,6 +20,12 @@ import java.util.ArrayList;
 
 import static spireCafe.Anniv7Mod.makeID;
 
+/*
+    Transient:
+    Player may ignore or interact with transient to give a card transient,
+    if the player interacts with the transient, a "chillin" scene begins that can be ended at any time.
+    During the chillin scene, the Transient fades out and images awkwardly pop up and slide around the screen, speeding up over time
+ */
 public class TheTransientCutscene extends AbstractCutscene {
     public static final String ID = makeID(TheTransientCutscene.class.getSimpleName());
     private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
@@ -32,7 +38,7 @@ public class TheTransientCutscene extends AbstractCutscene {
     @Override
     protected void onClick() {
         switch (dialogueIndex){
-            case 0:
+            case 0: //present options
                 nextDialogue();
 
                 this.dialog.addDialogOption(String.format(OPTIONS[0], MAX_HP_LOSS), new BurningBlood(){ //lmao get hijacked idiot relic (altering relic preview text to display transient definition)
@@ -47,7 +53,7 @@ public class TheTransientCutscene extends AbstractCutscene {
                 });
                 this.dialog.addDialogOption(OPTIONS[1]).setOptionResult((i)-> goToDialogue(7));
                 break;
-            case 3:
+            case 3: //end chillin scene, add cardmod button
                 for(SimpleTextureLerp e: textureLerps){
                     e.earlyEnd();
                 }
@@ -64,6 +70,7 @@ public class TheTransientCutscene extends AbstractCutscene {
                     }
                     AbstractDungeon.gridSelectScreen.open(group, 1, OPTIONS[4], false);
 
+                    //move to different endings depending on how long the player chilled
                     character.alreadyPerformedTransaction = true;
                     if(chillTime < 5){
                         goToDialogue(8);
@@ -81,7 +88,7 @@ public class TheTransientCutscene extends AbstractCutscene {
             case 6:
             case 7:
             case 8:
-                ((TheTransientPatron)character).postCutsceneFade();
+                ((TheTransientPatron)character).postCutsceneFade(); //apply fade to patron animation in bar at cutscene end
                 endCutscene();
                 break;
             default:
@@ -91,12 +98,12 @@ public class TheTransientCutscene extends AbstractCutscene {
         }
     }
 
-    float chillTime = 0;
-    int chillInd = -1;
-    float speedMult = 1; //sequence speeds up over time by speedMult, lerp effects speeds up by half as much (lots of things on screen over time)
-    boolean fullyFaded = false;
-    public static final float CHILL_FADE_TIME = 60;
-    ArrayList<SimpleTextureLerp> textureLerps = new ArrayList<>();
+    public float chillTime = 0; //time spent chillin
+    public int chillInd = -1; //chill index 0 to 5: indicates which one of the chill effects is playing (in order)
+    public float speedMult = 1; //sequence speeds up over time by speedMult, lerp effects speeds up by half as much (lots of things on screen over time)
+    public boolean fullyFaded = false; //transient fully faded
+    public static final float CHILL_FADE_TIME = 60; //time before loop and transient fully fades
+    ArrayList<SimpleTextureLerp> textureLerps = new ArrayList<>(); //effects kept here to allow for earlyEnd() call
     //grid selection for applying transient mod
     public void update() {
         super.update();
