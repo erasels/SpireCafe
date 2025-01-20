@@ -1,0 +1,20 @@
+{
+  "${ModID}:JukeboxScreen": {
+    "TEXT": [
+      "Waiting for Song",
+      "Now Playing: ",
+      "Close Jukebox",
+      "Queue is empty. Nothing to play.",
+      "Next",
+      "Previous",
+      "Add to Queue",
+      "Clear Queue",
+      "Confirm",
+      "Track removed from queue: ",
+      "Track added to queue: ",
+      "Queue confirmed: ",
+      "Skip"
+    ]
+  }
+
+}

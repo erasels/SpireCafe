@@ -1,8 +1,5 @@
 package spireCafe.interactables.merchants.secretshop;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -16,10 +13,12 @@ import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
-
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractMerchant;
 import spireCafe.util.TexLoader;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class SecretShopMerchant extends AbstractMerchant {
 

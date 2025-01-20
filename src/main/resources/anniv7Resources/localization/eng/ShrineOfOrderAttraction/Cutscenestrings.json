@@ -1,0 +1,27 @@
+{
+  "${ModID}:ShrineOfOrderCutscene": {
+    "NAME": "Shrine Of Order",
+    "BLOCKING_TEXTS": [],
+    "DESCRIPTIONS": [
+      "An odd-looking statue looms ahead. A small teal disc lies at its base.",
+      "Picking up the disc, you notice three matching slots in the surface of the sculpture. One is cracked with dust leaking from its crevices, another is pristine and unadorned, while the third is gilded and polished to a shine. What should you do with the disc?",
+      "As you fit the disc into the slot, a bright glow envelops you. You feel... ~[#5586ca]Perfect[]~ .",
+      "You step away from the statue.",
+      "You place the disc back where it was and step away from the statue.",
+      "You smash the coin against the floor, to the shock of the other patrons. A flash of light blasts from the shattered remains, changing you subtly."
+    ],
+    "OPTIONS": [
+      "Pick up the disc.",
+      "Cracked slot. ",
+      "(Your Common cards copy another of your Commons.)",
+      "Leave.",
+      "Plain slot. ",
+      "(Your Uncommon cards copy another of your Uncommons.)",
+      "Embellished slot. ",
+      "(Your Rare cards copy another of your Rares.)",
+      "Shatter. ",
+      "(Pick a Basic card. It copies one of your Commons.)",
+      "Pick a Basic Card."
+    ]
+  }
+}

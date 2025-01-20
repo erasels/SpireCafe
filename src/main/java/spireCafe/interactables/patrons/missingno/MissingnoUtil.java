@@ -20,7 +20,10 @@ import com.megacrit.cardcrawl.vfx.combat.*;
 import spireCafe.util.Wiz;
 
 import java.lang.reflect.Constructor;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.miscRng;
@@ -220,14 +223,16 @@ public class MissingnoUtil {
 
         if(time > 60f && !hasNameChanged) {
             hasNameChanged = true;
-            if(isGlitched() && Wiz.isInCombat() && miscRng.randomBoolean(.33f)) {
+            if(isGlitched() && miscRng.randomBoolean(.33f)) {
                 AbstractDungeon.topPanel.setPlayerName();
             }
         }
 
         if(time > 80f && !hasShuffledRelics) {
-            MissingnoUtil.shuffleRelics();
             hasShuffledRelics = true;
+            if(isGlitched()) {
+                MissingnoUtil.shuffleRelics();
+            }
         }
 
         if(time > 20f && !hasPlayedSfx) {

@@ -45,6 +45,7 @@ public abstract class AbstractMerchant extends AbstractCafeInteractable {
     @Override
     public void onInteract() {
         BaseMod.openCustomScreen(CafeMerchantScreen.ScreenEnum.CAFE_MERCHANT_SCREEN, this);
+        AbstractDungeon.overlayMenu.showBlackScreen();
     }
 
     //Override if you need special behavior when an article is bought
@@ -53,7 +54,9 @@ public abstract class AbstractMerchant extends AbstractCafeInteractable {
     }
 
     //Called after the custom screen is close in case you need to take care of lingering effects or something
-    public void onCloseShop() {}
+    public void onCloseShop() {
+        AbstractDungeon.overlayMenu.hideBlackScreen();
+    }
 
     public void updateShop() {
         for (AbstractArticle article : toAdd) {

@@ -238,10 +238,6 @@ public class PackmasterMerchant extends AbstractMerchant {
         return possibleMessages.get(MathUtils.random(possibleMessages.size() - 1));
     }
 
-    @Override
-    public void onCloseShop() {
-    }
-
     private enum ShopType {
         OnePack,
         TwoPacks,

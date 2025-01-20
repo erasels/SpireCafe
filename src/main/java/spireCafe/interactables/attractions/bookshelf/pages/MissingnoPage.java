@@ -28,7 +28,7 @@ public class MissingnoPage extends AbstractPage {
 
     @Override
     public String getText() {
-        return MarkovChain.getInstance(PAGE).generateText();
+        return MarkovChain.getInstance(PAGE).generateText(100, 400);
     }
 
     @Override

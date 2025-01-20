@@ -16,7 +16,6 @@ import spireCafe.util.TexLoader;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.miscRng;
 import static spireCafe.Anniv7Mod.*;
-import static spireCafe.Anniv7Mod.shake_color_rate;
 import static spireCafe.interactables.patrons.missingno.MissingnoUtil.initGlitchShader;
 
 public class MissingnoPatron extends AbstractPatron {

@@ -1,5 +1,6 @@
 package spireCafe;
 
+import basemod.BaseMod;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,6 +15,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import spireCafe.abstracts.*;
 import spireCafe.interactables.AuthorsNotSetException;
 import spireCafe.interactables.NameNotSetException;
+import spireCafe.screens.JukeboxScreen;
 import spireCafe.util.TexLoader;
 import spireCafe.util.decorationSystem.DecorationSystem;
 
@@ -46,9 +48,14 @@ public class CafeRoom extends AbstractEvent {
     private Texture barBackgroundImage, barImg;
     private DecorationSystem decoSystem;
 
+    private float musicDelay;
+    private boolean startedMusic;
+
     public boolean darkBg;
 
     public CafeRoom() {
+        startedMusic=false;
+
         this.body = "";
         AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.EVENT;
         this.hasDialog = true;
@@ -110,15 +117,22 @@ public class CafeRoom extends AbstractEvent {
         AbstractDungeon.player.drawX = -9000.0f;
         AbstractDungeon.player.drawY = -9000.0f;
 
-        // 1 Bartender, 1 Merchant, ~3 total patrons and attractions (at least one of each)
-        // To prevent running out of interactables on endless, if any of the possible lists are empty or the amount of
-        // patrons/attractions isn't enough, we should clear  Anniv7Mod.currentRunSeenInteractables and try again
-        // (But doing that needs to wait until we have enough of everything for a single run to not see duplicates)
+        // 1 Bartender, 1 Merchant, 1 attraction, 3 patrons
         com.megacrit.cardcrawl.random.Random rng = AbstractDungeon.miscRng;
         List<Class<? extends AbstractCafeInteractable>> possibleBartenders = getPossibilities(AbstractBartender.class);
         List<Class<? extends AbstractCafeInteractable>> possibleMerchants = getPossibilities(AbstractMerchant.class);
         List<Class<? extends AbstractCafeInteractable>> possiblePatrons = getPossibilities(AbstractPatron.class);
         List<Class<? extends AbstractCafeInteractable>> possibleAttractions = getPossibilities(AbstractAttraction.class);
+
+        // To prevent running out of interactables on endless, if any of the possible lists are empty or the amount of
+        // patrons/attractions isn't enough, clear the list of seen interactable and try again
+        if (possibleBartenders.isEmpty() || possibleMerchants.isEmpty() || possiblePatrons.size() < NUM_PATRONS || possibleAttractions.isEmpty()) {
+            Anniv7Mod.currentRunSeenInteractables.clear();
+            possibleBartenders = getPossibilities(AbstractBartender.class);
+            possibleMerchants = getPossibilities(AbstractMerchant.class);
+            possiblePatrons = getPossibilities(AbstractPatron.class);
+            possibleAttractions = getPossibilities(AbstractAttraction.class);
+        }
 
         Class<? extends AbstractCafeInteractable> bartenderClz;
         if (devCommandBartender != null) {
@@ -171,11 +185,18 @@ public class CafeRoom extends AbstractEvent {
         merchant.initialize();
         Anniv7Mod.currentRunSeenInteractables.add(merchant.id);
         decoSystem = new DecorationSystem();
+
     }
 
     @Override
     public void update() {
         super.update();
+        if(!startedMusic){
+            JukeboxScreen jukeboxScreen = (JukeboxScreen) BaseMod.getCustomScreen(JukeboxScreen.ScreenEnum.JUKEBOX_SCREEN);
+            jukeboxScreen.playCafeTheme();
+            startedMusic=true;
+        }
+
         if (!RoomEventDialog.waitForInput) {
             this.buttonEffect(this.roomEventText.getSelectedOption());
         }

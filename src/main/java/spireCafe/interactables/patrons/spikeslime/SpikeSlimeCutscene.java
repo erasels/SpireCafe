@@ -5,6 +5,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.MeatOnTheBone;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
+import spireCafe.util.Wiz;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 
@@ -29,7 +30,7 @@ public class SpikeSlimeCutscene extends AbstractCutscene {
                 character.blockingDialogueIndex = 0;
                 AbstractDungeon.getCurrRoom().spawnRelicAndObtain((float) Settings.WIDTH / 2.0F, (float)Settings.HEIGHT / 2.0F, new HandfulOfSlime());
             });
-            this.dialog.addDialogOption(OPTIONS[3], false, new HandfulOfSlime(HandfulOfSlime.BIG_SLIMY)).setOptionResult((i)-> {
+            this.dialog.addDialogOption(OPTIONS[3], Wiz.p().hasRelic(MeatOnTheBone.ID), new HandfulOfSlime(HandfulOfSlime.BIG_SLIMY)).setOptionResult((i)-> {
                 character.alreadyPerformedTransaction = true;
                 goToDialogue(4);
                 character.setCutscenePortrait("Portrait");

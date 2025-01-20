@@ -52,16 +52,18 @@ public class BartenderCutscene extends AbstractCutscene {
     public void update() {
         super.update();
 
-        if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty() && bartender.inHealAction) {
-            bartender.doForSelectedCardsFromHeal(AbstractDungeon.gridSelectScreen.selectedCards);
-            AbstractDungeon.gridSelectScreen.selectedCards.clear();
-            backToCutscene();
-        }
+        if (!AbstractDungeon.isScreenUp) {
+            if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty() && bartender.inHealAction) {
+                bartender.doForSelectedCardsFromHeal(AbstractDungeon.gridSelectScreen.selectedCards);
+                AbstractDungeon.gridSelectScreen.selectedCards.clear();
+                backToCutscene();
+            }
 
-        if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty() && bartender.inSecondAction) {
-            bartender.doForSelectedCardsFromSecondAction(AbstractDungeon.gridSelectScreen.selectedCards);
-            AbstractDungeon.gridSelectScreen.selectedCards.clear();
-            backToCutscene();
+            if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty() && bartender.inSecondAction) {
+                bartender.doForSelectedCardsFromSecondAction(AbstractDungeon.gridSelectScreen.selectedCards);
+                AbstractDungeon.gridSelectScreen.selectedCards.clear();
+                backToCutscene();
+            }
         }
     }
 
@@ -69,7 +71,7 @@ public class BartenderCutscene extends AbstractCutscene {
      * Adds all available options that haven't been used yet.
      * Flavor and No Thanks are always added (if flavor is implemented).
      */
-    private void addAvailableOptions() {
+    protected void addAvailableOptions() {
         // Clear old options, just in case
         this.dialog.clear();
 
@@ -84,7 +86,7 @@ public class BartenderCutscene extends AbstractCutscene {
         addNoThanksOption();
     }
 
-    private void addHealOption() {
+    protected void addHealOption() {
         String healText = bartender.getHealOptionDescription();
         this.dialog.addDialogOption(healText, !bartender.getHealOptionCondition()).setOptionResult((i) -> {
             bartender.inHealAction = true;
@@ -94,7 +96,7 @@ public class BartenderCutscene extends AbstractCutscene {
         });
     }
 
-    private void addSecondOption() {
+    protected void addSecondOption() {
         String secondOptionDesc = bartender.getSecondOptionDescription();
         this.dialog.addDialogOption(secondOptionDesc, !bartender.getSecondOptionCondition()).setOptionResult((i) -> {
             bartender.inSecondAction = true;
@@ -104,9 +106,9 @@ public class BartenderCutscene extends AbstractCutscene {
         });
     }
 
-    private void addNoThanksOption() {
+    protected void addNoThanksOption() {
         String noThanks = bartender.getNoThanksDescription();
-        this.dialog.addDialogOption(noThanks).setOptionResult((i)->{
+        this.dialog.addDialogOption(noThanks).setOptionResult((i) -> {
             // If all gameplay-affecting options are done, we consider the transaction complete.
             // Move to a "goodbye" line or end directly.
             if (allGameplayOptionsDone()) {
@@ -125,7 +127,7 @@ public class BartenderCutscene extends AbstractCutscene {
     /**
      * Checks if all gameplay-affecting options have been used.
      */
-    private boolean allGameplayOptionsDone() {
+    protected boolean allGameplayOptionsDone() {
         boolean secondOptionExists = bartender.getSecondOptionDescription() != null && !bartender.getSecondOptionDescription().isEmpty();
         // If second option didn't exist, it's considered "done" by default.
         if (!secondOptionExists) {
@@ -139,7 +141,7 @@ public class BartenderCutscene extends AbstractCutscene {
      * After choosing a gameplay option, we display the next dialogue line and update the option list.
      * If all gameplay options are done, we won't show them again.
      */
-    private void handleAfterGameplayOptionChosen() {
+    protected void handleAfterGameplayOptionChosen() {
         nextDialogue();
         // If there are still unselected gameplay options, we show them again along with flavor and no thanks.
         if (!allGameplayOptionsDone()) {
@@ -153,7 +155,7 @@ public class BartenderCutscene extends AbstractCutscene {
     @Override
     protected void endCutscene() {
         //Prevent cutscene from being ended before logic has been concluded
-        if(!(bartender.inSecondAction || bartender.inHealAction)) {
+        if (!(bartender.inSecondAction || bartender.inHealAction)) {
             super.endCutscene(); // Takes care of setting isDone
         }
     }

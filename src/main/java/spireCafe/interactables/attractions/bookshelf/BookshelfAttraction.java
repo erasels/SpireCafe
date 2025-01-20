@@ -14,7 +14,9 @@ import spireCafe.util.TexLoader;
 import spireCafe.util.WeightedList;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static spireCafe.Anniv7Mod.makeID;
 import static spireCafe.Anniv7Mod.modID;
@@ -74,7 +76,8 @@ public class BookshelfAttraction extends AbstractAttraction {
                 }
             }
 
-            for (int i = 0; i < Math.min(NUM_PAGES, pages.size()); i++) {
+            int intialPagesSize = pages.size();
+            for (int i = 0; i < Math.min(NUM_PAGES, intialPagesSize); i++) {
                 AbstractPage p = pages.getRandom(AbstractDungeon.miscRng, true);
                 selectedPages.add(p);
             }
