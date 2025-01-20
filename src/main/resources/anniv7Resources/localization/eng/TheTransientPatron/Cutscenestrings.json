@@ -1,0 +1,29 @@
+{
+  "${ModID}:TheTransientCutscene": {
+    "NAME": "The Transient Cutscene",
+    "BLOCKING_TEXTS": [
+      "\"That was hella fun, bro.\"",
+      "...",
+      "\"You should stick around for a little longer next time, my dude.\""
+    ],
+    "DESCRIPTIONS": [
+      "\"Yea dude, I had to shrink myself down to get into the cafe\" NL NL \"So what? I don't care. I love not caring, bro.\"",
+      "\"You seem like the type of person that cares too much, bro.\" NL NL \"Sit down with me, I'll show you how to chillax.\"",
+      "\"Okay bro, click to start chilling.\" NL NL \"When you are done with chilling, you can click again.\"",
+      "",
+      "You feel your body become lighter, as if a piece of your burdened self has #bfaded #baway. NL NL You look down at your equipment. Its form seems to #bshift in your hand.",
+      "\"Sick bro, that was some great work.\" NL NL \"With some more practice, you'll be one of us in no time.\"",
+      "Wait, where did the Transient go?",
+      "\"Sure dude, you can come back any time to chill.\" NL NL \"...or don't, I don't care.\"",
+      "\"Bro, you're done so soon?\" NL NL \"We were just getting to the good part.\""
+    ],
+    "OPTIONS": [
+      "[Chill] #gGive #gA #gCard #gTransient. #rLose #r%d #rMax #rHP.",
+      "[Leave] Nah, bro.",
+      "Transient",
+      "Transient cards #yExhaust and are permanently removed after being played #b5 times. NL If a Transient card is not a starter card, its base cost is reduced by #b1.",
+      "Give a card Transient (Exhaust, removed after 5 plays, costs 1 less if non-starter).",
+      "[Fade]"
+    ]
+  }
+}
