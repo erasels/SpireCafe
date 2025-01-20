@@ -44,9 +44,14 @@ public class SpiomesManifestationPatron extends AbstractPatron {
     public boolean hasChosenBiome = false;
 
     public static final String assetID = "SpiomesManifestation";
-    public static String queuedBiomeID;
 
-    static {
+    public SpiomesManifestationPatron(float animationX, float animationY) {
+        super(animationX, animationY, 160.0f, 200.0f);
+        this.name = characterStrings.NAMES[0];
+        this.authors = "Mindbomber";
+        this.img = TexLoader.getTexture(Anniv7Mod.makeCharacterPath("SpiomesManifestation/SpiomesHerald.png"));
+        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("SpiomesManifestation/SpiomesHerald.png")));
+
         if (Loader.isModLoaded("anniv6")) {
             try {
                 abstractZone = Class.forName("spireMapOverhaul.abstracts.AbstractZone");
@@ -57,31 +62,18 @@ public class SpiomesManifestationPatron extends AbstractPatron {
                 throw new RuntimeException("Error retrieving classes from Spiomes", e);
             }
         }
-    }
-
-    public SpiomesManifestationPatron(float animationX, float animationY) {
-        super(animationX, animationY, 160.0f, 200.0f);
-        this.name = characterStrings.NAMES[0];
-        this.authors = "Mindbomber";
-        this.img = TexLoader.getTexture(Anniv7Mod.makeCharacterPath("SpiomesManifestation/SpiomesHerald.png"));
-        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("SpiomesManifestation/SpiomesHerald.png")));
-
 
         this.availableBiomes = rollBiomes();
     }
 
     public List<Object> rollBiomes(){
         ArrayList<Object> allZones = new ArrayList<>(ReflectionHacks.getPrivateStatic(anniv6, "unfilteredAllZones"));
-        ArrayList<Object> activeZones = new ArrayList<>(ReflectionHacks.getPrivateStatic(betterMapGenerator, "activeZones"));
         HashSet<String> currentRunAllZoneNames = new HashSet<>(ReflectionHacks.getPrivateStatic(anniv6, "currentRunAllZones"));
         HashSet<String> currentRunSeenZoneNames = new HashSet<>(ReflectionHacks.getPrivateStatic(anniv6, "currentRunSeenZones"));
         ArrayList<Object> possibleBiomes = new ArrayList<>();
         boolean currentRunNoRepeatZones = ReflectionHacks.getPrivateStatic(anniv6, "currentRunNoRepeatZones");
         for (Object biome : allZones) {
-            if (currentRunAllZoneNames.contains(getBiomeId(biome))
-                    && !activeZones.contains(biome)
-                    && !(currentRunNoRepeatZones && currentRunSeenZoneNames.contains(getBiomeId(biome)))
-                    && getBiomeCanSpawn(biome)) {
+            if (currentRunAllZoneNames.contains(getBiomeId(biome)) && !(currentRunNoRepeatZones && currentRunSeenZoneNames.contains(getBiomeId(biome))) && getBiomeCanSpawn(biome)) {
                 possibleBiomes.add(biome);
             }
         }
@@ -89,11 +81,9 @@ public class SpiomesManifestationPatron extends AbstractPatron {
         return possibleBiomes.subList(0, 3);
     }
 
-    public static void addBiomeToNextMap(Object obj){
+    public void addBiomeToNextMap(Object obj){
         ArrayList<Object> queuedZone = ReflectionHacks.getPrivateStatic(betterMapGenerator, "queueCommandZones");
-        queuedZone.clear();
         queuedZone.add(obj);
-        queuedBiomeID = getBiomeId(obj);
     }
 
     public String getBiomeName(Object biome){
@@ -117,7 +107,7 @@ public class SpiomesManifestationPatron extends AbstractPatron {
         return false;
     }
 
-    public static String getBiomeId(Object biome){
+    public String getBiomeId(Object biome){
         try {
             return (String)ReflectionHacks.getCachedField(abstractZone, "id").get(biome);
         } catch (IllegalAccessException e) {
@@ -125,19 +115,6 @@ public class SpiomesManifestationPatron extends AbstractPatron {
         }
         return null;
     }
-
-    public static Object getBiomeById(String id) {
-        if (Loader.isModLoaded("anniv6")) {
-                ArrayList<Object> allZones = new ArrayList<>(ReflectionHacks.getPrivateStatic(anniv6, "unfilteredAllZones"));
-                for (Object zone : allZones){
-                    if(getBiomeId(zone).equals(id)){
-                        return zone;
-                    }
-                }
-        }
-        return null;
-    }
-
     public static boolean currentNodeInZone() {
 
         try {

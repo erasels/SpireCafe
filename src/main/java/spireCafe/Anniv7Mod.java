@@ -39,7 +39,6 @@ import spireCafe.interactables.patrons.dandadan.RightballPotion;
 import spireCafe.interactables.patrons.dandadan.RightballPotionPatch;
 import spireCafe.interactables.patrons.missingno.MissingnoUtil;
 import spireCafe.interactables.patrons.powerelic.implementation.debug.DevcommandPowerelic;
-import spireCafe.interactables.patrons.spiomesmanifestation.SpiomesManifestationPatron;
 import spireCafe.patches.PotencySaverPatch;
 import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.screens.JukeboxScreen;
@@ -78,13 +77,18 @@ public class Anniv7Mod implements
         StartGameSubscriber {
 
     public static final Logger logger = LogManager.getLogger("SpireCafe");
+
+    public static Settings.GameLanguage[] SupportedLanguages = {
+            Settings.GameLanguage.ENG
+    };
+
+    public static Anniv7Mod thismod;
+    public static SpireConfig modConfig = null;
+    public static HashSet<String> currentRunSeenInteractables = null;
+    public static ArrayList<String> allTimeSeenInteractables = null;
+
     public static final String modID = "anniv7";
-    public static final Map<String, Keyword> keywords = new HashMap<>();
-    public static final ImFloat shake_power = new ImFloat(0.007f);
-    public static final ImFloat shake_rate = new ImFloat(0.1f);
-    public static final ImFloat shake_speed = new ImFloat(2f);
-    public static final ImFloat shake_block_size = new ImFloat(0.001f);
-    public static final ImFloat shake_color_rate = new ImFloat(0.004f);
+
     private static final String ATTACK_S_ART = modID + "Resources/images/512/attack.png";
     private static final String SKILL_S_ART = modID + "Resources/images/512/skill.png";
     private static final String POWER_S_ART = modID + "Resources/images/512/power.png";
@@ -93,29 +97,22 @@ public class Anniv7Mod implements
     private static final String ATTACK_L_ART = modID + "Resources/images/1024/attack.png";
     private static final String SKILL_L_ART = modID + "Resources/images/1024/skill.png";
     private static final String POWER_L_ART = modID + "Resources/images/1024/power.png";
-    private static final float ENTRYCOST_CHECKBOX_X = 400f;
-    private static final float ENTRYCOST_CHECKBOX_Y = 685f;
-    private static final float SHADERS_CHECKBOX_SERIES_X = 400f;
-    private static final float SHADERS_CHECKBOX_Y = 600f;
-    public static Settings.GameLanguage[] SupportedLanguages = {
-            Settings.GameLanguage.ENG
-    };
-    public static Anniv7Mod thismod;
-    public static SpireConfig modConfig = null;
-    public static HashSet<String> currentRunSeenInteractables = null;
-    public static ArrayList<String> allTimeSeenInteractables = null;
+
     public static boolean initializedStrings = false;
+
+    public static final Map<String, Keyword> keywords = new HashMap<>();
+
     public static List<String> unfilteredAllInteractableIDs = new ArrayList<>();
     public static HashMap<String, Class<? extends AbstractCafeInteractable>> interactableClasses = new HashMap<>();
-    public static float time = 0f;
-    private ModPanel settingsPanel;
 
-    public Anniv7Mod() {
-        BaseMod.subscribe(this);
-    }
 
     public static String makeID(String idText) {
         return modID + ":" + idText;
+    }
+
+
+    public Anniv7Mod() {
+        BaseMod.subscribe(this);
     }
 
     public static String makePath(String resourcePath) {
@@ -193,132 +190,6 @@ public class Anniv7Mod implements
         }
     }
 
-    public static ArrayList<String> getSeenInteractables() {
-        if (modConfig == null) return new ArrayList<>();
-        return new ArrayList<>(Arrays.asList(modConfig.getString("seenInteractables").split(",")));
-    }
-
-    public static void saveSeenInteractables(ArrayList<String> input) throws IOException {
-        if (modConfig == null) return;
-        modConfig.setString("seenInteractables", String.join(",", input));
-        modConfig.save();
-    }
-
-    public static void addPotions() {
-        if (Loader.isModLoaded("widepotions")) {
-            Consumer<String> whitelist = getWidePotionsWhitelistMethod();
-
-        }
-        BaseMod.addPotion(RightballPotion.class,
-                new Color(254 / 255f, 193 / 255f, 27 / 255f, 1f), null, null, RightballPotion.Potion_ID);
-    }
-
-    private static Consumer<String> getWidePotionsWhitelistMethod() {
-        // To avoid the need for a dependency of any kind, we call Wide Potions through reflection
-        try {
-            Method whitelistMethod = Class.forName("com.evacipated.cardcrawl.mod.widepotions.WidePotionsMod").getMethod("whitelistSimplePotion", String.class);
-            return s -> {
-                try {
-                    whitelistMethod.invoke(null, s);
-                } catch (IllegalAccessException | InvocationTargetException e) {
-                    e.printStackTrace();
-                    throw new RuntimeException("Error trying to whitelist wide potion for " + s, e);
-                }
-            };
-        } catch (NoSuchMethodException | ClassNotFoundException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Could not find method WidePotionsMod.whitelistSimplePotion", e);
-        }
-    }
-
-    public static boolean getCafeEntryCostConfig() {
-        return modConfig != null && modConfig.getBool("cafeEntryCost");
-    }
-
-    public static void setCafeEntryCostConfig(boolean bool) {
-        if (modConfig != null) {
-            modConfig.setBool("cafeEntryCost", bool);
-            try {
-                modConfig.save();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static boolean getDisableShadersConfig() {
-        return modConfig != null && modConfig.getBool("disableShaders");
-    }
-
-    public static void setDisableShadersConfig(boolean bool) {
-        if (modConfig != null) {
-            modConfig.setBool("disableShaders", bool);
-            try {
-                modConfig.save();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static void addSaveFields() {
-        BaseMod.addSaveField(SavableCurrentRunSeenInteractables.SaveKey, new SavableCurrentRunSeenInteractables());
-        BaseMod.addSaveField(makeID("AppliedMakeup"), new CustomSavable<Boolean>() {
-            @Override
-            public Boolean onSave() {
-                return MakeupTableAttraction.isAPrettySparklingPrincess;
-            }
-
-            @Override
-            public void onLoad(Boolean state) {
-                MakeupTableAttraction.isAPrettySparklingPrincess = state;
-            }
-        });
-        BaseMod.addSaveField("Anniv7DepletedPotion", new CustomSavable<List<Integer>>() {
-            @Override
-            public List<Integer> onSave() {
-                return AbstractDungeon.player.potions.stream().map(p -> PotencySaverPatch.PotionUseField.isDepleted.get(p)).collect(Collectors.toCollection(ArrayList::new));
-            }
-
-            @Override
-            public void onLoad(List<Integer> l) {
-                int c = 0;
-                if (l != null && !l.isEmpty()) {
-                    for (AbstractPotion p : AbstractDungeon.player.potions) {
-                        int i = l.get(NumberUtils.min(c++, AbstractDungeon.player.potions.size() - 1));
-                        if (i != -1) {
-                            PotencySaverPatch.PotionUseField.isDepleted.set(p, i);
-                            p.name = CardCrawlGame.languagePack.getCharacterString(FleaMerchant.ID).TEXT[0].replace("{0}", p.name);
-                        }
-                        p.initializeData();
-                    }
-                }
-            }
-        });
-        BaseMod.addSaveField(makeID("ballPotion"), new RightBallPotionSavable());
-        BaseMod.addSaveField(makeID("queuedBiomeID"), new CustomSavable<String>() {
-            @Override
-            public String onSave() {
-                System.out.println("saving: " + SpiomesManifestationPatron.queuedBiomeID);
-                return SpiomesManifestationPatron.queuedBiomeID;
-            }
-
-            @Override
-            public void onLoad(String id) {
-                if (Loader.isModLoaded("anniv6") && id != null) {
-                    SpiomesManifestationPatron.queuedBiomeID=id;
-                    Object queuedBiome = SpiomesManifestationPatron.getBiomeById(id);
-                    System.out.println("loading: " + id);
-                    if (queuedBiome != null) {
-                        System.out.println("adding zone: " + queuedBiome);
-                        SpiomesManifestationPatron.addBiomeToNextMap(queuedBiome);
-
-                    }
-                }
-            }
-        });
-    }
-
     private void loadInteractables() {
         AutoAdd autoAdd = new AutoAdd(modID)
                 .packageFilter(Anniv7Mod.class);
@@ -343,13 +214,24 @@ public class Anniv7Mod implements
         logger.info("Found interactable classes with AutoAdd: " + unfilteredAllInteractableIDs.size());
     }
 
+    public static ArrayList<String> getSeenInteractables() {
+        if (modConfig == null) return new ArrayList<>();
+        return new ArrayList<>(Arrays.asList(modConfig.getString("seenInteractables").split(",")));
+    }
+
+    public static void saveSeenInteractables(ArrayList<String> input) throws IOException {
+        if (modConfig == null) return;
+        modConfig.setString("seenInteractables", String.join(",", input));
+        modConfig.save();
+    }
+
     @Override
     public void receiveEditRelics() {
         new AutoAdd(modID)
                 .packageFilter(Anniv7Mod.class)
                 .any(AbstractSCRelic.class, (info, relic) -> {
                     if (relic.color == null) {
-                        BaseMod.addRelic(relic, RelicType.SHARED);
+                            BaseMod.addRelic(relic, RelicType.SHARED);
                     } else {
                         BaseMod.addRelicToCustomPool(relic, relic.color);
                     }
@@ -384,6 +266,21 @@ public class Anniv7Mod implements
         ConsoleCommand.addCommand("powerelic", DevcommandPowerelic.class);
     }
 
+    public static void addPotions() {
+        if (Loader.isModLoaded("widepotions")) {
+            Consumer<String> whitelist = getWidePotionsWhitelistMethod();
+
+        }
+        BaseMod.addPotion(RightballPotion.class, 
+                new Color(254 / 255f, 193 / 255f, 27 / 255f, 1f), null, null, RightballPotion.Potion_ID);
+    }
+
+    public static final ImFloat shake_power = new ImFloat(0.007f);
+    public static final ImFloat shake_rate = new ImFloat(0.1f);
+    public static final ImFloat shake_speed = new ImFloat(2f);
+    public static final ImFloat shake_block_size = new ImFloat(0.001f);
+    public static final ImFloat shake_color_rate = new ImFloat(0.004f);
+
     @Override
     public void receiveImGui() {
         ImGui.sliderFloat("Glitch Power", shake_power.getData(), 0, 1f);
@@ -391,6 +288,24 @@ public class Anniv7Mod implements
         ImGui.sliderFloat("Glitch Speed", shake_speed.getData(), 0, 10);
         ImGui.sliderFloat("Glitch Block Size", shake_block_size.getData(), 0, 1.0f);
         ImGui.sliderFloat("Glitch Color Rate", shake_color_rate.getData(), 0, 0.01f);
+    }
+
+    private static Consumer<String> getWidePotionsWhitelistMethod() {
+        // To avoid the need for a dependency of any kind, we call Wide Potions through reflection
+        try {
+            Method whitelistMethod = Class.forName("com.evacipated.cardcrawl.mod.widepotions.WidePotionsMod").getMethod("whitelistSimplePotion", String.class);
+            return s -> {
+                try {
+                    whitelistMethod.invoke(null, s);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException("Error trying to whitelist wide potion for " + s, e);
+                }
+            };
+        } catch (NoSuchMethodException | ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Could not find method WidePotionsMod.whitelistSimplePotion", e);
+        }
     }
 
     @Deprecated
@@ -409,11 +324,13 @@ public class Anniv7Mod implements
 
         loadStrings("eng");
         loadInteractableStrings(unfilteredAllInteractableIDs, "eng");
-        if (Settings.language != Settings.GameLanguage.ENG) {
+        if (Settings.language != Settings.GameLanguage.ENG)
+        {
             loadStrings(Settings.language.toString().toLowerCase());
             loadInteractableStrings(unfilteredAllInteractableIDs, Settings.language.toString().toLowerCase());
         }
     }
+
 
     private void loadStrings(String langKey) {
         if (!Gdx.files.internal(modID + "Resources/localization/" + langKey + "/").exists()) return;
@@ -486,7 +403,8 @@ public class Anniv7Mod implements
 
         for (Keyword keyword : keywords) {
             BaseMod.addKeyword(modID, keyword.PROPER_NAME, keyword.NAMES, keyword.DESCRIPTION);
-            if (!keyword.ID.isEmpty()) {
+            if (!keyword.ID.isEmpty())
+            {
                 Anniv7Mod.keywords.put(keyword.ID, keyword);
             }
         }
@@ -506,6 +424,7 @@ public class Anniv7Mod implements
         BaseMod.addAudio(POKE9, makePath("audio/poke9.mp3"));
     }
 
+    public static float time = 0f;
     @Override
     public void receivePostUpdate() {
         time += Gdx.graphics.getRawDeltaTime();
@@ -530,10 +449,17 @@ public class Anniv7Mod implements
     @Override
     public void receivePostDungeonInitialize() {
         if (!CardCrawlGame.isInARun()) {
-            JukeboxScreen.resetToDefaultMusic();
-            ;
+            JukeboxScreen.resetToDefaultMusic();;
         }
     }
+
+    private ModPanel settingsPanel;
+
+    private static final float ENTRYCOST_CHECKBOX_X = 400f;
+    private static final float ENTRYCOST_CHECKBOX_Y = 685f;
+    private static final float SHADERS_CHECKBOX_SERIES_X = 400f;
+    private static final float SHADERS_CHECKBOX_Y = 600f;
+
 
     private void initializeConfig() {
         UIStrings configStrings = CardCrawlGame.languagePack.getUIString(makeID("ConfigMenuText"));
@@ -542,14 +468,12 @@ public class Anniv7Mod implements
 
         settingsPanel = new ModPanel();
         FixedModLabeledToggleButton cafeEntryCostToggle = new FixedModLabeledToggleButton(configStrings.TEXT[3], ENTRYCOST_CHECKBOX_X, ENTRYCOST_CHECKBOX_Y, Color.WHITE, FontHelper.tipBodyFont, getCafeEntryCostConfig(), null,
-                (label) -> {
-                },
+                (label) -> {},
                 (button) -> setCafeEntryCostConfig(button.enabled));
         settingsPanel.addUIElement(cafeEntryCostToggle);
 
         FixedModLabeledToggleButton disableShaders = new FixedModLabeledToggleButton(configStrings.TEXT[4], SHADERS_CHECKBOX_SERIES_X, SHADERS_CHECKBOX_Y, Color.WHITE, FontHelper.tipBodyFont, getDisableShadersConfig(), null,
-                (label) -> {
-                },
+                (label) -> {},
                 (button) -> setDisableShadersConfig(button.enabled));
         settingsPanel.addUIElement(disableShaders);
 
@@ -557,7 +481,74 @@ public class Anniv7Mod implements
         BaseMod.registerModBadge(badge, configStrings.TEXT[0], configStrings.TEXT[1], configStrings.TEXT[2], settingsPanel);
     }
 
+    public static boolean getCafeEntryCostConfig() {
+        return modConfig != null && modConfig.getBool("cafeEntryCost");
+    }
+
+    public static void setCafeEntryCostConfig(boolean bool) {
+        if (modConfig != null) {
+            modConfig.setBool("cafeEntryCost", bool);
+            try {
+                modConfig.save();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static boolean getDisableShadersConfig() {
+        return modConfig != null && modConfig.getBool("disableShaders");
+    }
+
+    public static void setDisableShadersConfig(boolean bool) {
+        if (modConfig != null) {
+            modConfig.setBool("disableShaders", bool);
+            try {
+                modConfig.save();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void initializeSavedData() {
+    }
+
+    public static void addSaveFields() {
+        BaseMod.addSaveField(SavableCurrentRunSeenInteractables.SaveKey, new SavableCurrentRunSeenInteractables());
+        BaseMod.addSaveField(makeID("AppliedMakeup"), new CustomSavable<Boolean>() {
+            @Override
+            public Boolean onSave() {
+                return MakeupTableAttraction.isAPrettySparklingPrincess;
+            }
+
+            @Override
+            public void onLoad(Boolean state) {
+                MakeupTableAttraction.isAPrettySparklingPrincess = state;
+            }
+        });
+	BaseMod.addSaveField("Anniv7DepletedPotion", new CustomSavable<List<Integer>>() {
+            @Override
+            public List<Integer> onSave() {
+                return AbstractDungeon.player.potions.stream().map(p -> PotencySaverPatch.PotionUseField.isDepleted.get(p)).collect(Collectors.toCollection(ArrayList::new));
+            }
+
+            @Override
+            public void onLoad(List<Integer> l) {
+                int c = 0;
+                if (l != null && !l.isEmpty()) {
+                    for (AbstractPotion p : AbstractDungeon.player.potions) {
+                        int i = l.get(NumberUtils.min(c++, AbstractDungeon.player.potions.size() - 1));
+                        if(i!=-1) {
+                            PotencySaverPatch.PotionUseField.isDepleted.set(p, i);
+                            p.name = CardCrawlGame.languagePack.getCharacterString(FleaMerchant.ID).TEXT[0].replace("{0}", p.name);
+                        }
+                        p.initializeData();
+                    }
+                }
+            }
+        });
+        BaseMod.addSaveField(makeID("ballPotion"), new RightBallPotionSavable());
     }
 
     @Override
