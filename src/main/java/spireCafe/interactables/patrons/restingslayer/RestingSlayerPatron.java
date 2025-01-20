@@ -92,7 +92,7 @@ public class RestingSlayerPatron extends AbstractPatron {
             //////
         }
         catch (Exception e) {
-            throw new RuntimeException("Error loading animation for character: " + slayer.id, e);
+            throw new RuntimeException("Error loading animation for character: " + slayer.chosenClass.name(), e);
         }
 
         generateCards();
