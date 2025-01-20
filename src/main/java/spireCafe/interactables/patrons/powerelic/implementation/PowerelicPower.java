@@ -47,7 +47,7 @@ public class PowerelicPower extends AbstractSCPower {
         //relic: sb.draw(this.img, this.currentX - 64.0F, this.currentY - 64.0F, 64.0F, 64.0F, 128.0F, 128.0F, this.scale, this.scale, this.rotation, 0, 0, 128, 128, false, false);
         if (this.img != null) {
             sb.setColor(c);
-            sb.draw(this.img, x - 44F*Settings.scale, y - 52F*Settings.scale, 0F, 0F, 128F, 128F, 1.25F*48/128F*Settings.scale * 1.5F, 1.5F*48/128F*Settings.scale * 1.5F, 0.0F, 0, 0, 128, 128, false, false);
+            sb.draw(this.img, x - 35F*Settings.scale, y - 35F*Settings.scale, 0F, 0F, 128F, 128F, 1.0F*48/128F*Settings.scale * 1.5F, 1.0F*48/128F*Settings.scale * 1.5F, 0.0F, 0, 0, 128, 128, false, false);
         }
 //        } else {
 //            sb.setColor(c);
