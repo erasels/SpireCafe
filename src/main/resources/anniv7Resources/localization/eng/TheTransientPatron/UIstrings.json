@@ -1,0 +1,10 @@
+{
+  "${ModID}:TransientMod": {
+    "TEXT": [
+      "%s NL *Transient %d.",
+      "Transient",
+      "When played, Exhaust and permanently decrease Transient by #b1. When Transient becomes #b0, remove this card permanently.",
+      " NL Base cost reduced by #b1."
+    ]
+  }
+}
