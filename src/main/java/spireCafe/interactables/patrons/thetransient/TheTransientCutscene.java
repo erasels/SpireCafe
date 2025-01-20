@@ -1,25 +1,16 @@
 package spireCafe.interactables.patrons.thetransient;
 
-import basemod.ReflectionHacks;
-import basemod.cardmods.InnateMod;
 import basemod.helpers.CardModifierManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.evacipated.cardcrawl.mod.stslib.fields.cards.AbstractCard.AutoplayField;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
-import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.BurningBlood;
-import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
-import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
-import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
-import spireCafe.cardmods.AutoplayMod;
 import spireCafe.cardmods.TransientMod;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
@@ -32,7 +23,7 @@ import static spireCafe.Anniv7Mod.makeID;
 public class TheTransientCutscene extends AbstractCutscene {
     public static final String ID = makeID(TheTransientCutscene.class.getSimpleName());
     private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
-    private static final int MAX_HP_LOSS = 4;
+    private static final int MAX_HP_LOSS = 3;
 
     public TheTransientCutscene(AbstractNPC character) {
         super(character, cutsceneStrings);
