@@ -39,6 +39,7 @@ import spireCafe.interactables.patrons.dandadan.RightballPotion;
 import spireCafe.interactables.patrons.dandadan.RightballPotionPatch;
 import spireCafe.interactables.patrons.missingno.MissingnoUtil;
 import spireCafe.interactables.patrons.powerelic.implementation.debug.DevcommandPowerelic;
+import spireCafe.interactables.patrons.spiomesmanifestation.SpiomesManifestationPatron;
 import spireCafe.patches.PotencySaverPatch;
 import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.screens.JukeboxScreen;
@@ -549,6 +550,24 @@ public class Anniv7Mod implements
             }
         });
         BaseMod.addSaveField(makeID("ballPotion"), new RightBallPotionSavable());
+        BaseMod.addSaveField(makeID("queuedBiomeID"), new CustomSavable<String>() {
+            @Override
+            public String onSave() {
+                return SpiomesManifestationPatron.queuedBiomeID;
+            }
+
+            @Override
+            public void onLoad(String id) {
+                if (Loader.isModLoaded("anniv6") && id != null) {
+                    SpiomesManifestationPatron.queuedBiomeID=id;
+                    Object queuedBiome = SpiomesManifestationPatron.getBiomeById(id);
+                    if (queuedBiome != null) {
+                        SpiomesManifestationPatron.addBiomeToNextMap(queuedBiome);
+
+                    }
+                }
+            }
+        });
     }
 
     @Override
