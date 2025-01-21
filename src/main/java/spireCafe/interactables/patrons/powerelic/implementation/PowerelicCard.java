@@ -25,7 +25,6 @@ import static spireCafe.interactables.patrons.powerelic.implementation.Powerelic
 public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
 
     //Tasks for later:
-    // patch relic.render and reorganizeRelics so they appear in the buffs list instead of the relics list
     // prohibit storing in A Note For Yourself
     // should Mummified Hand proc at start of combat from powers-turned-relics?
     // Ancient Tea Set requires playing the card twice, which is unfortunate.  make it feel better to play
