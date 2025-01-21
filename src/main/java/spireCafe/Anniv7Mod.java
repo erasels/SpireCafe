@@ -22,6 +22,7 @@ import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
+import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import imgui.ImGui;
 import imgui.type.ImFloat;
 import javassist.CtClass;
@@ -29,6 +30,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import spireCafe.abstracts.AbstractCafeInteractable;
+import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cardvars.SecondDamage;
 import spireCafe.cardvars.SecondMagicNumber;
@@ -43,6 +45,7 @@ import spireCafe.interactables.patrons.spiomesmanifestation.SpiomesManifestation
 import spireCafe.patches.PotencySaverPatch;
 import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.screens.JukeboxScreen;
+import spireCafe.ui.Dialog;
 import spireCafe.ui.FixedModLabeledToggleButton.FixedModLabeledToggleButton;
 import spireCafe.util.TexLoader;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
@@ -563,7 +566,6 @@ public class Anniv7Mod implements
                     Object queuedBiome = SpiomesManifestationPatron.getBiomeById(id);
                     if (queuedBiome != null) {
                         SpiomesManifestationPatron.addBiomeToNextMap(queuedBiome);
-
                     }
                 }
             }
@@ -572,7 +574,11 @@ public class Anniv7Mod implements
 
     @Override
     public void receiveStartGame() {
+        //Reset static variables in case the player quit to main menu during a cutscene
         CafeRoom.isInteracting = false;
+        AbstractCutscene.isInCutscene = false;
+        Dialog.optionList.clear();
+
         if (!CardCrawlGame.loadingSave) {
             RightballPotionPatch.receiveStartGame();
         }
