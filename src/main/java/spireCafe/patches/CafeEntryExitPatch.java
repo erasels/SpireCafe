@@ -120,7 +120,7 @@ public class CafeEntryExitPatch {
 
                 AbstractDungeon.overlayMenu.proceedButton.hideInstantly();
                 modifyProceedButton(ReflectionHacks.getPrivateStatic(ProceedButton.class, "DRAW_Y"), true);
-                JukeboxScreen.stopCurrentMusic();
+                JukeboxScreen.fadeOut();
 
                 if(allTimeSeenInteractables != null) {
                     try {
