@@ -15,11 +15,17 @@ public class RelicOrderPatches {
         public static void Patch(AbstractRelic __instance){
             //reorganizeRelics has the side effect of snapping a relic to its new slot,
             //effectively cancelling its obtain animation.  So preserve/restore that here.
+            boolean isDone=__instance.isDone;
             float x=__instance.currentX;
             float y=__instance.currentY;
+            float tx=__instance.targetX;
+            float ty=__instance.targetY;
             if(Wiz.adp()!=null)Wiz.adp().reorganizeRelics();
+            __instance.isDone=isDone;
             __instance.currentX=x;
             __instance.currentY=y;
+            __instance.targetX=tx;
+            __instance.targetY=ty;
         }
     }
     @SpirePatch2(clz = AbstractRelic.class, method = "instantObtain", paramtypez = {})
