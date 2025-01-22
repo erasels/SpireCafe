@@ -24,7 +24,9 @@ import spireCafe.abstracts.AbstractPatron;
 import spireCafe.util.TexLoader;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.eventRng;
@@ -50,12 +52,16 @@ public class RestingSlayerPatron extends AbstractPatron {
 
         restingSlayerRng = new Random(eventRng.randomLong());
 
+        HashSet<String> blockedCharacters = new HashSet<>(Arrays.asList(
+                "THE_PACKMASTER",
+                "THE_SISTERS",
+                "Librarian",
+                "THE_RAINBOW",
+                "Tuner_CLASS"
+        ));
         ArrayList<AbstractPlayer> options = CardCrawlGame.characterManager.getAllCharacters().stream()
                 .filter(p -> p.chosenClass != AbstractDungeon.player.chosenClass
-                        && !p.chosenClass.name().equals("THE_PACKMASTER")
-                        && !p.chosenClass.name().equals("THE_SISTERS")
-                        && !p.chosenClass.name().equals("Librarian")
-                        && !p.chosenClass.name().equals("THE_RAINBOW "))
+                        && !blockedCharacters.contains(p.chosenClass.name()))
                 .collect(Collectors.toCollection(ArrayList::new));
         slayer = !options.isEmpty() ? options.get(restingSlayerRng.random(options.size() - 1)) : AbstractDungeon.player;
         name = characterStrings.NAMES[0].replace("{0}", slayer.getLocalizedCharacterName().replace(characterStrings.NAMES[1], ""));
