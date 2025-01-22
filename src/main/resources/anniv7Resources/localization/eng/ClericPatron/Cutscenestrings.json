@@ -18,7 +18,7 @@
       "\" ~It's~ ~Cleric!~ This will do wonderfully!\""
     ],
     "OPTIONS": [
-      "[Posessions] #rLose %s. #gObtain #gMark #gof #gCompassion.",
+      "[Possessions] #rLose %s. #gObtain #gMark #gof #gCompassion.",
       "[Wealth] #rLose #r%s #rgold. #gObtain #gMark #gof #gIndulgence.",
       "[Self] #rLose #r%s #rMax #rHP. #gObtain #gMark #gof #gMartyrdom.",
       "[Leave] Back away.",
