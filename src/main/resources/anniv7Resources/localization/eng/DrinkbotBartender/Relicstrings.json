@@ -3,7 +3,7 @@
         "NAME": "Subcutaneous Intoxicator",
         "FLAVOR": "Get boozy without the effort!",
         "DESCRIPTIONS": [
-          "After #b5 turns, heal for #b25% of your missing HP.",
+          "At the end of turn #b5, heal for #b25% of your missing HP.",
           "HP gained: %s"
         ]
       }
