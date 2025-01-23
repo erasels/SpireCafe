@@ -19,8 +19,11 @@ public class PurchasedGridCardArticle extends AbstractArticle {
         private static float Y_OFFSET = 571.0F * Settings.scale;
         private static float X_PAD = 276.0F * Settings.scale;
         private static float Y_PAD = 282.0F * Settings.scale;
+        private static final float HOVERED_SCALE = 1.0f;
+        private static final float SCALE = 0.9f;
         private float rotate;
-
+        public boolean isRowHovered = false;
+        public boolean isColumnHovered = false;
 
     public PurchasedGridCardArticle(AbstractMerchant merchant, int row, int column) {
         super("id" + row + column, merchant);
@@ -47,6 +50,16 @@ public class PurchasedGridCardArticle extends AbstractArticle {
             transform.scale(scale,scale);
             transform.rotate(this.rotate);
             sb.draw(itemTexture, itemTexture.getRegionWidth(), itemTexture.getRegionHeight(), transform);
+        }
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        if (this.hb.hovered || this.isRowHovered || this.isColumnHovered) {
+            this.scale = Settings.scale * HOVERED_SCALE;
+        } else {
+            this.scale = Settings.scale * SCALE;
         }
     }
 
