@@ -35,8 +35,8 @@ public class DecorationSystem {
     private void spawnDecorations() {
         Collections.shuffle(allDecorations, new java.util.Random(rng.randomLong()));
 
-        decorations.add(new BarSignDecoration());
         initWindows();
+        decorations.add(new BarSignDecoration());
         boolean hasLarge = false;
         int decorationAmt = NUM_DECOS;
         for (int i = 0; i < decorationAmt; i++) {
