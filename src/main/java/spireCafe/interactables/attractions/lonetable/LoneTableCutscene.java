@@ -76,17 +76,17 @@ public class LoneTableCutscene extends AbstractCutscene {
     }
 
     private void handleNormalModeOptions() {
-        this.dialog.addDialogOption(OPTIONS[5] + " (" + DESCRIPTIONS[8] + ")",
+        this.dialog.addDialogOption(OPTIONS[5] + " (" + String.format(DESCRIPTIONS[5], 120) + ")",
                         AbstractDungeon.player.gold < 120)
                 .setOptionResult((i) -> {
                     startMatchAndKeepGame(AbstractCard.CardRarity.RARE, false, 120);
                 });
-        this.dialog.addDialogOption(OPTIONS[6] + " (" + DESCRIPTIONS[9] + ")",
+        this.dialog.addDialogOption(OPTIONS[6] + " (" + String.format(DESCRIPTIONS[5], 80) + ")",
                         AbstractDungeon.player.gold < 80)
                 .setOptionResult((j) -> {
                     startMatchAndKeepGame(AbstractCard.CardRarity.UNCOMMON, false, 80);
                 });
-        this.dialog.addDialogOption(OPTIONS[7] + " (" + DESCRIPTIONS[10] + ")",
+        this.dialog.addDialogOption(OPTIONS[7] + " (" + String.format(DESCRIPTIONS[5], 40) + ")",
                         AbstractDungeon.player.gold < 40)
                 .setOptionResult((k) -> {
                     startMatchAndKeepGame(AbstractCard.CardRarity.COMMON, false, 40);
@@ -97,17 +97,17 @@ public class LoneTableCutscene extends AbstractCutscene {
     }
 
     private void handleZanyModeOptions() {
-        this.dialog.addDialogOption(OPTIONS[5] + " (" + DESCRIPTIONS[11] + ")",
+        this.dialog.addDialogOption(OPTIONS[5] + " (" + String.format(DESCRIPTIONS[5], 60) + ")",
                         AbstractDungeon.player.gold < 60)
                 .setOptionResult((i) -> {
                     startMatchAndKeepGame(AbstractCard.CardRarity.RARE, true, 60);
                 });
-        this.dialog.addDialogOption(OPTIONS[6] + " (" + DESCRIPTIONS[12] + ")",
+        this.dialog.addDialogOption(OPTIONS[6] + " (" + String.format(DESCRIPTIONS[5], 40) + ")",
                         AbstractDungeon.player.gold < 40)
                 .setOptionResult((j) -> {
                     startMatchAndKeepGame(AbstractCard.CardRarity.UNCOMMON, true, 40);
                 });
-        this.dialog.addDialogOption(OPTIONS[7] + " (" + DESCRIPTIONS[13] + ")",
+        this.dialog.addDialogOption(OPTIONS[7] + " (" + String.format(DESCRIPTIONS[5], 20) + ")",
                         AbstractDungeon.player.gold < 20)
                 .setOptionResult((k) -> {
                     startMatchAndKeepGame(AbstractCard.CardRarity.COMMON, true, 20);

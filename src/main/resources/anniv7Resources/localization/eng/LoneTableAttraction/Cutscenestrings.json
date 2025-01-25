@@ -31,16 +31,7 @@
       "\"Care for a game of Match and Keep? I've got ALL kinds of cards ready...\"",
       "\"Ah, playing it safe, eh? Fair enough! Pick your stakes...\"",
       "\"OOH! Feeling lucky? The @zanier@ cards are half off! What'll it be?\"",
-      "\"The cards are ready! Let's begin...\"",
-      "You decide to leave the table.",
-      "The gremlin waves goodbye, already shuffling cards for the next potential player.",
-      "120 Gold",
-      "80 Gold",
-      "40 Gold",
-      "60 Gold",
-      "40 Gold",
-      "20 Gold",
-      "You've had enough gambling for now."
+      "%d Gold"
     ],
     "OPTIONS": [
       "Approach the table",

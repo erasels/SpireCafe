@@ -327,7 +327,8 @@ public class CafeMatchAndKeepScreen extends CustomScreen {
                 if (c.rarity == this.rarity &&
                         !c.hasTag(AbstractCard.CardTags.HEALING) &&
                         c.type != AbstractCard.CardType.STATUS &&
-                        c.type != AbstractCard.CardType.CURSE) {
+                        c.type != AbstractCard.CardType.CURSE &&
+                        c.color != AbstractCard.CardColor.CURSE) {
                     cardPool.add(c);
                 }
             }
@@ -368,6 +369,24 @@ public class CafeMatchAndKeepScreen extends CustomScreen {
         if (AbstractDungeon.getCurrRoom() != null) {
             AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.COMPLETE;
             AbstractDungeon.getCurrRoom().isBattleOver = true; // hi code reviewers. this line may seem weird but it was necessary to resolve some bugs.
+
+            /*
+            Further context to the line above: After playing the Match & Keep game, the attraction would seem to end as intended.
+            However, if the player were to then try to open either the map/deck/settings menu and then exit it, a black overlay would appear and
+            Cafe elements would no longer be interactable. While this happened, the map/deck options were disabled, but settings was still active.
+            Opening the settings menu (again) and closing it resolved this issue temporarily.
+
+            I use AI to do all of the code I need. From what I understand, there was some background issue with screen layering or cleanup?
+            I described my issue to Claude, the AI I use, and it actually managed to resolve it. When I asked why this solution worked, this is what Claude replied with:
+
+            "Looking at how the game manages transitions between different screens and phases, I realized that screen state in Slay the Spire involves multiple components working together -
+            not just the screen enums, but also things like isBattleOver, isScreenUp, and the room phase.
+
+            The solution came from thinking about what these screens (deck, map, settings) all have in common in terms of how they integrate with the game's screen management system.
+            They all use AbstractDungeon.closeCurrentScreen() as part of their cleanup, so adding that explicit call helps ensure all screen-related states are properly reset.
+            The addition of isBattleOver = true was based on understanding that the game uses this flag as part of determining whether certain screens/interactions should be available.
+            In essence, it wasn't enough to just set the room phase to COMPLETE - we needed to make sure all the related screen management flags were also properly reset to their expected states."
+            */
         }
         AbstractDungeon.overlayMenu.hideBlackScreen();
         AbstractDungeon.isScreenUp = false;
