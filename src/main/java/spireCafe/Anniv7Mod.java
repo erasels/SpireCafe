@@ -533,7 +533,7 @@ public class Anniv7Mod implements
 
             @Override
             public void onLoad(Boolean state) {
-                MakeupTableAttraction.isAPrettySparklingPrincess = state;
+                MakeupTableAttraction.isAPrettySparklingPrincess = state != null && state;
             }
         });
 	BaseMod.addSaveField("Anniv7DepletedPotion", new CustomSavable<List<Integer>>() {
