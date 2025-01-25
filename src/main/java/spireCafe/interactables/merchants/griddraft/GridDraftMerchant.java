@@ -47,7 +47,6 @@ public class GridDraftMerchant extends AbstractMerchant{
         articles.add(new GridPurchaseArticle(this, 0, true));
         articles.add(new GridPurchaseArticle(this, 1, true));
         articles.add(new GridPurchaseArticle(this, 2, true));
-        
         articles.add(new GridPurchaseArticle(this, 0, false));
         articles.add(new GridPurchaseArticle(this, 1, false));
         articles.add(new GridPurchaseArticle(this, 2, false));

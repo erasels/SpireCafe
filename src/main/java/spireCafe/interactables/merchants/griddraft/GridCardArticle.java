@@ -15,6 +15,8 @@ public class GridCardArticle extends CardArticle {
     private static float Y_PAD = 282.0F * Settings.scale;
     public static float CARD_SCALE = 0.60F;
     public static float CARD_SCALE_HOVER = 0.70F;
+    public boolean isRowHovered = false;
+    public boolean isColumnHovered = false;
 
     public int column;
     public int row;
@@ -34,7 +36,7 @@ public class GridCardArticle extends CardArticle {
     @Override
     public void update() {
         super.update();
-        if (this.hb.hovered) {
+        if (this.hb.hovered || this.isRowHovered || this.isColumnHovered) {
             this.card.drawScale = CARD_SCALE_HOVER;
         } else {
             this.card.drawScale = CARD_SCALE;
