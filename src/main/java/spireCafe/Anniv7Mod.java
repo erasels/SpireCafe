@@ -431,18 +431,15 @@ public class Anniv7Mod implements
     public static float time = 0f;
     @Override
     public void receivePostUpdate() {
-        if (CardCrawlGame.music == null) return;  // Add this safety check
-
         time += Gdx.graphics.getRawDeltaTime();
         MissingnoUtil.doMissingnoStuff();
-
+        //Jukebox Active Update Handling
         if (JukeboxScreen.FadingOut && nowPlayingSong != null) {
             JukeboxScreen.updateFadeOut();
             return;
         }
-
-        // Add null check before using isPlaying
-        if (!CardCrawlGame.isInARun() && isPlaying && nowPlayingSong != null) {
+        // Reset to default music if not in a run and something is playing
+        if (!CardCrawlGame.isInARun() && isPlaying) {
             JukeboxScreen.resetToDefaultMusic();
         }
         // Mute music when the game is backgrounded
