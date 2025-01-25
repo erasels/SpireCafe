@@ -145,7 +145,6 @@ public class LoneTableCutscene extends AbstractCutscene {
 
         }
 
-        // End the cutscene but keep the screen open
         if (this.dialog != null) {
             this.dialog.clear();
         }

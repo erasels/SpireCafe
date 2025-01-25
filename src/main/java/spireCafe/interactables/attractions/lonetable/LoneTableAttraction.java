@@ -33,8 +33,12 @@ public class LoneTableAttraction extends AbstractAttraction {
     }
 
     public void setCutscenePortrait(String texture) {
-        String resourcePath = String.format("MatchAndKeepGremlin/%s.png", texture);
-        this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath(resourcePath)));
+        if (texture == null) {
+            this.cutscenePortrait = null;
+        } else {
+            String resourcePath = String.format("MatchAndKeepGremlin/%s.png", texture);
+            this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath(resourcePath)));
+        }
     }
 
     @Override
