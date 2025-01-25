@@ -22,7 +22,6 @@ import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
-import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import imgui.ImGui;
 import imgui.type.ImFloat;
 import javassist.CtClass;
@@ -45,6 +44,7 @@ import spireCafe.interactables.patrons.spiomesmanifestation.SpiomesManifestation
 import spireCafe.patches.PotencySaverPatch;
 import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.screens.JukeboxScreen;
+import spireCafe.screens.CafeMatchAndKeepScreen;
 import spireCafe.ui.Dialog;
 import spireCafe.ui.FixedModLabeledToggleButton.FixedModLabeledToggleButton;
 import spireCafe.util.TexLoader;
@@ -265,6 +265,7 @@ public class Anniv7Mod implements
         BaseMod.addEvent(CafeRoom.ID, CafeRoom.class, "CafeDungeon");
         BaseMod.addCustomScreen(new CafeMerchantScreen());
         BaseMod.addCustomScreen(new JukeboxScreen());
+        BaseMod.addCustomScreen(new CafeMatchAndKeepScreen());
         ConsoleCommand.addCommand("cafe", Cafe.class);
         ConsoleCommand.addCommand("powerelic", DevcommandPowerelic.class);
     }
@@ -430,15 +431,18 @@ public class Anniv7Mod implements
     public static float time = 0f;
     @Override
     public void receivePostUpdate() {
+        if (CardCrawlGame.music == null) return;  // Add this safety check
+
         time += Gdx.graphics.getRawDeltaTime();
         MissingnoUtil.doMissingnoStuff();
-        //Jukebox Active Update Handling
+
         if (JukeboxScreen.FadingOut && nowPlayingSong != null) {
             JukeboxScreen.updateFadeOut();
             return;
         }
-        // Reset to default music if not in a run and something is playing
-        if (!CardCrawlGame.isInARun() && isPlaying) {
+
+        // Add null check before using isPlaying
+        if (!CardCrawlGame.isInARun() && isPlaying && nowPlayingSong != null) {
             JukeboxScreen.resetToDefaultMusic();
         }
         // Mute music when the game is backgrounded

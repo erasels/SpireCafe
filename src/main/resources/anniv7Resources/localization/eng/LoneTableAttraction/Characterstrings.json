@@ -1,0 +1,10 @@
+{
+  "${ModID}:LoneTableAttraction": {
+    "NAMES": [
+      "Lone Table",
+      "Match & Keep Gremlin"
+    ],
+    "TEXT": [
+    ]
+  }
+}
