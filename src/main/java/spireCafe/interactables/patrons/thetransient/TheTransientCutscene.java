@@ -63,7 +63,7 @@ public class TheTransientCutscene extends AbstractCutscene {
                     AbstractDungeon.player.decreaseMaxHealth(MAX_HP_LOSS);
 
                     CardGroup group = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
-                    for (AbstractCard card : AbstractDungeon.player.masterDeck.group) {
+                    for (AbstractCard card : AbstractDungeon.player.masterDeck.getPurgeableCards().group) {
                         if (card.cost != -2 && !CardModifierManager.hasModifier(card, TransientMod.ID)) {
                             group.addToBottom(card);
                         }
