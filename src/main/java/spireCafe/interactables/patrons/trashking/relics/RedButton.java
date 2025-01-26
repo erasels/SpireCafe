@@ -8,8 +8,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
-import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
-import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.interactables.patrons.trashking.TrashKingPatron;
 
@@ -25,21 +23,9 @@ public class RedButton extends AbstractSCRelic {
     }
 
     @Override
-    public String getUpdatedDescription() {
-        return DESCRIPTIONS[0];
-    }
-
-    @Override
-    public AbstractRelic makeCopy() {
-        return new RedButton();
-    }
-
-    @Override
     public void atBattleStart() {
         if (!usedThisCombat && (
-                AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss ||
-                        AbstractDungeon.getCurrRoom() instanceof MonsterRoomElite ||
-                        AbstractDungeon.getCurrRoom().eliteTrigger ||
+                AbstractDungeon.getCurrRoom().eliteTrigger ||
                         AbstractDungeon.getMonsters().monsters.stream().anyMatch(m -> m.type == AbstractMonster.EnemyType.BOSS)
         )) {
             this.flash();
@@ -59,5 +45,15 @@ public class RedButton extends AbstractSCRelic {
     public void onEnterRoom(AbstractRoom room) {
         grayscale = false;
         usedThisCombat = false;
+    }
+
+    @Override
+    public String getUpdatedDescription() {
+        return DESCRIPTIONS[0];
+    }
+
+    @Override
+    public AbstractRelic makeCopy() {
+        return new RedButton();
     }
 }
