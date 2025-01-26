@@ -33,7 +33,6 @@ public class UnidentifiedCard extends AbstractSCCard{
 
     public UnidentifiedCard() {
         super(ID, ZONE, COST, TYPE, RARITY, TARGET);
-        identify();
     }
 
     @Override

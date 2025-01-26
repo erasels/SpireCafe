@@ -35,7 +35,9 @@ public class DecorationSystem {
     private void spawnDecorations() {
         Collections.shuffle(allDecorations, new java.util.Random(rng.randomLong()));
 
-        decorations.add(new BarSignDecoration());
+        // Add sign first so other decorations try to avoid overlapping it
+        BarSignDecoration sign = new BarSignDecoration();
+        decorations.add(sign);
         initWindows();
         boolean hasLarge = false;
         int decorationAmt = NUM_DECOS;
@@ -49,6 +51,9 @@ public class DecorationSystem {
                 decorationAmt++;
             }
         }
+        // Move sign to end of list so it renders on top of other wall decorations
+        decorations.remove(sign);
+        decorations.add(sign);
     }
 
     private void initDeco(Decoration deco) {

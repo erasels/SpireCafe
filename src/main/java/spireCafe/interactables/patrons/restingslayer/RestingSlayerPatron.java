@@ -21,10 +21,11 @@ import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractPatron;
-import spireCafe.util.TexLoader;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.eventRng;
@@ -50,54 +51,81 @@ public class RestingSlayerPatron extends AbstractPatron {
 
         restingSlayerRng = new Random(eventRng.randomLong());
 
+        // Now that we have canLoadAnimation we may not need this list of specific blocked characters anymore, but we've
+        // left it here because it does no harm and it's not worth the time to test each one of these
+        HashSet<String> blockedCharacters = new HashSet<>(Arrays.asList(
+                "THE_PACKMASTER",
+                "THE_SISTERS",
+                "Librarian",
+                "THE_RAINBOW",
+                "Tuner_CLASS"
+        ));
         ArrayList<AbstractPlayer> options = CardCrawlGame.characterManager.getAllCharacters().stream()
                 .filter(p -> p.chosenClass != AbstractDungeon.player.chosenClass
-                        && !p.chosenClass.name().equals("THE_PACKMASTER")
-                        && !p.chosenClass.name().equals("THE_SISTERS")
-                        && !p.chosenClass.name().equals("Librarian")
-                        && !p.chosenClass.name().equals("THE_RAINBOW "))
+                        && !blockedCharacters.contains(p.chosenClass.name())
+                        && canLoadAnimation(p))
                 .collect(Collectors.toCollection(ArrayList::new));
+        Anniv7Mod.logger.info("Characters with animations that can be loaded for Resting Slayer: " + options.stream().map(p -> p.chosenClass.name()).collect(Collectors.joining(", ")));
         slayer = !options.isEmpty() ? options.get(restingSlayerRng.random(options.size() - 1)) : AbstractDungeon.player;
+        Anniv7Mod.logger.info("Loading animation for character: " + slayer.chosenClass.name());
         name = characterStrings.NAMES[0].replace("{0}", slayer.getLocalizedCharacterName().replace(characterStrings.NAMES[1], ""));
         authors = "Jack Renoson";
 
         try {
-            //directly copied loadAnimation from AbstractCreature class
             if(slayer instanceof CustomPlayer){
                 AbstractAnimation anim = ReflectionHacks.getPrivate(slayer, CustomPlayer.class, "animation");
-                if(anim.type() == AbstractAnimation.Type.SPRITE){
+                if (slayer.img != null) {
+                    img = slayer.img;
+                } else if (anim.type() == AbstractAnimation.Type.SPRITE){
                     animation = anim;
                 } else {
-                    this.atlas = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "atlas");
-                    SkeletonJson json = new SkeletonJson(this.atlas);
-                    json.setScale(Settings.renderScale);
-                    this.skeleton = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "skeleton");
-                    if(skeleton != null) {
-                        this.skeleton.setColor(Color.WHITE);
-                        this.stateData = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "stateData");
-                        this.state = new AnimationState(this.stateData);
-                    } else {
-                        img = TexLoader.getTexture(Anniv7Mod.makeCharacterPath("ExampleNPC/image.png"));
-                    }
+                    loadStandardAnimation();
                 }
             } else {
-                this.atlas = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "atlas");
-                SkeletonJson json = new SkeletonJson(this.atlas);
-                json.setScale(Settings.renderScale);
-                this.skeleton = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "skeleton");
-                this.skeleton.setColor(Color.WHITE);
-                this.stateData = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "stateData");
-                this.state = new AnimationState(this.stateData);
+                loadStandardAnimation();
             }
-            //////
         }
         catch (Exception e) {
-            throw new RuntimeException("Error loading animation for character: " + slayer.id, e);
+            throw new RuntimeException("Error loading animation for character: " + slayer.chosenClass.name(), e);
         }
 
         generateCards();
         generateRelics();
         updateOffer();
+    }
+
+    private boolean canLoadAnimation(AbstractPlayer p) {
+        if (!(p instanceof CustomPlayer)) {
+            return true;
+        }
+        // For modded characters, we can load the image if they either:
+        // (1) Use a static image
+        // (2) Use a sprite animation
+        // (3) Use AbstractCreature.loadAnimation (checked by looking at the key fields that method sets)
+        if (p.img != null) {
+            return true;
+        }
+        AbstractAnimation anim = ReflectionHacks.getPrivate(p, CustomPlayer.class, "animation");
+        if (anim == null) {
+            return false;
+        }
+        if (anim.type() == AbstractAnimation.Type.SPRITE) {
+            return true;
+        }
+        return ReflectionHacks.getPrivate(p, AbstractCreature.class, "atlas") != null
+                && ReflectionHacks.getPrivate(p, AbstractCreature.class, "skeleton") != null
+                && ReflectionHacks.getPrivate(p, AbstractCreature.class, "stateData") != null;
+    }
+
+    private void loadStandardAnimation() {
+        //directly copied loadAnimation from AbstractCreature class
+        this.atlas = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "atlas");
+        SkeletonJson json = new SkeletonJson(this.atlas);
+        json.setScale(Settings.renderScale);
+        this.skeleton = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "skeleton");
+        this.skeleton.setColor(Color.WHITE);
+        this.stateData = ReflectionHacks.getPrivate(slayer, AbstractCreature.class, "stateData");
+        this.state = new AnimationState(this.stateData);
     }
 
     public void setCutscenePortrait(String texture) {

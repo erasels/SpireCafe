@@ -37,6 +37,7 @@ public class SpikeSlimeCutscene extends AbstractCutscene {
                 character.blockingDialogueIndex = 1;
                 AbstractDungeon.getCurrRoom().spawnRelicAndObtain((float) Settings.WIDTH / 2.0F, (float)Settings.HEIGHT / 2.0F, new HandfulOfSlime(HandfulOfSlime.BIG_SLIMY));
                 AbstractDungeon.getCurrRoom().spawnRelicAndObtain((float) Settings.WIDTH / 2.0F, (float)Settings.HEIGHT / 2.0F, new MeatOnTheBone());
+                AbstractDungeon.uncommonRelicPool.remove(MeatOnTheBone.ID);
             });
             this.dialog.addDialogOption(OPTIONS[4]).setOptionResult((i)-> {
                 goToDialogue(6);

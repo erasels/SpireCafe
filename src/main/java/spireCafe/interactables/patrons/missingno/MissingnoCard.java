@@ -1,6 +1,7 @@
 package spireCafe.interactables.patrons.missingno;
 
 import basemod.ReflectionHacks;
+import basemod.patches.com.megacrit.cardcrawl.screens.compendium.CardLibraryScreen.NoCompendium;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
@@ -38,6 +39,7 @@ import static spireCafe.interactables.patrons.missingno.MissingnoUtil.*;
 import static spireCafe.util.CardArtRoller.computeCard;
 import static spireCafe.util.Wiz.atb;
 
+@NoCompendium
 public class MissingnoCard extends AbstractSCCard {
 
     public static final String ID = makeID(MissingnoCard.class.getSimpleName());

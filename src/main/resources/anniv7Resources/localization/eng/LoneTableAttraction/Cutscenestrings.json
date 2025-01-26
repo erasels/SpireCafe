@@ -1,0 +1,48 @@
+{
+  "${ModID}:LoneTableAttraction": {
+    "NAMES": [
+      "Lone Table"
+    ],
+    "TEXT": []
+  },
+  "${ModID}:LoneTableCutscene": {
+    "NAME": "Lone Table",
+    "BLOCKING_TEXTS": [
+      "You've had enough gambling for now.",
+      "You don't need to gamble anymore.",
+      "YOU DON'T NEED TO GAMBLE.",
+      "STOP GAMBLING.",
+      "In an attempt to ease your unyielding urge to gamble, you try to look for a distraction, but your eyes just can't leave the table...",
+      "Such beautiful craftsmanship. You've never seen a table this elegant before.",
+      "Full disclosure, that was a joke. That table is putrid.",
+      "It's as if the designer of the table spent a whopping 5 seconds in Photoshop making it.",
+      "...",
+      "...",
+      "...",
+      "...",
+      "...",
+      "...",
+      "There are no Easter Eggs up here. Go away.",
+      "..."
+    ],
+    "DESCRIPTIONS": [
+      "You see a lone table. It is ~suspiciously~ empty...",
+      "~\"HEHEHEHE!\"~ A small gremlin seems to materialize out of nowhere, shuffling cards with surprising dexterity.",
+      "\"Care for a game of Match and Keep? I've got ALL kinds of cards ready...\"",
+      "\"Ah, playing it safe, eh? Fair enough! Pick your stakes...\"",
+      "\"OOH! Feeling lucky? The @zanier@ cards are half off! What'll it be?\"",
+      "%d Gold"
+    ],
+    "OPTIONS": [
+      "Approach the table",
+      "Walk away",
+      "Regular Match & Keep",
+      "Prismatic Match & Keep",
+      "On second thought...",
+      "#yRare cards",
+      "#bUncommon cards",
+      "Common cards",
+      "Leave the table"
+    ]
+  }
+}

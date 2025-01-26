@@ -39,4 +39,10 @@ public class RightballPotionPatch {
             return LineFinder.findInOrder(ctBehavior, new ArrayList<Matcher>(), finalMatcher);
         }
     }
+
+    //Reset stuff when starting a new run
+    public static void receiveStartGame() {
+        rbp = null;
+        potionReward = null;
+    }
 }

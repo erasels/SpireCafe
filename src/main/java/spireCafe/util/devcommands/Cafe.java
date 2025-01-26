@@ -2,6 +2,7 @@ package spireCafe.util.devcommands;
 
 import basemod.DevConsole;
 import basemod.devcommands.ConsoleCommand;
+import spireCafe.screens.JukeboxScreen;
 
 public class Cafe extends ConsoleCommand{
 
@@ -12,6 +13,7 @@ public class Cafe extends ConsoleCommand{
         followup.put("merchant", CafeMerchant.class);
         followup.put("clear", CafeClear.class);
         followup.put("redecorate", CafeRedecorate.class);
+        followup.put("jukebox", CafeJukebox.class);
         requiresPlayer = true;
     }
 
@@ -34,5 +36,6 @@ public class Cafe extends ConsoleCommand{
         DevConsole.log("* merchant [id]");
         DevConsole.log("* clear (all|attraction|bartender|patron|merchant)");
         DevConsole.log("* redecorate");
+        DevConsole.log("* jukebox (open|stop)");
     }
 }

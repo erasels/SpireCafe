@@ -79,6 +79,27 @@ public class GridPurchaseArticle extends AbstractArticle {
         } else {
             this.itemTexture = this.isRow ? new TextureRegion(ROW_IDLE) : new TextureRegion(COLUMN_IDLE);
         }
+        scaleCards(this.hb.hovered);
+    }
+    
+    private void scaleCards(boolean hovered) {
+        ArrayList<AbstractArticle> tmp = ((GridDraftMerchant)this.merchant).getArticles(slot, isRow);
+        for (AbstractArticle a : tmp) {
+            if (a instanceof GridCardArticle) {
+                if (isRow){
+                    ((GridCardArticle)a).isRowHovered = hovered;
+                } else {
+                    ((GridCardArticle)a).isColumnHovered = hovered;
+                }
+            }
+            if (a instanceof PurchasedGridCardArticle) {
+                if (isRow){
+                    ((PurchasedGridCardArticle)a).isRowHovered = hovered;
+                } else {
+                    ((PurchasedGridCardArticle)a).isColumnHovered = hovered;
+                }
+            }
+        }
     }
 
     @Override
@@ -124,10 +145,10 @@ public class GridPurchaseArticle extends AbstractArticle {
         float priceX = xPos;
         float priceY = yPos;
         if (isRow) {
-            priceX += 50 * scale;
-            priceY += 60 * scale;
+            priceX += 50 * scale * Settings.scale;
+            priceY += 60 * scale * Settings.scale;
         } else {
-            priceX += 118 * scale;
+            priceX += 118 * scale * Settings.scale;
             priceY += 0;
         }
         float textLength = FontHelper.getWidth(FontHelper.tipHeaderFont, String.valueOf(price), scale);

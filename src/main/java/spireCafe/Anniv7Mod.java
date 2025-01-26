@@ -29,6 +29,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import spireCafe.abstracts.AbstractCafeInteractable;
+import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cardvars.SecondDamage;
 import spireCafe.cardvars.SecondMagicNumber;
@@ -36,11 +37,15 @@ import spireCafe.interactables.attractions.makeup.MakeupTableAttraction;
 import spireCafe.interactables.merchants.fleamerchant.FleaMerchant;
 import spireCafe.interactables.patrons.dandadan.RightBallPotionSavable;
 import spireCafe.interactables.patrons.dandadan.RightballPotion;
+import spireCafe.interactables.patrons.dandadan.RightballPotionPatch;
 import spireCafe.interactables.patrons.missingno.MissingnoUtil;
 import spireCafe.interactables.patrons.powerelic.implementation.debug.DevcommandPowerelic;
+import spireCafe.interactables.patrons.spiomesmanifestation.SpiomesManifestationPatron;
 import spireCafe.patches.PotencySaverPatch;
 import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.screens.JukeboxScreen;
+import spireCafe.screens.CafeMatchAndKeepScreen;
+import spireCafe.ui.Dialog;
 import spireCafe.ui.FixedModLabeledToggleButton.FixedModLabeledToggleButton;
 import spireCafe.util.TexLoader;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
@@ -58,8 +63,7 @@ import java.util.stream.Collectors;
 import static spireCafe.interactables.attractions.bookshelf.BookshelfAttraction.PAGE_CONFIG_KEY;
 import static spireCafe.interactables.patrons.missingno.MissingnoPatches.*;
 import static spireCafe.patches.CafeEntryExitPatch.CAFE_ENTRY_SOUND_KEY;
-import static spireCafe.screens.JukeboxScreen.isPlaying;
-import static spireCafe.screens.JukeboxScreen.nowPlayingSong;
+import static spireCafe.screens.JukeboxScreen.*;
 
 @SuppressWarnings({"unused"})
 @SpireInitializer
@@ -261,6 +265,7 @@ public class Anniv7Mod implements
         BaseMod.addEvent(CafeRoom.ID, CafeRoom.class, "CafeDungeon");
         BaseMod.addCustomScreen(new CafeMerchantScreen());
         BaseMod.addCustomScreen(new JukeboxScreen());
+        BaseMod.addCustomScreen(new CafeMatchAndKeepScreen());
         ConsoleCommand.addCommand("cafe", Cafe.class);
         ConsoleCommand.addCommand("powerelic", DevcommandPowerelic.class);
     }
@@ -428,19 +433,25 @@ public class Anniv7Mod implements
     public void receivePostUpdate() {
         time += Gdx.graphics.getRawDeltaTime();
         MissingnoUtil.doMissingnoStuff();
+        //Jukebox Active Update Handling
+        if (JukeboxScreen.FadingOut && nowPlayingSong != null) {
+            JukeboxScreen.updateFadeOut();
+            return;
+        }
+        // Reset to default music if not in a run and something is playing
         if (!CardCrawlGame.isInARun() && isPlaying) {
             JukeboxScreen.resetToDefaultMusic();
         }
+        // Mute music when the game is backgrounded
         if (CardCrawlGame.MUTE_IF_BG && Settings.isBackgrounded) {
             if (nowPlayingSong != null) {
-                nowPlayingSong.setVolume(0.0f); // Mute music when backgrounded
+                nowPlayingSong.setVolume(0.0f);
             }
-            return; // Exit early, no need for further updates
+            return;
         }
         // Adjust volume dynamically while the game is in the foreground
-        if (nowPlayingSong != null && !Settings.isBackgrounded) {
+        if (!JukeboxScreen.isPaused && nowPlayingSong != null && !Settings.isBackgrounded) {
             float adjustedVolume = Settings.MUSIC_VOLUME * Settings.MASTER_VOLUME; // Use the global volume slider
-
             nowPlayingSong.setVolume(adjustedVolume); // Update the music volume on the fly
         }
     }
@@ -523,7 +534,7 @@ public class Anniv7Mod implements
 
             @Override
             public void onLoad(Boolean state) {
-                MakeupTableAttraction.isAPrettySparklingPrincess = state;
+                MakeupTableAttraction.isAPrettySparklingPrincess = state != null && state;
             }
         });
 	BaseMod.addSaveField("Anniv7DepletedPotion", new CustomSavable<List<Integer>>() {
@@ -548,11 +559,35 @@ public class Anniv7Mod implements
             }
         });
         BaseMod.addSaveField(makeID("ballPotion"), new RightBallPotionSavable());
+        BaseMod.addSaveField(makeID("queuedBiomeID"), new CustomSavable<String>() {
+            @Override
+            public String onSave() {
+                return SpiomesManifestationPatron.queuedBiomeID;
+            }
+
+            @Override
+            public void onLoad(String id) {
+                if (Loader.isModLoaded("anniv6") && id != null) {
+                    SpiomesManifestationPatron.queuedBiomeID=id;
+                    Object queuedBiome = SpiomesManifestationPatron.getBiomeById(id);
+                    if (queuedBiome != null) {
+                        SpiomesManifestationPatron.addBiomeToNextMap(queuedBiome);
+                    }
+                }
+            }
+        });
     }
 
     @Override
     public void receiveStartGame() {
+        //Reset static variables in case the player quit to main menu during a cutscene
         CafeRoom.isInteracting = false;
+        AbstractCutscene.isInCutscene = false;
+        Dialog.optionList.clear();
+
+        if (!CardCrawlGame.loadingSave) {
+            RightballPotionPatch.receiveStartGame();
+        }
     }
 
     public static class SavableCurrentRunSeenInteractables implements CustomSavable<HashSet<String>> {
