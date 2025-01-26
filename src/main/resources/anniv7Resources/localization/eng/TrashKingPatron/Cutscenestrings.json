@@ -1,0 +1,27 @@
+{
+  "${ModID}:TrashKingCutscene": {
+    "NAME": "Trash King",
+    "BLOCKING_TEXTS": [
+      "The bag seems to be ignoring you."
+    ],
+    "DESCRIPTIONS": [
+      "You encounter a strange looking bag of garbage.",
+      "\"Hey watch where you're sticking that thing, I'm a paying customer like you. Are you another one of those crazies that wants my loot?\"",
+      "\"Can I offer you a nice relic in these trying times?\" Before you can answer he shoves something in your hand and crawls back into his bag.",
+      "\"Don't waste my time again, I knew you were trash.\" The man crawls back into his bag and pretends to ignore you.",
+      "You decide against dumpster diving.",
+      "\"You are one of those crazies, I tell ya what if you can part with some serious coin I can offer you 2 relics.\"",
+      "%d Gold",
+      "He snatches the coins out of your hand faster than you can blink. You feel something greasy that's been pressed into your hands."
+    ],
+    "OPTIONS": [
+      "Poke it with a stick",
+      "Leave it alone",
+      "Pay for a random trash Relic",
+      "Ask for more",
+      "Pay for two random trash Relics",
+      "Decline politely",
+      "This guy is weird... (Leave)"
+    ]
+  }
+}
