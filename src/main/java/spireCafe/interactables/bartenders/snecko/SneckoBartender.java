@@ -22,8 +22,6 @@ import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 
 import java.util.ArrayList;
 
-import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.eventRng;
-
 public class SneckoBartender extends AbstractBartender {
     public static final String ID = SneckoBartender.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
@@ -77,7 +75,7 @@ public class SneckoBartender extends AbstractBartender {
     @Override
     public int getHealAmount() {
         // Heal randomly between 50% and 100% of max HP
-        return (int) (Wiz.p().maxHealth * eventRng.random(MIN_SALAD_HEAL, MAX_SALAD_HEAL));
+        return (int) (Wiz.p().maxHealth * AbstractDungeon.miscRng.random(MIN_SALAD_HEAL, MAX_SALAD_HEAL));
     }
 
     @Override
@@ -101,8 +99,8 @@ public class SneckoBartender extends AbstractBartender {
                 candidates.add(card);
             }
         }
-        AbstractCard chosenCard = candidates.get(eventRng.random(candidates.size()-1));
-        int modifier = increase?eventRng.random(1, 3-chosenCard.cost):-eventRng.random(1, chosenCard.cost-1);
+        AbstractCard chosenCard = candidates.get(AbstractDungeon.miscRng.random(candidates.size()-1));
+        int modifier = increase?AbstractDungeon.miscRng.random(1, 3-chosenCard.cost):-AbstractDungeon.miscRng.random(1, chosenCard.cost-1);
         CardModifierManager.addModifier(chosenCard, new CostMod(modifier));
     }
 
@@ -131,7 +129,7 @@ public class SneckoBartender extends AbstractBartender {
     public void applySecondOptionAction() {
         CardCrawlGame.sound.play("MONSTER_SNECKO_GLARE");
         randomizeCardCost(false);
-        Wiz.p().loseGold(eventRng.random(MIN_GUMMY_COST, MAX_GUMMY_COST));
+        Wiz.p().loseGold(AbstractDungeon.miscRng.random(MIN_GUMMY_COST, MAX_GUMMY_COST));
         inSecondAction = false; //Important to set this to false after the logic has concluded
     }
 
