@@ -1,0 +1,19 @@
+{
+  "${ModID}:TemmieBartenderCutscene": {
+    "NAME": "InSpire Employee Cutscene",
+    "BLOCKING_TEXTS": [
+      "\"Thank you for your patronage. Goodbye.\""
+    ],
+    "DESCRIPTIONS": [
+      "\"Welcome! How may I be of service?\"",
+      "*Grumble* \"I do not get paid enough for this...\"",
+      "\"Alright!\"",
+      "\"Have a nice day!\""
+    ],
+    "OPTIONS": [
+      "I don't want anything.",
+      "[Coffee] Heal #b%s HP and lose #b%s Gold.",
+      "[Milk] Give a card #b2 additional Block and lose #b%s Gold."
+    ]
+  }
+}
