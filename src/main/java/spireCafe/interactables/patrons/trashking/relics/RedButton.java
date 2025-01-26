@@ -36,7 +36,12 @@ public class RedButton extends AbstractSCRelic {
 
     @Override
     public void atBattleStart() {
-        if (!usedThisCombat && (AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss || AbstractDungeon.getCurrRoom() instanceof MonsterRoomElite)) {
+        if (!usedThisCombat && (
+                AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss ||
+                        AbstractDungeon.getCurrRoom() instanceof MonsterRoomElite ||
+                        AbstractDungeon.getCurrRoom().eliteTrigger ||
+                        AbstractDungeon.getMonsters().monsters.stream().anyMatch(m -> m.type == AbstractMonster.EnemyType.BOSS)
+        )) {
             this.flash();
             AbstractMonster target = AbstractDungeon.getMonsters().getRandomMonster(true);
             AbstractDungeon.actionManager.addToBottom(new DamageAction(

@@ -48,13 +48,6 @@
       "If you are at #b1 HP, your #yAttacks deal triple damage."
     ]
   },
-  "${ModID}:ToyBrick": {
-    "NAME": "Toy Brick",
-    "FLAVOR": "Rumors say this this very brick sparked The Architect's interest in...architecture.",
-    "DESCRIPTIONS": [
-      "Upon pickup, replace ALL #rCurses in your deck with #yClumsy."
-    ]
-  },
   "${ModID}:SuperheroComic": {
     "NAME": "Superhero Comic",
     "FLAVOR": "I guess you could say I'm-",

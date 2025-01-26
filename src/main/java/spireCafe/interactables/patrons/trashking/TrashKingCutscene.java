@@ -1,10 +1,11 @@
 package spireCafe.interactables.patrons.trashking;
 
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
+import com.megacrit.cardcrawl.potions.PotionSlot;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
 import spireCafe.interactables.patrons.trashking.relics.*;
@@ -22,9 +23,9 @@ public class TrashKingCutscene extends AbstractCutscene {
     public static final String ID = makeID(TrashKingCutscene.class.getSimpleName());
     private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
 
-    private static final String[] TRASH_KING_RELICS = {
+    public static final String[] TRASH_KING_RELICS = {
             DesignersBrush.ID, SlimeUvula.ID, Life.ID, Pebbles.ID, ArtOfPeace.ID,
-            PetRock.ID, PaperNail.ID, ToyBrick.ID, SuperheroComic.ID, RingOfTheNoodle.ID,
+            PetRock.ID, PaperNail.ID, SuperheroComic.ID, RingOfTheNoodle.ID,
             Supplements.ID, HospitalBill.ID, WellDoneSteak.ID, LonelyAnt.ID, NapiersBones.ID,
             LostPenny.ID, Popcorn.ID, InsuranceCard.ID, TyrtleShell.ID, RayOfMoonlight.ID,
             StylePoints.ID, Loan.ID, PaintBucket.ID, ElyphantToothpaste.ID, HeirloomFork.ID,
@@ -58,6 +59,7 @@ public class TrashKingCutscene extends AbstractCutscene {
 
     private void handleInitialOptions() {
         this.dialog.addDialogOption(OPTIONS[0]).setOptionResult((i) -> {
+            CardCrawlGame.sound.play("POWER_ENTANGLED", 0.05F);
             character.setCutscenePortrait("Portrait3");
             nextDialogue();
         });
@@ -69,7 +71,7 @@ public class TrashKingCutscene extends AbstractCutscene {
 
     private void handleOfferOptions() {
         character.setCutscenePortrait("Portrait4");
-        this.dialog.addDialogOption(OPTIONS[2] + " (" + String.format(DESCRIPTIONS[6], 5) + ")",
+        this.dialog.addDialogOption(String.format(OPTIONS[2], 5),
                         AbstractDungeon.player.gold < 5)
                 .setOptionResult((i) -> {
                     handleRelicPurchase(5, 1);
@@ -85,9 +87,8 @@ public class TrashKingCutscene extends AbstractCutscene {
         });
     }
 
-
     private void handleSecondaryOfferOptions() {
-        this.dialog.addDialogOption(OPTIONS[4] + " (" + String.format(DESCRIPTIONS[6], 50) + ")",
+        this.dialog.addDialogOption(String.format(OPTIONS[4], 50),
                         AbstractDungeon.player.gold < 50)
                 .setOptionResult((i) -> {
                     handleRelicPurchase(50, 2);
@@ -102,7 +103,12 @@ public class TrashKingCutscene extends AbstractCutscene {
         AbstractDungeon.player.loseGold(cost);
         character.alreadyPerformedTransaction = true;
 
+        // Filter out relics the player already has and ElyphantToothpaste if no potions
         ArrayList<String> availableRelics = new ArrayList<>(Arrays.asList(TRASH_KING_RELICS));
+        availableRelics.removeIf(relicId ->
+                AbstractDungeon.player.hasRelic(relicId) ||
+                        (relicId.equals(ElyphantToothpaste.ID) && !hasAnyPotions())
+        );
         Collections.shuffle(availableRelics, new Random(AbstractDungeon.miscRng.randomLong()));
 
         for (int i = 0; i < relicCount && i < availableRelics.size(); i++) {
@@ -117,6 +123,11 @@ public class TrashKingCutscene extends AbstractCutscene {
             goToDialogue(7);
             this.dialogueIndex = 8;
         }
+    }
+
+    private boolean hasAnyPotions() {
+        return AbstractDungeon.player.potions.stream()
+                .anyMatch(potion -> !(potion instanceof PotionSlot));
     }
 
     @Override

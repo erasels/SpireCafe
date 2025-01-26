@@ -21,18 +21,19 @@ public class StylePoints extends AbstractSCRelic {
 
     @Override
     public void onVictory() {
-        if (AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss) {
+        if (AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss && AbstractDungeon.getCurrMapNode() != null && AbstractDungeon.getCurrMapNode().room instanceof MonsterRoomBoss) {
             HashSet<String> uniqueCardIDs = new HashSet<>();
             for (AbstractCard card : AbstractDungeon.player.masterDeck.group) {
                 uniqueCardIDs.add(card.cardID);
             }
-
             int goldGain = uniqueCardIDs.size();
             AbstractDungeon.player.gainGold(goldGain);
             this.flash();
             CardCrawlGame.sound.play("GOLD_GAIN");
         }
     }
+
+
 
     @Override
     public String getUpdatedDescription() {
