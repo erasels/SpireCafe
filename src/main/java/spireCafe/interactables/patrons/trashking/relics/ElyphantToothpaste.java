@@ -50,7 +50,7 @@ public class ElyphantToothpaste extends AbstractSCRelic {
             cardToUpgrade.upgrade();
             AbstractDungeon.player.bottledCardUpgradeCheck(cardToUpgrade);
             float xOffset = (i % 2 == 0 ? -1 : 1) * AbstractCard.IMG_WIDTH / 2.0F * (0.5F + 0.5F * new Random().nextFloat()) + 20.0F * Settings.scale;
-            float yOffset = (new Random().nextFloat() - 0.5F) * 100.0F * Settings.scale; // Random vertical offset
+            float yOffset = (new Random().nextFloat() - 0.5F) * 100.0F * Settings.scale;
             AbstractDungeon.topLevelEffectsQueue.add(new ShowCardBrieflyEffect(cardToUpgrade.makeStatEquivalentCopy(), (float)Settings.WIDTH / 2.0F + xOffset, (float)Settings.HEIGHT / 2.0F + yOffset));
             anyCardUpgraded = true;
         }

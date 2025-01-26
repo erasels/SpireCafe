@@ -38,14 +38,14 @@ public class DesignersBrush extends AbstractSCRelic {
                         c.upgrade();
                         c.superFlash();
                     }
-                    grayscale = true; // Set the relic to grayscale
+                    grayscale = true;
                 }
             }
         });
     }
 
     @Override
-    public void onEnterRoom(AbstractRoom room) { // Reset grayscale when entering a new room
+    public void onEnterRoom(AbstractRoom room) {
         grayscale = false;
     }
 

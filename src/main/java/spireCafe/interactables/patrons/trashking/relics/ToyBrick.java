@@ -38,10 +38,8 @@ public class ToyBrick extends AbstractSCRelic {
             flash();
 
             for (AbstractCard oldCard : cardsToRemove) {
-                // Properly remove each Curse card using the removeCard method
                 AbstractDungeon.player.masterDeck.removeCard(oldCard);
 
-                // Show and obtain a Clumsy card for each Curse card replaced
                 AbstractCard newCard = new Clumsy();
                 float effectPosX = (float) Settings.WIDTH / 2.0F + (MathUtils.random(-0.2f, 0.2f) * Settings.WIDTH);
                 float effectPosY = (float) Settings.HEIGHT / 2.0F + (MathUtils.random(-0.2f, 0.2f) * Settings.HEIGHT);

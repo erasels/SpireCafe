@@ -26,11 +26,10 @@ public class LonelyAnt extends AbstractSCRelic {
         addToBot(new AbstractGameAction() {
             @Override
             public void update() {
-                isDone = true;  // Make sure to mark this action as complete after execution.
+                isDone = true;
 
                 boolean hasUncommonOrRare = false;
 
-                // Check each card in the hand for Uncommon or Rare rarity.
                 for (AbstractCard card : AbstractDungeon.player.hand.group) {
                     if (card.rarity == AbstractCard.CardRarity.UNCOMMON || card.rarity == AbstractCard.CardRarity.RARE) {
                         hasUncommonOrRare = true;
@@ -38,7 +37,6 @@ public class LonelyAnt extends AbstractSCRelic {
                     }
                 }
 
-                // Apply effects if no Uncommon or Rare cards are present.
                 if (!hasUncommonOrRare) {
                     flash();
                     addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, LonelyAnt.this));
