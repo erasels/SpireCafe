@@ -225,11 +225,15 @@ public class FleaMerchant extends AbstractMerchant {
         };
         articles.add(relic);
 
-        AbstractArticle primedRelic = new FleaMarketRelicArticle(this, 1, haggleArticle);
-        articles.add(primedRelic);
+        FleaMarketRelicArticle primedRelic = new FleaMarketRelicArticle(this, 1, haggleArticle);
+        if (primedRelic.relic != null) {
+            articles.add(primedRelic);
+        }
 
-        AbstractArticle usedRelic = new FleaMarketRelicArticle(this, 2, haggleArticle);
-        articles.add(usedRelic);
+        FleaMarketRelicArticle usedRelic = new FleaMarketRelicArticle(this, 2, haggleArticle);
+        if (usedRelic.relic != null) {
+            articles.add(usedRelic);
+        }
     }
 
     private AbstractPotion getUsedPotion(){
