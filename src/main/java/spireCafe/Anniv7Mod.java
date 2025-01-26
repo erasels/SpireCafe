@@ -584,7 +584,16 @@ public class Anniv7Mod implements
         CafeRoom.isInteracting = false;
         AbstractCutscene.isInCutscene = false;
         Dialog.optionList.clear();
-
+        // Reset JukeboxScreen.isCoinSlotClicked
+        if (AbstractDungeon.player != null) {
+            if (AbstractDungeon.player.hasRelic("JukeboxRelicID")) {
+                // Player has the relic, mark the coin slot as clicked
+                JukeboxScreen.isCoinSlotClicked = true;
+            } else {
+                // Player doesn't have the relic, clear the coin slot flag
+                JukeboxScreen.isCoinSlotClicked = false;
+            }
+        }
         if (!CardCrawlGame.loadingSave) {
             RightballPotionPatch.receiveStartGame();
         }
