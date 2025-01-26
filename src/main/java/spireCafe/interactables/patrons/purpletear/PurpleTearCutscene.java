@@ -89,7 +89,7 @@ public class PurpleTearCutscene extends AbstractCutscene {
                 eligibleRelics.add(relic);
             }
         }
-        Collections.shuffle(eligibleRelics, AbstractDungeon.eventRng.random);
+        Collections.shuffle(eligibleRelics, AbstractDungeon.miscRng.random);
         int maxOptions = Math.min(3, eligibleRelics.size());
         for (int i = 0; i < maxOptions; i++) {
             AbstractRelic relic = eligibleRelics.get(i);

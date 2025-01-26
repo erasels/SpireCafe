@@ -28,8 +28,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
-import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.eventRng;
-
 public class RestingSlayerPatron extends AbstractPatron {
     public static final String ID = RestingSlayerPatron.class.getSimpleName();
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
@@ -49,7 +47,7 @@ public class RestingSlayerPatron extends AbstractPatron {
     public RestingSlayerPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
 
-        restingSlayerRng = new Random(eventRng.randomLong());
+        restingSlayerRng = new Random(AbstractDungeon.miscRng.randomLong());
 
         // Now that we have canLoadAnimation we may not need this list of specific blocked characters anymore, but we've
         // left it here because it does no harm and it's not worth the time to test each one of these

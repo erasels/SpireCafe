@@ -42,7 +42,7 @@ public class LooterPatron extends AbstractPatron {
         e.setTime(e.getEndTime() * MathUtils.random());
         //////
 
-        this.rewardGold = AbstractDungeon.eventRng.random(MIN_GOLD,MAX_GOLD);
+        this.rewardGold = AbstractDungeon.miscRng.random(MIN_GOLD,MAX_GOLD);
         setCutscenePortrait("Portrait");
     }
 
