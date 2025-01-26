@@ -1,15 +1,25 @@
 package spireCafe.interactables.patrons.dandadan;
 
-import basemod.abstracts.AbstractCardModifier;
-import basemod.cardmods.EtherealMod;
-import basemod.helpers.CardModifierManager;
+import static spireCafe.Anniv7Mod.makeID;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardQueueItem;
+import com.megacrit.cardcrawl.core.AbstractCreature;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.UIStrings;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+
+import basemod.abstracts.AbstractCardModifier;
+import basemod.cardmods.EtherealMod;
+import basemod.helpers.CardModifierManager;
 import spireCafe.Anniv7Mod;
 import spireCafe.util.TexLoader;
 
@@ -19,6 +29,7 @@ public class GhostModifier extends AbstractCardModifier {
 
     private float alpha;
     private boolean fading = true;
+    private boolean playTwice = false;
 
     public static final float FADE_SPEED = 0.3F;
 
@@ -29,10 +40,13 @@ public class GhostModifier extends AbstractCardModifier {
     private static Texture silky_img = TexLoader
             .getTexture(Anniv7Mod.makeImagePath("characters/Dandadan/acrobatic_silky.png"));
 
-    public GhostModifier() {
+    private static UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID("GhostModifier"));
+
+    public GhostModifier(boolean playTwice) {
+        this.playTwice = playTwice;
     }
 
-    public GhostModifier(int ghost) {
+    public GhostModifier(int ghost, boolean playTwice) {
         switch (ghost) {
             case 0:
                 ghost_img = crab_img;
@@ -44,15 +58,16 @@ public class GhostModifier extends AbstractCardModifier {
                 ghost_img = silky_img;
                 break;
         }
+        this.playTwice = playTwice;
     }
 
-    public GhostModifier(Texture img) {
+    public GhostModifier(Texture img, boolean playTwice) {
         ghost_img = img;
     }
 
     @Override
     public AbstractCardModifier makeCopy() {
-        return new GhostModifier(ghost_img);
+        return new GhostModifier(ghost_img, playTwice);
     }
 
     @Override
@@ -71,6 +86,39 @@ public class GhostModifier extends AbstractCardModifier {
                     ghost_img = silky_img;
                     break;
             }
+        }
+    }
+
+    @Override
+    public void onUse(AbstractCard card, AbstractCreature target, UseCardAction action) {
+        if (playTwice && !card.purgeOnUse) {
+            AbstractMonster m = null;
+            if (action.target != null) {
+                m = (AbstractMonster) action.target;
+            }
+
+            AbstractCard tmp = card.makeSameInstanceOf();
+            AbstractDungeon.player.limbo.addToBottom(tmp);
+            tmp.current_x = card.current_x;
+            tmp.current_y = card.current_y;
+            tmp.target_x = Settings.WIDTH / 2.0F - 300.0F * Settings.scale;
+            tmp.target_y = Settings.HEIGHT / 2.0F;
+            if (m != null) {
+                tmp.calculateCardDamage(m);
+            }
+
+            tmp.purgeOnUse = true;
+            AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, card.energyOnUse, true, true),
+                    true);
+        }
+    }
+
+    @Override
+    public String modifyDescription(String rawDescription, AbstractCard card) {
+        if (playTwice) {
+            return rawDescription + uiStrings.TEXT[0];
+        } else {
+            return rawDescription;
         }
     }
 

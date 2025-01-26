@@ -71,14 +71,8 @@ public class GoldenBallRelic extends AbstractSCRelic implements CustomSavable<In
             if (ghostIndex >= 3)
                 break;
             if (c.type != AbstractCard.CardType.CURSE && c.cost != -2 && c.costForTurn != -2) {
-                CardModifierManager.addModifier(c, new GhostModifier(ghostIndex++));
+                CardModifierManager.addModifier(c, new GhostModifier(ghostIndex++, ghostsPlayed == -1));
             }
-        }
-
-        if (ghostsPlayed == -1) {
-            flash();
-            Wiz.atb(new RelicAboveCreatureAction(Wiz.p(), this));
-            Wiz.applyToSelf(new DuplicationPower(Wiz.p(), 1));
         }
     }
 
