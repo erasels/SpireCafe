@@ -1,4 +1,4 @@
-package spireCafe.interactables.bartenders.temmie;
+package spireCafe.interactables.bartenders.Temmie;
 
 import basemod.helpers.CardModifierManager;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -60,7 +60,7 @@ public class TemmieBartender extends AbstractBartender {
     public TemmieBartender(float animationX, float animationY) {
         super(animationX, animationY, 180.0f, 250.0f);
         name = "Bartender Temmie";
-        this.authors = "Gk";
+        this.authors = "Darklight";
         this.img = TexLoader.getTexture(Anniv7Mod.makeBartenderPath("temmie/Temmie.png"));
         this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeBartenderPath("temmie/Portrait.png")));
     }
@@ -69,8 +69,7 @@ public class TemmieBartender extends AbstractBartender {
     public void onInteract() {
         Random rand = new Random();
         int phraseIndex = rand.nextInt(activationPhrases.length);
-        CardCrawlGame.sound.play(Anniv7Mod.makeAudioPath("Temmie-Voice.mp3"));
-        Wiz.p().openDialog(activationPhrases[phraseIndex]);
+        CardCrawlGame.sound.play("/anniv7Resources/audio/Temmie-Voice.mp3");
         AbstractDungeon.topLevelEffectsQueue.add(new BartenderCutscene(this, cutsceneStrings));
     }
 
