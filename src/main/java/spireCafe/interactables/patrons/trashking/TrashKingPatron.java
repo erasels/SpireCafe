@@ -18,7 +18,7 @@ public class TrashKingPatron extends AbstractPatron {
     public TrashKingPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
         this.name = characterStrings.NAMES[0];
-        this.authors = "Cany0udance & chocolatecake5000";
+        this.authors = "Cany0udance, chocolatecake5000";
 
         img = TexLoader.getTexture(Anniv7Mod.makeCharacterPath("TrashKing/Portrait.png"));
         this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeCharacterPath("TrashKing/Portrait2.png")));
