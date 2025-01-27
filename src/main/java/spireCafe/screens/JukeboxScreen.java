@@ -254,21 +254,21 @@ public class JukeboxScreen extends CustomScreen {
 
     private String getTrackOrigin(String trackName) {
         if (trackName == null || trackName.isEmpty()) {
-            return "Unknown Origin"; // Fallback for invalid or empty track names
+            return TEXT[23]; // Fallback for invalid or empty track names
         }
 
         // Check if the track is from the custom tracks
         if (customTrackFileMap.containsKey(trackName)) {
-            return "External";
+            return TEXT[19];
         }
 
         // Define specific origins for certain predefined tracks
         if (trackName.equalsIgnoreCase("Cafe Theme")) {
-            return "ModalModule (Composer)";
+            return TEXT[20];
         } else if (trackName.equalsIgnoreCase("Like A Rolling Stone")) {
-            return "Eeriemist (Contributor)";
+            return TEXT[21];
         } else {
-            return "Clark Aboud (Vanilla)"; // Default for predefined tracks
+            return TEXT[22]; // Default for predefined tracks
         }
     }
     private void createButtons() {
