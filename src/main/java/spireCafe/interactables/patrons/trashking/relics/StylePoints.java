@@ -21,7 +21,7 @@ public class StylePoints extends AbstractSCRelic {
 
     @Override
     public void onVictory() {
-        if (AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss && AbstractDungeon.getCurrMapNode() != null && AbstractDungeon.getCurrMapNode().room instanceof MonsterRoomBoss) {
+        if (AbstractDungeon.getCurrMapNode() != null && AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss) {
             HashSet<String> uniqueCardIDs = new HashSet<>();
             for (AbstractCard card : AbstractDungeon.player.masterDeck.group) {
                 uniqueCardIDs.add(card.cardID);
