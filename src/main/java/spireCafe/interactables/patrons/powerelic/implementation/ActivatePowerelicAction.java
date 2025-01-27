@@ -3,8 +3,11 @@ package spireCafe.interactables.patrons.powerelic.implementation;
 import basemod.ReflectionHacks;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.relics.SlaversCollar;
+import com.megacrit.cardcrawl.vfx.SmokePuffEffect;
 import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
 import spireCafe.util.Wiz;
 
@@ -25,14 +28,18 @@ public class ActivatePowerelicAction extends AbstractGameAction {
 
         activateRelicFromCard(card,card.capturedRelic);
         //note that if the card was duplicated, capturedRelic might point to a different relic now!
+        int previousMaxEnergy=Wiz.adp().energy.energyMaster;
+        int previousHandSize=Wiz.adp().masterHandSize;
         if(PowerelicAllowlist.isEssentialEquipRelic(card.capturedRelic)) {
-            int previousMaxEnergy=Wiz.adp().energy.energyMaster;
-            int previousHandSize=Wiz.adp().masterHandSize;
             card.capturedRelic.onEquip();
-            if(PowerelicAllowlist.isImmediateOnequipRelic(card.capturedRelic)){
-                Wiz.att(new PowerelicUpdateEnergyAndHandsizeAction(previousMaxEnergy,previousHandSize));
-            }
         }
+        if(card.capturedRelic instanceof SlaversCollar)
+            ((SlaversCollar)card.capturedRelic).beforeEnergyPrep();
+        //Logic change 2025/01/27: check for "immediate equip" status independently of "essential equip" status
+        if(PowerelicAllowlist.isImmediateOnequipRelic(card.capturedRelic)){
+            Wiz.att(new PowerelicUpdateEnergyAndHandsizeAction(previousMaxEnergy,previousHandSize));
+        }
+
 
         isDone=true;
     }
@@ -42,7 +49,7 @@ public class ActivatePowerelicAction extends AbstractGameAction {
             //can't use spawnRelicAndObtain as that will automatically onEquip even if we don't want to
             Wiz.att(new ApplyPowerAction(Wiz.adp(),Wiz.adp(),new PowerelicPower(relic)));
             relic.instantObtain(Wiz.adp(),Wiz.adp().relics.size(),false);
-            //AbstractDungeon.effectsQueue.add(new SmokePuffEffect(relic.targetX,relic.targetY));
+            AbstractDungeon.effectsQueue.add(new SmokePuffEffect(relic.targetX,relic.targetY));
             if(Wiz.curRoom()!=null)relic.justEnteredRoom(Wiz.curRoom());
             relic.atPreBattle();
             relic.atBattleStart();

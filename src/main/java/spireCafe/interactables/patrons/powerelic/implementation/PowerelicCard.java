@@ -25,6 +25,11 @@ import static spireCafe.interactables.patrons.powerelic.implementation.Powerelic
 public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
 
     //Tasks for later:
+    // Slaver's Collar reported to not work vs elites
+    //      (uses beforeEnergyPrep method)
+    // display relic in card view
+    // fix power position for different Settings.scale
+    // MAYBE display relic counter, if it looks ok
     // prohibit storing in A Note For Yourself
     // should Mummified Hand proc at start of combat from powers-turned-relics?
     // Ancient Tea Set requires playing the card twice, which is unfortunate.  make it feel better to play
@@ -208,6 +213,9 @@ public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
                     capturedRelic.onUnequip();
                 }
             }
+            //Also note that if for whatever reason we have a permanent non-Powerelic relic in the player relic bar
+            // and the player removes a card with the same relic ID, the above logic will become very confused
+            // and probably remove the permanent relic.  So avoid allowing duplicate relics.
         }
     }
 
