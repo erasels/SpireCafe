@@ -103,7 +103,7 @@ public class PowerelicRelic extends AbstractSCRelic {
         float temps=capturedCard.drawScale;
         float tempa=capturedCard.angle;
         capturedCard.current_x=this.currentX;
-        capturedCard.current_y=this.currentY-14;
+        capturedCard.current_y=this.currentY-20*Settings.scale;
         capturedCard.drawScale=IMAGE_SCALE;
         capturedCard.angle=0;
 

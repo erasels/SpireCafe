@@ -25,10 +25,7 @@ import static spireCafe.interactables.patrons.powerelic.implementation.Powerelic
 public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
 
     //Tasks for later:
-    // Slaver's Collar reported to not work vs elites
-    //      (uses beforeEnergyPrep method)
     // display relic in card view
-    // fix power position for different Settings.scale
     // MAYBE display relic counter, if it looks ok
     // prohibit storing in A Note For Yourself
     // should Mummified Hand proc at start of combat from powers-turned-relics?
