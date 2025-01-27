@@ -586,7 +586,7 @@ public class Anniv7Mod implements
         Dialog.optionList.clear();
         // Reset JukeboxScreen.isCoinSlotClicked
         if (AbstractDungeon.player != null) {
-            if (AbstractDungeon.player.hasRelic("JukeboxRelicID")) {
+            if (AbstractDungeon.player.hasRelic(JukeboxRelic.ID)) {
                 // Player has the relic, mark the coin slot as clicked
                 JukeboxScreen.isCoinSlotClicked = true;
             } else {
