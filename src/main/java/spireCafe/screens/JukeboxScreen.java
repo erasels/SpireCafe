@@ -8,6 +8,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Interpolation;
 import com.evacipated.cardcrawl.modthespire.lib.ConfigUtils;
 import com.evacipated.cardcrawl.modthespire.lib.SpireEnum;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -29,9 +30,8 @@ import spireCafe.util.TexLoader;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.Random;
+import java.util.*;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -48,6 +48,7 @@ public class JukeboxScreen extends CustomScreen {
     private final List<Boolean> buttonClickedStates = new ArrayList<>();
     private boolean isQueueConfirmState = false; // Tracks if the button says "Confirm" or "Add to Queue"
     private List<String> queuedTracks = new ArrayList<>(); // List of selected tracks
+    private Map<String, String> customTrackFileMap = new HashMap<>(); // Map: Formatted Name -> Original File Name
     public static boolean isPlaying = false;
     public static boolean isCoinSlotClicked = false;
 
@@ -56,6 +57,7 @@ public class JukeboxScreen extends CustomScreen {
     private boolean loopEnabled = false;
     private String currentTrackName;
     private int glowingButtonIndex = -1;
+    private String trackOrigin = "";
     private String textField;
 
     private Texture backgroundTexture;
@@ -65,6 +67,8 @@ public class JukeboxScreen extends CustomScreen {
     private Texture buttonlongTexture;
     private Texture buttononTexture;
     private Texture buttonoffTexture;
+    private Texture buttononGlowTexture;
+    private Texture buttonoffGlowTexture;
     private Texture buttonDisabledTexture;
     private Texture coinSlotTexture;
     private Texture coinSlotLitTexture;
@@ -76,10 +80,14 @@ public class JukeboxScreen extends CustomScreen {
     private Texture loopButtonTexture;
     private Texture loopButtonGlowTexture;
     private Texture skipButtonTexture;
+    private Texture pauseButtonTexture;
+    private Texture pauseButtonGlowTexture;
+    private Texture playButtonTexture;
     private Texture clearButtonTexture;
     private Texture clearButtonOffTexture;
     private Texture insertSlotTexture;
     private Texture insertSlotGlowTexture;
+    private Texture originTexture;
     private static final String ID = Anniv7Mod.makeID(JukeboxScreen.class.getSimpleName());
     private static final UIStrings UIStrings = CardCrawlGame.languagePack.getUIString(ID);
     private static final String[] TEXT = UIStrings.TEXT;
@@ -94,6 +102,8 @@ public class JukeboxScreen extends CustomScreen {
         buttonlongTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/ButtonLong.png"));
         buttononTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/ButtonOn.png"));
         buttonoffTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/ButtonOff.png"));
+        buttononGlowTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/ButtonOnGlow.png"));
+        buttonoffGlowTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/ButtonOffGlow.png"));
         buttonDisabledTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/ButtonflipN.png"));
         coinSlotTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/Coinslot.png"));
         coinSlotLitTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/CoinslotLit.png"));
@@ -103,6 +113,9 @@ public class JukeboxScreen extends CustomScreen {
         loopButtonTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/LoopButton.png"));
         loopButtonGlowTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/LoopButtonGlow.png"));
         skipButtonTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/SkipButton.png"));
+        pauseButtonTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/PauseButton.png"));
+        pauseButtonGlowTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/PauseButtonGlow.png"));
+        playButtonTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/PlayButton.png"));
         clearButtonOffTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/ClearButtonOff.png"));
         insertSlotTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/InsertSlot.png"));
         insertSlotGlowTexture = TexLoader.getTexture(Anniv7Mod.makeAttractionPath("jukebox/InsertSlotGlow.png"));
@@ -112,6 +125,7 @@ public class JukeboxScreen extends CustomScreen {
         windowTexture = TexLoader.getTexture("images/ui/reward/takeAll.png");
         clearButtonTexture = TexLoader.getTexture("images/ui/profile/delete_button.png");
         highlightButtonTexture = TexLoader.getTexture("images/ui/charSelect/highlightButton2.png");
+        originTexture = TexLoader.getTexture("images/ui/option/abandon.png");
 
         initializePredefinedTracks();
         loadCustomTracks();
@@ -133,6 +147,7 @@ public class JukeboxScreen extends CustomScreen {
 
     private void initializePredefinedTracks() {
         predefinedTracks.add("Cafe_Theme");
+        predefinedTracks.add("Like_A_Rolling_Stone");
         predefinedTracks.add("SHOP");
         predefinedTracks.add("SHOP_ALT");
         predefinedTracks.add("SHRINE");
@@ -162,9 +177,9 @@ public class JukeboxScreen extends CustomScreen {
         predefinedTracks.add("BOSS_VICTORY_STINGER_3");
         predefinedTracks.add("BOSS_VICTORY_STINGER_4");
     }
-
     private void loadCustomTracks() {
         customTracks.clear();
+        customTrackFileMap.clear();
 
         File customFolder = new File(CUSTOM_MUSIC_FOLDER);
         if (!customFolder.exists()) {
@@ -184,18 +199,17 @@ public class JukeboxScreen extends CustomScreen {
             LOGGER.info("Scanning custom music folder for audio files...");
             for (File file : files) {
                 if (file.isFile() && isValidAudioFile(file.getName())) {
-                    String trimmedName = file.getName()
-                            .replaceAll("\\.(ogg|mp3|wav)$", "") // Remove extensions
-                            .replace("_", " ");                 // Replace underscores with spaces
-                    customTracks.add(trimmedName);
-                    LOGGER.info("Custom track added: " + trimmedName);
+                    String formattedName = formatTrackName(file.getName());
+                    customTracks.add(formattedName);
+                    customTrackFileMap.put(formattedName, file.getName()); // Map formatted name to original name
+                    LOGGER.info("Custom track added: " + formattedName);
                 } else {
                     LOGGER.warn("Invalid or unsupported file skipped: " + file.getName());
-
                 }
             }
         }
     }
+
 
     // Helper method to check for valid audio file extensions
     private boolean isValidAudioFile(String fileName) {
@@ -217,8 +231,14 @@ public class JukeboxScreen extends CustomScreen {
     }
 
     private String formatTrackName(String trackName) {
-        // Remove the file extension and replace underscores with spaces
-        trackName = trackName.replaceAll("\\.ogg|\\.mp3|\\.wav", "").replace("_", " ");
+        if (trackName == null) {
+            return "";
+        }
+        // Remove file extensions and replace underscores and hyphens with spaces
+        trackName = trackName.replaceAll("\\.ogg|\\.mp3|\\.wav", "")
+                .replace("_", " ")
+                .replace("-", " ");
+
         // Capitalize each word
         String[] words = trackName.split(" ");
         StringBuilder formattedName = new StringBuilder();
@@ -232,6 +252,25 @@ public class JukeboxScreen extends CustomScreen {
         return formattedName.toString().trim();
     }
 
+    private String getTrackOrigin(String trackName) {
+        if (trackName == null || trackName.isEmpty()) {
+            return TEXT[23]; // Fallback for invalid or empty track names
+        }
+
+        // Check if the track is from the custom tracks
+        if (customTrackFileMap.containsKey(trackName)) {
+            return TEXT[19];
+        }
+
+        // Define specific origins for certain predefined tracks
+        if (trackName.equalsIgnoreCase("Cafe Theme")) {
+            return TEXT[20];
+        } else if (trackName.equalsIgnoreCase("Like A Rolling Stone")) {
+            return TEXT[21];
+        } else {
+            return TEXT[22]; // Default for predefined tracks
+        }
+    }
     private void createButtons() {
         buttons.clear();
         buttonClickedStates.clear();
@@ -288,9 +327,10 @@ public class JukeboxScreen extends CustomScreen {
 
     @Override
     public void update() {
-        if (nowPlayingSong != null) {
-            nowPlayingSong.setVolume(Settings.MUSIC_VOLUME * Settings.MASTER_VOLUME); // Continuously update volume
-
+        if (currentTrackName != null) {
+            trackOrigin = getTrackOrigin(currentTrackName); // Dynamically update the origin
+        } else {
+            trackOrigin = ""; // Clear origin if no track is playing
         }
         clearHighlightsOnEmptyTrack();
         updateSongButtons();
@@ -323,13 +363,30 @@ public class JukeboxScreen extends CustomScreen {
         sb.draw(backgroundTexture, 0, 0, Settings.WIDTH, Settings.HEIGHT);
 
         // Draw window and text field
-        float windowX = (Settings.WIDTH / 2f);
-        float windowY = (Settings.HEIGHT / 2f);
-        sb.draw(windowTexture, windowX - 450f, windowY + 170f, 900f * Settings.scale, 250f * Settings.scale);
+        float windowX = 415f * Settings.scale;
+        float windowY = 710f * Settings.scale;
+        float windowFontX = 960f * Settings.scale;
+        float windowFontY = 838f * Settings.scale;
+        sb.draw(windowTexture, windowX, windowY, 1100f * Settings.scale, 250f * Settings.scale);
         FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont,
                 TEXT[1] + (currentTrackName != null ? currentTrackName : TEXT[0]),
-                Settings.WIDTH / 2f, Settings.HEIGHT - (242f * Settings.scale),
+                windowFontX, windowFontY,
                 Color.GOLD);
+        // Draw Credit/Origin Box
+        float creditX = 185f * Settings.scale;
+        float creditY = 760f * Settings.scale;
+        float creditFontX = 400f * Settings.scale;
+        float creditFontY = 815f * Settings.scale;
+        sb.draw(originTexture, creditX, creditY, 440 * Settings.scale, 100 * Settings.scale);
+
+        // Render the "Origin: Name" text over the Credit Box
+        if (currentTrackName != null) {
+            String trackOrigin = getTrackOrigin(currentTrackName); // Get the origin dynamically
+            FontHelper.renderFontCentered(sb, FontHelper.smallDialogOptionFont,
+                    TEXT[18]+ " " + trackOrigin,
+                    creditFontX, creditFontY, // Adjust the text position
+                    Color.GOLD); // White text for visibility
+        }
     }
 
     //U&R Song Buttons
@@ -346,7 +403,7 @@ public class JukeboxScreen extends CustomScreen {
             float x = (i < BUTTONS_PER_PAGE) ? leftColumnX : rightColumnX;
             float y = startingY - ((i % BUTTONS_PER_PAGE) * buttonSpacing);
 
-            float hitboxWidth = 300f * Settings.scale;
+            float hitboxWidth = 320f * Settings.scale;
             float hitboxHeight = 70f * Settings.scale;
             float hitboxX = x + (400f * Settings.scale - hitboxWidth) / 2f;
             float hitboxY = y + (200f * Settings.scale - hitboxHeight) / 2f;
@@ -379,23 +436,29 @@ public class JukeboxScreen extends CustomScreen {
     }
 
     private void renderSongButtons(SpriteBatch sb) {
-        // Positions and spacing
-        float leftColumnX = 408f * Settings.scale;
-        float rightColumnX = 808f * Settings.scale;
-        float startingY = 613f * Settings.scale;
-        float buttonSpacing = 85f * Settings.scale;
+        // Base positions and spacing without scaling
+        float baseLeftColumnX = 408f;
+        float baseRightColumnX = 808f;
+        float baseStartingY = 613f;
+        float baseButtonSpacing = 85f;
 
         // Iterate through the buttons and render them
         for (int i = 0; i < buttons.size(); i++) {
             LargeDialogOptionButton button = buttons.get(i);
 
             // Determine x and y based on the column (left or right)
-            float x = (i < BUTTONS_PER_PAGE) ? leftColumnX : rightColumnX;
-            float y = startingY - ((i % BUTTONS_PER_PAGE) * buttonSpacing);
+            float baseX = (i < BUTTONS_PER_PAGE) ? baseLeftColumnX : baseRightColumnX;
+            float baseY = baseStartingY - ((i % BUTTONS_PER_PAGE) * baseButtonSpacing);
+
+            // Scale positions
+            float x = baseX * Settings.scale;
+            float y = baseY * Settings.scale;
+
+            // Visual button dimensions (scaled)
+            float visualWidth = 420f * Settings.scale;
+            float visualHeight = 200f * Settings.scale;
 
             // Draw the visual button
-            float visualWidth = 400f * Settings.scale;
-            float visualHeight = 200f * Settings.scale;
             sb.draw(buttonTexture, x, y, visualWidth, visualHeight);
 
             // Highlight if clicked
@@ -409,16 +472,27 @@ public class JukeboxScreen extends CustomScreen {
 
             // Render the formatted button text
             String displayName = formatTrackName(button.msg);
-            FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, displayName,
-                    x + (visualWidth / 2f), y + (visualHeight / 2f), Color.WHITE);
+            float textX = x + (420f / 2f) * Settings.scale; // Center the text horizontally
+            float textY = y + (200f / 2f) * Settings.scale; // Center the text vertically
+            FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, displayName, textX, textY, Color.WHITE);
 
-            // Render the hitbox for debugging
-            float hitboxWidth = 300f * Settings.scale;
-            float hitboxHeight = 70f * Settings.scale;
-            float hitboxX = x + (visualWidth - hitboxWidth) / 2f;
-            float hitboxY = y + (visualHeight - hitboxHeight) / 2f;
+            // Hitbox dimensions
+            float baseHitboxWidth = 320f;
+            float baseHitboxHeight = 70f;
+            float hitboxWidth = baseHitboxWidth * Settings.scale;
+            float hitboxHeight = baseHitboxHeight * Settings.scale;
+
+            // Scale hitbox positions properly
+            float baseHitboxX = baseX + (420f - baseHitboxWidth) / 2f; // Centered within the button
+            float baseHitboxY = baseY + (200f - baseHitboxHeight) / 2f;
+            float hitboxX = baseHitboxX * Settings.scale;
+            float hitboxY = baseHitboxY * Settings.scale;
+
+            // Render hitbox for debugging
             Hitbox debugHitbox = new Hitbox(hitboxX, hitboxY, hitboxWidth, hitboxHeight);
             debugHitbox.render(sb);
+
+            // Queue Track Numbers
             String selectedTrack = allTracks.get(button.slot);
             if (queuedTracks.contains(selectedTrack)) {
                 // Get queue number and render it
@@ -426,11 +500,13 @@ public class JukeboxScreen extends CustomScreen {
                 String queueNumber = Integer.toString(queuePosition);
 
                 // Render the queue number next to the button
-                FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, queueNumber,
-                        x + visualWidth * Settings.scale, y + visualHeight / 2f, Settings.GOLD_COLOR);
+                float queueX = (baseX + (baseRightColumnX/2f)) * Settings.scale; // Adjust to be near the button
+                float queueY = (baseY + 100f) * Settings.scale; // Vertically aligned near center
+                FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, queueNumber, queueX, queueY, Settings.GOLD_COLOR);
             }
         }
     }
+
 
     //U&R Side Buttons and Hitboxes for them
     private final Hitbox insertHitbox = new Hitbox(80f * Settings.scale, 80f * Settings.scale);
@@ -438,6 +514,9 @@ public class JukeboxScreen extends CustomScreen {
     private final Hitbox refreshHitbox = new Hitbox(80f * Settings.scale, 80f * Settings.scale);
     private final Hitbox loopHitbox = new Hitbox(80f * Settings.scale, 80f * Settings.scale);
     private final Hitbox skipButtonHitbox = new Hitbox(80f * Settings.scale, 80f * Settings.scale);
+    private final Hitbox pauseHitbox = new Hitbox(80f * Settings.scale, 80f * Settings.scale);
+    private final Hitbox playHitbox = new Hitbox(80f * Settings.scale, 80f * Settings.scale);
+
 
 
     private void updateSideButtons() {
@@ -468,8 +547,8 @@ public class JukeboxScreen extends CustomScreen {
             LOGGER.info("Looping is now: " + (loopEnabled ? "Enabled" : "Disabled"));
         }
         //Skip Button
-        float buttonX = 1250f * Settings.scale;
-        float buttonY = 510f * Settings.scale;
+        float buttonX = 1450f * Settings.scale;
+        float buttonY = 200f * Settings.scale;
 
         skipButtonHitbox.move(buttonX + skipButtonHitbox.width / 2f, buttonY + skipButtonHitbox.height / 2f);
         skipButtonHitbox.update();
@@ -477,10 +556,43 @@ public class JukeboxScreen extends CustomScreen {
         if (skipButtonHitbox.hovered && InputHelper.justClickedLeft) {
             LOGGER.info("Skip button clicked!");
             stopCurrentMusic();
+            // Reset isPaused when skipping a song
+            isPaused = false;
             if (!queuedTracks.isEmpty()) {
                 playQueuedTracks(); // Play the next queued track
             } else {
                 playRandomTrack(); // Play a random track if the queue is empty
+            }
+        }
+
+        float pauseButtonX = 1350f * Settings.scale;
+        float pauseButtonY = 200f * Settings.scale;
+        pauseHitbox.move(pauseButtonX + sideButtonWidth / 2f, pauseButtonY + sideButtonHeight / 2f);
+        pauseHitbox.update();
+        if (pauseHitbox.hovered && InputHelper.justClickedLeft) {
+            LOGGER.info("Pause button clicked!");
+            CardCrawlGame.sound.play("UI_CLICK_1");
+            if (nowPlayingSong != null) {
+                if (!isPaused) {
+                    pauseMusic(); // Pause the music
+                } else {
+                    playMusic(); // Resume the music
+                }
+            }
+        }
+        float playButtonX = 1250f * Settings.scale;
+        float playButtonY = 200f * Settings.scale;
+        playHitbox.move(playButtonX + sideButtonWidth / 2f, playButtonY + sideButtonHeight / 2f);
+        playHitbox.update();
+        if (playHitbox.hovered && InputHelper.justClickedLeft) {
+            LOGGER.info("Play button clicked!");
+            CardCrawlGame.sound.play("UI_CLICK_1");
+            if (nowPlayingSong != null && isPaused) {
+                // Resume the currently paused track
+                playMusic();
+            } else if (nowPlayingSong == null) {
+                // Play a new track if no track is playing
+                playRandomTrack();
             }
         }
     }
@@ -488,11 +600,13 @@ public class JukeboxScreen extends CustomScreen {
     private void renderSideButtons(SpriteBatch sb) {
         float sideButtonWidth = 80f * Settings.scale;
         float sideButtonHeight = 80f * Settings.scale;
-        // Refresh Button
+        // Refresh Button (Reload)
         float refreshButtonX = 1350f * Settings.scale;
         float refreshButtonY = 300f * Settings.scale;
         if (refreshHitbox.hovered) {
             sb.draw(highlightButtonTexture, 1347f * Settings.scale, 297f * Settings.scale, 85f * Settings.scale, 85f * Settings.scale);
+            FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[17],
+                    refreshButtonX + refreshHitbox.width / 2f, refreshButtonY - (refreshHitbox.height / 5f), Color.WHITE);
         }
         sb.draw(refreshButtonTexture, refreshButtonX, refreshButtonY, sideButtonWidth, sideButtonHeight);
 
@@ -501,6 +615,8 @@ public class JukeboxScreen extends CustomScreen {
         float loopButtonY = 300f * Settings.scale;
         if (loopHitbox.hovered) {
             sb.draw(highlightButtonTexture, 1247f * Settings.scale, 297f * Settings.scale, 85f * Settings.scale, 85f * Settings.scale);
+            FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[15],
+                    loopButtonX + loopHitbox.width / 2f, loopButtonY - (loopHitbox.height / 5f), Color.WHITE);
         }
         if (loopEnabled) {
             sb.draw(loopButtonGlowTexture, loopButtonX, loopButtonY, sideButtonWidth, sideButtonHeight);
@@ -510,20 +626,51 @@ public class JukeboxScreen extends CustomScreen {
 
         //Skip Button
 
-        float skipbuttonX = 1250f * Settings.scale; // Position for the Skip button
-        float skipbuttonY = 505f * Settings.scale; // Slightly below Clear Queue button
+        float skipbuttonX = 1450f * Settings.scale; // Position for the Skip button
+        float skipbuttonY = 200f * Settings.scale; // Slightly below Clear Queue button
         if (skipButtonHitbox.hovered) {
-            sb.draw(highlightButtonTexture, 1247f * Settings.scale, 502f * Settings.scale, 85f * Settings.scale, 85f * Settings.scale);
+            sb.draw(highlightButtonTexture, 1447f * Settings.scale, 197f * Settings.scale, 85f * Settings.scale, 85f * Settings.scale);
+            FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[12],
+                    skipbuttonX + skipButtonHitbox.width / 2f, skipbuttonY - (skipButtonHitbox.height / 5f), Color.WHITE);
         }
         sb.draw(skipButtonTexture, skipbuttonX, skipbuttonY, sideButtonWidth, sideButtonHeight);
-        FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[12],
-                skipbuttonX + skipButtonHitbox.width / 2f, skipbuttonY - (skipButtonHitbox.height / 5f), Color.WHITE);
 
+        //Pause Button
+
+        float pauseButtonX = 1350f * Settings.scale;
+        float pauseButtonY = 200f * Settings.scale;
+
+// Highlight effect when hovered
+        if (pauseHitbox.hovered) {
+            sb.draw(highlightButtonTexture, 1347f * Settings.scale, 197f * Settings.scale, 85f * Settings.scale, 85f * Settings.scale);
+            FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[13],
+                    pauseButtonX + pauseHitbox.width / 2f, pauseButtonY - (pauseHitbox.height / 5f), Color.WHITE);
+        }
+// Glow effect when paused
+        if (isPaused) {
+            sb.draw(pauseButtonGlowTexture, pauseButtonX, pauseButtonY, sideButtonWidth, sideButtonHeight);
+        } else {
+            sb.draw(pauseButtonTexture, pauseButtonX, pauseButtonY, sideButtonWidth, sideButtonHeight);
+        }
+
+
+        //Play Button
+
+        float playButtonX = 1250f * Settings.scale;
+        float playButtonY = 200f * Settings.scale;
+        if (playHitbox.hovered) {
+            sb.draw(highlightButtonTexture, 1247f * Settings.scale, 197f * Settings.scale, 85f * Settings.scale, 85f * Settings.scale);
+            FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[14],
+                    playButtonX + playHitbox.width / 2f, playButtonY - (playHitbox.height / 5f), Color.WHITE);
+        }
+        sb.draw(playButtonTexture, playButtonX, playButtonY, sideButtonWidth, sideButtonHeight);
         // Render hitbox for debugging
 
         skipButtonHitbox.render(sb);
         refreshHitbox.render(sb);
         loopHitbox.render(sb);
+        pauseHitbox.render(sb);
+        playHitbox.render(sb);
     }
 
     private void refreshTrackList() {
@@ -574,6 +721,7 @@ public class JukeboxScreen extends CustomScreen {
         float insertButtonY = 300f * Settings.scale;
         if (insertHitbox.hovered || insertSlotHitbox.hovered) {
             sb.draw(highlightButtonTexture, 1447f * Settings.scale, 297f * Settings.scale, 85f * Settings.scale, 85f * Settings.scale);
+
         }
         sb.draw(insertButtonTexture, insertButtonX, insertButtonY, sideButtonWidth, sideButtonHeight);
 
@@ -582,6 +730,8 @@ public class JukeboxScreen extends CustomScreen {
         float insertSlotY = 390f * Settings.scale;
         if (insertHitbox.hovered || insertSlotHitbox.hovered) {
             sb.draw(insertSlotGlowTexture, insertSlotX, insertSlotY, insertSlotWidth, insertSlotHeight);
+            FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[16],
+                    insertSlotX + insertHitbox.width * 1.75f, insertSlotY + (insertHitbox.height / 4.1f), Color.WHITE);
         } else {
             sb.draw(insertSlotTexture, insertSlotX, insertSlotY, insertSlotWidth, insertSlotHeight);
         }
@@ -731,7 +881,7 @@ public class JukeboxScreen extends CustomScreen {
     private final Hitbox addToQueueHitbox = new Hitbox(62f * Settings.scale, 42f * Settings.scale);
 
     private void updateAddToQueueButton() {
-        float buttonX = 1402f * Settings.scale; // Position above the Insert Slot
+        float buttonX = 1352f * Settings.scale; // Position above the Insert Slot
         float buttonY = 540f * Settings.scale;
 
         addToQueueHitbox.move(buttonX + addToQueueHitbox.width / 2f, buttonY + addToQueueHitbox.height / 2f);
@@ -739,38 +889,48 @@ public class JukeboxScreen extends CustomScreen {
 
         if (addToQueueHitbox.hovered && InputHelper.justClickedLeft) {
             if (!isQueueConfirmState) {
-                // Change button to Confirm mode
+                // Change to Confirm mode
                 isQueueConfirmState = true;
-                queuedTracks.clear();
+                queuedTracks.clear(); // Clear queue when entering confirm state
                 LOGGER.info("Queue selection mode activated.");
             } else {
-                // Finalize the queue
+                // Confirm and finalize the queue
                 LOGGER.info("Queue confirmed: " + queuedTracks);
                 isQueueConfirmState = false;
-                playQueuedTracks();
+                // Reset isPaused when confirming the queued song
+                isPaused = false;
+                playQueuedTracks(); // Start playing queued tracks
             }
         }
     }
 
     private void renderAddToQueueButton(SpriteBatch sb) {
-        float buttonX = 1402f * Settings.scale;
+        float buttonX = 1352f * Settings.scale;
         float buttonY = 540f * Settings.scale;
 
-        // Render button background
-        sb.draw(isQueueConfirmState ? buttononTexture : buttonoffTexture, buttonX, buttonY, addToQueueHitbox.width, addToQueueHitbox.height);
+        // Choose texture based on state and hover
+        Texture buttonTexture = isQueueConfirmState
+                ? (addToQueueHitbox.hovered ? buttononGlowTexture : buttononTexture)
+                : (addToQueueHitbox.hovered ? buttonoffGlowTexture : buttonoffTexture);
 
-        String buttonText = isQueueConfirmState ? TEXT[8] : TEXT[6];
+        // Draw the button texture
+        sb.draw(buttonTexture, buttonX, buttonY, addToQueueHitbox.width, addToQueueHitbox.height);
+
+        // Set button text based on state
+        String buttonText = isQueueConfirmState ? "Confirm" : "Add to Queue";
+
+        // Render the button text
         FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, buttonText,
                 buttonX + addToQueueHitbox.width / 2f, buttonY + addToQueueHitbox.height / 2f, Color.WHITE);
 
-
+        // Render the hitbox for debugging
         addToQueueHitbox.render(sb);
     }
 
     private final Hitbox clearQueueHitbox = new Hitbox(50f * Settings.scale, 50f * Settings.scale);
 
     private void updateClearQueueButton() {
-        float buttonX = 1409f * Settings.scale; // Position near Add to Queue button
+        float buttonX = 1359f * Settings.scale; // Position near Add to Queue button
         float buttonY = 468f * Settings.scale; // Slightly below Add to Queue button
 
         clearQueueHitbox.move(buttonX + clearQueueHitbox.width / 2f, buttonY + clearQueueHitbox.height / 2f);
@@ -781,10 +941,15 @@ public class JukeboxScreen extends CustomScreen {
             LOGGER.info(TEXT[8]);
         }
     }
-
     private void renderClearQueueButton(SpriteBatch sb) {
-        float buttonX = 1409f * Settings.scale; // Position near Add to Queue button
+        float buttonX = 1359f * Settings.scale; // Position near Add to Queue button
         float buttonY = 468f * Settings.scale; // Slightly below Add to Queue button
+
+        // Highlight effect when hovered
+        if (clearQueueHitbox.hovered) {
+            sb.draw(highlightButtonTexture, buttonX - 1f * Settings.scale, buttonY - 1f * Settings.scale,
+                    clearQueueHitbox.width + 2f * Settings.scale, clearQueueHitbox.height + 2f * Settings.scale);
+        }
 
         // Determine the button texture based on queue state
         Texture buttonTexture = queuedTracks.isEmpty() ? clearButtonOffTexture : clearButtonTexture;
@@ -799,6 +964,7 @@ public class JukeboxScreen extends CustomScreen {
         // Render hitbox for debugging
         clearQueueHitbox.render(sb);
     }
+
 
 
     @Override
@@ -837,7 +1003,8 @@ public class JukeboxScreen extends CustomScreen {
             // Update the text field and current track name
             textField = TEXT[1] + selectedTrack;
             currentTrackName = formatTrackName(selectedTrack);
-
+            // Reset isPaused when selecting a song
+            isPaused = false;
             // Delegate playback logic to playTrack
             playTrack(selectedTrack);
         }
@@ -866,9 +1033,7 @@ public class JukeboxScreen extends CustomScreen {
                 // Handle custom tracks
                 String originalFileName = getOriginalFileName(trackName);
                 if (originalFileName == null) {
-
                     LOGGER.warn("File not found for track: " + trackName);
-
                     return;
                 }
 
@@ -885,8 +1050,8 @@ public class JukeboxScreen extends CustomScreen {
             }
 
             // Configure playback
-            currentTrackName = formatTrackName(trackName);
-            nowPlayingSong.setVolume(Settings.MUSIC_VOLUME);
+            currentTrackName = formatTrackName(trackName); // Update the current track name
+            nowPlayingSong.setVolume(Settings.MUSIC_VOLUME * Settings.MASTER_VOLUME);
 
             // For all other tracks, follow the loopEnabled flag
             nowPlayingSong.setLooping(loopEnabled);
@@ -895,10 +1060,11 @@ public class JukeboxScreen extends CustomScreen {
                     playRandomTrack(); // Play a random track if loop is disabled
                 }
             });
-
-
             nowPlayingSong.play();
             isPlaying = true;
+
+            // Update button highlights
+            updateButtonHighlights();
 
         } catch (Exception e) {
             LOGGER.error("Failed to play music: " + trackName);
@@ -924,7 +1090,7 @@ public class JukeboxScreen extends CustomScreen {
             // Play the intro
             nowPlayingSong = Gdx.audio.newMusic(fileHandle);
             currentTrackName = "Cafe_Intro";
-            nowPlayingSong.setVolume(Settings.MUSIC_VOLUME);
+            nowPlayingSong.setVolume(Settings.MUSIC_VOLUME * Settings.MASTER_VOLUME);
             nowPlayingSong.setLooping(false); // Intro does not loop
 
             // Set up transition to Cafe_Loop
@@ -941,7 +1107,7 @@ public class JukeboxScreen extends CustomScreen {
 
                     nowPlayingSong = Gdx.audio.newMusic(loopHandle);
                     currentTrackName = "Cafe_Loop";
-                    nowPlayingSong.setVolume(Settings.MUSIC_VOLUME);
+                    nowPlayingSong.setVolume(Settings.MUSIC_VOLUME * Settings.MASTER_VOLUME);
                     nowPlayingSong.setLooping(true); // Loop Cafe_Loop
                     nowPlayingSong.play();
                     LOGGER.info("Cafe_Loop is now playing.");
@@ -960,6 +1126,43 @@ public class JukeboxScreen extends CustomScreen {
             e.printStackTrace();
         }
     }
+    public static boolean FadingOut = false;
+    private static float fadeOutTimer = 0.0f;
+    private static final float FADE_OUT_DURATION = 4.0f; // Adjustable fade-out duration
+    private static float fadeOutStartVolume;
+    public static void fadeOut() {
+        if (nowPlayingSong != null && !FadingOut) { // Prevent multiple fade-out calls
+            FadingOut = true;
+            fadeOutTimer = FADE_OUT_DURATION;
+            fadeOutStartVolume = nowPlayingSong.getVolume(); // Start from the current volume
+            LOGGER.info("Starting fade-out with volume: " + fadeOutStartVolume);
+        } else if (nowPlayingSong == null) {
+            LOGGER.warn("No music is currently playing to fade out.");
+        } else {
+            LOGGER.info("Fade-out is already in progress.");
+        }
+    }
+
+    public static void updateFadeOut() {
+        if (FadingOut && nowPlayingSong != null) {
+            fadeOutTimer -= Gdx.graphics.getDeltaTime(); // Decrease the timer
+            if (fadeOutTimer <= 0.0f) {
+                // Fade-out complete
+                fadeOutTimer = 0.0f;
+                FadingOut = false;
+                nowPlayingSong.stop();
+                nowPlayingSong.dispose();
+                nowPlayingSong = null;
+                isPlaying = false;
+                LOGGER.info("Fade-out completed and music stopped.");
+            } else {
+                // Gradually reduce the volume
+                float fadeVolume = Interpolation.fade.apply(fadeOutStartVolume, 0.0f, 1.0f - (fadeOutTimer / FADE_OUT_DURATION));
+                nowPlayingSong.setVolume(fadeVolume);
+                LOGGER.info("Fading out... Current volume: " + fadeVolume);
+            }
+        }
+    }
 
     public static void stopCurrentMusic() {
         CardCrawlGame.music.silenceTempBgmInstantly();
@@ -972,6 +1175,28 @@ public class JukeboxScreen extends CustomScreen {
             nowPlayingSong = null;
         }
     }
+    public static boolean isPaused = false;
+
+    public static void pauseMusic() {
+        if (nowPlayingSong != null && nowPlayingSong.isPlaying()) {
+            nowPlayingSong.pause(); // Pause the music
+            isPaused = true; // Set paused state to true
+            isPlaying = false; // Set playing state to false
+            LOGGER.info("Music paused.");
+        }
+    }
+
+    public void playMusic() {
+        if (nowPlayingSong != null) {
+            nowPlayingSong.play(); // Resume or start playing
+            isPaused = false; // Set paused state to false
+            isPlaying = true; // Set playing state to true
+            LOGGER.info("Music resumed.");
+        } else {
+            LOGGER.info("No track currently playing. Playing a random track.");
+            playRandomTrack(); // Play a random track if none is loaded
+        }
+    }
 
     private String getTrackFileName(String key) {
         switch (key) {
@@ -981,6 +1206,8 @@ public class JukeboxScreen extends CustomScreen {
                 return "anniv7Resources/audio/Cafe_Loop.ogg";
             case "Cafe_Theme":
                 return "anniv7Resources/audio/Cafe_Theme.mp3";
+            case "Like_A_Rolling_Stone":
+                return "anniv7Resources/audio/Like_A_Rolling_Stone.ogg";
             case "SHOP":
                 return "audio/music/STS_Merchant_NewMix_v1.ogg";
             case "SHRINE":
@@ -1042,23 +1269,14 @@ public class JukeboxScreen extends CustomScreen {
         }
     }
 
-    private String getOriginalFileName(String displayName) {
-        File customFolder = new File(CUSTOM_MUSIC_FOLDER);
-        if (!customFolder.exists()) return null;
-
-        File[] files = customFolder.listFiles();
-        if (files == null) return null;
-
-        for (File file : files) {
-            String trimmedName = file.getName()
-                    .replaceAll("\\.(ogg|mp3|wav)$", "") // Remove extensions
-                    .replace("_", " ");                 // Replace underscores with spaces
-            if (trimmedName.equals(displayName)) {
-                return file.getName(); // Return the exact file name with extension
-            }
+    private String getOriginalFileName(String trackName) {
+        if (customTrackFileMap.containsKey(trackName)) {
+            return customTrackFileMap.get(trackName); // Return the original file name with extension
         }
-        return null; // File not found
+        LOGGER.warn("Original file name not found for track: " + trackName);
+        return null; // Fallback if no match is found
     }
+
 
     private void updateLoopingState() {
         if (nowPlayingSong != null) {
@@ -1120,7 +1338,13 @@ public class JukeboxScreen extends CustomScreen {
         }
 
         // Find the index of the currently playing track
-        int trackIndex = allTracks.indexOf(currentTrackName);
+        int trackIndex = -1;
+        for (int i = 0; i < allTracks.size(); i++) {
+            if (formatTrackName(allTracks.get(i)).equals(currentTrackName)) {
+                trackIndex = i;
+                break;
+            }
+        }
 
         if (trackIndex == -1) {
             // Track not found in the current list, clear all highlights
@@ -1149,7 +1373,6 @@ public class JukeboxScreen extends CustomScreen {
             }
         }
     }
-
     public static class ScreenEnum {
         @SpireEnum
         public static AbstractDungeon.CurrentScreen JUKEBOX_SCREEN;

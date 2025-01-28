@@ -23,6 +23,7 @@ import javassist.expr.MethodCall;
 import spireCafe.Anniv7Mod;
 import spireCafe.CafeRoom;
 import spireCafe.abstracts.AbstractCutscene;
+import spireCafe.interactables.patrons.spiomesmanifestation.SpiomesManifestationPatron;
 import spireCafe.scene.CafeScene;
 import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.screens.JukeboxScreen;
@@ -119,7 +120,7 @@ public class CafeEntryExitPatch {
 
                 AbstractDungeon.overlayMenu.proceedButton.hideInstantly();
                 modifyProceedButton(ReflectionHacks.getPrivateStatic(ProceedButton.class, "DRAW_Y"), true);
-                JukeboxScreen.stopCurrentMusic();
+                JukeboxScreen.fadeOut();
 
                 if(allTimeSeenInteractables != null) {
                     try {
@@ -180,6 +181,8 @@ public class CafeEntryExitPatch {
         AbstractDungeon.fadeOut();
         setFadeTimer();
         AbstractDungeon.waitingOnFadeOut = true;
+
+        SpiomesManifestationPatron.queuedBiomeID=null;
     }
 
     private static void healBeforeCafe() {

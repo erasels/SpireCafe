@@ -85,9 +85,4 @@ public class RelicRenderPatches {
         }
     }
 
-    //later: investigate ways to autoreorganize as soon as a relic is picked up
-    //  -- at the moment, we're scared of possible side effects
-
-
-
 }

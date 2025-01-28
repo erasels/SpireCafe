@@ -1,0 +1,191 @@
+{
+  "${ModID}:DesignersBrush": {
+    "NAME": "Designer's Brush",
+    "FLAVOR": "Unupgraded cards? Groooss.",
+    "DESCRIPTIONS": [
+      "At the start of combat, if there are no #yUpgraded cards in your hand, #yUpgrade all cards in your hand."
+    ]
+  },
+  "${ModID}:SlimeUvula": {
+    "NAME": "Slime Uvula",
+    "FLAVOR": "Fun fact: Due to the composition of their bodies, slimes never become thirsty.",
+    "DESCRIPTIONS": [
+      "If you have no empty potion slots at the end of combat, heal #b2 HP."
+    ]
+  },
+  "${ModID}:Life": {
+    "NAME": "Life?",
+    "FLAVOR": "a cute flower pot :) wait what is that growing in the middle",
+    "DESCRIPTIONS": [
+      "At the start of combat, gain #b1 #yConstricted. Whenever you lose HP from #yConstricted, gain #b1 #yStrength."
+    ]
+  },
+  "${ModID}:Pebbles": {
+    "NAME": "Pebbles",
+    "FLAVOR": "The pebbles are oddly smooth.",
+    "DESCRIPTIONS": [
+      "Your Defends give you #b1 more #yBlock."
+    ]
+  },
+  "${ModID}:ArtOfPeace": {
+    "NAME": "Art of Peace",
+    "FLAVOR": "This book is banned from ninja libraries.",
+    "DESCRIPTIONS": [
+      "Whenever you use a Smoke Bomb, gain #b50 #yGold."
+    ]
+  },
+  "${ModID}:PetRock": {
+    "NAME": "Pet Rock",
+    "FLAVOR": "It's okay, Rocky. You go when you feel like it.",
+    "DESCRIPTIONS": [
+      "If you play no cards during your turn, gain [E] next turn."
+    ]
+  },
+  "${ModID}:PaperNail": {
+    "NAME": "Paper Nail",
+    "FLAVOR": "\"Does this one have a use?\" - The Architect",
+    "DESCRIPTIONS": [
+      "If you are at #b1 HP, your #yAttacks deal triple damage."
+    ]
+  },
+  "${ModID}:SuperheroComic": {
+    "NAME": "Superhero Comic",
+    "FLAVOR": "I guess you could say I'm-",
+    "DESCRIPTIONS": [
+      "At the start of each combat, gain #b60 #yInvincible."
+    ]
+  },
+  "${ModID}:RingOfTheNoodle": {
+    "NAME": "Ring of the Noodle",
+    "FLAVOR": "A participation trophy from the Foglands.",
+    "DESCRIPTIONS": [
+      "At the start of each combat, draw #b2 additional cards if you have at least #b3 #yInnate cards in your deck."
+    ]
+  },
+  "${ModID}:Supplements": {
+    "NAME": "Supplements",
+    "FLAVOR": "We don't get much Vitamin D in the Spire.",
+    "DESCRIPTIONS": [
+      "Whenever your Max HP is raised, raise it by #b1 more."
+    ]
+  },
+  "${ModID}:HospitalBill": {
+    "NAME": "Hospital Bill",
+    "FLAVOR": "Wait, how much is the bill?? On second thought, I think I feel fine.",
+    "DESCRIPTIONS": [
+      "Whenever you lose Max HP, heal all of your HP."
+    ]
+  },
+  "${ModID}:WellDoneSteak": {
+    "NAME": "Well Done Steak",
+    "FLAVOR": "Congratulations!!!! We're so proud of you :D",
+    "DESCRIPTIONS": [
+      "At the start of turn #b3, heal #b1 HP."
+    ]
+  },
+  "${ModID}:LonelyAnt": {
+    "NAME": "Lonely Ant",
+    "FLAVOR": "Left behind by the rest.",
+    "DESCRIPTIONS": [
+      "At the start of your turn, if you have no #yUncommon or #yRare cards in your hand, gain #b1 temporary #yStrength."
+    ]
+  },
+  "${ModID}:NapiersBones": {
+    "NAME": "Napier's Bones",
+    "FLAVOR": "Probably useful at some point, though not now.",
+    "DESCRIPTIONS": [
+      "The first time you shuffle your draw pile each combat, gain #b1 temporary #yStrength and #b1 temporary #yDexterity."
+    ]
+  },
+  "${ModID}:LostPenny": {
+    "NAME": "Lost Penny",
+    "FLAVOR": "Who keeps dropping these?",
+    "DESCRIPTIONS": [
+      "Whenever you enter a shop room, gain #b10 #yGold."
+    ]
+  },
+  "${ModID}:Popcorn": {
+    "NAME": "Popcorn",
+    "FLAVOR": "\"Those gremlins put on such a show! Loved the finale in particular.\" - Ranwid",
+    "DESCRIPTIONS": [
+      "At the end of your turn, gain #b3 #yBlock if you have no cards in your draw pile."
+    ]
+  },
+  "${ModID}:InsuranceCard": {
+    "NAME": "Insurance Card",
+    "FLAVOR": "I KNEW this would come in handy!",
+    "DESCRIPTIONS": [
+      "Whenever you climb a floor, if you have #b0 #yGold, gain #b150 #yGold."
+    ]
+  },
+  "${ModID}:TyrtleShell": {
+    "NAME": "Tyrtle Shell",
+    "FLAVOR": "Tyrtles are said to have sought refuge underground since the Spireblight.",
+    "DESCRIPTIONS": [
+      "At the start of combat, if there are no #yAttacks in your deck, gain #b5 #yDexterity."
+    ]
+  },
+  "${ModID}:RayOfMoonlight": {
+    "NAME": "Ray of Moonlight",
+    "FLAVOR": "\"Lay low. If The Ancients catch us building this...\" - Kublai the Great",
+    "DESCRIPTIONS": [
+      "At the start of combat, if there are no #yRare cards in your deck, gain #b2 #yArtifact."
+    ]
+  },
+  "${ModID}:StylePoints": {
+    "NAME": "Style Points",
+    "FLAVOR": "What's your high score?",
+    "DESCRIPTIONS": [
+      "Whenever you defeat a Boss, gain #b1 #yGold for each unique card in your deck."
+    ]
+  },
+  "${ModID}:Loan": {
+    "NAME": "Loan",
+    "FLAVOR": "A loan. To whom you owe is unknown.",
+    "DESCRIPTIONS": [
+      "Upon pickup, gain #b200 #yGold. At the start of your next #b23 turns, lose #b10 #yGold."
+    ]
+  },
+  "${ModID}:PaintBucket": {
+    "NAME": "Paint Bucket",
+    "FLAVOR": "Used for the Merchant's mask(s).",
+    "DESCRIPTIONS": [
+      "Whenever you lose #b100 or more #yGold at once, increase your max HP by #b1."
+    ]
+  },
+  "${ModID}:ElyphantToothpaste": {
+    "NAME": "Elyphant Toothpaste",
+    "FLAVOR": "STOP PUMPING CHEMICALS INTO IT!!! IT KEEP GROWINGGG",
+    "DESCRIPTIONS": [
+      "Upon pickup, discard ALL your potions. #yUpgrade a random card in your deck for each potion lost this way."
+    ]
+  },
+  "${ModID}:HeirloomFork": {
+    "NAME": "Heirloom Fork",
+    "FLAVOR": "The former owner of this fork paid around 140 Gold for it.",
+    "DESCRIPTIONS": [
+      "Whenever you remove a #rCurse from your deck, #yUpgrade a random #yBasic card in your deck."
+    ]
+  },
+  "${ModID}:FistOfThePugilist": {
+    "NAME": "Fist of the Pugilist",
+    "FLAVOR": "\"Use your most expected attack, and it will be unexpected.\" - Kublai the Great",
+    "DESCRIPTIONS": [
+      "Whenever you play a #yBasic Strike, gain #b1 temporary #yStrength."
+    ]
+  },
+  "${ModID}:RedButton": {
+    "NAME": "Red Button",
+    "FLAVOR": "Only to be pressed in times of desperation.",
+    "DESCRIPTIONS": [
+      "At the start of Boss and Elite combats, deal #b15 damage to a random enemy."
+    ]
+  },
+  "${ModID}:Neurotoxin": {
+    "NAME": "Neurotoxin",
+    "FLAVOR": "Aha! A deadly concoction to residents of the Spire. This should make the climb easy...right?",
+    "DESCRIPTIONS": [
+      "At the end of turn #b15, set the HP of ALL enemies to #b0."
+    ]
+  }
+}

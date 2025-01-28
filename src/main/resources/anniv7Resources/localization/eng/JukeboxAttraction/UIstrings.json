@@ -13,7 +13,18 @@
       "Track removed from queue: ",
       "Track added to queue: ",
       "Queue confirmed: ",
-      "Skip"
+      "Skip",
+      "Pause",
+      "Play",
+      "Loop",
+      "Insert Track",
+      "Reload",
+      "Origin:",
+      "External",
+      "ModalModule (Composer)",
+      "Eeriemist (Contributor)",
+      "Clark Aboud (Vanilla)",
+      "Unknown Origin"
     ]
   }
 
