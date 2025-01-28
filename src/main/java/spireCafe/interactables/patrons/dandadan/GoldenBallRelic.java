@@ -4,7 +4,6 @@ import basemod.abstracts.CustomSavable;
 import basemod.helpers.CardModifierManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -16,7 +15,6 @@ import com.megacrit.cardcrawl.monsters.beyond.AwakenedOne;
 import com.megacrit.cardcrawl.monsters.beyond.Donu;
 import com.megacrit.cardcrawl.monsters.beyond.TimeEater;
 import com.megacrit.cardcrawl.monsters.city.SphericGuardian;
-import com.megacrit.cardcrawl.powers.DuplicationPower;
 import com.megacrit.cardcrawl.relics.Girya;
 import com.megacrit.cardcrawl.relics.PeacePipe;
 import com.megacrit.cardcrawl.relics.Shovel;
@@ -71,14 +69,8 @@ public class GoldenBallRelic extends AbstractSCRelic implements CustomSavable<In
             if (ghostIndex >= 3)
                 break;
             if (c.type != AbstractCard.CardType.CURSE && c.cost != -2 && c.costForTurn != -2) {
-                CardModifierManager.addModifier(c, new GhostModifier(ghostIndex++));
+                CardModifierManager.addModifier(c, new GhostModifier(ghostIndex++, ghostsPlayed == -1));
             }
-        }
-
-        if (ghostsPlayed == -1) {
-            flash();
-            Wiz.atb(new RelicAboveCreatureAction(Wiz.p(), this));
-            Wiz.applyToSelf(new DuplicationPower(Wiz.p(), 1));
         }
     }
 
