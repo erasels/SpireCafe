@@ -33,6 +33,7 @@ import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractSCRelic;
 import spireCafe.cardvars.SecondDamage;
 import spireCafe.cardvars.SecondMagicNumber;
+import spireCafe.interactables.attractions.jukebox.JukeboxRelic;
 import spireCafe.interactables.attractions.makeup.MakeupTableAttraction;
 import spireCafe.interactables.merchants.fleamerchant.FleaMerchant;
 import spireCafe.interactables.patrons.dandadan.RightBallPotionSavable;
