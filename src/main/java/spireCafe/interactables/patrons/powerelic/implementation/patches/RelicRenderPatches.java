@@ -16,51 +16,29 @@ import spireCafe.interactables.patrons.powerelic.implementation.PowerelicCard;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
+import static java.lang.System.currentTimeMillis;
+
 public class RelicRenderPatches {
+
+    public static boolean relicsAreBlinking(){
+        if(currentTimeMillis()%1000<500){
+            return true;
+        }
+        return false;
+    }
+
     @SpirePatch(clz = AbstractRelic.class, method = "renderInTopPanel")
     public static class RenderPatch {
         @SpirePrefixPatch
         public static SpireReturn<Void> Patch(AbstractRelic __instance) {
             if(PowerelicCard.PowerelicRelicContainmentFields.isContained.get(__instance)){
-                return SpireReturn.Return();
-            }
-            return SpireReturn.Continue();
-        }
-    }
-    @SpirePatch(clz = AbstractRelic.class, method = "renderTip")
-    public static class RenderTipPatch {
-        @SpirePrefixPatch
-        public static SpireReturn<Void> Patch(AbstractRelic __instance) {
-            if(PowerelicCard.PowerelicRelicContainmentFields.isContained.get(__instance)){
-                return SpireReturn.Return();
-            }
-            return SpireReturn.Continue();
-        }
-    }
-    @SpirePatch(clz=AbstractRelic.class,method="update")
-    public static class HideMagnifyingCursorPatch{
-        @SpireInstrumentPatch
-        public static ExprEditor Bar() {
-            return new ExprEditor() {
-                public void edit(MethodCall m) throws CannotCompileException {
-                    if (m.getClassName().equals(GameCursor.class.getName()) && m.getMethodName().equals("changeType")) {
-                        m.replace("{ if(!"+RelicContainmentDetection.class.getName()+".isContained(this)) { $proceed($$); } }");
-                    }
+                if(relicsAreBlinking()) {
+                    return SpireReturn.Return();
                 }
-            };
-        }
-    }
-    @SpirePatch(clz=AbstractRelic.class,method="updateRelicPopupClick")
-    public static class DisableClickPatch{
-        @SpirePrefixPatch
-        public static SpireReturn<Void> Patch(AbstractRelic __instance) {
-            if(PowerelicCard.PowerelicRelicContainmentFields.isContained.get(__instance)){
-                return SpireReturn.Return();
             }
             return SpireReturn.Continue();
         }
     }
-
 
     public static void moveInvisibleRelicsToEnd(AbstractPlayer __instance){
         ArrayList<AbstractRelic> invisibleRelics = new ArrayList<>();

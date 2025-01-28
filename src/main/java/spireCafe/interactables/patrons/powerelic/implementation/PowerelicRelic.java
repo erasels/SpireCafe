@@ -3,12 +3,12 @@ package spireCafe.interactables.patrons.powerelic.implementation;
 import basemod.ReflectionHacks;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.evacipated.cardcrawl.modthespire.lib.SpireField;
-import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.screens.SingleRelicViewPopup;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import spireCafe.abstracts.AbstractSCCard;
 import spireCafe.abstracts.AbstractSCRelic;
@@ -97,14 +97,21 @@ public class PowerelicRelic extends AbstractSCRelic {
     }
 
     private void renderCardInstead(SpriteBatch sb){
+        renderPowerCardAtLocation(sb,capturedCard,this.currentX,this.currentY+8*Settings.scale-30f*this.scale,this.scale/Settings.scale);
+    }
+
+    private static void renderPowerCardAtLocation(SpriteBatch sb, AbstractCard capturedCard, float x, float y, float drawScale){
+        //drawScale parameter does NOT include Settings.scale
+        //note -- relic.scale has Settings.scale baked in already! (and card.drawscale does not)
         final float IMAGE_SCALE = 0.25f;
         float tempx=capturedCard.current_x;
         float tempy=capturedCard.current_y;
         float temps=capturedCard.drawScale;
         float tempa=capturedCard.angle;
-        capturedCard.current_x=this.currentX;
-        capturedCard.current_y=this.currentY-14;
-        capturedCard.drawScale=IMAGE_SCALE;
+
+        capturedCard.current_x=x;
+        capturedCard.current_y=y;
+        capturedCard.drawScale=drawScale*IMAGE_SCALE;
         capturedCard.angle=0;
 
         //capturedCard.render(sb);
@@ -121,6 +128,23 @@ public class PowerelicRelic extends AbstractSCRelic {
         capturedCard.angle=tempa;
     }
 
+
+    @SpirePatch2(clz=SingleRelicViewPopup.class,method="renderRelicImage")
+    public static class RelicInspectScreenPatch{
+        @SpirePrefixPatch
+        public static SpireReturn<Void> patch(SingleRelicViewPopup __instance, SpriteBatch sb){
+            AbstractRelic relic=ReflectionHacks.getPrivate(__instance,SingleRelicViewPopup.class,"relic");
+            if(relic instanceof PowerelicRelic) {
+                PowerelicRelic prRelic=((PowerelicRelic) relic);
+                if (prRelic.capturedCard != null){
+                    renderPowerCardAtLocation(sb,prRelic.capturedCard, Settings.WIDTH/2f,Settings.HEIGHT/2f+20f*Settings.scale,
+                            2.25f);
+                    return SpireReturn.Return();
+                }
+            }
+            return SpireReturn.Continue();
+        }
+    }
 
 
 }
