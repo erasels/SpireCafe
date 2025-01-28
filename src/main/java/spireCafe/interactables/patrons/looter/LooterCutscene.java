@@ -37,7 +37,7 @@ public class LooterCutscene extends AbstractCutscene {
                     }
                 }
             }
-            looter.stealTarget = possibleTargets.get(AbstractDungeon.eventRng.random(0, possibleTargets.size()-1));
+            looter.stealTarget = possibleTargets.get(AbstractDungeon.miscRng.random(0, possibleTargets.size()-1));
 
             if(looter.stealTarget.alreadyPerformedTransaction){ //(not briefed path)
                 dialogueIndex = 7;

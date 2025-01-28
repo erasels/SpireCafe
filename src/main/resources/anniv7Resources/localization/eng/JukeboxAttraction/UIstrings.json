@@ -18,7 +18,13 @@
       "Play",
       "Loop",
       "Insert Track",
-      "Reload"
+      "Reload",
+      "Origin:",
+      "External",
+      "ModalModule (Composer)",
+      "Eeriemist (Contributor)",
+      "Clark Aboud (Vanilla)",
+      "Unknown Origin"
     ]
   }
 

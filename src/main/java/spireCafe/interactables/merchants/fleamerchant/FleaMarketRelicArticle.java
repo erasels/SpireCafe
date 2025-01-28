@@ -17,7 +17,7 @@ public class FleaMarketRelicArticle extends AbstractArticle {
     private static final String ID = Anniv7Mod.makeID(FleaMarketRelicArticle.class.getSimpleName());
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ID);
     private static final float RELIC_Y = 364.0F * Settings.scale;
-    private final AbstractRelic relic;
+    public final AbstractRelic relic;
     private boolean primed;
     private HaggleArticle haggleArticle;
     private final double priceJitter;
@@ -28,7 +28,9 @@ public class FleaMarketRelicArticle extends AbstractArticle {
         this.primed = slot==2;
         this.haggleArticle = haggleArticle;
         this.relic = primed?getRandomPrimedRelic():getRandomUsedRelic();
-        this.itemTexture = new TextureRegion(ImageMaster.loadImage("images/relics/"+relic.imgUrl));
+        if (this.relic != null) {
+            this.itemTexture = new TextureRegion(ImageMaster.loadImage("images/relics/"+relic.imgUrl));
+        }
         priceJitter = AbstractDungeon.merchantRng.random(0.95F, 1.05F);
     }
 
@@ -80,6 +82,15 @@ public class FleaMarketRelicArticle extends AbstractArticle {
         primedRelics.add(new IncenseBurner());  prCounters.add(6);
         primedRelics.add(new TinyChest());      prCounters.add(4);
         primedRelics.add(new HappyFlower());    prCounters.add(3);
+        for (int i = primedRelics.size() - 1; i >= 0; i--) {
+            if (AbstractDungeon.player.hasRelic(primedRelics.get(i).relicId)) {
+                primedRelics.remove(i);
+                prCounters.remove(i);
+            }
+        }
+        if (primedRelics.isEmpty()) {
+            return null;
+        }
 
         int r = AbstractDungeon.merchantRng.random(0, primedRelics.size()-1);
         AbstractRelic primedRelic = primedRelics.get(r);
@@ -95,6 +106,15 @@ public class FleaMarketRelicArticle extends AbstractArticle {
         usedRelics.add(new Matryoshka());   urCounters.add(2);
         usedRelics.add(new Omamori());      urCounters.add(2);
         usedRelics.add(new WingBoots());    urCounters.add(3);
+        for (int i = usedRelics.size() - 1; i >= 0; i--) {
+            if (AbstractDungeon.player.hasRelic(usedRelics.get(i).relicId)) {
+                usedRelics.remove(i);
+                urCounters.remove(i);
+            }
+        }
+        if (usedRelics.isEmpty()) {
+            return null;
+        }
 
         int r = AbstractDungeon.merchantRng.random(usedRelics.size()-1);
         AbstractRelic usedRelic = usedRelics.get(r);

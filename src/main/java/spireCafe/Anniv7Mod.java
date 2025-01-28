@@ -22,7 +22,6 @@ import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
-import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import imgui.ImGui;
 import imgui.type.ImFloat;
 import javassist.CtClass;
@@ -45,6 +44,7 @@ import spireCafe.interactables.patrons.spiomesmanifestation.SpiomesManifestation
 import spireCafe.patches.PotencySaverPatch;
 import spireCafe.screens.CafeMerchantScreen;
 import spireCafe.screens.JukeboxScreen;
+import spireCafe.screens.CafeMatchAndKeepScreen;
 import spireCafe.ui.Dialog;
 import spireCafe.ui.FixedModLabeledToggleButton.FixedModLabeledToggleButton;
 import spireCafe.util.TexLoader;
@@ -265,6 +265,7 @@ public class Anniv7Mod implements
         BaseMod.addEvent(CafeRoom.ID, CafeRoom.class, "CafeDungeon");
         BaseMod.addCustomScreen(new CafeMerchantScreen());
         BaseMod.addCustomScreen(new JukeboxScreen());
+        BaseMod.addCustomScreen(new CafeMatchAndKeepScreen());
         ConsoleCommand.addCommand("cafe", Cafe.class);
         ConsoleCommand.addCommand("powerelic", DevcommandPowerelic.class);
     }
@@ -533,7 +534,7 @@ public class Anniv7Mod implements
 
             @Override
             public void onLoad(Boolean state) {
-                MakeupTableAttraction.isAPrettySparklingPrincess = state;
+                MakeupTableAttraction.isAPrettySparklingPrincess = state != null && state;
             }
         });
 	BaseMod.addSaveField("Anniv7DepletedPotion", new CustomSavable<List<Integer>>() {
@@ -583,7 +584,16 @@ public class Anniv7Mod implements
         CafeRoom.isInteracting = false;
         AbstractCutscene.isInCutscene = false;
         Dialog.optionList.clear();
-
+        // Reset JukeboxScreen.isCoinSlotClicked
+        if (AbstractDungeon.player != null) {
+            if (AbstractDungeon.player.hasRelic(JukeboxRelic.ID)) {
+                // Player has the relic, mark the coin slot as clicked
+                JukeboxScreen.isCoinSlotClicked = true;
+            } else {
+                // Player doesn't have the relic, clear the coin slot flag
+                JukeboxScreen.isCoinSlotClicked = false;
+            }
+        }
         if (!CardCrawlGame.loadingSave) {
             RightballPotionPatch.receiveStartGame();
         }

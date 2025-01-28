@@ -1,0 +1,8 @@
+{
+  "${ModID}:PaperNailPower": {
+    "NAME": "Desperate",
+    "DESCRIPTIONS": [
+      "#yAttacks deal triple damage."
+    ]
+  }
+}
