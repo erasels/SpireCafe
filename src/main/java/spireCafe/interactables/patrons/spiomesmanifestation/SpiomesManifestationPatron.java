@@ -156,7 +156,7 @@ public class SpiomesManifestationPatron extends AbstractPatron {
     }
 
     public static boolean canSpawn() {
-        return Loader.isModLoaded("anniv6");
+        return Loader.isModLoaded("anniv6") && (boolean)ReflectionHacks.getPrivateStatic(anniv6, "currentRunActive");
     }
 
 
