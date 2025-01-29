@@ -36,7 +36,7 @@ public abstract class AbstractCafeInteractable {
     public boolean flipHorizontal = false;
     public boolean flipVertical = false;
     protected Hitbox hitbox;
-    private boolean showTooltip = false;
+    protected boolean showTooltip = false;
 
     public float animationX;
     public float animationY;
