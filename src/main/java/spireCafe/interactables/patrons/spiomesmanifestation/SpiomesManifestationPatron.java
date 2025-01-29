@@ -18,6 +18,7 @@ import spireCafe.util.TexLoader;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -112,14 +113,23 @@ public class SpiomesManifestationPatron extends AbstractPatron {
 
     public boolean getBiomeCanSpawn(Object biome){
         try {
-            Method canSpawn = ReflectionHacks.getCachedMethod(biome.getClass(), "canSpawn");
-            if(canSpawn!=null){
-                return (Boolean) canSpawn.invoke(biome);
+            Method canSpawnMethod = null;
+            Method[] methods = biome.getClass().getDeclaredMethods();
+            for (Method m : methods) {
+                if (!Modifier.isStatic(m.getModifiers()) && m.getName().equals("canSpawn") && m.getReturnType().equals(boolean.class) && m.getParameterCount() == 0) {
+                    m.setAccessible(true);
+                    canSpawnMethod = m;
+                    break;
+                }
             }
+            if (canSpawnMethod != null){
+                return (boolean) canSpawnMethod.invoke(biome);
+            }
+            return true;
         } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
             return false;
         }
-        return false;
     }
 
     public static String getBiomeId(Object biome){
