@@ -3,19 +3,19 @@
     "NAME": "Mark of Compassion",
     "FLAVOR": "The weight of countless blessings rest in your palm.",
     "DESCRIPTIONS": [
-      "On pick up, give 5 random cards in your deck #yanniv7:Blessed."
+      "Upon pickup, give #b5 random cards in your deck #yanniv7:Blessed."
     ]
   }, "${ModID}:IndulgenceMarkRelic": {
     "NAME": "Mark of Indulgence",
     "FLAVOR": "A blessing for the divine and a curse for the insatiable.",
     "DESCRIPTIONS": [
-      "At the end of your turn, if you have unspent Energy, gain 1 #yStrength and #yDexterity. (Max 3 per combat)"
+      "At the end of your turn, if you have unspent Energy, gain #b1 #yStrength and #yDexterity. (Max #b3 per combat)"
     ]
   }, "${ModID}:MartyrdomMarkRelic": {
     "NAME": "Mark of Martyrdom",
     "FLAVOR": "A testament to your resolve and your pain.",
     "DESCRIPTIONS": [
-      "Whenever you take unblocked attack damage, gain that much block at the start of the next turn."
+      "Whenever you take unblocked attack damage, gain that much #yBlock at the start of the next turn."
     ]
   }
 }
