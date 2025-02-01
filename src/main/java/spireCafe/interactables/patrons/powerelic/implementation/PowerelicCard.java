@@ -14,6 +14,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.screens.SingleCardViewPopup;
 import spireCafe.abstracts.AbstractSCCard;
 import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
 import spireCafe.util.Wiz;
@@ -25,6 +26,8 @@ import static spireCafe.interactables.patrons.powerelic.implementation.Powerelic
 public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
 
     //Tasks for later:
+    // display power in up-close relic view
+    // MAYBE display relic counter, if it looks ok
     // prohibit storing in A Note For Yourself
     // should Mummified Hand proc at start of combat from powers-turned-relics?
     // Ancient Tea Set requires playing the card twice, which is unfortunate.  make it feel better to play
@@ -208,6 +211,9 @@ public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
                     capturedRelic.onUnequip();
                 }
             }
+            //Also note that if for whatever reason we have a permanent non-Powerelic relic in the player relic bar
+            // and the player removes a card with the same relic ID, the above logic will become very confused
+            // and probably remove the permanent relic.  So avoid allowing duplicate relics.
         }
     }
 
@@ -283,6 +289,35 @@ public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
         }
     }
 
+
+    @SpirePatch2(clz = SingleCardViewPopup.class, method = "renderPortrait")
+    public static class CardInspectScreenPatch{
+        @SpirePostfixPatch
+        public static void patch(SingleCardViewPopup __instance, SpriteBatch sb) {
+            AbstractCard card = ReflectionHacks.getPrivate(__instance, SingleCardViewPopup.class,"card");
+            if(card instanceof PowerelicCard){
+                PowerelicCard prCard=((PowerelicCard)card);
+                if(prCard.capturedRelic!=null){
+                    float drawX = Settings.WIDTH / 2.0F - 250.0F;
+                    float drawY = Settings.HEIGHT / 2.0F - 100.0F;
+                    //this.capturedRelic.loadLargeImg();
+                    Texture img = prCard.capturedRelic.largeImg;
+                    Color renderColor = ReflectionHacks.getPrivate(prCard, AbstractCard.class, "renderColor");
+                    if (false && img != null) {
+                        //for later: add support for large images (draw parameters haven't been set yet)
+                        // note that loadLargeImg causes logger WARNING spam if no such image exists!
+                        sb.setColor(renderColor);
+                        //sb.draw(img, drawX, drawY + 72.0F, 125.0F, 23.0F, 250.0F, 190.0F, 2*this.drawScale * Settings.scale, 2*this.drawScale * Settings.scale, this.angle, -60, -64, 250, 190, false, false);
+                    }else{
+                        img = prCard.capturedRelic.img;
+                        sb.draw(img, drawX+125F, drawY + 72.0F, 125.0F, 23.0F, 250.0F, 190.0F, 4 * Settings.scale, 4 * Settings.scale, 0.0F, -60, -64, 250, 190, false, false);
+                    }
+                }
+            }
+        }
+    }
+
+
     @SpirePatch2(clz = AbstractPlayer.class, method = "loseRelic")
     public static class RemovingRelicAlsoRemovesCardPatch {
         @SpirePrefixPatch
@@ -306,6 +341,9 @@ public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
             }
         }
     }
+
+
+
 
 
 

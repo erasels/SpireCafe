@@ -12,7 +12,7 @@ public class MoveCardToDeckAction extends AbstractGameAction {
     }
     @Override
     public void update() {
-        AbstractDungeon.player.hand.moveToDeck(card, true);
+        AbstractDungeon.player.hand.moveToDeck(card, false);
         isDone = true;
     }
 }

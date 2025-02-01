@@ -84,6 +84,7 @@ public class PowerelicAllowlist {
                 RunicDome.ID,
                 SneckoEye.ID,
                 Sozu.ID,
+                SlaversCollar.ID,
                 VelvetChoker.ID
         ));
     }

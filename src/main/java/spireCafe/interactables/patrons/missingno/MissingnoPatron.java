@@ -9,7 +9,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractPatron;
 import spireCafe.util.TexLoader;
@@ -23,6 +25,8 @@ public class MissingnoPatron extends AbstractPatron {
     public static final String ID = MissingnoPatron.class.getSimpleName();
     public static final String assetID = "MissingnoRelic";
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
+    private static final UIStrings authorsString = CardCrawlGame.languagePack.getUIString(makeID("Authors"));
+
     private static ShaderProgram glitchShader = null;
     private final float WAVY_DISTANCE = 2.0F * Settings.scale;
     private float wavy_y;
@@ -50,8 +54,8 @@ public class MissingnoPatron extends AbstractPatron {
         if(shouldShowSpeechBubble) {
             this.speechBubble.render(sb);
         }
+        sb.setColor(Color.WHITE);
         if(!Anniv7Mod.getDisableShadersConfig()) {
-            sb.setColor(Color.WHITE);
             glitchShader = initGlitchShader(glitchShader);
             sb.setShader(glitchShader);
             glitchShader.setUniformf("u_time", (time % 10) + 200);
@@ -66,6 +70,16 @@ public class MissingnoPatron extends AbstractPatron {
             sb.setShader(null);
         }
         this.hitbox.render(sb);
+
+        if(showTooltip && !AbstractDungeon.isScreenUp){
+            String tooltipBody = authorsString.TEXT[0] + this.authors;
+            float boxWidth = 320.0F * Settings.scale;
+
+            float tooltipX = Settings.WIDTH - boxWidth - 20.0f * Settings.scale;
+            float tooltipY = 0.85f * Settings.HEIGHT - 20.0f * Settings.scale;
+
+            TipHelper.renderGenericTip(tooltipX, tooltipY, name, tooltipBody);
+        }
     }
 
 
