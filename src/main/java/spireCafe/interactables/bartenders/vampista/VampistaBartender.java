@@ -73,7 +73,7 @@ public class VampistaBartender extends AbstractBartender {
     public void applySecondOptionAction() {
         CardGroup group = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
         for (AbstractCard card : Wiz.deck().getPurgeableCards().group) {
-            group.addToBottom(card);
+            group.addToTop(card);
         }
         if(!group.isEmpty()) {
             int num = Math.min(group.size(), 3);
