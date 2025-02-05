@@ -2,18 +2,16 @@
   "${ModID}:TemmieBartenderCutscene": {
     "NAME": "InSpire Employee Cutscene",
     "BLOCKING_TEXTS": [
-      "\"Thank you for your patronage. Goodbye.\""
+      "\"okay, u go now!! but temmie will be waiting for your return!!!\""
     ],
     "DESCRIPTIONS": [
-      "\"Welcome! How may I be of service?\"",
-      "*Grumble* \"I do not get paid enough for this...\"",
-      "\"Alright!\"",
-      "\"Have a nice day!\""
+      "\"oh wowie!!! another hooman/doge/monster/??? in temmie bar!!!\"",
+      "\"hoi hoi!! welcome to... temmie bar!!!\"",
+      "\"u thirsty?? u hungry??? u just wanna give temmie munnie??? all acceptable!!!\""
     ],
     "OPTIONS": [
-      "I don't want anything.",
-      "[Coffee] Heal #b%s HP and lose #b%s Gold.",
-      "[Milk] Give a card #b2 additional Block and lose #b%s Gold."
+      "No Thanks, some other time",
+      "[Temmie Flakes] Heal #b%s HP and lose #b%s Gold."
     ]
   }
 }
