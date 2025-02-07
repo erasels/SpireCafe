@@ -20,9 +20,13 @@ public class TemmieBartender extends AbstractBartender {
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
     private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(Anniv7Mod.makeID(ID + "Cutscene"));
 
-    private static final int FLAKE_COST = 1; // Starting cost for a Temmie Flake
-    private static final int FLAKE_PRICE_MULTIPLIER = 1; // No price increase for repeat purchases
-    private int flakePrice = FLAKE_COST; // Current price of Temmie Flake
+    private static final String TEMMIE_VOICE = Anniv7Mod.makeID("temmie_voice2.mp3");
+    private static final int FLAKE_COST = 1;
+    private static final int COLLEGE_FUND_COST = 100;
+    private static final int FLAKE_PRICE_MULTIPLIER = 1;
+    private int flakePrice = FLAKE_COST;
+
+    private int collegeFundDonations = 0;
 
     public TemmieBartender(float animationX, float animationY) {
         super(animationX, animationY, 180.0f, 250.0f);
@@ -34,39 +38,30 @@ public class TemmieBartender extends AbstractBartender {
 
     @Override
     public void onInteract() {
-        // Debug logging
         System.out.println("Interacting with Temmie Bartender");
-
-        // Play Temmie voice when bartender is clicked
-        CardCrawlGame.sound.play(Anniv7Mod.makeID("audio/Temmie-Voice2.ogg"));
-
-        // Show the bartender cutscene
+        CardCrawlGame.sound.play(TEMMIE_VOICE);
         AbstractDungeon.topLevelEffectsQueue.add(new BartenderCutscene(this, cutsceneStrings));
     }
 
     @Override
     public String getNoThanksDescription() {
-        // Play sound when declining the offer
-        CardCrawlGame.sound.play(Anniv7Mod.makeID("audio/Temmie-Voice2.ogg"));
-        return cutsceneStrings.OPTIONS[0];
+        CardCrawlGame.sound.play(TEMMIE_VOICE);
+        return String.format("No Thanks", COLLEGE_FUND_COST);
     }
 
     @Override
     public void applyHealAction() {
-        // Play sound when the player buys Temmie Flakes
-        CardCrawlGame.sound.play(Anniv7Mod.makeID("audio/Temmie-Voice2.ogg"));
-
-        // Apply healing and gold deduction
+        CardCrawlGame.sound.play(TEMMIE_VOICE);
         Wiz.p().heal(getHealAmount());
         Wiz.p().loseGold(flakePrice);
+        inHealAction = false;
     }
 
     @Override
     public void applySecondOptionAction() {
-        // Play sound when selecting a secondary option (if applicable)
-        CardCrawlGame.sound.play(Anniv7Mod.makeID("audio/Temmie-Voice2.ogg"));
-
-        // Important to reset this action flag
+        CardCrawlGame.sound.play(TEMMIE_VOICE);
+        Wiz.p().loseGold(COLLEGE_FUND_COST);
+        collegeFundDonations++;
         inSecondAction = false;
     }
 
@@ -82,7 +77,18 @@ public class TemmieBartender extends AbstractBartender {
 
     @Override
     public int getHealAmount() {
-        return (Wiz.p().currentHealth < Wiz.p().maxHealth) ? 10 : 0;
+        int baseHeal = (Wiz.p().currentHealth < Wiz.p().maxHealth) ? 10 : 0;
+        return baseHeal + collegeFundDonations;
+    }
+
+    @Override
+    public String getSecondOptionDescription() {
+        return String.format("Donate to College Fund (%d Gold)", COLLEGE_FUND_COST);
+    }
+
+    @Override
+    public boolean getSecondOptionCondition() {
+        return Wiz.p().gold >= COLLEGE_FUND_COST;
     }
 
     @Override
