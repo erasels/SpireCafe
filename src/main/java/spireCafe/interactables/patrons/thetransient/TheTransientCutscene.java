@@ -65,7 +65,7 @@ public class TheTransientCutscene extends AbstractCutscene {
                     CardGroup group = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
                     for (AbstractCard card : AbstractDungeon.player.masterDeck.getPurgeableCards().group) {
                         if (card.cost != -2 && !CardModifierManager.hasModifier(card, TransientMod.ID)) {
-                            group.addToBottom(card);
+                            group.addToTop(card);
                         }
                     }
                     AbstractDungeon.gridSelectScreen.open(group, 1, OPTIONS[4], false);
