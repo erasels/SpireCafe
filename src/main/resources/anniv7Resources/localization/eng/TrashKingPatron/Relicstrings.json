@@ -139,25 +139,11 @@
       "Whenever you defeat a Boss, gain #b1 #yGold for each unique card in your deck."
     ]
   },
-  "${ModID}:Loan": {
-    "NAME": "Loan",
-    "FLAVOR": "A loan. To whom you owe is unknown.",
-    "DESCRIPTIONS": [
-      "Upon pickup, gain #b200 #yGold. At the start of your next #b23 turns, lose #b10 #yGold."
-    ]
-  },
   "${ModID}:PaintBucket": {
     "NAME": "Paint Bucket",
     "FLAVOR": "Used for the Merchant's mask(s).",
     "DESCRIPTIONS": [
       "Whenever you lose #b100 or more #yGold at once, increase your max HP by #b1."
-    ]
-  },
-  "${ModID}:ElyphantToothpaste": {
-    "NAME": "Elyphant Toothpaste",
-    "FLAVOR": "STOP PUMPING CHEMICALS INTO IT!!! IT KEEP GROWINGGG",
-    "DESCRIPTIONS": [
-      "Upon pickup, discard ALL your potions. #yUpgrade a random card in your deck for each potion lost this way."
     ]
   },
   "${ModID}:HeirloomFork": {
