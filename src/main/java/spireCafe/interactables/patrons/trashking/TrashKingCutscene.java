@@ -103,7 +103,8 @@ public class TrashKingCutscene extends AbstractCutscene {
         AbstractDungeon.player.loseGold(cost);
         character.alreadyPerformedTransaction = true;
 
-        // Filter out relics the player already has and ElyphantToothpaste if no potions
+        ArrayList<AbstractRelic> givenRelics = new ArrayList<>();
+
         ArrayList<String> availableRelics = new ArrayList<>(Arrays.asList(TRASH_KING_RELICS));
         availableRelics.removeIf(relicId ->
                 AbstractDungeon.player.hasRelic(relicId) ||
@@ -114,6 +115,15 @@ public class TrashKingCutscene extends AbstractCutscene {
         for (int i = 0; i < relicCount && i < availableRelics.size(); i++) {
             AbstractRelic relic = RelicLibrary.getRelic(availableRelics.get(i)).makeCopy();
             AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2, Settings.HEIGHT / 2, relic);
+            givenRelics.add(relic);
+        }
+
+        if (relicCount == 2) {
+            for (AbstractRelic relic : givenRelics) {
+                if (relic.relicId.equals(ElyphantToothpaste.ID) || relic.relicId.equals(Loan.ID)) {
+                    relic.onEquip(); // onEquip wasn't working in the two-relic purchase scenario, for some reason. Have to call it manually
+                }
+            }
         }
 
         if (relicCount == 1) {
