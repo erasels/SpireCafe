@@ -4,7 +4,6 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
-import com.megacrit.cardcrawl.potions.PotionSlot;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
@@ -28,7 +27,7 @@ public class TrashKingCutscene extends AbstractCutscene {
             PetRock.ID, PaperNail.ID, SuperheroComic.ID, RingOfTheNoodle.ID,
             Supplements.ID, HospitalBill.ID, WellDoneSteak.ID, LonelyAnt.ID, NapiersBones.ID,
             LostPenny.ID, Popcorn.ID, InsuranceCard.ID, TyrtleShell.ID, RayOfMoonlight.ID,
-            StylePoints.ID, Loan.ID, PaintBucket.ID, ElyphantToothpaste.ID, HeirloomFork.ID,
+            StylePoints.ID, PaintBucket.ID, HeirloomFork.ID,
             FistOfThePugilist.ID, RedButton.ID, Neurotoxin.ID
     };
 
@@ -103,12 +102,8 @@ public class TrashKingCutscene extends AbstractCutscene {
         AbstractDungeon.player.loseGold(cost);
         character.alreadyPerformedTransaction = true;
 
-        // Filter out relics the player already has and ElyphantToothpaste if no potions
         ArrayList<String> availableRelics = new ArrayList<>(Arrays.asList(TRASH_KING_RELICS));
-        availableRelics.removeIf(relicId ->
-                AbstractDungeon.player.hasRelic(relicId) ||
-                        (relicId.equals(ElyphantToothpaste.ID) && !hasAnyPotions())
-        );
+
         Collections.shuffle(availableRelics, new Random(AbstractDungeon.miscRng.randomLong()));
 
         for (int i = 0; i < relicCount && i < availableRelics.size(); i++) {
@@ -123,11 +118,6 @@ public class TrashKingCutscene extends AbstractCutscene {
             goToDialogue(7);
             this.dialogueIndex = 8;
         }
-    }
-
-    private boolean hasAnyPotions() {
-        return AbstractDungeon.player.potions.stream()
-                .anyMatch(potion -> !(potion instanceof PotionSlot));
     }
 
     @Override
