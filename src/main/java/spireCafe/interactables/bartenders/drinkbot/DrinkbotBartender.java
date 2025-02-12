@@ -30,21 +30,21 @@ public class DrinkbotBartender extends AbstractBartender {
     private int secondCost = 0;
     public boolean hasPurchased = false;
     public boolean hasVisited = false;
-
+    
     public DrinkbotBartender(float animationX, float animationY) {
         super(animationX, animationY, HB_W, HB_H);
         this.serialNum = MathUtils.random(100, 999);
         this.nemesisNum = MathUtils.random(10, 999);
         this.secondCost = BASE2_COST + AbstractDungeon.miscRng.random(0, 25);
-
+        
         name = characterStrings.NAMES[0] + serialNum;
         this.authors = "Coda";
-
+        
         loadAnimation(BARTENDER_STR + "skeleton.atlas", BARTENDER_STR + "skeleton.json", 1.0F);
         this.state.setAnimation(0, "idle", true);
 
         this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeBartenderPath("drinkbot/portrait.png")));
-
+        
     }
 
     @Override
