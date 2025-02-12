@@ -62,6 +62,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static spireCafe.interactables.attractions.bookshelf.BookshelfAttraction.PAGE_CONFIG_KEY;
+import static spireCafe.interactables.bartenders.Temmie.TemmieBartender.TEMMIE_VOICE;
 import static spireCafe.interactables.patrons.missingno.MissingnoPatches.*;
 import static spireCafe.patches.CafeEntryExitPatch.CAFE_ENTRY_SOUND_KEY;
 import static spireCafe.screens.JukeboxScreen.*;
@@ -427,6 +428,7 @@ public class Anniv7Mod implements
         BaseMod.addAudio(POKE7, makePath("audio/poke7.mp3"));
         BaseMod.addAudio(POKE8, makePath("audio/poke8.mp3"));
         BaseMod.addAudio(POKE9, makePath("audio/poke9.mp3"));
+        BaseMod.addAudio(TEMMIE_VOICE, makePath("audio/temmie_voice2.mp3"));
     }
 
     public static float time = 0f;
