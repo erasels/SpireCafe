@@ -101,5 +101,5 @@ fixalpha.exe
 *.kra
 
 pom.xml
-example-pom2.txt
+example-pom.txt
 /src/main/resources/anniv7Resources/images/ui/decoration/ignore/
