@@ -5,10 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
-import com.megacrit.cardcrawl.potions.PotionSlot;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractPatron;
-import spireCafe.interactables.patrons.trashking.relics.ElyphantToothpaste;
 import spireCafe.util.TexLoader;
 
 import java.util.Arrays;
@@ -39,14 +37,8 @@ public class TrashKingPatron extends AbstractPatron {
 
     public static boolean canSpawn() {
         return Arrays.stream(TrashKingCutscene.TRASH_KING_RELICS)
-                .filter(s -> !s.equals(ElyphantToothpaste.ID) || hasAnyPotions())
                 .map(s -> !AbstractDungeon.player.hasRelic(s))
                 .count() > 1;
-    }
-
-    private static boolean hasAnyPotions() {
-        return AbstractDungeon.player.potions.stream()
-                .anyMatch(potion -> !(potion instanceof PotionSlot));
     }
 
     @Override
