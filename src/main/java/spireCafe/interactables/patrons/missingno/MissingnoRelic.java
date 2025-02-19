@@ -3,7 +3,9 @@ package spireCafe.interactables.patrons.missingno;
 import com.megacrit.cardcrawl.actions.utility.SFXAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import spireCafe.abstracts.AbstractSCRelic;
@@ -43,6 +45,11 @@ public class MissingnoRelic extends AbstractSCRelic {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onUnequip() {
+        AbstractDungeon.getCurrRoom().spawnRelicAndObtain((Settings.WIDTH / 2f), (Settings.HEIGHT / 2f), RelicLibrary.getRelic(ID).makeCopy());
     }
 
     @Override
