@@ -15,6 +15,7 @@ import spireCafe.CafeRoom;
 import spireCafe.abstracts.AbstractCafeInteractable;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
+import spireCafe.interactables.patrons.looter.LooterCutscene;
 import spireCafe.interactables.patrons.looter.LooterPatron;
 import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
 import spireCafe.interactables.patrons.powerelic.PowerelicConfig;
@@ -48,8 +49,11 @@ public class PowerelicCutscene extends AbstractCutscene {
             CafeRoom cafe = (CafeRoom)AbstractDungeon.getCurrRoom().event;
             List<AbstractCafeInteractable> inhabitants = cafe.getCurrentInhabitants();
             for(AbstractCafeInteractable i : inhabitants){
-                if(!ignoreLooter && i instanceof LooterPatron && ((LooterPatron)i).stealTarget==character){
-                    looterGold=((LooterPatron)i).rewardGold;
+                if(!ignoreLooter && i instanceof LooterPatron){
+                    if(((LooterPatron)i).stealTarget == null)
+                        LooterCutscene.generateStealTarget((LooterPatron)i);
+                    if(((LooterPatron)i).stealTarget == character)
+                        looterGold = ((LooterPatron)i).rewardGold;
                 }
                 if(i instanceof TrashKingPatron){
                     trashKingExists=true;
@@ -118,7 +122,6 @@ public class PowerelicCutscene extends AbstractCutscene {
             setupRelicChoices();
         } else if(dialogueIndex==14){
             goToDialogue(16);
-        } else if(dialogueIndex==16){
             this.dialog.addDialogOption(OPTIONS[7]).setOptionResult((i) -> {
                 goToDialogue(19);
             });

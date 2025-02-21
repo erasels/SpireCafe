@@ -23,6 +23,7 @@ public class LooterPatron extends AbstractPatron {
     public static final int MAX_GOLD = 50;
     public AbstractPatron stealTarget;
     public int rewardGold;
+    public boolean briefed;
 
     public LooterPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);
@@ -43,6 +44,7 @@ public class LooterPatron extends AbstractPatron {
         //////
 
         this.rewardGold = AbstractDungeon.miscRng.random(MIN_GOLD,MAX_GOLD);
+        this.briefed = false;
         setCutscenePortrait("Portrait");
     }
 
