@@ -97,7 +97,7 @@ public class ViolescentShard extends AbstractSCRelic implements CustomSavable<Ar
                                 return;
                             }
                             Anniv7Mod.logger.info("Violescent Shard: " + card[0].toString() + " gets swapped out for " + relic.toString());
-                            PowerelicCard newCard = PowerelicCard.fromCopy(relic);
+                            PowerelicCard newCard = PowerelicCard.fromViolescentShard(relic);
                             newCard.cardIsFromCardReward = true;
                             card[0]=newCard;
                         }

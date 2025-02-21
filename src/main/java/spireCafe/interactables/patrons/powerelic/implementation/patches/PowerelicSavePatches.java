@@ -50,16 +50,14 @@ public class PowerelicSavePatches {
                 if(PowerelicCard.PowerelicRelicContainmentFields.isContained.get(relic)){
                     PowerelicCard card=PowerelicCard.PowerelicRelicContainmentFields.withinCard.get(relic);
                     if(card!=null && !Wiz.deck().group.contains(card)) {
-                        if(!card.cardIsFromCardReward) {
-                            //the relic is already active but it needs a card in order to be saved properly.
-                            //  we must flag the relic or card as temporary so that it vanishes at start of next combat.
-                            //  atm, we're doing so by using a secondary temporary card class.
-                            AbstractCard tempCard = new PowerelicTemporaryDuplicateCard(relic);
-                            Wiz.deck().group.add(tempCard);
-                            //note that the previous loop, meant to flag active relics, only checks cards in deck.
-                            //the duplicated relic/card isn't in our deck so we need to flag it as active here
-                            PowerelicCard.PowerelicRelicContainmentFields.isActiveBetweenCombats.set(relic, true);
-                        }
+                        //the relic is already active but it needs a card in order to be saved properly.
+                        //  we must flag the relic or card as temporary so that it vanishes at start of next combat.
+                        //  atm, we're doing so by using a secondary temporary card class.
+                        AbstractCard tempCard = new PowerelicTemporaryDuplicateCard(relic);
+                        Wiz.deck().group.add(tempCard);
+                        //note that the previous loop, meant to flag active relics, only checks cards in deck.
+                        //the duplicated relic/card isn't in our deck so we need to flag it as active here
+                        PowerelicCard.PowerelicRelicContainmentFields.isActiveBetweenCombats.set(relic, true);
                     }
                 }
             }
@@ -136,20 +134,14 @@ public class PowerelicSavePatches {
             }
 
             ArrayList<AbstractCard> DEBUG_GROUP_PTR = Wiz.deck().group;
-            ////////////for relics that were duplicates of relics transformed into cards/////////////
-            for(AbstractCard card : Wiz.deck().group) {
-                if(card instanceof PowerelicTemporaryDuplicateCard){
-                    //note that PowerelicTemporaryDuplicateCard is an instanceof PowerelicCard,
-                    //so the relic has already been initialized in the above loop.
-                    //Just need to mark the relic as temporary now.
-                    AbstractRelic relic=((PowerelicCard)card).capturedRelic;
-                    PowerelicCard.PowerelicRelicContainmentFields.withinCard.set(relic,null);
-                }
-            }
+            //for relics that were duplicates of relics transformed into cards,
+            //keep the relic pointing to the temporary card.
+            //the temporary card will be removed from the deck shortly and the relic will get garbage-collection'd.
 
             Wiz.deck().group.removeIf(card -> PowerelicRelic.PowerelicCardContainmentFields.isContained.get(card));
             //unlike cards-turned-relics, relics-turned-cards may be active when the game was saved
             //use misc to track if the relic is active
+            //if relic is INactive, remove it
             Wiz.adp().relics.removeIf(relic -> PowerelicCard.PowerelicRelicContainmentFields.withinCard.get(relic)!=null
                     && PowerelicCard.PowerelicRelicContainmentFields.withinCard.get(relic).misc<999999999);
             Wiz.adp().reorganizeRelics();

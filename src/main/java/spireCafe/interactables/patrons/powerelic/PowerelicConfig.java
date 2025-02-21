@@ -25,9 +25,9 @@ public class PowerelicConfig {
             Relic chosen is dependent on cardRng. If a non-cardable relic is chosen, it is rerolled
             Only the final chosen relic is removed from the relic pool
     */
-    public static final float CARDED_RELIC_SUBSTITUTION_CHANCE = 0.50f;
+    public static final float CARDED_RELIC_SUBSTITUTION_CHANCE = 0.70f;
     public static final int RELIC_COST = 100;
-    public static final boolean EXCLUDE_BOSS_ROOMS = false;
+    public static final boolean EXCLUDE_BOSS_ROOMS = true;
     public static final boolean DEBUG_ALL_RELICS_ARE_BOSS_RELICS = false;
 
 }
