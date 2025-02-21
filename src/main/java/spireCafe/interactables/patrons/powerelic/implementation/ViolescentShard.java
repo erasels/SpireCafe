@@ -24,9 +24,10 @@ import static spireCafe.Anniv7Mod.makeID;
 
 public class ViolescentShard extends AbstractSCRelic implements CustomSavable<ArrayList<String>> {
     public static final String ID = makeID(ViolescentShard.class.getSimpleName());
+    public static final String assetID = "ViolescentShard";
     public ArrayList<String> relicPoolHistory = new ArrayList<>();
     public ViolescentShard() {
-        super(ID, null, RelicTier.SPECIAL, LandingSound.MAGICAL);
+        super(ID, assetID, RelicTier.SPECIAL, LandingSound.MAGICAL);
     }
     @Override
     public ArrayList<String> onSave() {
