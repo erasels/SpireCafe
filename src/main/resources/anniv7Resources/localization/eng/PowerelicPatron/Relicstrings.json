@@ -19,5 +19,12 @@
     "DESCRIPTIONS": [
       "This will not appear in the finished version."
     ]
+  },
+  "${ModID}:ViolescentShard": {
+    "NAME": "Violescent Shard",
+    "FLAVOR": "A trinket made especially for those who, due to reasons unknown, simply cannot bring themselves to trust three foxes in a trenchcoat.",
+    "DESCRIPTIONS": [
+      "Combat reward screens now sometimes contain carded relics."
+    ]
   }
 }

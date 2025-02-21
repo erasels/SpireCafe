@@ -45,17 +45,21 @@ public class PowerelicSavePatches {
                 }
             }
             ////////////for relics that were duplicates of relics transformed into cards/////////////
+            //These relics can be identified as relics in the player list that don't have corresponding cards in deck.
             for(AbstractRelic relic : Wiz.adp().relics){
                 if(PowerelicCard.PowerelicRelicContainmentFields.isContained.get(relic)){
                     PowerelicCard card=PowerelicCard.PowerelicRelicContainmentFields.withinCard.get(relic);
                     if(card!=null && !Wiz.deck().group.contains(card)) {
-                        //the relic is already active but it needs a card in order to be saved properly.
-                        //  we must flag the relic or card as temporary so that it vanishes at start of next combat.
-                        //  atm, we're doing so by using a secondary temporary card class.
-                        AbstractCard tempCard = new PowerelicTemporaryDuplicateCard(relic);
-                        Wiz.deck().group.add(tempCard);
-                        //note that the previous loop meant to flag active relics only checks cards in deck, so set it here too
-                        PowerelicCard.PowerelicRelicContainmentFields.isActiveBetweenCombats.set(relic,true);
+                        if(!card.cardIsFromCardReward) {
+                            //the relic is already active but it needs a card in order to be saved properly.
+                            //  we must flag the relic or card as temporary so that it vanishes at start of next combat.
+                            //  atm, we're doing so by using a secondary temporary card class.
+                            AbstractCard tempCard = new PowerelicTemporaryDuplicateCard(relic);
+                            Wiz.deck().group.add(tempCard);
+                            //note that the previous loop, meant to flag active relics, only checks cards in deck.
+                            //the duplicated relic/card isn't in our deck so we need to flag it as active here
+                            PowerelicCard.PowerelicRelicContainmentFields.isActiveBetweenCombats.set(relic, true);
+                        }
                     }
                 }
             }

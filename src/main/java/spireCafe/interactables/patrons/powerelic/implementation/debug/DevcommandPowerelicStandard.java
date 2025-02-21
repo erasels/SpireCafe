@@ -14,6 +14,7 @@ public class DevcommandPowerelicStandard extends DevcommandPowerelic{
     }
 
     protected void execute(String[] arg0, int arg1) {
+        outfoxedCheck();
         DevConsole.log("\"standard\" is optional.  You can just type \"powerelic\" by itself.");
         super.execute(arg0,arg1);
     }

@@ -2,24 +2,46 @@
   "${ModID}:PowerelicCutscene": {
     "NAME": "Powerelic Cutscene",
     "BLOCKING_TEXTS": [
-      "\"This thing is out of battery now. But I'm sure you'll be fine.\""
+      "\"This thing is out of battery now. But I'm sure you'll be fine.\"",
+      "\"Good luck!\""
     ],
     "DESCRIPTIONS": [
       "Choose 1 Power to become a Relic.",
-      "~\"Greetings,~ ~fellow~ ~human!~ NL Would you be interested in my research into #yPower #yCards?\"",
-      "~\"Greetings,~ ~fellow~ ~humanoid!~ NL Would you be interested in my research into #yPower #yCards?\"",
-      "~\"Greetings,~ ~fellow~ ~mortal!~ NL Would you be interested in my research into #yPower #yCards?\"",
+      "~\"Greetings,~ ~fellow~ ~human!~ NL Would you be interested in my research on #yPower #yCards?\"",
+      "~\"Greetings,~ ~fellow~ ~humanoid!~ NL Would you be interested in my research on #yPower #yCards?\"",
+      "~\"Greetings,~ ~fellow~ ~mortal!~ NL Would you be interested in my research on #yPower #yCards?\"",
       "\"You see, after months of tailbreaking research, I have determined th-- #p@HOLD@ #p@STILL@ #p@DOWN@ #p@THERE!@ -- determined that #yPower #yCards and #yRelics are fundamentally one and the same!\"",
       "\"Now, with my patented ~Powerelic~ ~Polarity~ ~Percolator,~ I can convert one of your #yPowers into a #yRelic! It will forever be a -- #p@STOP@ #p@WIGGLING@ -- be a part of you without ever needing to draw and play it! What say you?\"",
       "\"Changed your mind? I can convert one of your -- #pclaws. #p@CLAWS!@ -- convert one of your #yPowers into a #yRelic, just say the word!\"",
       "The professor rummages around in his trenchcoat and hands herself a dubious-looking ray gun, pointing it at you. There is a flash of light and a puff of smoke. NL ... NL ... You smell kind of ~skunky~ ...",
       "@\"TA-DAAA!!@ Your %s is now a #yRelic!\"",
       "\"Oh! You may notice that some of your old #yRelics are now #yPowers. Perfectly ordinary side effect, nothing to worry about...\"",
-      "You back away slowly."
+      "You back away slowly.",
+      "\"Hmmm?  I see... and then you went on to #pwin #pthe #prun with the help of your new #yrelic #ycards, yes yes?\"",
+      "\"Well... that's true, I admit that the Spire still appears to be standing...\"",
+      "\"Okay, fine, whatever. I just happen to have a special item that is #yconsiderably #yless #ylikely #yto #ykill #ya #yrun #yin #yprogress. I'll even let you have -- #pclaws. #p@CLAWS!@ -- let you have it for cheap. How about it?\"",
+      "\"What? I think #b",
+      " #yGold is a perfectly fair price, don't you?\"",
+      "\"It's exactly #b",
+      " #yGold plus #b",
+      " #yGold, which is a number I arrived at via... gut feeling.\"",
+      "\"Oh.\"",
+      "\"Well, you make a fair point about gameplay incentives, I guess. I'll sell this thing to you for only #b",
+      " #yGold, and any #ptotally #punexpected #pwindfalls in your near future will just be a nice rebate on top.\"",
+      "\"Done! NL NL NL (I still would have taken the other offer if I were you...)\"",
+      "\"Changed your mind? I offer deals ranging from livestream content to @LIVESTREAM@ @CONTENT!!\"@",
+      "You are feeling particularly risk-averse today. Where's the Trash King when you need him?",
+      "You are feeling particularly risk-averse today."
     ],
     "OPTIONS": [
       "[Accept] #gTurn #g1 #gPower #ginto #ga #gRelic, #rbut #ralso...",
-      "[Decline]"
+      "[Decline]",
+      "[Locked] Requires: Picked the 1st option on a previous run.",
+      "[Interrupt] Explain what happened last time.",
+      "[Trade] #y",
+      " #yGold: #gObtain #ga #gspecial #gRelic.",
+      "\"Wait a minute...\"",
+      "[Patiently explain that the nearby looter exists for gameplay purposes]"
     ]
   },
   "${ModID}:PowerelicCutscene_playtest": {

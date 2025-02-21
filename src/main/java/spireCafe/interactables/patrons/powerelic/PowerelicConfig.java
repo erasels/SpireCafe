@@ -15,4 +15,19 @@ public class PowerelicConfig {
         }
         return total;
     }
+    /*
+        The following constants are for use with the Violescent Shard relic.
+        Relic substitution chance is subject to the following:
+            Chance is rolled once per 3-card reward
+            If roll is successful, the card corresponding to (floornum % numCards) is swapped out
+            Any cardable relic can be chosen from the first four relic pools
+            If the original card's rarity was RARE, a boss relic will be chosen instead
+            Relic chosen is dependent on cardRng. If a non-cardable relic is chosen, it is rerolled
+            Only the final chosen relic is removed from the relic pool
+    */
+    public static final float CARDED_RELIC_SUBSTITUTION_CHANCE = 0.50f;
+    public static final int RELIC_COST = 100;
+    public static final boolean EXCLUDE_BOSS_ROOMS = false;
+    public static final boolean DEBUG_ALL_RELICS_ARE_BOSS_RELICS = false;
+
 }

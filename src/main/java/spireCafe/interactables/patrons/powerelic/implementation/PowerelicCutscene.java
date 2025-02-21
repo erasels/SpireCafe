@@ -11,18 +11,19 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.BottledTornado;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
+import spireCafe.CafeRoom;
+import spireCafe.abstracts.AbstractCafeInteractable;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractNPC;
+import spireCafe.interactables.patrons.looter.LooterPatron;
 import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
 import spireCafe.interactables.patrons.powerelic.PowerelicConfig;
+import spireCafe.interactables.patrons.trashking.TrashKingPatron;
 import spireCafe.util.Wiz;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Random;
+import java.util.*;
 
 import static spireCafe.Anniv7Mod.makeID;
 import static spireCafe.interactables.patrons.powerelic.implementation.PowerelicPatron.getAllConvertiblePowers;
@@ -30,14 +31,32 @@ import static spireCafe.interactables.patrons.powerelic.implementation.Powerelic
 public class PowerelicCutscene extends AbstractCutscene {
     public static final String ID = makeID(PowerelicCutscene.class.getSimpleName());
     private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(ID);
-
     protected boolean alreadyTalkedOnce=false;
-
+    public int looterGold=0;
+    public boolean ignoreLooter=false;
+    public boolean trashKingExists=false;
+    public AbstractNPC character;
     public PowerelicCutscene(AbstractNPC character) {
         super(character, cutsceneStrings);
+        this.character=character;
         if(character instanceof PowerelicPatron) {
             alreadyTalkedOnce = ((PowerelicPatron)character).alreadyTalkedOnce;
+            ignoreLooter = ((PowerelicPatron)character).ignoreLooter;
         }
+        looterGold=0;
+        if(AbstractDungeon.getCurrRoom().event instanceof CafeRoom){
+            CafeRoom cafe = (CafeRoom)AbstractDungeon.getCurrRoom().event;
+            List<AbstractCafeInteractable> inhabitants = cafe.getCurrentInhabitants();
+            for(AbstractCafeInteractable i : inhabitants){
+                if(!ignoreLooter && i instanceof LooterPatron && ((LooterPatron)i).stealTarget==character){
+                    looterGold=((LooterPatron)i).rewardGold;
+                }
+                if(i instanceof TrashKingPatron){
+                    trashKingExists=true;
+                }
+            }
+        }
+
 
         dialogueIndex = 0;
         String cClass= Wiz.adp().chosenClass.toString();
@@ -49,9 +68,16 @@ public class PowerelicCutscene extends AbstractCutscene {
             dialogueIndex=3;
         }
         if(alreadyTalkedOnce) {
-            dialogueIndex = 6;
-            if(!character.alreadyPerformedTransaction) {
-                setupChoices();
+            if(!ViolescentShard.getOutfoxedStatus()) {
+                dialogueIndex = 6;
+                if (!character.alreadyPerformedTransaction) {
+                    setupChoices();
+                }
+            }else{
+                dialogueIndex = 23;
+                if (!character.alreadyPerformedTransaction) {
+                    setupALLChoices();
+                }
             }
         }
     }
@@ -77,12 +103,35 @@ public class PowerelicCutscene extends AbstractCutscene {
             //do nothing; waiting for player to click a button
         }else if(dialogueIndex==7) {
             character.alreadyPerformedTransaction = true;
+            ViolescentShard.setOutfoxedStatus(true);
             convertSelectedCardsToRelics(selectedCards);
             playEffectsAfterConverting();
             nextDialogue();
         } else if(dialogueIndex==8){
             nextDialogue();
-        } else if (dialogueIndex >= 9) {
+        } else if (dialogueIndex == 9 || dialogueIndex == 10) {
+            endCutscene();
+        } else if(dialogueIndex==11){
+            nextDialogue();
+        } else if(dialogueIndex==12){
+            nextDialogue();
+            setupRelicChoices();
+        } else if(dialogueIndex==14){
+            goToDialogue(16);
+        } else if(dialogueIndex==16){
+            this.dialog.addDialogOption(OPTIONS[7]).setOptionResult((i) -> {
+                goToDialogue(19);
+            });
+        } else if(dialogueIndex==19){
+            looterGold=0;
+            if(character instanceof PowerelicPatron)
+            {
+                ((PowerelicPatron)character).ignoreLooter=true;
+                ignoreLooter=true;
+            }
+            nextDialogue();
+            setupRelicChoices();
+        } else if(dialogueIndex==22||dialogueIndex==24||dialogueIndex==25){
             endCutscene();
         }
     }
@@ -94,6 +143,23 @@ public class PowerelicCutscene extends AbstractCutscene {
             ArrayList<String> words = new ArrayList<>(Arrays.asList(selectedCards.get(0).name.split(" ")));
             words.replaceAll(s -> "#y"+s);
             text0=String.format(text0,String.join(" ",words));
+        }
+        if(dialogueIndex==14){
+            text0=DESCRIPTIONS[14]
+                    +(PowerelicConfig.RELIC_COST+looterGold)
+                    +DESCRIPTIONS[15];
+        }
+        if(dialogueIndex==16){
+            text0=DESCRIPTIONS[16]
+                    +PowerelicConfig.RELIC_COST
+                    +DESCRIPTIONS[17]
+                    +looterGold
+                    +DESCRIPTIONS[18];
+        }
+        if(dialogueIndex==20){
+            text0=DESCRIPTIONS[20]
+                    +PowerelicConfig.RELIC_COST
+                    +DESCRIPTIONS[21];
         }
         String text = appendSpeakerToDialogue(text0);
         if (this.show) {
@@ -116,18 +182,19 @@ public class PowerelicCutscene extends AbstractCutscene {
             nextDialogue();
             goToDialogue(7);
         });
-//        this.dialog.addDialogOption(OPTIONS[1],!enableCheck()).setOptionResult((i) -> {
-//            character.alreadyPerformedTransaction = true;
-//            doTheVerySillyThing();
-//            CardCrawlGame.sound.play("ATTACK_MAGIC_BEAM_SHORT");
-//            goToDialogue(7);
-//        });
-        this.dialog.addDialogOption(OPTIONS[1]).setOptionResult((i) -> {
-            goToDialogue(10);
-        });
+        if(!ViolescentShard.getOutfoxedStatus()) {
+            this.dialog.addDialogOption(OPTIONS[2],true).setOptionResult((i) -> {
+            });
+            this.dialog.addDialogOption(OPTIONS[1]).setOptionResult((i) -> {
+                goToDialogue(10);
+            });
+        }else{
+            this.dialog.addDialogOption(OPTIONS[3],false).setOptionResult((i) -> {
+                character.blockingDialogueIndex=1;
+                goToDialogue(11);
+            });
+        }
     }
-
-
 
     public boolean cardsAreSelected=true;
     public ArrayList<AbstractCard>selectedCards=new ArrayList<>();
@@ -185,7 +252,6 @@ public class PowerelicCutscene extends AbstractCutscene {
     }
 
     public static void convertRandomRelicsToPowers(int amount){
-
         ArrayList<AbstractRelic>convertibleRelics= PowerelicAllowlist.getAllConvertibleRelics();
 
         Collections.shuffle(convertibleRelics, new Random(AbstractDungeon.miscRng.randomLong()));
@@ -214,10 +280,51 @@ public class PowerelicCutscene extends AbstractCutscene {
     public static void convertAllRelicsToPowers(){
         convertRandomRelicsToPowers(Wiz.adp().relics.size());
     }
-
     public static void playEffectsAfterConverting(){
         AbstractDungeon.effectsQueue.add(new BorderFlashEffect(Color.WHITE));
         CardCrawlGame.sound.play("ATTACK_MAGIC_FAST_1");
+    }
+
+    private void setupRelicChoices(){
+        int displayedCost=PowerelicConfig.RELIC_COST+looterGold;
+        this.dialog.addDialogOption(OPTIONS[4]+displayedCost+OPTIONS[5],Wiz.adp().gold<displayedCost, new ViolescentShard()).setOptionResult((i) -> {
+            buyRelic();
+            goToDialogue(22);
+        });
+        if(looterGold>0){
+            this.dialog.addDialogOption(OPTIONS[6]).setOptionResult((i) -> {
+                nextDialogue();
+                goToDialogue(14);
+            });
+        }else{
+            this.dialog.addDialogOption(OPTIONS[1]).setOptionResult((i) -> {
+                nextDialogue();
+                goToDialogue(trashKingExists?25:24);
+            });
+        }
+    }
+
+    private void setupALLChoices(){
+        this.dialog.addDialogOption(OPTIONS[0],!enableCheck()).setOptionResult((i) -> {
+            doTheThing();
+            nextDialogue();
+            goToDialogue(7);
+        });
+        int displayedCost=PowerelicConfig.RELIC_COST+looterGold;
+        this.dialog.addDialogOption(OPTIONS[4]+displayedCost+OPTIONS[5],Wiz.adp().gold<displayedCost,new ViolescentShard()).setOptionResult((i) -> {
+            buyRelic();
+            goToDialogue(22);
+        });
+        this.dialog.addDialogOption(OPTIONS[1]).setOptionResult((i) -> {
+            nextDialogue();
+            goToDialogue(trashKingExists?25:24);
+        });
+    }
+
+    public void buyRelic(){
+        character.alreadyPerformedTransaction = true;
+        Wiz.adp().loseGold(PowerelicConfig.RELIC_COST+looterGold);
+        AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2f, Settings.HEIGHT / 2f, new ViolescentShard());
     }
 
 }

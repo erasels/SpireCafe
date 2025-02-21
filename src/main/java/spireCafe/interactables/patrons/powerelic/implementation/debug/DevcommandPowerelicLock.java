@@ -1,12 +1,12 @@
 package spireCafe.interactables.patrons.powerelic.implementation.debug;
 
 import basemod.DevConsole;
-import spireCafe.interactables.patrons.powerelic.implementation.PowerelicCutscene;
+import spireCafe.interactables.patrons.powerelic.implementation.ViolescentShard;
 
 import java.util.ArrayList;
 
-public class DevcommandPowerelicAll extends DevcommandPowerelic{
-    public DevcommandPowerelicAll() {
+public class DevcommandPowerelicLock extends DevcommandPowerelic{
+    public DevcommandPowerelicLock() {
         requiresPlayer = true;
         this.minExtraTokens = 0;
         this.maxExtraTokens = 0;
@@ -15,12 +15,11 @@ public class DevcommandPowerelicAll extends DevcommandPowerelic{
 
     @Override
     protected void execute(String[] arg0, int arg1) {
-        outfoxedCheck();
-        try {
-            PowerelicCutscene.doTheVerySillyThing();
-            DevConsole.log("Converted ALL powers to relics.");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        if(!ViolescentShard.getOutfoxedStatus()){
+            DevConsole.log("The second option at the Powerelic Professor was already locked!");
+        }else{
+            ViolescentShard.setOutfoxedStatus(false);
+            DevConsole.log("The second option at the Powerelic Professor has been locked again.");
         }
     }
 
