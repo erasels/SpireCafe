@@ -187,7 +187,7 @@ public class PeddlerMerchant extends AbstractMerchant {
 
         //Rare Relics
         for (int i = 0; i < 3; i++) {
-            AbstractRelic randomRelic = AbstractDungeon.returnRandomRelic(AbstractRelic.RelicTier.RARE);
+            AbstractRelic randomRelic = AbstractDungeon.returnRandomRelicEnd(AbstractRelic.RelicTier.RARE);
             int place = i;
             AbstractArticle relic = new RelicArticle("PeddlerRelic" + place, this, 964.0F * Settings.xScale + 150.0F * place * Settings.xScale,364.0F * Settings.scale, randomRelic, (int)veryFairPriceIncrease(randomRelic.getPrice())){
                 @Override
@@ -266,7 +266,7 @@ public class PeddlerMerchant extends AbstractMerchant {
 
     public void relicCourierCheck(int i){
         if (AbstractDungeon.player.hasRelic(Courier.ID)) {
-            AbstractRelic randomRelic = AbstractDungeon.returnRandomRelic(AbstractRelic.RelicTier.RARE);
+            AbstractRelic randomRelic = AbstractDungeon.returnRandomRelicEnd(AbstractRelic.RelicTier.RARE);
             AbstractArticle relic = new RelicArticle("PeddlerRelic" + i, this, 964.0F * Settings.xScale,364.0F * Settings.scale, randomRelic, (int) veryFairPriceIncrease(randomRelic.getPrice())){
                 @Override
                 public void onClick() {
