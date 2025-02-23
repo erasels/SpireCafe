@@ -231,7 +231,7 @@ public class PackmasterMerchant extends AbstractMerchant {
             possibleMessages.add(s[i]);
         }
         if (AbstractDungeon.player.chosenClass.toString().equals("THE_PACKMASTER")) {
-            possibleMessages.add(s[5]);
+            possibleMessages.add(s[baseMessageCount]);
         }
         possibleMessages.add(s[baseMessageCount + 1 + Arrays.asList(ShopType.values()).indexOf(this.shopType)]);
 
