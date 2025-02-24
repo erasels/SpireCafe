@@ -33,17 +33,17 @@ public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
     // Ancient Tea Set requires playing the card twice, which is unfortunate.  make it feel better to play
     // Bottle cards don't work at the moment, but they might be doable with a patch to initializeDeck
     // should usedUp relics be blocked from becoming cards?
+    // Do we care that Black Blood doesn't replace Burning Blood if added to the deck via Violescent Shard?
 
     public static final String ID = makeID(PowerelicCard.class.getSimpleName());
     private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(ID);
 
-
     public AbstractRelic capturedRelic = null;
 
-
+    public boolean cardIsFromCardReward = false;
 
     //DO NOT USE THESE CONSTRUCTORS except to add a PowerelicCard to the compendium.
-    //Other cards should use one of the static factory methods with the appropriate side effects.
+    //Other cards and relics should use one of the static factory methods with the appropriate side effects.
     public PowerelicCard() {
         super(ID, assetID,1, CardType.POWER, CardRarity.SPECIAL, AbstractCard.CardTarget.SELF);
         rawDescription = cardStrings.DESCRIPTION;
@@ -52,16 +52,28 @@ public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
         super(cardID, cost, type, rarity, target);
         rawDescription = cardStrings.DESCRIPTION;
     }
-
+    //USE THESE INSTEAD.
     public static PowerelicCard fromActiveRelic(AbstractRelic relic) {
+        //called only during the powerelic event
         PowerelicCard card = new PowerelicCard();
         card.setRelicInfoForNewlyConvertedCard(relic);
         return card;
     }
     public static PowerelicCard fromCopy(AbstractRelic relic) {
-        //copy can be permanent (from deck) or temporary (from duplication effect)
+        //copy can be permanent (from master deck) or temporary (from duplication effect)
         PowerelicCard card = new PowerelicCard();
         card.setRelicInfoForCopiedCard(relic);
+        return card;
+    }
+    public static PowerelicCard fromViolescentShard(AbstractRelic relic) {
+        //called only from card rewards.
+        //Violescent Shard swaps an existing card reward for a brand new PowerelicCard.
+        //The game is expecting the card reward function to return the *master recording*
+        //and will automatically produce a *new copy* of the card later, which will lead to a fromCopy call.
+        //In order to connect the relic to the new copy, we need to set this card's capturedRelic field
+        //but leave the relic itself untouched, as the relic will stick to the first copy it is assigned to.
+        PowerelicCard card = new PowerelicCard();
+        card.capturedRelic=relic;
         return card;
     }
 
@@ -170,6 +182,7 @@ public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
         //AND the card is flagged as BOTH "nonessential-equip" and "skip equip if temp"
         //...then the card (and captured relic) is not temp and should be equipped.
         //      (i.e. add another Necronomicurse to the deck.)
+        //In addition to the previous condition, also do this if the card was from a ViolescentShard card reward.
         boolean cardIsCopy=false;
         for(AbstractCard card : Wiz.deck().group){
             if(card!=this) {
@@ -181,7 +194,8 @@ public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
                 }
             }
         }
-        if(cardIsCopy) {
+        if(cardIsCopy || cardIsFromCardReward) {
+            cardIsFromCardReward=false;
             if (PowerelicAllowlist.isNonessentialEquipRelic(capturedRelic)) {
                 if (PowerelicAllowlist.isSkipEquipIfTempRelic(capturedRelic)) {
                     capturedRelic.onEquip();
@@ -344,10 +358,9 @@ public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
 
 
 
-
-
-
     public AbstractCard makeCopy() {
-        return PowerelicCard.fromCopy(capturedRelic);
+        PowerelicCard copy = PowerelicCard.fromCopy(capturedRelic);
+        copy.cardIsFromCardReward = this.cardIsFromCardReward;
+        return copy;
     }
 }

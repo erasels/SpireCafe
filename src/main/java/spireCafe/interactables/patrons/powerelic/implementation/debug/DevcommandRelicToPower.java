@@ -20,6 +20,7 @@ public class DevcommandRelicToPower extends ConsoleCommand {
         this.simpleCheck = false;
     }
     public void execute(String[] tokens, int depth) {
+        DevcommandPowerelic.outfoxedCheck();
         String[] relicNameArray = Arrays.copyOfRange(tokens, 2, tokens.length);
         String relicName = Relic.getRelicName(relicNameArray);
         if(relicName.toLowerCase().startsWith("random ")){

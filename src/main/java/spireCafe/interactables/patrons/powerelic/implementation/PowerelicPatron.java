@@ -19,6 +19,7 @@ public class PowerelicPatron extends AbstractPatron {
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
 
     protected boolean alreadyTalkedOnce=false;
+    protected boolean ignoreLooter=false;
 
     public PowerelicPatron(float animationX, float animationY) {
         super(animationX, animationY, 160.0f, 200.0f);

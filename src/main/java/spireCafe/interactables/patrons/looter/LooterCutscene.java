@@ -26,18 +26,9 @@ public class LooterCutscene extends AbstractCutscene {
 
         LooterPatron looter = ((LooterPatron)character);
         rewardGold = looter.rewardGold;
-        if(looter.stealTarget == null){ //First interaction with looter: generate steal target
-            ArrayList<AbstractPatron> possibleTargets = new ArrayList<>();
-            if(AbstractDungeon.getCurrRoom().event instanceof CafeRoom){ //sanity check idk
-                CafeRoom cafe = (CafeRoom)AbstractDungeon.getCurrRoom().event;
-                List<AbstractCafeInteractable> inhabitants = cafe.getCurrentInhabitants();
-                for(AbstractCafeInteractable i : inhabitants){
-                    if(i instanceof AbstractPatron && i != character){
-                        possibleTargets.add((AbstractPatron)i);
-                    }
-                }
-            }
-            looter.stealTarget = possibleTargets.get(AbstractDungeon.miscRng.random(0, possibleTargets.size()-1));
+        if(!looter.briefed){ //First interaction with looter: generate steal target if nobody else has done it already
+            if(looter.stealTarget == null)
+                generateStealTarget(looter);
 
             if(looter.stealTarget.alreadyPerformedTransaction){ //(not briefed path)
                 dialogueIndex = 7;
@@ -47,6 +38,7 @@ public class LooterCutscene extends AbstractCutscene {
         }else{ //target not interacted
             dialogueIndex = 3;
         }
+        looter.briefed=true;
     }
 
     @Override
@@ -99,5 +91,19 @@ public class LooterCutscene extends AbstractCutscene {
             default:
                 nextDialogue();
         }
+    }
+
+    public static void generateStealTarget(LooterPatron looter){
+        ArrayList<AbstractPatron> possibleTargets = new ArrayList<>();
+        if(AbstractDungeon.getCurrRoom().event instanceof CafeRoom){ //sanity check idk
+            CafeRoom cafe = (CafeRoom)AbstractDungeon.getCurrRoom().event;
+            List<AbstractCafeInteractable> inhabitants = cafe.getCurrentInhabitants();
+            for(AbstractCafeInteractable i : inhabitants){
+                if(i instanceof AbstractPatron && i != looter){
+                    possibleTargets.add((AbstractPatron)i);
+                }
+            }
+        }
+        looter.stealTarget = possibleTargets.get(AbstractDungeon.miscRng.random(0, possibleTargets.size()-1));
     }
 }
