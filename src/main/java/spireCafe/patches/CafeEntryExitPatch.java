@@ -88,7 +88,7 @@ public class CafeEntryExitPatch {
 
                 public void edit(MethodCall m) throws CannotCompileException {
                     if (m.getClassName().equals(ProceedButton.class.getName()) && m.getMethodName().equals("goToNextDungeon")) {
-                        m.replace(String.format("{ if(%1$s.inCafe()) { $proceed(%1$s.getOriginalRoom()); } else { $proceed($$); } }", CafeEntryExitPatch.class.getName()));
+                        m.replace(String.format("{ if(%1$s.inCafe()) { if(%2$s.screen == %3$s.NONE) { $proceed(%1$s.getOriginalRoom()); } else { %1$s.closeCurrentScreen(); } } else { $proceed($$); } }", CafeEntryExitPatch.class.getName(), AbstractDungeon.class.getName(), AbstractDungeon.CurrentScreen.class.getName()));
                     }
                 }
             };
@@ -100,8 +100,11 @@ public class CafeEntryExitPatch {
         @SpirePostfixPatch
         public static void showProceedButton() {
             // Many screens (e.g. GridCardSelectScreen) hide the proceed button when opened, so we make it visible again
-            if (inCafe()) {
+            // Some screens (e.g. the card rewards screen from Orrery) also change the buttons text, so reset that too
+            // (But only if we're not currently interacting with a cutscene or a merchant or in another screen)
+            if (inCafe() && !isInteracting() && AbstractDungeon.screen == AbstractDungeon.CurrentScreen.NONE) {
                 AbstractDungeon.overlayMenu.proceedButton.show();
+                AbstractDungeon.overlayMenu.proceedButton.setLabel(CafeRoom.uiStrings.TEXT[1]);
             }
         }
     }
@@ -149,6 +152,10 @@ public class CafeEntryExitPatch {
 
     public static boolean inCafe() {
         return AbstractDungeon.currMapNode != null && AbstractDungeon.currMapNode.room instanceof CafeEventRoom;
+    }
+
+    public static boolean isInteracting() {
+        return AbstractCutscene.isInCutscene || AbstractDungeon.screen == CafeMerchantScreen.ScreenEnum.CAFE_MERCHANT_SCREEN;
     }
 
     public static boolean cafeComplete() {
@@ -247,7 +254,7 @@ public class CafeEntryExitPatch {
             else {
                 super.update();
                 boolean proceedButtonHidden = ReflectionHacks.getPrivate(AbstractDungeon.overlayMenu.proceedButton, ProceedButton.class, "isHidden");
-                boolean isInteracting = AbstractCutscene.isInCutscene || AbstractDungeon.screen == CafeMerchantScreen.ScreenEnum.CAFE_MERCHANT_SCREEN;
+                boolean isInteracting = isInteracting();
                 if (isInteracting && !proceedButtonHidden) {
                     AbstractDungeon.overlayMenu.proceedButton.hideInstantly();
                 }
@@ -276,5 +283,10 @@ public class CafeEntryExitPatch {
         } else {
             btn.setLabel(CafeRoom.uiStrings.TEXT[1]);
         }
+    }
+
+    public static void closeCurrentScreen() {
+        AbstractDungeon.closeCurrentScreen();
+        AbstractDungeon.overlayMenu.cancelButton.hideInstantly();
     }
 }
