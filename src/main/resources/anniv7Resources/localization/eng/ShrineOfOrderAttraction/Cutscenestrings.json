@@ -13,12 +13,12 @@
     "OPTIONS": [
       "Pick up the disc.",
       "Cracked slot. ",
-      "(Your Common cards copy another of your Commons.)",
+      "(ALL your Common cards copy one of your Commons.)",
       "Leave.",
       "Plain slot. ",
-      "(Your Uncommon cards copy another of your Uncommons.)",
+      "(ALL your Uncommon cards copy one of your Uncommons.)",
       "Embellished slot. ",
-      "(Your Rare cards copy another of your Rares.)",
+      "(ALL your Rare cards copy one of your Rares.)",
       "Shatter. ",
       "(Pick a Basic card. It copies one of your Commons.)",
       "Pick a Basic Card."
