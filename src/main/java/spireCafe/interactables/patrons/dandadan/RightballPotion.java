@@ -18,6 +18,7 @@ public class RightballPotion extends CustomPotion implements CustomSavable<Integ
     public static final String Potion_ID = Anniv7Mod.makeID(RightballPotion.class.getSimpleName());
 
     private static final PotionStrings potionStrings;
+    private static final int RETURN_CHANCE_REDUCTION = 10;
     public int returnChance;
 
     public RightballPotion(int returnChance) {
@@ -37,7 +38,7 @@ public class RightballPotion extends CustomPotion implements CustomSavable<Integ
 
     public void initializeData() {
         this.potency = this.getPotency();
-        this.description = String.format(potionStrings.DESCRIPTIONS[0], potency, returnChance);
+        this.description = String.format(potionStrings.DESCRIPTIONS[0], potency, returnChance, RETURN_CHANCE_REDUCTION);
         this.tips.clear();
         this.tips.add(new PowerTip(this.name, this.description));
     }
@@ -49,7 +50,7 @@ public class RightballPotion extends CustomPotion implements CustomSavable<Integ
         this.addToBot(new DamageAction(target, info, AbstractGameAction.AttackEffect.BLUNT_HEAVY));
         if (AbstractDungeon.cardRandomRng.randomBoolean(returnChance / 100.0f)) {
             RightballPotionPatch.rbp = this;
-            returnChance -= 10;
+            returnChance -= RETURN_CHANCE_REDUCTION;
             initializeData();
         } else {
             RightballPotionPatch.rbp = null;

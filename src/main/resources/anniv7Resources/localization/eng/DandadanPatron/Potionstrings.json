@@ -2,7 +2,7 @@
   "${ModID}:RightballPotion": {
     "NAME": "Golden Fury",
     "DESCRIPTIONS": [
-      "Deal #b%d damage. #b%d%% chance to return after combat."
+      "Deal #b%d damage. #b%d%% chance to return after combat. (Goes down by #b%d%% each use.)"
     ]
   }
 }
