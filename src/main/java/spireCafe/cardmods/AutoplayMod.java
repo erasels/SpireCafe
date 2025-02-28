@@ -1,6 +1,7 @@
 package spireCafe.cardmods;
 
 import basemod.abstracts.AbstractCardModifier;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.utility.NewQueueCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -19,7 +20,15 @@ public class AutoplayMod extends AbstractCardModifier {
 
     @Override
     public void onDrawn(AbstractCard card) {
-        AbstractDungeon.actionManager.addToBottom(new NewQueueCardAction(card, AbstractDungeon.getCurrRoom().monsters.getRandomMonster(null, true, AbstractDungeon.cardRandomRng)));
+        AbstractDungeon.actionManager.addToBottom(new AbstractGameAction() {
+            @Override
+            public void update() {
+                if (AbstractDungeon.player.hand.contains(card)) {
+                    AbstractDungeon.actionManager.addToTop(new NewQueueCardAction(card, AbstractDungeon.getCurrRoom().monsters.getRandomMonster(null, true, AbstractDungeon.cardRandomRng)));
+                }
+                this.isDone = true;
+            }
+        });
     }
 
     @Override
