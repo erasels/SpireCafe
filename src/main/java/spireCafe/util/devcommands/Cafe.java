@@ -2,7 +2,6 @@ package spireCafe.util.devcommands;
 
 import basemod.DevConsole;
 import basemod.devcommands.ConsoleCommand;
-import spireCafe.screens.JukeboxScreen;
 
 public class Cafe extends ConsoleCommand{
 
