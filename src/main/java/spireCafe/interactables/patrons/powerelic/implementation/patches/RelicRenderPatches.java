@@ -1,15 +1,10 @@
 package spireCafe.interactables.patrons.powerelic.implementation.patches;
 
-import com.evacipated.cardcrawl.modthespire.lib.SpireInstrumentPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.core.GameCursor;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import javassist.CannotCompileException;
-import javassist.expr.ExprEditor;
-import javassist.expr.MethodCall;
 import spireCafe.Anniv7Mod;
 import spireCafe.interactables.patrons.powerelic.implementation.PowerelicCard;
 
