@@ -460,7 +460,7 @@ public class Anniv7Mod implements
     @Override
     public void receivePostDungeonInitialize() {
         if (!CardCrawlGame.isInARun()) {
-            JukeboxScreen.resetToDefaultMusic();;
+            JukeboxScreen.resetToDefaultMusic();
         }
     }
 
