@@ -16,7 +16,7 @@ public class IdentifyPotionArticle extends AbstractArticle{
     private static final String ID = Anniv7Mod.makeID(IdentifyPotionArticle.class.getSimpleName());
     private static final Texture TEXTURE = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("secretshop/potion.png"));
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ID);
-    private static final float POTION_Y = 168.0F * Settings.scale;;
+    private static final float POTION_Y = 168.0F * Settings.scale;
     public AbstractPotion hiddenPotion;
     private int basePrice;
     private int slot;

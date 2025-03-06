@@ -16,7 +16,7 @@ import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
 public class DrinkbotBartender extends AbstractBartender {
 
     public static final String ID = DrinkbotBartender.class.getSimpleName();
-    private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));;
+    private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(Anniv7Mod.makeID(ID));
     private static final String BARTENDER_STR = Anniv7Mod.makeBartenderPath("drinkbot/");
     private static final CutsceneStrings cutsceneStrings = LocalizedCutsceneStrings.getCutsceneStrings(Anniv7Mod.makeID(ID + "Cutscene"));
 
