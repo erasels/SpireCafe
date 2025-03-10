@@ -75,7 +75,7 @@ public class StarbucksBartender extends AbstractBartender {
         CardGroup group = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
         for (AbstractCard card : AbstractDungeon.player.masterDeck.group) {
             if (card.baseBlock > 0) {
-                group.addToBottom(card);
+                group.addToTop(card);
             }
         }
         if(!group.isEmpty()) {
