@@ -60,7 +60,7 @@ public class RestingSlayerCutscene extends AbstractCutscene {
                     CardGroup group = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
                     for (AbstractCard c : AbstractDungeon.player.masterDeck.group) {
                         if (c.rarity == card.rarity) {
-                            group.addToBottom(c);
+                            group.addToTop(c);
                         }
                     }
                     if (!group.isEmpty()) {

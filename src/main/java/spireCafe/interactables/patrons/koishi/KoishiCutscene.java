@@ -47,7 +47,7 @@ public class KoishiCutscene extends AbstractCutscene {
                         CardGroup group = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
                         for (AbstractCard card : AbstractDungeon.player.masterDeck.group) {
                             if (card.cost != -2 && !AutoplayField.autoplay.get(card) && !CardModifierManager.hasModifier(card, AutoplayMod.ID)) {
-                                group.addToBottom(card);
+                                group.addToTop(card);
                             }
                         }
                         AbstractDungeon.gridSelectScreen.open(group, 1, OPTIONS[4] + " " + OPTIONS[5], false);

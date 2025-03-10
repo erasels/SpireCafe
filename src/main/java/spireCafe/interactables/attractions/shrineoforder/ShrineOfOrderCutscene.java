@@ -91,7 +91,7 @@ public class ShrineOfOrderCutscene extends AbstractCutscene {
         CardGroup group = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
         for (AbstractCard card : Wiz.p().masterDeck.group) {
             if (card.rarity == AbstractCard.CardRarity.BASIC) {
-                group.addToBottom(card);
+                group.addToTop(card);
             }
         }
         if (!group.isEmpty()) {
