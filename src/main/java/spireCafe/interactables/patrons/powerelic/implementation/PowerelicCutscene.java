@@ -7,10 +7,13 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.Hitbox;
+import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.BottledTornado;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
+import com.megacrit.cardcrawl.vfx.combat.HeartBuffEffect;
 import spireCafe.CafeRoom;
 import spireCafe.abstracts.AbstractCafeInteractable;
 import spireCafe.abstracts.AbstractCutscene;
@@ -20,6 +23,7 @@ import spireCafe.interactables.patrons.looter.LooterPatron;
 import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
 import spireCafe.interactables.patrons.powerelic.PowerelicConfig;
 import spireCafe.interactables.patrons.trashking.TrashKingPatron;
+import spireCafe.ui.Dialog;
 import spireCafe.util.Wiz;
 import spireCafe.util.cutsceneStrings.CutsceneStrings;
 import spireCafe.util.cutsceneStrings.LocalizedCutsceneStrings;
@@ -37,8 +41,10 @@ public class PowerelicCutscene extends AbstractCutscene {
     public boolean ignoreLooter=false;
     public boolean trashKingExists=false;
     public AbstractNPC character;
-    public PowerelicCutscene(AbstractNPC character) {
+    public boolean snootBoop=false;
+    public PowerelicCutscene(AbstractNPC character, boolean snootBoop) {
         super(character, cutsceneStrings);
+        this.snootBoop=snootBoop;
         this.character=character;
         if(character instanceof PowerelicPatron) {
             alreadyTalkedOnce = ((PowerelicPatron)character).alreadyTalkedOnce;
@@ -60,10 +66,22 @@ public class PowerelicCutscene extends AbstractCutscene {
                 }
             }
         }
+        if(snootBoop){
+            //note that this only applies if showBlockingDialogue doesn't activate, so we need to check for it there too
+            setupSnootBoopEasterEgg();
+        }else{
+            setupConversationStart(false);
+        }
+    }
+    public void setupSnootBoopEasterEgg(){
+        character.cutscenePortrait=null;
+        playSnootBoopEasterEggEffects();
+        dialogueIndex=26;
+    }
 
-
+    public void setupConversationStart(boolean useGoto){
         dialogueIndex = 0;
-        String cClass= Wiz.adp().chosenClass.toString();
+        String cClass = Wiz.adp().chosenClass.toString();
         if(cClass.equals("IRONCLAD") || cClass.equals("THE_SILENT") || cClass.equals("WATCHER")){
             dialogueIndex=1;
         }else if(cClass.equals("DEFECT")){
@@ -74,15 +92,21 @@ public class PowerelicCutscene extends AbstractCutscene {
         if(alreadyTalkedOnce) {
             if(!ViolescentShard.getOutfoxedStatus()) {
                 dialogueIndex = 6;
-                if (!character.alreadyPerformedTransaction) {
-                    setupChoices();
-                }
             }else{
                 dialogueIndex = 23;
-                if (!character.alreadyPerformedTransaction) {
-                    setupALLChoices();
-                }
             }
+        }
+        if(alreadyPerformedTransaction){
+            ((PowerelicPatron)character).alreadyShowedBlockingDialogue=true;
+            super.dialogueIndex=character.blockingDialogueIndex+27;
+        }
+        if(useGoto){
+            goToDialogue(dialogueIndex);
+        }
+        if(dialogueIndex==6 && !character.alreadyPerformedTransaction) {
+            setupChoices();
+        }else if(dialogueIndex==23 && !character.alreadyPerformedTransaction) {
+            setupALLChoices();
         }
     }
 
@@ -135,6 +159,15 @@ public class PowerelicCutscene extends AbstractCutscene {
             nextDialogue();
             setupRelicChoices();
         } else if(dialogueIndex==22||dialogueIndex==24||dialogueIndex==25){
+            endCutscene();
+        } else if(dialogueIndex==26){
+            character.cutscenePortrait=((PowerelicPatron)character).standardCutscenePortrait;
+            if(!((PowerelicPatron)character).alreadyShowedBlockingDialogue){
+                setupConversationStart(true);
+            }else{
+                endCutscene();
+            }
+        } else if(dialogueIndex>=27){
             endCutscene();
         }
     }
@@ -222,14 +255,6 @@ public class PowerelicCutscene extends AbstractCutscene {
         }
     }
 
-    public void update() {
-        super.update();
-        if (!this.cardsAreSelected && AbstractDungeon.gridSelectScreen.selectedCards.size() == DEFAULT_CARDS_TO_CONVERT) {
-            this.selectedCards=new ArrayList<>(AbstractDungeon.gridSelectScreen.selectedCards);
-            AbstractDungeon.gridSelectScreen.selectedCards.clear();
-            CardCrawlGame.sound.play("ATTACK_MAGIC_BEAM_SHORT");
-        }
-    }
 
     public static void convertSelectedCardsToRelics(ArrayList<AbstractCard> selectedCards,boolean skipRelicConversion){
         int relicsToConvert = PowerelicConfig.calculateNumberOfRelicsToConvert(selectedCards);
@@ -288,6 +313,11 @@ public class PowerelicCutscene extends AbstractCutscene {
         CardCrawlGame.sound.play("ATTACK_MAGIC_FAST_1");
     }
 
+    public void playSnootBoopEasterEggEffects(){
+        Hitbox snootHb=((PowerelicPatron)character).snootHitbox;
+        AbstractDungeon.effectsQueue.add(new HeartBuffEffect(snootHb.x+snootHb.width/2, snootHb.y+snootHb.height/2));
+    }
+
     private void setupRelicChoices(){
         int displayedCost=PowerelicConfig.RELIC_COST+looterGold;
         this.dialog.addDialogOption(OPTIONS[4]+displayedCost+OPTIONS[5],Wiz.adp().gold<displayedCost, new ViolescentShard()).setOptionResult((i) -> {
@@ -328,6 +358,37 @@ public class PowerelicCutscene extends AbstractCutscene {
         character.alreadyPerformedTransaction = true;
         Wiz.adp().loseGold(PowerelicConfig.RELIC_COST+looterGold);
         AbstractDungeon.getCurrRoom().spawnRelicAndObtain(Settings.WIDTH / 2f, Settings.HEIGHT / 2f, new ViolescentShard());
+    }
+    @Override
+    public void update() {
+        if (!shouldRunCutscene()) {
+            return;
+        }
+        if (this.show) {
+            AbstractDungeon.overlayMenu.showBlackScreen(blackScreenValue);
+            isInCutscene = true;
+            //this cutscene uses custom logic for whether to display blocking dialogue
+            updateDialogueText();
+        }
+        this.hb.update();
+        if (Dialog.optionList.isEmpty()) {
+            if (this.hb.hovered && InputHelper.justClickedLeft) {
+                InputHelper.justClickedLeft = false;
+                this.hb.clickStarted = true;
+            }
+            if (this.hb.clicked) {
+                this.hb.clicked = false;
+                //we don't use the blocking dialogue system, so we need to call endCutscene manually
+                onClick();
+            }
+        }
+        this.dialog.update();
+
+        if (!this.cardsAreSelected && AbstractDungeon.gridSelectScreen.selectedCards.size() == DEFAULT_CARDS_TO_CONVERT) {
+            this.selectedCards=new ArrayList<>(AbstractDungeon.gridSelectScreen.selectedCards);
+            AbstractDungeon.gridSelectScreen.selectedCards.clear();
+            CardCrawlGame.sound.play("ATTACK_MAGIC_BEAM_SHORT");
+        }
     }
 
 }
