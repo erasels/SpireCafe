@@ -246,6 +246,7 @@ public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
     public AbstractRelic replaceThisCardsRelicWithNewCopy(){
         if(this.capturedRelic==null)return null;
         AbstractRelic newRelic=this.capturedRelic.makeCopy();
+        newRelic.setCounter(this.capturedRelic.counter);
         this.capturedRelic=newRelic;
         this.setRelicInfoForCopiedCard(newRelic);
         ReflectionHacks.privateMethod(AbstractRelic.class, "initializeTips").invoke(newRelic);
