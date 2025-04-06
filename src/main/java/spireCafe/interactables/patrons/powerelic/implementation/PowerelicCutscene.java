@@ -13,7 +13,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.BottledTornado;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
-import com.megacrit.cardcrawl.vfx.combat.HeartBuffEffect;
+import com.megacrit.cardcrawl.vfx.combat.IntenseZoomEffect;
 import spireCafe.CafeRoom;
 import spireCafe.abstracts.AbstractCafeInteractable;
 import spireCafe.abstracts.AbstractCutscene;
@@ -315,7 +315,8 @@ public class PowerelicCutscene extends AbstractCutscene {
 
     public void playSnootBoopEasterEggEffects(){
         Hitbox snootHb=((PowerelicPatron)character).snootHitbox;
-        AbstractDungeon.effectsQueue.add(new HeartBuffEffect(snootHb.x+snootHb.width/2, snootHb.y+snootHb.height/2));
+        AbstractDungeon.effectsQueue.add(new IntenseZoomEffect(snootHb.x+snootHb.width/2, snootHb.y+snootHb.height/2,false));
+        AbstractDungeon.effectsQueue.add(new CustomHeartBuffEffect(snootHb.x+snootHb.width/2, snootHb.y+snootHb.height/2));
     }
 
     private void setupRelicChoices(){

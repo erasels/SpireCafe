@@ -12,7 +12,9 @@ import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractCutscene;
 import spireCafe.abstracts.AbstractPatron;
 import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
+import spireCafe.interactables.patrons.powerelic.PowerelicConfig;
 import spireCafe.util.TexLoader;
+import spireCafe.util.Wiz;
 
 import java.util.ArrayList;
 
@@ -45,7 +47,7 @@ public class PowerelicPatron extends AbstractPatron {
     }
 
     public static boolean canSpawn() {
-        return (!PowerelicAllowlist.getAllConvertibleRelics().isEmpty() && !getAllConvertiblePowers().isEmpty());
+        return (ViolescentShard.getOutfoxedStatus() && Wiz.adp().gold>=PowerelicConfig.RELIC_COST) || (!PowerelicAllowlist.getAllConvertibleRelics().isEmpty() && !getAllConvertiblePowers().isEmpty());
     }
 
     @Override
