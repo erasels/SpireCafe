@@ -45,7 +45,7 @@ public class PowerelicPatron extends AbstractPatron {
     }
 
     public static boolean canSpawn() {
-        return (!PowerelicAllowlist.getAllConvertibleRelics().isEmpty() && !getAllConvertiblePowers().isEmpty());
+        return ViolescentShard.getOutfoxedStatus() || (!PowerelicAllowlist.getAllConvertibleRelics().isEmpty() && !getAllConvertiblePowers().isEmpty());
     }
 
     @Override
