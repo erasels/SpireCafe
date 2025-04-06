@@ -1,6 +1,7 @@
 package spireCafe.interactables.patrons.powerelic.implementation;
 
 import basemod.ReflectionHacks;
+import basemod.abstracts.CustomSavable;
 import basemod.patches.com.megacrit.cardcrawl.screens.compendium.CardLibraryScreen.NoCompendium;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,19 +12,28 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.relics.Circlet;
 import com.megacrit.cardcrawl.screens.SingleCardViewPopup;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import spireCafe.abstracts.AbstractSCCard;
 import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
+import spireCafe.interactables.patrons.powerelic.implementation.patches.CardedRelicSaveData;
 import spireCafe.util.Wiz;
+
+import java.util.Objects;
 
 import static spireCafe.Anniv7Mod.makeID;
 import static spireCafe.interactables.patrons.powerelic.implementation.PowerelicPatron.assetID;
 
 @NoCompendium
-public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
+public class PowerelicCard extends AbstractSCCard implements OnObtainCard, CustomSavable<CardedRelicSaveData> {
+
+    public static final Logger logger = LogManager.getLogger("anniv7:Powerelic");
 
     //Tasks for later:
     // display power in up-close relic view
@@ -357,6 +367,56 @@ public class PowerelicCard extends AbstractSCCard implements OnObtainCard {
         }
     }
 
+    @Override
+    public CardedRelicSaveData onSave() {
+        logger.info("PowerelicCard.onSave "+this.capturedRelic);
+        if(this.capturedRelic==null){
+            return new CardedRelicSaveData("EMPTY",0,false);
+        }
+        return new CardedRelicSaveData(this.capturedRelic.relicId,this.capturedRelic.counter,Wiz.adp().relics.contains(this.capturedRelic));
+    }
+
+    @Override
+    public void onLoad(CardedRelicSaveData cardedRelicSaveData) {
+        if(cardedRelicSaveData==null){
+            logger.info("PowerelicCard.onLoad, but savedata is null");
+            return;
+        }
+        logger.info("PowerelicCard.onLoad "+cardedRelicSaveData.relicID+" "+cardedRelicSaveData.counter+" "+cardedRelicSaveData.active);
+        boolean matchFound=false;
+        AbstractRelic relic=null;
+        if(cardedRelicSaveData.active){
+            //find the first relic in the player's relic list that
+            //  1) matches the saved data and
+            //  2) is not already captured, then
+            //      flag it as temporary
+            for(AbstractRelic playerRelic : Wiz.adp().relics){
+                if(Objects.equals(playerRelic.relicId, cardedRelicSaveData.relicID)){
+                    if(playerRelic.counter==cardedRelicSaveData.counter){
+                        if(!PowerelicRelicContainmentFields.isContained.get(playerRelic)) {
+                            logger.info(cardedRelicSaveData.relicID+" with counter "+cardedRelicSaveData.counter+" will be restored to temporary status");
+                            relic = playerRelic;
+                            matchFound = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if(!matchFound){
+                logger.info("WARNING: "+cardedRelicSaveData.relicID+" reports that it is temporary, but we couldn't find a matching relic in player's list with counter "+cardedRelicSaveData.counter);
+            }
+        }
+        if(!matchFound){
+            relic = RelicLibrary.getRelic(cardedRelicSaveData.relicID).makeCopy();
+            //note that if relicID was not found, RelicLibrary will return a Circlet
+            if(relic instanceof Circlet && !Objects.equals(cardedRelicSaveData.relicID, Circlet.ID)){
+                logger.info("WARNING: "+cardedRelicSaveData.relicID+" became a Circlet after loading");
+            }
+            relic.setCounter(cardedRelicSaveData.counter);
+        }
+
+        this.setRelicInfo(relic);
+    }
 
 
     public AbstractCard makeCopy() {
