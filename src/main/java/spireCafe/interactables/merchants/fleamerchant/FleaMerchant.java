@@ -451,7 +451,7 @@ public class FleaMerchant extends AbstractMerchant {
     }
     
     private int getPotionPotency(AbstractPotion p){
-        return AbstractDungeon.merchantRng.random(1, p.makeCopy().getPotency()-1);
+        return AbstractDungeon.merchantRng.random(1, p.makeCopy().getPotency(AbstractDungeon.ascensionLevel) - 1);
     }
 
     public double jitter(double d){
