@@ -120,7 +120,6 @@ public class SpiomesManifestationPatron extends AbstractPatron {
             return false;
         }
 
-        int originalActNum = AbstractDungeon.actNum;
         try {
             Method canSpawnMethod = null;
             Method[] methods = biome.getClass().getDeclaredMethods();
@@ -133,9 +132,9 @@ public class SpiomesManifestationPatron extends AbstractPatron {
             }
             if (canSpawnMethod != null){
                 // A number of biomes check the act number to determine if they can spawn, but in the Cafe we're checking
-                // if the biome is okay to spawn for the next act, so we temporarily increment the act number (and set it
-                // back to the original value in the finally clause).
-                AbstractDungeon.actNum++;
+                // if the biome is okay to spawn for the next act, so we temporarily increment the act number by patching
+                // the method that biomes use to check it to add 1 during the canSpawn call.
+                BiomesGetRealActNumPatch.active = true;
                 return (boolean) canSpawnMethod.invoke(biome);
             }
             return true;
@@ -144,7 +143,7 @@ public class SpiomesManifestationPatron extends AbstractPatron {
             return false;
         }
         finally {
-            AbstractDungeon.actNum = originalActNum;
+            BiomesGetRealActNumPatch.active = false;
         }
     }
 
