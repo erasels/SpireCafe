@@ -39,7 +39,7 @@ public class PowerelicAllowlist {
                 PhilosopherStone.ID,
                 RingOfTheSerpent.ID,
                 RunicDome.ID,
-                SacredBark.ID,
+                //Sacred Bark removed -- turns out it PERMANENTLY upgrades all held potions
                 SneckoEye.ID,
                 Sozu.ID,
                 ToxicEgg2.ID,
