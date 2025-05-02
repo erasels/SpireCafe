@@ -1,0 +1,56 @@
+{
+    "${ModID}:EnchantCardEffect": {
+      "TEXT": [
+        "Choose card to enchant:"
+      ]
+    },
+    
+    "${ModID}:RefundMod": {
+      "TEXT": [
+        "[#EFC851]Refund %s NL "
+      ]
+    },
+
+    "${ModID}:ReshuffleMod": {
+      "TEXT": [
+        "Recall",
+        "Shuffles back into the draw pile.",
+        " NL Reshuffle.",
+        "Reshuffle"
+      ]
+    },
+
+    "${ModID}:LootMod": {
+      "TEXT": [
+        "Looting",
+        "Draws #b1 card. Discards #b1 card.",
+        " NL Draw %d card. NL Discard %d card."
+      ]
+    },
+
+    "${ModID}:NoxiousMod": {
+      "TEXT": [
+        "Noxious",
+        "Applies #b2 #yPoison to ALL enemies.",
+        " NL Apply %d Poison to ALL enemies."
+      ]
+    },
+
+    "${ModID}:AutoplayAndDrawMod": {
+      "TEXT": [
+        "Automatic",
+        "Card #yautoplays when drawn. Draws a card.",
+        "Autoplay NL ",
+        " NL Draw %d card."
+      ]
+    },
+
+    "${ModID}:PersistentMod": {
+      "TEXT": [
+        "Persistent",
+        "Card only discards after a certain number of uses each turn.",
+        " NL Persist %d"
+      ]
+    }
+
+}
