@@ -17,7 +17,7 @@ public abstract class AbstractFoodArticle extends AbstractArticle {
     }
 
     public boolean canBuy() {
-        return AbstractDungeon.player.gold > getModifiedPrice();
+        return AbstractDungeon.player.gold >= getModifiedPrice();
     }
 
     @Override
