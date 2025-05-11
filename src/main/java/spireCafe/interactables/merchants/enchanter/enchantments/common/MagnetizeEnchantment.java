@@ -18,7 +18,12 @@ public class MagnetizeEnchantment extends AbstractEnchantment{
 
     @Override
     public String getDescription() {
-        return makeModLabel(this.cardModifier.getClass()) + BaseMod.getKeywordDescription("anniv5:magnetized") + " " + BaseMod.getKeywordDescription("anniv5:polarity");
+        try {
+            Class<?> clz = Class.forName("thePackmaster.cardmodifiers.magnetizepack.MagnetizedModifier");
+            return makeModLabel(clz) + BaseMod.getKeywordDescription("anniv5:magnetized") + " " + BaseMod.getKeywordDescription("anniv5:polarity");
+        } catch (ClassNotFoundException e) {
+            return makeModLabel(this.cardModifier.getClass()) + BaseMod.getKeywordDescription("anniv5:magnetized") + " " + BaseMod.getKeywordDescription("anniv5:polarity");
+        }
     }
     
 }

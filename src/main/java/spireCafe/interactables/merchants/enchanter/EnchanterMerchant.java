@@ -37,12 +37,12 @@ import spireCafe.interactables.merchants.enchanter.enchantments.dynamic.ChimeraE
 import spireCafe.interactables.merchants.enchanter.enchantments.dynamic.KeywordEnchantment;
 import spireCafe.interactables.merchants.enchanter.enchantments.dynamic.ManaSurgeEnchantment;
 import spireCafe.interactables.merchants.enchanter.enchantments.rare.AutoplayEnchantment;
+import spireCafe.interactables.merchants.enchanter.enchantments.rare.RippableEnchantment;
 import spireCafe.interactables.merchants.enchanter.enchantments.rare.TransientEnchantment;
 import spireCafe.interactables.merchants.enchanter.enchantments.uncommon.LootEnchantment;
 import spireCafe.interactables.merchants.enchanter.enchantments.uncommon.NoxiousEnchantment;
 import spireCafe.interactables.merchants.enchanter.enchantments.uncommon.RefundEnchantment;
-import spireCafe.interactables.merchants.enchanter.modifiers.RipMod;
-import spireCafe.interactables.merchants.enchanter.modifiers.StitchMod;
+import spireCafe.interactables.merchants.enchanter.enchantments.uncommon.StitchEnchantment;
 import spireCafe.util.TexLoader;
 import spireCafe.vfx.TopLevelSpeechEffect;
 public class EnchanterMerchant extends AbstractMerchant {
@@ -62,7 +62,7 @@ public class EnchanterMerchant extends AbstractMerchant {
     private static final float BOTTOM_ROW_Y = 300.0F * Settings.yScale;
     private static final float DRAW_START_X = 400.0F * Settings.xScale;
     private static final float DRAW_OFFSET_X = 300.0F * Settings.xScale;
-    private static final float HELP_X = 1500f * Settings.xScale;
+    private static final float HELP_X = 1525f * Settings.xScale;
     private static final float HELP_Y = 800f * Settings.yScale;
 
     private static final String ID = EnchanterMerchant.class.getSimpleName();
@@ -141,10 +141,6 @@ public class EnchanterMerchant extends AbstractMerchant {
         loadDefaultModifiers();
         loadBackupModifiers();
 
-        logger.info(commonEnchantments);
-        logger.info(uncommonEnchantments);
-        logger.info(rareEnchantments);
-
         // It's possible, but rare, that the enchantment lists can be empty because no enchantments
         // are valid for the cards in the player's deck. To prevent crashing we just load a basic
         // set of enchantments in this case. Maybe they'll aquire a valid card from other interactables!
@@ -191,7 +187,8 @@ public class EnchanterMerchant extends AbstractMerchant {
             this.articles.add(articleToAdd);
         }
 
-        this.articles.add(new HelpArticle(this, HELP_X, HELP_Y, characterStrings.OPTIONS[0], characterStrings.OPTIONS[1]));
+        this.articles.add(new HelpArticle(this, HELP_X, HELP_Y, characterStrings.OPTIONS[0], characterStrings.OPTIONS[1]
+            ,true, HELP_X, HELP_Y - 50f * Settings.yScale));
     }
 
     private void addEnchantmentToList(AbstractEnchantment enchantment) {
@@ -359,14 +356,14 @@ public class EnchanterMerchant extends AbstractMerchant {
 
     private void loadAnniv5Modifiers() {
         //Rare
-        addEnchantmentToList(new KeywordEnchantment(new RipMod(), EnchantmentRarity.RARE, "anniv5:rippable"));
+        addEnchantmentToList(new RippableEnchantment());
     }
 
     private void loadExpansionPackModifiers() {
         // Common
         addEnchantmentToList(new MagnetizeEnchantment());
         // Uncommon
-        addEnchantmentToList(new KeywordEnchantment(new StitchMod(), EnchantmentRarity.UNCOMMON, "anniv5:stitch"));
+        addEnchantmentToList(new StitchEnchantment());
     }
 
     public void enchanterSpeech(int stringIndex, EnchantSister which) {

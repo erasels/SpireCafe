@@ -16,7 +16,6 @@ import com.megacrit.cardcrawl.vfx.cardManip.ShowCardBrieflyEffect;
 import basemod.BaseMod;
 import basemod.helpers.CardModifierManager;
 import spireCafe.Anniv7Mod;
-import spireCafe.interactables.merchants.enchanter.EnchanterMerchant.EnchantSister;
 import spireCafe.screens.CafeMerchantScreen;
 
 public class EnchantCardEffect extends AbstractGameEffect{
