@@ -27,6 +27,7 @@ public class SnackmasterMerchant extends AbstractMerchant {
         this.authors = "Gk";
         this.img = TexLoader.getTexture(Anniv7Mod.makeMerchantPath("snackmaster/chef_with_table.png"));
         background = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeMerchantPath("snackmaster/shopscreen.png")));
+        this.facingDirection = FacingDirection.LEFT;
     }
 
     @Override

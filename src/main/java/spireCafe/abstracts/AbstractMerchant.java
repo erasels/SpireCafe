@@ -30,6 +30,7 @@ public abstract class AbstractMerchant extends AbstractCafeInteractable {
 
     public AbstractMerchant(float animationX, float animationY, float hb_w, float hb_h) {
         super(animationX, animationY, hb_w, hb_h);
+        facingDirection = FacingDirection.RIGHT;
     }
 
     public void initialize() {

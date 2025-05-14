@@ -52,6 +52,7 @@ public class FleaMerchant extends AbstractMerchant {
         this.haggleArticle = new HaggleArticle(this, Settings.WIDTH * 0.75F, 164.0F * Settings.yScale);
         articles.add(haggleArticle);
         speechTimer = 1.5F;
+        this.facingDirection = FacingDirection.FORWARD;
     }
 
     @Override

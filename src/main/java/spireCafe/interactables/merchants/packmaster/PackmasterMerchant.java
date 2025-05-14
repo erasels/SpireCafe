@@ -88,6 +88,7 @@ public class PackmasterMerchant extends AbstractMerchant {
             AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle", true);
             e.setTime(e.getEndTime() * MathUtils.random());
         }
+        this.facingDirection = FacingDirection.RIGHT;
     }
 
     public static boolean canSpawn() {

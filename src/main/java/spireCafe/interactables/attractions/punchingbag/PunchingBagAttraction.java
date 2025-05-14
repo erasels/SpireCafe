@@ -51,6 +51,7 @@ public class PunchingBagAttraction extends AbstractAttraction{
         loadAnimation(RESOURCE_PATH + "skeleton.atlas", RESOURCE_PATH + "skeleton.json", 1.0F);
         this.state.setAnimation(0, "idle", true);
         this.stateData.setMix("hit", "idle", 0.1F);
+        facingDirection = FacingDirection.RIGHT;
     }
 
     @Override

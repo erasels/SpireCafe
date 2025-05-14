@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.relics.*;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractArticle;
 import spireCafe.abstracts.AbstractMerchant;
+import spireCafe.abstracts.AbstractCafeInteractable.FacingDirection;
 
 import java.util.ArrayList;
 
