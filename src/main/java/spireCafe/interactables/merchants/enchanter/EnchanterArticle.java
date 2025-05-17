@@ -40,8 +40,6 @@ public class EnchanterArticle extends AbstractArticle {
     public AbstractCardModifier baseModifier;
     public boolean isPurchased = false;
 
-
-
     public EnchanterArticle(AbstractMerchant merchant, AbstractEnchantment enchantment) {
         this(merchant, enchantment, 0, 0);
     }

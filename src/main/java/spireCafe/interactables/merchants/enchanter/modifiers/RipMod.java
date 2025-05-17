@@ -29,6 +29,7 @@ public class RipMod extends AbstractCardModifier {
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException | ClassNotFoundException e) {
             e.printStackTrace();
+            throw new RuntimeException(String.format("Error initializing cardmod: %s", this.getClass().getSimpleName()), e);
         }
     }
 

@@ -22,7 +22,8 @@ public class MagnetizeEnchantment extends AbstractEnchantment{
             Class<?> clz = Class.forName("thePackmaster.cardmodifiers.magnetizepack.MagnetizedModifier");
             return makeModLabel(clz) + BaseMod.getKeywordDescription("anniv5:magnetized") + " " + BaseMod.getKeywordDescription("anniv5:polarity");
         } catch (ClassNotFoundException e) {
-            return makeModLabel(this.cardModifier.getClass()) + BaseMod.getKeywordDescription("anniv5:magnetized") + " " + BaseMod.getKeywordDescription("anniv5:polarity");
+            e.printStackTrace();
+            throw new RuntimeException(String.format("Error generating enchantment description for %s", this.getClass().getSimpleName()), e);
         }
     }
     

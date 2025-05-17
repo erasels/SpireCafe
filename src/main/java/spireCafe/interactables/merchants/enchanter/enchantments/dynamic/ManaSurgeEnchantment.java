@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import basemod.ReflectionHacks;
 import basemod.abstracts.AbstractCardModifier;
 import spireCafe.interactables.merchants.enchanter.AbstractEnchantment;
+import spireCafe.interactables.merchants.enchanter.EnchanterMerchant;
 import spireCafe.interactables.merchants.enchanter.EnchanterMerchant.EnchantmentRarity;
 
 public class ManaSurgeEnchantment extends AbstractEnchantment{
@@ -24,9 +25,10 @@ public class ManaSurgeEnchantment extends AbstractEnchantment{
             String modifierID = ReflectionHacks.getPrivateStatic(cardModifier.getClass(), "ID");
             return (String) m.invoke(null, modifierID);
         } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e) {
+            EnchanterMerchant.logger.warn(String.format("Error getting truncated name for %s, using full name instead...", cardModifier.getClass().getSimpleName()));
             e.printStackTrace();
+            return cardModifier.additionalTooltips(tooltipBuddy).get(0).title;
         }
-        return cardModifier.additionalTooltips(tooltipBuddy).get(0).title;
     }
 
     @Override

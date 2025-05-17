@@ -22,7 +22,8 @@ public class StitchEnchantment extends AbstractEnchantment{
             Class<?> clz = Class.forName("thePackmaster.actions.needlework.StitchAction");
             return makeModLabel(clz) + BaseMod.getKeywordDescription("anniv5:stitch");
         } catch (ClassNotFoundException e) {
-            return makeModLabel(this.cardModifier.getClass()) + BaseMod.getKeywordDescription("anniv5:stitch");
+            e.printStackTrace();
+            throw new RuntimeException(String.format("Error generating enchantment description for %s", this.getClass().getSimpleName()), e);
         }
     }
     

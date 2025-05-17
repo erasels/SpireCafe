@@ -26,6 +26,7 @@ public class MagnetizeMod extends AbstractCardModifier {
             CardModifierManager.addModifier(card, (AbstractCardModifier) magnetizeMod.getConstructor(boolean.class).newInstance(false));
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException | ClassNotFoundException e) {
             e.printStackTrace();
+            throw new RuntimeException(String.format("Error initializing cardmod: %s", this.getClass().getSimpleName()), e);
         }
     }
 

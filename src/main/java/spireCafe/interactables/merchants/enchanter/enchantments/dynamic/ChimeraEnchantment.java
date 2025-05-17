@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.cards.CardGroup.CardGroupType;
 
 import basemod.abstracts.AbstractCardModifier;
 import spireCafe.interactables.merchants.enchanter.AbstractEnchantment;
+import spireCafe.interactables.merchants.enchanter.EnchanterMerchant;
 import spireCafe.interactables.merchants.enchanter.EnchanterMerchant.EnchantmentRarity;
 
 public class ChimeraEnchantment extends AbstractEnchantment{
@@ -47,6 +48,7 @@ public class ChimeraEnchantment extends AbstractEnchantment{
             Method m = chimeraAbstractAugment.getMethod("modifyName", String.class, AbstractCard.class);
             header = ((String) m.invoke(this.cardModifier, "", tooltipBuddy)).replace("  ", " ").trim();
         } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e) {
+            EnchanterMerchant.logger.warn(String.format("Error generating name for %s, using class name instead...", cardModifier.getClass().getSimpleName()));
             e.printStackTrace();
         }
 
@@ -64,6 +66,7 @@ public class ChimeraEnchantment extends AbstractEnchantment{
             Method m = chimeraAbstractAugment.getMethod("getAugmentDescription");
             body = makeModLabel(cardModifier.getClass()) + m.invoke(cardModifier);
         } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e) {
+            EnchanterMerchant.logger.warn(String.format("Error generating description for %s, leaving blank...", cardModifier.getClass().getSimpleName()));
             e.printStackTrace();
             return body;
         }

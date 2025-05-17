@@ -286,7 +286,7 @@ public class EnchanterMerchant extends AbstractMerchant {
                 return (boolean) m.invoke(null, chimeraMap.get(string));
             } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
-                return false;
+                throw new RuntimeException("Error checking card mod status from Chimera Cards", e);
             }
         }
         return false;

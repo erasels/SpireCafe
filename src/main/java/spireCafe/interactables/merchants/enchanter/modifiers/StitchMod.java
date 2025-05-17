@@ -38,6 +38,7 @@ public class StitchMod extends AbstractCardModifier{
             addToBot((AbstractGameAction) constructor.newInstance(card));
         } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             e.printStackTrace();
+            throw new RuntimeException(String.format("Error initializing cardmod: %s", this.getClass().getSimpleName()), e);
         }
     }
 

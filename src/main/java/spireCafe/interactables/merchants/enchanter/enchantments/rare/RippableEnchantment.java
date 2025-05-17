@@ -22,7 +22,8 @@ public class RippableEnchantment extends AbstractEnchantment{
             Class<?> clz = Class.forName("thePackmaster.cardmodifiers.rippack.RippableModifier");
             return makeModLabel(clz) + BaseMod.getKeywordDescription("anniv5:rippable");
         } catch (ClassNotFoundException e) {
-            return makeModLabel(this.cardModifier.getClass()) + BaseMod.getKeywordDescription("anniv5:rippable");
+            e.printStackTrace();
+            throw new RuntimeException(String.format("Error generating enchantment description for %s", this.getClass().getSimpleName()), e);
         }
     }
     
