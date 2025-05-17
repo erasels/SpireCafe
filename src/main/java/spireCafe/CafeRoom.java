@@ -23,7 +23,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CafeRoom extends AbstractEvent {
     public static final String ID = Anniv7Mod.makeID(CafeRoom.class.getSimpleName());
@@ -69,16 +71,20 @@ public class CafeRoom extends AbstractEvent {
         this.barImg = TexLoader.getTexture(Anniv7Mod.makeUIPath("bar.png"));
     }
 
-    private static List<Class<? extends AbstractCafeInteractable>> getPossibilities(Class<? extends AbstractCafeInteractable> clz) {
+    public static Stream<Entry<String, Class<? extends AbstractCafeInteractable>>> getPossibilitiesStream(Class<? extends AbstractCafeInteractable> clz) {
         return Anniv7Mod.interactableClasses.entrySet().stream()
                 .filter(entry -> clz.isAssignableFrom(entry.getValue()))
                 .filter(entry -> !Anniv7Mod.currentRunSeenInteractables.contains(entry.getKey()))
-                .filter(entry -> canSpawn(entry.getValue()))
+                .filter(entry -> canSpawn(entry.getValue()));
+    }
+
+    private static List<Class<? extends AbstractCafeInteractable>> getPossibilities(Class<? extends AbstractCafeInteractable> clz) {
+        return getPossibilitiesStream(clz)
                 .map(Map.Entry::getValue)
                 .collect(Collectors.toList());
     }
 
-    private static boolean canSpawn(Class<? extends AbstractCafeInteractable> clz) {
+    public static boolean canSpawn(Class<? extends AbstractCafeInteractable> clz) {
         Method canSpawnMethod = null;
         if (canSpawnMethods.containsKey(clz)) {
             canSpawnMethod = canSpawnMethods.get(clz);
@@ -101,7 +107,7 @@ public class CafeRoom extends AbstractEvent {
         }
     }
 
-    private static AbstractCafeInteractable createInteractable(Class<? extends AbstractCafeInteractable> clz, float x, float y) {
+    public static AbstractCafeInteractable createInteractable(Class<? extends AbstractCafeInteractable> clz, float x, float y) {
         try {
             return clz.getConstructor(float.class, float.class).newInstance(x, y);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
