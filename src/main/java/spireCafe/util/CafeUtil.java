@@ -1,8 +1,6 @@
 package spireCafe.util;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +13,6 @@ import spireCafe.abstracts.AbstractCafeInteractable;
 import spireCafe.abstracts.AbstractMerchant;
 import spireCafe.abstracts.AbstractPatron;
 import spireCafe.abstracts.AbstractCafeInteractable.FacingDirection;
-import spireCafe.util.devcommands.Cafe;
 
 // !!--- READ BEFORE EDITING ---!!
 //
