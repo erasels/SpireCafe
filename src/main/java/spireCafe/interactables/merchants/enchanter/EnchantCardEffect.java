@@ -26,8 +26,6 @@ public class EnchantCardEffect extends AbstractGameEffect{
     private EnchanterArticle article;
     private int cost;
     private boolean gridScreenOpened = false;
-    // private boolean merchantScreenOpened = false;
-
 
     public EnchantCardEffect(CardGroup cards, EnchanterArticle article, int cost) {
         this.cards = cards;

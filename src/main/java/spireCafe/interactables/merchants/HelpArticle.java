@@ -5,9 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.TipHelper;
-import com.megacrit.cardcrawl.helpers.input.InputHelper;
 
-import basemod.devcommands.Help;
 import spireCafe.Anniv7Mod;
 import spireCafe.abstracts.AbstractArticle;
 import spireCafe.abstracts.AbstractMerchant;
