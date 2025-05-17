@@ -97,6 +97,10 @@ public class CafeUtil {
         Anniv7Mod.currentRunSeenInteractables.add(interactable.id);
     }
 
+    public static void clearRunSeenInteractables() {
+        Anniv7Mod.currentRunSeenInteractables.clear();
+    }
+
     public static Class <? extends AbstractCafeInteractable> getInteractableClass(String ID) {
         return Anniv7Mod.interactableClasses.get(ID);
     }
