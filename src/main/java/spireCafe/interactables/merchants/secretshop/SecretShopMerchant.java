@@ -48,7 +48,7 @@ public class SecretShopMerchant extends AbstractMerchant {
         this.identifyMode = false;
         loadAnimation(MERCHANT_STR + "skeleton.atlas", MERCHANT_STR + "skeleton.json", 1.0F);
         this.state.setAnimation(0, "idle", true);
-        
+        this.facingDirection = FacingDirection.FORWARD;
     }
     
     @Override

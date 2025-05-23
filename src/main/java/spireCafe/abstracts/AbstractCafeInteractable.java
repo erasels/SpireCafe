@@ -40,6 +40,7 @@ public abstract class AbstractCafeInteractable {
 
     public float animationX;
     public float animationY;
+    public FacingDirection facingDirection = FacingDirection.FORWARD;
     public boolean clickable = true;
 
     public AbstractCafeInteractable(float animationX, float animationY, float hb_w, float hb_h, float hb_x_offset, float hb_y_offset) {
@@ -122,5 +123,9 @@ public abstract class AbstractCafeInteractable {
         this.skeleton.setColor(Color.WHITE);
         this.stateData = new AnimationStateData(skeletonData);
         this.state = new AnimationState(this.stateData);
+    }
+
+    public enum FacingDirection {
+        FORWARD, RIGHT, LEFT
     }
 }
