@@ -41,6 +41,7 @@ import spireCafe.interactables.patrons.dandadan.RightballPotion;
 import spireCafe.interactables.patrons.dandadan.RightballPotionPatch;
 import spireCafe.interactables.patrons.missingno.MissingnoUtil;
 import spireCafe.interactables.patrons.powerelic.implementation.debug.DevcommandPowerelic;
+import spireCafe.interactables.patrons.powerelic.implementation.patches.PowerelicSavePatches2;
 import spireCafe.interactables.patrons.spiomesmanifestation.SpiomesManifestationPatron;
 import spireCafe.patches.PotencySaverPatch;
 import spireCafe.screens.CafeMerchantScreen;
@@ -577,6 +578,7 @@ public class Anniv7Mod implements
                 }
             }
         });
+        BaseMod.addSaveField(PowerelicSavePatches2.Anniv7PowerelicTemporaryDuplicateRelics.SaveKey, new PowerelicSavePatches2.Anniv7PowerelicTemporaryDuplicateRelics());
     }
 
     @Override
