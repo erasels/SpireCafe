@@ -1,7 +1,7 @@
 {
     "${ModID}:SecretShopMerchant": {
       "NAMES": [
-        "Gheed"
+        "Secret Shop"
       ],
       "TEXT": [
         "Blood for information.",

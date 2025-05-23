@@ -1,6 +1,12 @@
 package spireCafe.cardmods;
 
+import basemod.BaseMod;
 import basemod.abstracts.AbstractCardModifier;
+import basemod.helpers.TooltipInfo;
+
+import java.util.Collections;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
@@ -34,6 +40,11 @@ public class BlessedMod extends AbstractCardModifier {
     @Override
     public AbstractCardModifier makeCopy() {
         return new BlessedMod();
+    }
+
+    @Override
+    public boolean shouldApply(AbstractCard card) {
+        return card.cost > 0;
     }
 
     @Override
