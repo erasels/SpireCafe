@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.evacipated.cardcrawl.modthespire.Loader;
+import com.megacrit.cardcrawl.cards.AbstractCard.CardType;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -394,6 +395,9 @@ public class EnchanterMerchant extends AbstractMerchant {
     }
 
     public static boolean canSpawn() {
-        return (AbstractDungeon.player.masterDeck.group.stream().filter(c -> CardModifierManager.modifiers(c).isEmpty()).anyMatch(c -> c.cost != -2));
+        return (AbstractDungeon.player.masterDeck.group.stream()
+            .filter(c -> CardModifierManager.modifiers(c).isEmpty())
+            .filter(c -> c.type != CardType.CURSE)
+            .anyMatch(c -> c.cost != -2));
     }
 }

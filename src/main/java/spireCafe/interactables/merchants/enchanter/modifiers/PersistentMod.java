@@ -25,7 +25,7 @@ public class PersistentMod extends AbstractCardModifier {
 
     @Override
     public boolean shouldApply(AbstractCard card) {
-        return PersistFields.basePersist.get(card) <= 0;
+        return card.cost != -2 && PersistFields.basePersist.get(card) <= 0;
     }
 
     @Override

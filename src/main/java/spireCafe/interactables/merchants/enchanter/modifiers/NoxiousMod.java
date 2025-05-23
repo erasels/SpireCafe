@@ -1,5 +1,7 @@
 package spireCafe.interactables.merchants.enchanter.modifiers;
 
+import com.evacipated.cardcrawl.mod.stslib.StSLib;
+import com.evacipated.cardcrawl.mod.stslib.actions.common.AllEnemyApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -35,9 +37,7 @@ public class NoxiousMod extends AbstractCardModifier {
 
     @Override
     public void onUse(AbstractCard card, AbstractCreature target, UseCardAction action) {
-        for (AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
-            this.addToBot(new ApplyPowerAction(m, AbstractDungeon.player, new PoisonPower(m, AbstractDungeon.player, count), count, true));
-        }
+        this.addToBot(new AllEnemyApplyPowerAction(AbstractDungeon.player, count, (m) -> new PoisonPower(m, AbstractDungeon.player, count)));
     }
 
     @Override
