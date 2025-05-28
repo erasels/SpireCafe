@@ -30,7 +30,9 @@ import spireCafe.interactables.patrons.powerelic.PowerelicAllowlist;
 import spireCafe.interactables.patrons.powerelic.implementation.patches.CardedRelicSaveData;
 import spireCafe.util.Wiz;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static spireCafe.Anniv7Mod.makeID;
 import static spireCafe.interactables.patrons.powerelic.implementation.PowerelicPatron.assetID;
@@ -185,7 +187,12 @@ public class PowerelicCard extends AbstractSCCard implements OnObtainCard, Custo
                 }
             }
             __instance.relics.removeIf(relic -> PowerelicRelicContainmentFields.isContained.get(relic));
+            // If any relics were just obtained at the start of the battle (like what the Humility zone does), they'll
+            // have isDone set to false, and we have to preserve that for the relic gaining process to work correctly
+            // (reorganizeRelics sets isDone to true, which would result in onEquip being skipped for new relics).
+            List<AbstractRelic> justObtainedRelics = __instance.relics.stream().filter(r -> !r.isDone).collect(Collectors.toList());
             Wiz.adp().reorganizeRelics();
+            justObtainedRelics.forEach(r -> r.isDone = false);
         }
     }
 
