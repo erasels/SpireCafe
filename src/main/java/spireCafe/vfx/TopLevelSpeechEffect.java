@@ -32,8 +32,11 @@ public class TopLevelSpeechEffect extends AbstractGameEffect{
     public TopLevelSpeechEffect(float x, float y, String msg, boolean isPlayer) {
         this(x, y, 2f, msg, isPlayer);
     }
-
     public TopLevelSpeechEffect(float x, float y, float duration, String msg, boolean isPlayer) {
+        this(x, y, 2f, msg, isPlayer, new Color(0.8f, 0.9f, 0.9f, 0f));
+    }
+
+    public TopLevelSpeechEffect(float x, float y, float duration, String msg, boolean isPlayer, Color color) {
         float effect_x = -170f * Settings.scale;
         if (isPlayer) {
             effect_x = 170f * Settings.scale;
@@ -49,7 +52,7 @@ public class TopLevelSpeechEffect extends AbstractGameEffect{
             this.x = x - ADJUST_X;
         }
         this.y = y + ADJUST_Y;
-        this.color = new Color(0.8f, 0.9f, 0.9f, 0f);
+        this.color = color;
         this.duration = duration;
         this.facingRight = !isPlayer;
     }

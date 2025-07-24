@@ -1,0 +1,37 @@
+{
+    "${ModID}:EnchanterMerchant": {
+      "NAMES": [
+        "Enchanting Sisters"
+      ],
+      "TEXT": [
+        "...hello",
+        "...",
+        "...",
+        "...thanks",
+        "...enjoy",
+        "...money",
+        "...gold",
+        "...cards",
+        "What're you buying?",
+        "What's up boss",
+        "That's a popular one!",
+        "I'll be honest. I don't know what that one does.",
+        "Go kill some Elites with that.",
+        "We're running a business here!",
+        "Come back when you have money.",
+        "I can't make it work with any of your cards.",
+        "Nice to see you!",
+        "Let me know if you need any help.",
+        "Have a nice day.",
+        "Be careful traveler.",
+        "I hope this helps on your journey.",
+        "Sorry, that's a bit expensive.",
+        "May I suggest a more budget option.",
+        "None of your cards support this enchantment."
+      ],
+      "OPTIONS": [
+        "Enchanting Sisters",
+        "Highlight a scroll to see an enchantment you can apply to a card in your deck. Once you purchase the scroll you'll be able to select a valid card in your deck to enchant. Pre-modified cards aren't eligible for enchantment."
+      ]
+    }
+  }

@@ -52,6 +52,7 @@ public class FleaMerchant extends AbstractMerchant {
         this.haggleArticle = new HaggleArticle(this, Settings.WIDTH * 0.75F, 164.0F * Settings.yScale);
         articles.add(haggleArticle);
         speechTimer = 1.5F;
+        this.facingDirection = FacingDirection.FORWARD;
     }
 
     @Override
@@ -451,7 +452,7 @@ public class FleaMerchant extends AbstractMerchant {
     }
     
     private int getPotionPotency(AbstractPotion p){
-        return AbstractDungeon.merchantRng.random(1, p.makeCopy().getPotency()-1);
+        return AbstractDungeon.merchantRng.random(1, p.makeCopy().getPotency(AbstractDungeon.ascensionLevel) - 1);
     }
 
     public double jitter(double d){

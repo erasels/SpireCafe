@@ -199,10 +199,10 @@ public class RestingSlayerPatron extends AbstractPatron {
         }
 
         cards = new ArrayList<>();
-        if(!basics.isEmpty()) cards.add(basics.getRandomCard(restingSlayerRng));
-        if(!commons.isEmpty()) cards.add(commons.getRandomCard(restingSlayerRng));
-        if(!uncommons.isEmpty()) cards.add(uncommons.getRandomCard(restingSlayerRng));
-        if(!rares.isEmpty()) cards.add(rares.getRandomCard(restingSlayerRng));
+        if(!basics.isEmpty()) cards.add(basics.getRandomCard(restingSlayerRng).makeCopy());
+        if(!commons.isEmpty()) cards.add(commons.getRandomCard(restingSlayerRng).makeCopy());
+        if(!uncommons.isEmpty()) cards.add(uncommons.getRandomCard(restingSlayerRng).makeCopy());
+        if(!rares.isEmpty()) cards.add(rares.getRandomCard(restingSlayerRng).makeCopy());
     }
 
     /**

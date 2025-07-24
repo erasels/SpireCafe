@@ -34,6 +34,7 @@ public class VampistaBartender extends AbstractBartender {
         this.authors = "Gk";
         this.img = TexLoader.getTexture(Anniv7Mod.makeBartenderPath("vampista/image.png"));
         this.cutscenePortrait = new TextureRegion(TexLoader.getTexture(Anniv7Mod.makeBartenderPath("vampista/Portrait.png")));
+        facingDirection = FacingDirection.FORWARD;
     }
 
     @Override

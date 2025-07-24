@@ -43,6 +43,7 @@ public class PeddlerMerchant extends AbstractMerchant {
         articles.add(noRefundsSign);
         background = new TextureRegion(BG_TEXTURE);
         speechTimer = 1.5F;
+        this.facingDirection = FacingDirection.RIGHT;
     }
 
     @Override

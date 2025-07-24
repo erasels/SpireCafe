@@ -21,10 +21,7 @@ import spireCafe.util.TexLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import static spireCafe.Anniv7Mod.*;
 import static spireCafe.interactables.patrons.missingno.MissingnoUtil.initGlitchShader;
@@ -116,6 +113,13 @@ public class SpiomesManifestationPatron extends AbstractPatron {
     }
 
     public boolean getBiomeCanSpawn(Object biome){
+        // Some biomes have restrictions based on specific acts. Since we don't know what act the player will choose
+        // next, we exclude these. And since there's no good way to detect this dynamically, this is hardcoded.
+        List<String> excludedZones = Arrays.asList("InvasionZone", "HumilityZone", "HumidityZone");
+        if (excludedZones.contains(biome.getClass().getSimpleName())) {
+            return false;
+        }
+
         try {
             Method canSpawnMethod = null;
             Method[] methods = biome.getClass().getDeclaredMethods();
@@ -127,12 +131,19 @@ public class SpiomesManifestationPatron extends AbstractPatron {
                 }
             }
             if (canSpawnMethod != null){
+                // A number of biomes check the act number to determine if they can spawn, but in the Cafe we're checking
+                // if the biome is okay to spawn for the next act, so we temporarily increment the act number by patching
+                // the method that biomes use to check it to add 1 during the canSpawn call.
+                BiomesGetRealActNumPatch.active = true;
                 return (boolean) canSpawnMethod.invoke(biome);
             }
             return true;
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
             return false;
+        }
+        finally {
+            BiomesGetRealActNumPatch.active = false;
         }
     }
 

@@ -46,7 +46,7 @@ public class FleaMarketRelicArticle extends AbstractArticle {
 
     @Override
     public boolean canBuy() {
-        return AbstractDungeon.player.gold > getModifiedPrice();
+        return AbstractDungeon.player.gold >= getModifiedPrice();
     }
 
     @Override
