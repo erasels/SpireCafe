@@ -1,0 +1,30 @@
+{
+  "${ModID}:PowerelicRelic": {
+    "NAME": "Powerelic",
+    "FLAVOR": "它曾经是一张能力牌，现在永远成为了你的一部分，除非恩洛斯吃掉了它。",
+    "DESCRIPTIONS": [
+      "获得这张能力牌原本的效果。"
+    ]
+  },
+  "${ModID}:PowerelicFormerRelic": {
+    "NAME": "[DNT]Powerelic",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      " NL NL (Wears off at start of next combat.)"
+    ]
+  },
+  "${ModID}:PowerelicDebugRelic": {
+    "NAME": "Playtesting Relic",
+    "FLAVOR": "[DNT]",
+    "DESCRIPTIONS": [
+      "This will not appear in the finished version."
+    ]
+  },
+  "${ModID}:ViolescentShard": {
+    "NAME": "紫罗兰碎片",
+    "FLAVOR": "一件专为那些——原因不明——就是单纯无法相信风衣里是三只小狐狸的人打造的小饰品。",
+    "DESCRIPTIONS": [
+      "战斗奖励现在会包含遗物牌。"
+    ]
+  }
+}

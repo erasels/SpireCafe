@@ -1,0 +1,20 @@
+{
+  "${ModID}:IdentifyRelicArticle": {
+    "TEXT": [
+      "未知遗物",
+      "???"
+    ]
+  },
+  "${ModID}:IdentifyPotionArticle": {
+    "TEXT": [
+      "未知药水",
+      "???"
+    ]
+  },
+  "${ModID}:IdentifyArticle": {
+    "TEXT": [
+      "探查之眼",
+      "开启时，你可以选取一张牌，消耗生命值随机探查它的耗能、类型或稀有度中的一项。当一张牌被探查两次后，会直接揭示这张牌。"
+    ]
+  }
+}

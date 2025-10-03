@@ -1,0 +1,7 @@
+{
+    "${ModID}:HighScoreEffect": {
+    "TEXT": [
+      "新得分记录！"
+    ]
+  }
+}

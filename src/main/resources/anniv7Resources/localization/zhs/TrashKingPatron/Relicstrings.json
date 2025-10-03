@@ -1,0 +1,177 @@
+{
+  "${ModID}:DesignersBrush": {
+    "NAME": "设计师的刷子",
+    "FLAVOR": "没升级的牌？呕—。",
+    "DESCRIPTIONS": [
+      "战斗开始时，如果手牌中没有 #y已升级 的牌， #y升级 你的手牌。"
+    ]
+  },
+  "${ModID}:SlimeUvula": {
+    "NAME": "史莱姆小舌",
+    "FLAVOR": "有趣的事实：史莱姆的身体构造使得他们永远不会感到口渴。",
+    "DESCRIPTIONS": [
+      "战斗结束时，如果你没有空余的药水栏位，回复 #b2 点生命。"
+    ]
+  },
+  "${ModID}:Life": {
+    "NAME": "生命？",
+    "FLAVOR": "可爱的花盆:) 等等有什么从中间长出来了。",
+    "DESCRIPTIONS": [
+      "战斗开始时，获得 #b1 层 #y缠绕 。每当你因为 #y缠绕 失去生命，获得 #b1 点 #y力量 。"
+    ]
+  },
+  "${ModID}:Pebbles": {
+    "NAME": "卵石",
+    "FLAVOR": "这块卵石异常光滑。",
+    "DESCRIPTIONS": [
+      "防御额外提供 #b1 点 #y格挡 。"
+    ]
+  },
+  "${ModID}:ArtOfPeace": {
+    "NAME": "和平艺术",
+    "FLAVOR": "这本书被忍者图书馆禁了。",
+    "DESCRIPTIONS": [
+      "每当你使用烟雾弹，获得 #b50 #y金币 。"
+    ]
+  },
+  "${ModID}:PetRock": {
+    "NAME": "宠物石",
+    "FLAVOR": "没关系，小石，想去就去吧。",
+    "DESCRIPTIONS": [
+      "如果你在回合内没有打出任何牌，在下一回合获得 [E] 。"
+    ]
+  },
+  "${ModID}:PaperNail": {
+    "NAME": "纸钉",
+    "FLAVOR": " \"这东西有用吗？\" ——建筑师",
+    "DESCRIPTIONS": [
+      "当你生命值为 #b1 时，#y攻击牌 造成三倍伤害。"
+    ]
+  },
+  "${ModID}:SuperheroComic": {
+    "NAME": "超级英雄漫画",
+    "FLAVOR": "我猜你想说 \"我是XXX\" ",
+    "DESCRIPTIONS": [
+      "战斗开始时，获得 #b60 层 #y坚不可摧。"
+    ]
+  },
+  "${ModID}:RingOfTheNoodle": {
+    "NAME": "面条戒指",
+    "FLAVOR": "来自迷雾大陆的参与奖。",
+    "DESCRIPTIONS": [
+      "如果你的牌组中有 #b3 张以上 #y固有 牌，战斗开始时额外抽 #b2 张牌。"
+    ]
+  },
+  "${ModID}:Supplements": {
+    "NAME": "补品",
+    "FLAVOR": "尖塔里的维生素D不足。",
+    "DESCRIPTIONS": [
+      "当你的最大生命值增加时，额外提高 #b1 点。"
+    ]
+  },
+  "${ModID}:HospitalBill": {
+    "NAME": "医院账单",
+    "FLAVOR": "等会，账单多少钱？？等下，我感觉好多了。",
+    "DESCRIPTIONS": [
+      "每当你失去最大生命值，回复所有生命。"
+    ]
+  },
+  "${ModID}:WellDoneSteak": {
+    "NAME": "全熟牛排",
+    "FLAVOR": "恭喜你！！！！我们为你骄傲:D",
+    "DESCRIPTIONS": [
+      "第 #b3 个回合开始时，回复 #b1 点生命。"
+    ]
+  },
+  "${ModID}:LonelyAnt": {
+    "NAME": "孤独蚂蚁",
+    "FLAVOR": "被其他同伴抛弃了。",
+    "DESCRIPTIONS": [
+      "回合开始时，如果手牌中没有 #y罕见 或 #y稀有 牌，获得 #b1 点临时 #y力量 。"
+    ]
+  },
+  "${ModID}:NapiersBones": {
+    "NAME": "纳皮尔之骨",
+    "FLAVOR": "大概某个时候会有用，但不是现在。",
+    "DESCRIPTIONS": [
+      "每场战斗第一次将抽牌堆洗牌时，获得 #b1 点临时 #y力量 和 #b1 点临时 #y敏捷 。"
+    ]
+  },
+  "${ModID}:LostPenny": {
+    "NAME": "遗失的硬币",
+    "FLAVOR": "谁老在掉钱？",
+    "DESCRIPTIONS": [
+      "每当你进入商店房间，获得 #b10 #y金币 。"
+    ]
+  },
+  "${ModID}:Popcorn": {
+    "NAME": "爆米花",
+    "FLAVOR": " \"那些地精小鬼的表演真精彩！我尤其喜欢结局。\" ——兰伟德",
+    "DESCRIPTIONS": [
+      "回合结束时，如果你的抽牌堆是空的，获得 #b3 点 #y格挡 。"
+    ]
+  },
+  "${ModID}:InsuranceCard": {
+    "NAME": "保险卡",
+    "FLAVOR": "我就知道这东西能用上！",
+    "DESCRIPTIONS": [
+      "每前进一层时，如果你没有金币，获得 #b150 #y金币 。"
+    ]
+  },
+  "${ModID}:TyrtleShell": {
+    "NAME": "泰尔龟壳",
+    "FLAVOR": "据说自尖塔荒疫之后，泰尔龟便一直在地下寻求庇护。",
+    "DESCRIPTIONS": [
+      "如果你的牌组中没有 #y攻击 牌，战斗开始时获得 #b5 点 #y敏捷 。"
+    ]
+  },
+  "${ModID}:RayOfMoonlight": {
+    "NAME": "月光射线",
+    "FLAVOR": " \"低调点。如果被先古之民抓到我们在造这个的话...\" ——忽必烈大帝",
+    "DESCRIPTIONS": [
+      "如果你的牌组中没有 #y稀有 牌，获得 #b2 层 #y人工制品 。"
+    ]
+  },
+  "${ModID}:StylePoints": {
+    "NAME": "风格分数",
+    "FLAVOR": "你的最高分是多少？",
+    "DESCRIPTIONS": [
+      "每当你击败一名首领，牌组中每有一张不重复的牌，获得 #b1 #y金币 。"
+    ]
+  },
+  "${ModID}:PaintBucket": {
+    "NAME": "颜料桶",
+    "FLAVOR": "给商人的面具用了。",
+    "DESCRIPTIONS": [
+      "每当你一次失去 #b100 #y金币 以上，最大生命值提高 #b1 点。"
+    ]
+  },
+  "${ModID}:HeirloomFork": {
+    "NAME": "家传之叉",
+    "FLAVOR": "它的前主人花了大约140金币买下它。",
+    "DESCRIPTIONS": [
+      "每当你移除一张 #r诅咒 牌，随机 #y升级 一张 #y基础 牌。"
+    ]
+  },
+  "${ModID}:FistOfThePugilist": {
+    "NAME": "拳击手之拳",
+    "FLAVOR": " \"用你最可预料的攻击，反而能出其不意。\" ——忽必烈大帝。",
+    "DESCRIPTIONS": [
+      "每当你打出 #y打击 牌，获得 #b1 点临时 #y力量 。"
+    ]
+  },
+  "${ModID}:RedButton": {
+    "NAME": "红色按钮",
+    "FLAVOR": "只在走投无路时按下。",
+    "DESCRIPTIONS": [
+      "精英或首领战开始时，对随机敌人造成 #b15 点伤害。"
+    ]
+  },
+  "${ModID}:Neurotoxin": {
+    "NAME": "神经毒素",
+    "FLAVOR": "啊哈！一种对尖塔居民致命的混合物。这应该能让爬塔变得轻松...吧？",
+    "DESCRIPTIONS": [
+      "每场战斗的第 #b15 回合结束时，将所有敌人的生命值变为 #b0 。"
+    ]
+  }
+}

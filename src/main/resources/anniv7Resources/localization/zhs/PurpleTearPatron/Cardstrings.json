@@ -1,0 +1,11 @@
+{
+  "${ModID}:Prescript": {
+    "NAME": "法令意志",
+    "DESCRIPTION": "",
+    "EXTENDED_DESCRIPTION": ["示例法令"]
+  },
+  "${ModID}:Clone": {
+    "NAME": "克隆",
+    "DESCRIPTION": " 保留 。 NL 复制一张手牌中耗能最高的牌。 NL 消耗 。 "
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "${ModID}:JukeboxRelic": {
+    "NAME": "自动点唱机",
+    "FLAVOR": "这个小家伙加入了你的爬塔旅程！",
+    "DESCRIPTIONS": [
+      "右键此遗物以使用点唱机。"
+    ]
+  }
+}

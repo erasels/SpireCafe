@@ -1,0 +1,14 @@
+{
+  "${ModID}:BookshelfCutscene": {
+    "NAME": "Bookshelf",
+    "BLOCKING_TEXTS": [
+    ],
+    "DESCRIPTIONS": [
+      "书架上摆着各式各样的巨著。你要拿 #b一 本来看看吗？",
+      "你必须先学习如何阅读。"
+    ],
+    "OPTIONS": [
+      "你无法阅读。"
+    ]
+  }
+}

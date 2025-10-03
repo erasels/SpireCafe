@@ -1,0 +1,12 @@
+{
+  "${ModID}:CouncilOfGhostsPatron": {
+    "NAMES": [
+      "幽灵议会",
+      "1号幽灵",
+      "2号幽灵",
+      "3号幽灵"
+    ],
+    "TEXT": [
+    ]
+  }
+}

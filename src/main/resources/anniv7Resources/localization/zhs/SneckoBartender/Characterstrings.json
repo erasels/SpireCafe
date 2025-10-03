@@ -1,0 +1,10 @@
+{
+  "${ModID}:SneckoBartender": {
+    "NAMES": [
+      "异蛇"
+    ],
+    "TEXT": [
+      "逸舍"
+    ]
+  }
+}

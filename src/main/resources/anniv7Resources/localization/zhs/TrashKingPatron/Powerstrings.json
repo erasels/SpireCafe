@@ -1,0 +1,8 @@
+{
+  "${ModID}:PaperNailPower": {
+    "NAME": "背水",
+    "DESCRIPTIONS": [
+      " #y攻击 造成三倍伤害。"
+    ]
+  }
+}

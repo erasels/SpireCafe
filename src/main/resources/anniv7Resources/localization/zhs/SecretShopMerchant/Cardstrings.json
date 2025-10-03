@@ -1,0 +1,22 @@
+{
+    "${ModID}:UnidentifiedCard": {
+        "NAME": "未知卡牌",
+        "DESCRIPTION": "???",
+        "EXTENDED_DESCRIPTION": [
+            "??? NL ",
+            "耗能: ",
+            "类型: ",
+            "稀有度: ",
+            "X NL ",
+            "不能被打出 NL ",
+            "技能 NL ",
+            "攻击 NL ",
+            "能力 NL ",
+            "其他 NL ",
+            "普通",
+            "罕见",
+            "稀有",
+            "其他"
+        ]
+    }
+}

@@ -1,0 +1,10 @@
+{
+  "${ModID}:DrinkbotBartender": {
+    "NAMES": [
+      "小家伙——"
+    ],
+    "TEXT": [
+      "机械调饮吧"
+    ]
+  }
+}

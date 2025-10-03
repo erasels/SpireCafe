@@ -1,0 +1,9 @@
+{
+  "${ModID}:JukeboxAttraction": {
+    "NAMES": [
+      "自动点唱机"
+    ],
+    "TEXT": [
+    ]
+  }
+}

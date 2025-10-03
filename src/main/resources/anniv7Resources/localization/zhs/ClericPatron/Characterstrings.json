@@ -1,0 +1,9 @@
+{
+  "${ModID}:ClericPatron": {
+    "NAMES": [
+      "牧师"
+    ],
+    "TEXT": [
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+    "${ModID}:EnchantCardEffect": {
+      "TEXT": [
+        "选择要附魔的牌:"
+      ]
+    },
+    
+    "${ModID}:RefundMod": {
+      "TEXT": [
+        " [#EFC851]回馈 %s NL "
+      ]
+    },
+
+    "${ModID}:ReshuffleMod": {
+      "TEXT": [
+        "回返",
+        "将这张牌放回抽牌堆",
+        " NL 再洗入 。",
+        "再洗入"
+      ]
+    },
+
+    "${ModID}:LootMod": {
+      "TEXT": [
+        "抢夺",
+        "抽 #b1 张牌。丢弃 #b1 张牌",
+        " NL 抽 %d 张牌。 NL 丢弃 %d 张牌。"
+      ]
+    },
+
+    "${ModID}:NoxiousMod": {
+      "TEXT": [
+        "泛毒",
+        "对所有敌人施加 #b2 层 #y中毒 。",
+        " NL 对所有敌人施加 %d 层 中毒 。"
+      ]
+    },
+
+    "${ModID}:AutoplayAndDrawMod": {
+      "TEXT": [
+        "自动",
+        "抽到时 #y自动打出 。抽1张牌。",
+        "自动打出。 NL ",
+        " NL 抽 %d 张牌。"
+      ]
+    },
+
+    "${ModID}:PersistentMod": {
+      "TEXT": [
+        "持久",
+        "这张牌在一回合内打出指定次数后才会进入弃牌堆。",
+        " NL *持久 %d"
+      ]
+    }
+
+}

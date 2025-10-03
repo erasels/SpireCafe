@@ -1,0 +1,11 @@
+{
+  "${ModID}:VampistaBartender": {
+    "NAMES": [
+      "吸血鬼酒保"
+    ],
+    "TEXT": [
+      "鲜血精酿",
+      "选择 %s 张牌转化为噬咬。"
+    ]
+  }
+}

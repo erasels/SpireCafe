@@ -1,0 +1,27 @@
+{
+  "${ModID}:ConfigMenuText": {
+    "TEXT": [
+      "尖塔咖啡厅",
+      "尖塔模组社区",
+      "在第一和第二幕结束时会进入一家温馨舒适的咖啡厅。",
+      "进入咖啡厅会失去生命。",
+      "关闭着色器。"
+    ]
+  },
+  "${ModID}:CafeUI": {
+    "TEXT": [
+      "返回",
+      "离开"
+    ]
+  },
+  "${ModID}:Authors": {
+    "TEXT": [
+      "作者: "
+    ]
+  },
+  "${ModID}:Missingno": {
+    "TEXT": [
+      "MissingNo"
+    ]
+  }
+}

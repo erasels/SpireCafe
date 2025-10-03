@@ -1,0 +1,10 @@
+{
+  "${ModID}:PowerelicCard": {
+    "NAME": "能力遗物",
+    "DESCRIPTION": "直到下场战斗开始之前，获得此遗物的效果。"
+  },
+  "${ModID}:PowerelicTemporaryDuplicateCard": {
+    "NAME": "Powerelic Duplicate",
+    "DESCRIPTION": "[DNT] You REALLY shouldn't be able to see this message."
+  }
+}

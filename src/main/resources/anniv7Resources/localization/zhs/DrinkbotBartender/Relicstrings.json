@@ -1,0 +1,10 @@
+{
+    "${ModID}:DrinkInserterRelic": {
+        "NAME": "皮下酒精产生装置",
+        "FLAVOR": "足不出户，随时醉酒！",
+        "DESCRIPTIONS": [
+          "第 #b5 个回合结束时，回复 #b25% 已损失的生命。",
+          "已回复生命： %s"
+        ]
+      }
+}

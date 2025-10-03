@@ -1,0 +1,6 @@
+{
+    "${ModID}:GoldenBallLightning": {
+        "NAME": "球状闪电",
+        "DESCRIPTION": "造成 !D! 点伤害。生成 !M! 个 闪电 充能球。"
+    }
+}

@@ -1,0 +1,10 @@
+{
+  "${ModID}:RestingSlayerPatron": {
+    "NAMES": [
+      "正在休息的 {0}",
+      " "
+    ],
+    "TEXT": [
+    ]
+  }
+}

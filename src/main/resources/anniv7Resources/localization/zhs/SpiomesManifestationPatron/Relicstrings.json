@@ -1,0 +1,9 @@
+{
+  "${ModID}:BiomesExplorationMap": {
+    "NAME": "生态探索地图",
+    "FLAVOR": "准备充分的冒险家一定会有所成长。",
+    "DESCRIPTIONS": [
+      "每当你进入尖塔生态的房间，提高 #g1 点 #g最大生命值 。"
+    ]
+  }
+}

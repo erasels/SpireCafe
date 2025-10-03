@@ -1,0 +1,21 @@
+{
+  "${ModID}:CompassionMarkRelic": {
+    "NAME": "慈悲之印",
+    "FLAVOR": "数不尽的祝福停留在你的掌心。",
+    "DESCRIPTIONS": [
+      "拾起时，随机给牌组中的 #b5 张牌添加 #yanniv7:祝福 。"
+    ]
+  }, "${ModID}:IndulgenceMarkRelic": {
+    "NAME": "放纵之印",
+    "FLAVOR": "对神圣者是祝福，对贪婪者则是诅咒。",
+    "DESCRIPTIONS": [
+      "回合结束时，如果仍有未使用的 [E] ，获得 #b1 点 #y力量 和 #y敏捷 。(每场战斗最多触发 #b3 次)。"
+    ]
+  }, "${ModID}:MartyrdomMarkRelic": {
+    "NAME": "殉道之印",
+    "FLAVOR": "你的决心与痛苦的见证。",
+    "DESCRIPTIONS": [
+      "每当你受到未被格挡的伤害，在下一回合获得等量的 #y格挡 。"
+    ]
+  }
+}

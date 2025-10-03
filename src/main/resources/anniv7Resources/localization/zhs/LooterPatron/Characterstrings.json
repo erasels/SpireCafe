@@ -1,0 +1,9 @@
+{
+  "${ModID}:LooterPatron": {
+    "NAMES": [
+      "小偷"
+    ],
+    "TEXT": [
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "${ModID}:RightballPotion": {
+    "NAME": "金球之怒",
+    "DESCRIPTIONS": [
+      "造成 #b%d 点伤害。有 #b%d%% 几率在战斗后捡回来。(每次使用都会降低 #b%d%% 几率)"
+    ]
+  }
+}

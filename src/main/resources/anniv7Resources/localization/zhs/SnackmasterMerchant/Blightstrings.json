@@ -1,0 +1,16 @@
+{
+  "${ModID}:MawFilletBlight": {
+    "NAME": "巨口肉片",
+    "DESCRIPTION": [
+      "接下来的 #b%s 场战斗开始时，获得 #b%s 点 #y力量 。",
+      "用餐结束了。"
+    ]
+  },
+  "${ModID}:SpireSpaghettiBlight": {
+    "NAME": "尖塔意面",
+    "DESCRIPTION": [
+      "接下来的 #b8 场战斗中，当你不出牌而结束回合时， #y消耗 所有手牌并开始一个新的回合。每场战斗只会触发一次。",
+      "用餐结束了。"
+    ]
+  }
+}

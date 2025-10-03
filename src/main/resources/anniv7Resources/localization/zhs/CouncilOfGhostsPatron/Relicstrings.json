@@ -1,0 +1,10 @@
+{
+  "${ModID}:BlankTombstone": {
+    "NAME": "空墓碑",
+    "FLAVOR": "警钟长鸣。",
+    "DESCRIPTIONS": [
+      "战斗开始时，获得 #b",
+      " 层 #y无实体 。"
+    ]
+  }
+}

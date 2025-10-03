@@ -1,0 +1,6 @@
+{
+  "${ModID}:MissingnoCard": {
+    "NAME": "Missingno",
+    "DESCRIPTION": "抽1张牌。 NL 消耗 。 NL "
+  }
+}

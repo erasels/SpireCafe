@@ -1,0 +1,19 @@
+{
+  "${ModID}:StarbucksBartenderCutscene": {
+    "NAME": "InSpire Employee Cutscene",
+    "BLOCKING_TEXTS": [
+      " \"感谢您的赞助，再见。\" "
+    ],
+    "DESCRIPTIONS": [
+      " \"欢迎光临，有什么能为您服务的？\" ",
+      " *嘀咕* \"我干这行就这点钱...\" ",
+      " \"好啊！\" ",
+      " \"祝您有个美好的一天！\" "
+    ],
+    "OPTIONS": [
+      "我什么都不想要。",
+      "[咖啡] 回复 #b%s 点生命，失去 #b%s 金币 。",
+      "[牛奶] 使一张牌的格挡值提高 #b2 点，失去 #b%s 金币。"
+    ]
+  }
+}

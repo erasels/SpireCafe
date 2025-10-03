@@ -1,0 +1,14 @@
+{
+  "${ModID}:MissingnoCutscene": {
+    "NAME": "Missingno Cutscene",
+    "BLOCKING_TEXTS": [
+    ],
+    "DESCRIPTIONS": [
+    ],
+    "OPTIONS": [
+      "呃... 你好？",
+      "<小心地后退>",
+      "谢谢...？"
+    ]
+  }
+}

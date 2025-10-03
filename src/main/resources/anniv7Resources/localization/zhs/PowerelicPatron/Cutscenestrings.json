@@ -1,0 +1,71 @@
+{
+  "${ModID}:PowerelicCutscene": {
+    "NAME": "Powerelic Cutscene",
+    "BLOCKING_TEXTS": [
+      " \"这东西没电了，但我肯定你不会有事的。\" ",
+      " \"祝你好运！\" "
+    ],
+    "DESCRIPTIONS": [
+      "选择一张能力牌变成遗物。",
+      " ~\"你好啊，人类朋友！~ NL 你对我的 #y能力牌 的研究感兴趣吗？\" ",
+      " ~\"你好啊，机器人朋友！~ NL 你对我的 #y能力牌 的研究感兴趣吗？\" ",
+      " ~\"你好啊，凡人朋友！~ NL 你对我的 #y能力牌 的研究感兴趣吗？\" ",
+      " \"你看，经过我数月不眠不休的研究，我发现—— #p@站那儿别动！@ ——我发现 #y能力牌 和 #y遗物 的本质其实是一样的！\" ",
+      " \"现在有了这项专利发明—— ~能遗两极渗滤器~ ，我可以将你的一张 #y能力牌 转化为 #y遗物 ！它将永远—— #p@别乱动！@ ——永远成为你的一部分，而不用抽到和打出它。你觉得如何？\" ",
+      " \"改变主意了吗？我可以转换—— #p爪子， #p@爪子！@ ——转换你的一张 #y能力牌 变为 #y遗物 ，尽管开口！\" ",
+      "教授在她的风衣里翻找，然后掏出一把样子可疑的射线枪，指向了你。一道闪光和一阵烟雾过后 NL ... NL ... 你闻起来像 ~臭鼬~ 一样...",
+      " @\"哒哒哒！！@ 你的 %s 现在变成 #y遗物 了！\" ",
+      " \"噢！你可能注意到了你原本的一些 #y遗物 变成了 #y能力牌 ，不过不用担心，这完全是意料之中的副作用...\" ",
+      " 你缓缓地往后退。 ",
+      " \"嗯？我想起来了...所以你最后凭借你的 #y遗物牌 #p赢下了那一局 ，对吧？\" ",
+      " \"好吧...这倒是真的，我承认尖塔看上去仍然屹立不倒...\" ",
+      " \"行吧，怎么样都好了。我这里有一件特殊道具 #y可以让你没那么容易被干掉 。我还可以给—— #p爪子， #p@爪子！@ ——给你一个便宜价。如何？\" ",
+      " \"什么？我觉得 #b",
+      " #y金币 已经是最公平的价格了，你还嫌高？\" ",
+      " \"正好是 #b",
+      " #y金币 ，一个整数，再加上 #b",
+      " #y金币 ，这是我凭...直觉想出来的数字。\" ",
+      " \"噢。\" ",
+      " \"好吧，你说得有道理，我猜。那么这个东西我就 #b",
+      " #y金币 卖给你，并且之后 #p所有的意外收获 都可以当做返现。\" ",
+      " \"成交！ NL NL NL (不过如果我是你，我会选另一个选项...)\" ",
+      " \"改变主意了吗？我这里还有其他的业务内容，从直播到 @直播！！ @\"@",
+      "你今天格外地小心翼翼。当你需要废物之王的时候，它在哪？",
+      "你今天格外地小心翼翼。",
+      "你感到一阵多巴胺冲击，仿佛你击中了谁的鼻尖。",
+      " \"这东西没电了，但我肯定你不会有事的。\" ",
+      " \"祝你好运！\" "
+    ],
+    "OPTIONS": [
+      "[接受] #g将一张能力牌转化为遗物， #r但同时... ",
+      "[拒绝]",
+      "[锁定] 需要：在上一局游戏选择第一个选项。",
+      "[打断] 解释上次发生了什么。",
+      "[交易] #y",
+      " #y金币 ： #g获得一件特殊遗物。 ",
+      " \"等一下...\" ",
+      "[耐心地解释旁边的小偷只是剧情需要而存在]"
+    ]
+  },
+  "${ModID}:PowerelicCutscene_playtest": {
+    "NAME": "Powerelic Cutscene",
+    "BLOCKING_TEXTS": [
+      " \"Never mind the placeholders.  We'll fix 'em before it ships.\" "
+    ],
+    "DESCRIPTIONS": [
+      "Choose 1 Power to become a Relic.",
+      "~\"Greetings,~ ~fellow~ ~human!~ NL I am definitely not three foxes in a trenchcoat!\" ",
+      "~\"Greetings,~ ~fellow~ ~humanoid!~ NL I am definitely not three foxes in a trenchcoat!\" ",
+      "~\"Greetings,~ ~fellow~ ~mortal!~ NL I am definitely not three foxes in a trenchcoat!\" ",
+      " \"You must be here to test the #ypowerelics.  What'll it be today?\" ",
+      " \"Oho! I see we're going for the #yEPIC #yTWITCH #yCONTENT today. NL @vicksyShake.@ NL You know that'll cost you ALL your convertible relics, right?\" ",
+      " \"Done.  Remember you can use the #ypowerelic console command to make specific adjustments during playtesting.\" ",
+      "Apparently, this was not the playtest you were looking for."
+    ],
+    "OPTIONS": [
+      "[Playtest] #gTurn #g1 #gPower #ginto #ga #gRelic, #rbut #ralso...",
+      "[Playtest??] #gTurn #gALL #gPowers #ginto #gRelics, #rbut #ralso...",
+      "[Decline]"
+    ]
+  }
+}
